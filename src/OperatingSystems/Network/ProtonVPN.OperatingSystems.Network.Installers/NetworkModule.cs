@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -18,7 +18,11 @@
  */
 
 using Autofac;
-using ProtonVPN.OperatingSystems.Network.NetworkInterface;
+using ProtonVPN.OperatingSystems.Network.Monitors;
+using ProtonVPN.OperatingSystems.Network.NetworkInterfaces;
+using ProtonVPN.OperatingSystems.Network.NetworkInterfaces.Registries;
+using ProtonVPN.OperatingSystems.Network.Policies;
+using ProtonVPN.OperatingSystems.Network.Routing;
 
 namespace ProtonVPN.OperatingSystems.Network.Installers;
 
@@ -28,7 +32,15 @@ public class NetworkModule : Module
     {
         builder.RegisterType<ProxyDetector>().AsImplementedInterfaces().SingleInstance();
         builder.RegisterType<SystemNetworkInterfaces>().AsImplementedInterfaces().SingleInstance();
-        builder.RegisterType<NetworkInterfaceLoader>().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<NetworkInterfaceProvider>().AsImplementedInterfaces().SingleInstance();
         builder.RegisterType<NetworkUtilities>().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<RoutingTableHelper>().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<Ipv4GatewayResolver>().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<NetworkInterfacePolicyManager>().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<InterfaceForwardingMonitor>().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<RouteChangeMonitor>().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<RegistryNetworkAdaptersProvider>().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<NetworkInterfacesProvider>().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<ConflictingNetworkInterfacesProvider>().AsImplementedInterfaces().SingleInstance();
     }
 }

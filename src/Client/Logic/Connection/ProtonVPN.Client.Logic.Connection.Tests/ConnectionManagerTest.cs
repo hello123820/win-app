@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -19,9 +19,11 @@
 
 using NSubstitute;
 using ProtonVPN.Client.EventMessaging.Contracts;
+using ProtonVPN.Client.Logic.Auth.Contracts;
+using ProtonVPN.Client.Logic.Connection.Contracts.Enums;
+using ProtonVPN.Client.Logic.Connection.Contracts.Messages;
 using ProtonVPN.Client.Logic.Connection.Contracts.Models.Intents;
 using ProtonVPN.Client.Logic.Connection.Contracts.Models.Intents.Features;
-using ProtonVPN.Client.Logic.Connection.Contracts.Models.Intents.Locations;
 using ProtonVPN.Client.Logic.Connection.Contracts.Models.Intents.Locations.Countries;
 using ProtonVPN.Client.Logic.Connection.Contracts.RequestCreators;
 using ProtonVPN.Client.Logic.Connection.GuestHole;
@@ -32,11 +34,9 @@ using ProtonVPN.Client.Logic.Users.Contracts.Messages;
 using ProtonVPN.Client.Settings.Contracts;
 using ProtonVPN.EntityMapping.Contracts;
 using ProtonVPN.Logging.Contracts;
-using ProtonVPN.OperatingSystems.Network.Contracts;
-using ProtonVPN.ProcessCommunication.Contracts.Entities.Auth;
 using ProtonVPN.ProcessCommunication.Contracts.Entities.Crypto;
+using ProtonVPN.ProcessCommunication.Contracts.Entities.LocalAgent;
 using ProtonVPN.ProcessCommunication.Contracts.Entities.Vpn;
-using ProtonVPN.StatisticalEvents.Contracts;
 using ProtonVPN.StatisticalEvents.Contracts.Dimensions;
 
 namespace ProtonVPN.Client.Logic.Connection.Tests;
@@ -55,9 +55,13 @@ public class ConnectionManagerTest
     private IReconnectionRequestCreator? _reconnectionRequestCreator;
     private IDisconnectionRequestCreator? _disconnectionRequestCreator;
     private IServersLoader? _serversLoader;
+    private IFavoriteServersStorage? _favoriteServersStorage;
     private IGuestHoleServersFileStorage? _guestHoleServersFileStorage;
     private IGuestHoleConnectionRequestCreator? _guestHoleConnectionRequestCreator;
+    private IGuestHoleDisconnectionRequestCreator? _guestHoleDisconnectionRequestCreator;
     private IConnectionStatisticalEventsManager? _statisticalEventManager;
+    private IConnectionKeyManager? _connectionKeyManager;
+    private IServersUpdater? _serversUpdater;
 
     [TestInitialize]
     public void Initialize()
@@ -71,9 +75,13 @@ public class ConnectionManagerTest
         _reconnectionRequestCreator = Substitute.For<IReconnectionRequestCreator>();
         _disconnectionRequestCreator = Substitute.For<IDisconnectionRequestCreator>();
         _serversLoader = Substitute.For<IServersLoader>();
+        _favoriteServersStorage = Substitute.For<IFavoriteServersStorage>();
         _guestHoleServersFileStorage = Substitute.For<IGuestHoleServersFileStorage>();
         _guestHoleConnectionRequestCreator = Substitute.For<IGuestHoleConnectionRequestCreator>();
+        _guestHoleDisconnectionRequestCreator = Substitute.For<IGuestHoleDisconnectionRequestCreator>();
         _statisticalEventManager = Substitute.For<IConnectionStatisticalEventsManager>();
+        _connectionKeyManager = Substitute.For<IConnectionKeyManager>();
+        _serversUpdater = Substitute.For<IServersUpdater>();
 
         _connectionRequestCreator!.CreateAsync(Arg.Any<IConnectionIntent>()).Returns(GetConnectionRequestIpcEntity());
         _reconnectionRequestCreator!.CreateAsync(Arg.Any<IConnectionIntent>()).Returns(GetConnectionRequestIpcEntity());
@@ -91,9 +99,46 @@ public class ConnectionManagerTest
         _reconnectionRequestCreator = null;
         _disconnectionRequestCreator = null;
         _serversLoader = null;
+        _favoriteServersStorage = null;
         _guestHoleServersFileStorage = null;
         _guestHoleConnectionRequestCreator = null;
+        _guestHoleDisconnectionRequestCreator = null;
         _statisticalEventManager = null;
+        _connectionKeyManager = null;
+        _serversUpdater = null;
+    }
+
+    [TestMethod]
+    public async Task ConnectAsync_UpdatesOverdueLoads_BeforeCreatingTheRequest()
+    {
+        // Act
+        await GetConnectionManager().ConnectAsync(VpnTriggerDimension.Auto, GetConnectionIntent(new TorFeatureIntent()));
+
+        // Assert
+        Received.InOrder(() =>
+        {
+            _serversUpdater!.UpdateOverdueLoadsAsync();
+            _connectionRequestCreator!.CreateAsync(Arg.Any<IConnectionIntent>());
+        });
+    }
+
+    [TestMethod]
+    public async Task ReconnectAsync_UpdatesOverdueLoads_BeforeCreatingTheRequest()
+    {
+        // Arrange
+        ConnectionManager connectionManager = GetConnectionManager();
+        await connectionManager.ConnectAsync(VpnTriggerDimension.Auto, GetConnectionIntent(new TorFeatureIntent()));
+        _serversUpdater!.ClearReceivedCalls();
+
+        // Act
+        await connectionManager.ReconnectAsync(VpnTriggerDimension.Auto);
+
+        // Assert
+        Received.InOrder(() =>
+        {
+            _serversUpdater!.UpdateOverdueLoadsAsync();
+            _reconnectionRequestCreator!.CreateAsync(Arg.Any<IConnectionIntent>());
+        });
     }
 
     [TestMethod]
@@ -103,7 +148,7 @@ public class ConnectionManagerTest
     {
         // Arrange
         _settings!.IsPortForwardingEnabled.Returns(true);
-        _settings!.VpnPlan.Returns(new VpnPlan(string.Empty, string.Empty, PAID_PLAN_TIER));
+        _settings!.VpnPlan.Returns(new VpnPlan(string.Empty, string.Empty, PAID_PLAN_TIER, false));
 
         ConnectionManager connectionManager = GetConnectionManager();
         IFeatureIntent featureIntent = GetFeatureIntent(featureIntentType);
@@ -123,7 +168,7 @@ public class ConnectionManagerTest
     {
         // Arrange
         _settings!.IsPortForwardingEnabled.Returns(false);
-        _settings!.VpnPlan.Returns(new VpnPlan(string.Empty, string.Empty, PAID_PLAN_TIER));
+        _settings!.VpnPlan.Returns(new VpnPlan(string.Empty, string.Empty, PAID_PLAN_TIER, false));
 
         ConnectionManager connectionManager = GetConnectionManager();
         IFeatureIntent featureIntent = GetFeatureIntent(featureIntentType);
@@ -143,7 +188,7 @@ public class ConnectionManagerTest
     {
         // Arrange
         _settings!.IsPortForwardingEnabled.Returns(true);
-        _settings!.VpnPlan.Returns(new VpnPlan(string.Empty, string.Empty, PAID_PLAN_TIER));
+        _settings!.VpnPlan.Returns(new VpnPlan(string.Empty, string.Empty, PAID_PLAN_TIER, false));
 
         ConnectionManager connectionManager = GetConnectionManager();
         IFeatureIntent featureIntent = GetFeatureIntent(featureIntentType);
@@ -155,6 +200,93 @@ public class ConnectionManagerTest
 
         // Assert
         Assert.IsTrue(connectionManager.CurrentConnectionIntent?.IsSameAs(connectionIntent));
+    }
+
+    [TestMethod]
+    public async Task HandleAsync_ShouldSendMessageWithInnerChangeButNoStatusChange_WhenInnerStatusesMapToSameConnectionStatusAsync()
+    {
+        // Arrange
+        SetupStatusMapping();
+        ConnectionManager connectionManager = GetConnectionManager();
+
+        // Act
+        await connectionManager.HandleAsync(GetVpnStateIpcEntity(VpnStatusIpcEntity.Connecting));
+        await connectionManager.HandleAsync(GetVpnStateIpcEntity(VpnStatusIpcEntity.Authenticating));
+        await connectionManager.HandleAsync(GetVpnStateIpcEntity(VpnStatusIpcEntity.AssigningIp));
+
+        // Assert
+        _eventMessageSender!.Received(3).Send(Arg.Any<ConnectionStatusChangedMessage>());
+        _eventMessageSender!.Received(2).Send(Arg.Is<ConnectionStatusChangedMessage>(
+            m => m.ConnectionStatus == ConnectionStatus.Connecting && !m.HasConnectionStatusChanged && m.HasInnerStatusOrErrorChanged));
+    }
+
+    [TestMethod]
+    public async Task HandleAsync_ShouldSendMessageWithInnerChange_WhenErrorChangesForSameConnectionStatusAsync()
+    {
+        // Arrange
+        SetupStatusMapping();
+        ConnectionManager connectionManager = GetConnectionManager();
+
+        // Act
+        await connectionManager.HandleAsync(GetVpnStateIpcEntity(VpnStatusIpcEntity.Connecting, VpnErrorTypeIpcEntity.None));
+        await connectionManager.HandleAsync(GetVpnStateIpcEntity(VpnStatusIpcEntity.Connecting, VpnErrorTypeIpcEntity.Unpaid));
+
+        // Assert
+        _eventMessageSender!.Received(1).Send(Arg.Is<ConnectionStatusChangedMessage>(
+            m => m.ConnectionStatus == ConnectionStatus.Connecting && !m.HasConnectionStatusChanged && m.HasInnerStatusOrErrorChanged));
+    }
+
+    [TestMethod]
+    public async Task HandleAsync_ShouldSendMessageWithConnectionIntentChanged_WhenConnectingToDifferentIntentAsync()
+    {
+        // Arrange
+        _settings!.VpnPlan.Returns(new VpnPlan(string.Empty, string.Empty, PAID_PLAN_TIER, false));
+        SetupStatusMapping();
+        ConnectionManager connectionManager = GetConnectionManager();
+        IConnectionIntent firstIntent = GetConnectionIntent(GetFeatureIntent(typeof(TorFeatureIntent)));
+        IConnectionIntent secondIntent = GetConnectionIntent(GetFeatureIntent(typeof(SecureCoreFeatureIntent)));
+
+        // The very first status update is always force-sent (and thus reports every flag as changed),
+        // so it is consumed here to observe the steady-state behavior below.
+        await connectionManager.ConnectAsync(VpnTriggerDimension.Auto, firstIntent);
+        await connectionManager.HandleAsync(GetVpnStateIpcEntity(VpnStatusIpcEntity.Connecting));
+        _eventMessageSender!.ClearReceivedCalls();
+
+        // Act
+        await connectionManager.HandleAsync(GetVpnStateIpcEntity(VpnStatusIpcEntity.Authenticating));
+        await connectionManager.ConnectAsync(VpnTriggerDimension.Auto, secondIntent);
+        await connectionManager.HandleAsync(GetVpnStateIpcEntity(VpnStatusIpcEntity.Connecting));
+
+        // Assert
+        _eventMessageSender!.Received(1).Send(Arg.Is<ConnectionStatusChangedMessage>(
+            m => m.ConnectionStatus == ConnectionStatus.Connecting && !m.HasConnectionIntentChanged));
+        _eventMessageSender!.Received(1).Send(Arg.Is<ConnectionStatusChangedMessage>(
+            m => m.ConnectionStatus == ConnectionStatus.Connecting && m.HasConnectionIntentChanged));
+    }
+
+    private void SetupStatusMapping()
+    {
+        _entityMapper!.Map<VpnStatusIpcEntity, ConnectionStatus>(Arg.Any<VpnStatusIpcEntity>())
+            .Returns(callInfo => callInfo.Arg<VpnStatusIpcEntity>() switch
+            {
+                VpnStatusIpcEntity.Disconnected or VpnStatusIpcEntity.Disconnecting => ConnectionStatus.Disconnected,
+                VpnStatusIpcEntity.Connected => ConnectionStatus.Connected,
+                _ => ConnectionStatus.Connecting
+            });
+    }
+
+    private VpnStateIpcEntity GetVpnStateIpcEntity(
+        VpnStatusIpcEntity status,
+        VpnErrorTypeIpcEntity error = VpnErrorTypeIpcEntity.None)
+    {
+        return new VpnStateIpcEntity
+        {
+            Status = status,
+            Error = error,
+            EndpointIp = string.Empty,
+            Label = string.Empty,
+            ConnectionCertificatePem = string.Empty,
+        };
     }
 
     private ConnectionRequestIpcEntity GetConnectionRequestIpcEntity()
@@ -190,9 +322,13 @@ public class ConnectionManagerTest
             _reconnectionRequestCreator!,
             _disconnectionRequestCreator!,
             _serversLoader!,
+            _favoriteServersStorage!,
             _guestHoleServersFileStorage!,
             _guestHoleConnectionRequestCreator!,
-            _statisticalEventManager!);
+            _guestHoleDisconnectionRequestCreator!,
+            _statisticalEventManager!,
+            _connectionKeyManager!,
+            _serversUpdater!);
     }
 
     private IConnectionIntent GetConnectionIntent(IFeatureIntent featureIntent)

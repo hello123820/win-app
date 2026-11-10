@@ -17,11 +17,14 @@
  * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System.Drawing;
 using System.Threading;
 using NUnit.Framework;
 using ProtonVPN.UI.Tests.Robots;
+using ProtonVPN.UI.Tests.UiTools;
 using ProtonVPN.UI.Tests.TestBase;
 using ProtonVPN.UI.Tests.TestsHelper;
+using ProtonVPN.UI.Tests.TestsHelper.TestData;
 
 namespace ProtonVPN.UI.Tests.Tests.E2ETests;
 
@@ -30,40 +33,83 @@ namespace ProtonVPN.UI.Tests.Tests.E2ETests;
 [Category("ARM")]
 public class LoginSsoTests : FreshSessionSetUp
 {
-    private const string SSO_LOGIN_ERROR = "Email domain associated to an existing organization. Please sign in with SSO";
+    private static readonly string _ssoLoginError = ApiTranslationHelper.GetTranslatedString("LoginSso_SsoLoginError");
+    private static readonly string _regularLoginError = ApiTranslationHelper.GetTranslatedString("LoginSso_RegularLoginError");
 
     [Test]
+    [Property("TestCaseId", "602334")]
     [Retry(3)]
-    public void LoginSsoDomainDetection()
+    [Category("SMOKE_1")]
+    public void LoginWithSso()
     {
-        //Delay to allow app to setup unauth session
-        Thread.Sleep(TestConstants.FiveSecondsTimeout);
+        VerifyIsOnLoginPage();
 
-        LoginRobot.Login(TestUserData.SsoUser)
-            .Verify.IsErrorMessageDisplayed(SSO_LOGIN_ERROR);
+        LoginRobot
+            .ClickSignInWithSso()
+            .EnterEmail(TestUserData.SsoUser);
 
         CompleteSsoLogin();
     }
 
     [Test]
-    [Retry(3)]
-    public void LoginSsoHappyPath()
+    [Property("TestCaseId", "602335")]
+    public void LoginRegularWithSso()
     {
-        //Delay to allow app to setup unauth session
-        Thread.Sleep(TestConstants.FiveSecondsTimeout);
+        VerifyIsOnLoginPage();
 
-        LoginRobot.EnterEmail(TestUserData.SsoUser)
+        LoginRobot
+            .Login(TestUserData.SsoUser)
+            .Verify.IsErrorMessageDisplayed(_ssoLoginError);
+    }
+
+    [Test]
+    [Property("TestCaseId", "602336")]
+    public void LoginToSsoWithRegular()
+    {
+        VerifyIsOnLoginPage();
+
+        LoginRobot
+            .ClickSignInWithSso()
+            .EnterEmail(TestUserData.FakePlusUserWithDomain)
+            .ClickSignInButton()
+            .Verify.IsErrorMessageDisplayed(_regularLoginError);
+    }
+
+    [Test]
+    [Property("TestCaseId", "890293")]
+    [Ignore("JIRA - VPNWIN-3343")]
+    public void LoginToSsoWithMaxChars()
+    {
+        VerifyIsOnLoginPage();
+
+        LoginRobot
             .ClickSignInWithSso();
 
-        CompleteSsoLogin();
+        (Point Position, Size Size) elementBeforeTyping = UiActions.GetElementSizeAndPosition(LoginRobot.UsernameTextBox);
+
+        UiActions.VerifyElementSizeAndPosition(LoginRobot.UsernameTextBox, elementBeforeTyping, () =>
+            LoginRobot
+                .EnterEmail(InputTestData.LongInput)
+        );
+        LoginRobot.Verify.IsSignInButtonDisplayed();
     }
 
     private void CompleteSsoLogin()
     {
-        LoginRobot.ClickSignInButton()
-             .DoLoginSsoWebview(TestUserData.SsoUser.Password);
+        LoginRobot
+            .ClickSignInButton()
+            .DoLoginSsoWebview(TestUserData.SsoUser.Password);
 
         NavigationRobot
             .Verify.IsOnMainPage();
+    }
+
+    private void VerifyIsOnLoginPage()
+    {
+        //Delay to allow app to setup unauth session
+        Thread.Sleep(TestConstants.FiveSecondsTimeout);
+
+        NavigationRobot
+            .Verify.IsOnLoginPage();
     }
 }

@@ -45,9 +45,14 @@ namespace ProtonVPN.NetworkFilter
             IpFilterNative.DestroySublayerFiltersByName(Session.Handle, _ipFilter.ProviderId, Id, name);
         }
 
+        public List<Guid> GetFilters()
+        {
+            return IpFilterNative.GetSublayerFilters(Session.Handle, ProviderId, Id);
+        }
+
         public uint GetFilterCount()
         {
-            return IpFilterNative.GetSublayerFilterCount(Session.Handle, ProviderId, Id);
+            return (uint)GetFilters().Count;
         }
 
         public void DestroyFilter(Guid filterId)
@@ -117,12 +122,17 @@ namespace ProtonVPN.NetworkFilter
             return filterId;
         }
 
+        /// <summary>
+        /// Creates an application filter for the specified application.
+        /// </summary>
+        /// <param name="appIdentifier">Either the full path to the executable or the package family name for UWP apps.</param>
         public Guid CreateAppFilter(
             DisplayData displayData,
             Action action,
             Layer layer,
             uint weight,
-            string appPath,
+            string appIdentifier,
+            bool isDnsPortExcluded,
             bool persistent = false,
             Guid id = new())
         {
@@ -136,7 +146,8 @@ namespace ProtonVPN.NetworkFilter
                 weight,
                 Guid.Empty, 
                 Guid.Empty,
-                appPath,
+                appIdentifier,
+                isDnsPortExcluded,
                 persistent,
                 id);
 
@@ -151,6 +162,7 @@ namespace ProtonVPN.NetworkFilter
             Callout callout,
             ProviderContext providerContext,
             string appPath,
+            bool isDnsPortExcluded,
             bool persistent = false,
             Guid id = new())
         {
@@ -165,6 +177,7 @@ namespace ProtonVPN.NetworkFilter
                 callout.Id,
                 providerContext.Id,
                 appPath,
+                isDnsPortExcluded,
                 persistent,
                 id);
 

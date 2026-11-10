@@ -21,14 +21,14 @@ using System;
 using System.IO;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProtonVPN.Common.Legacy.Extensions;
+using ProtonVPN.Common.Core.Extensions;
 
 namespace ProtonVPN.Common.Tests.Extensions
 {
     [TestClass]
     public class ExceptionTypeExtensionsTest
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(true, typeof(IOException))]
         [DataRow(true, typeof(UnauthorizedAccessException))]
         [DataRow(false, typeof(ArgumentException))]

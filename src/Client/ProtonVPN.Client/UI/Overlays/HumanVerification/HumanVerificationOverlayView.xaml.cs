@@ -29,6 +29,7 @@ using ProtonVPN.Configurations.Contracts;
 using ProtonVPN.Logging.Contracts;
 using ProtonVPN.Logging.Contracts.Events.AppLogs;
 using ProtonVPN.Client.Core.Bases;
+using ProtonVPN.Common.Core.Extensions;
 
 namespace ProtonVPN.Client.UI.Overlays.HumanVerification;
 
@@ -101,14 +102,21 @@ public sealed partial class HumanVerificationOverlayView : IContextAware
                 return;
             }
 
-            WebView2.CoreWebView2Initialized -= OnCoreWebView2InitializedAsync;
+            // Stop x:Bind updates, otherwise the closed WebView2 throws if ViewModel
+            // raises Url changes after the dialog goes away.
+            Bindings.StopTracking();
+            WebView2.Source = null;
+
+            WebView2.CoreWebView2Initialized -= OnCoreWebView2Initialized;
             WebView2.WebMessageReceived -= WebView2_WebMessageReceived;
 
-            if (WebView2?.CoreWebView2 != null)
+            if (WebView2.CoreWebView2 != null)
             {
                 WebView2.CoreWebView2.ServerCertificateErrorDetected -= OnServerCertificateErrorDetected;
                 WebView2.CoreWebView2.WebResourceRequested -= CoreWebView2_WebResourceRequested;
             }
+
+            WebView2.Close();
         }
         catch (Exception ex)
         {
@@ -123,7 +131,7 @@ public sealed partial class HumanVerificationOverlayView : IContextAware
             if (_humanVerificationConfig.IsSupported())
             {
                 Environment.SetEnvironmentVariable("WEBVIEW2_USER_DATA_FOLDER", UserDataFolder);
-                WebView2.CoreWebView2Initialized += OnCoreWebView2InitializedAsync;
+                WebView2.CoreWebView2Initialized += OnCoreWebView2Initialized;
             }
         }
         catch (Exception e)
@@ -132,7 +140,12 @@ public sealed partial class HumanVerificationOverlayView : IContextAware
         }
     }
 
-    private async void OnCoreWebView2InitializedAsync(WebView2 webView2, CoreWebView2InitializedEventArgs args)
+    private void OnCoreWebView2Initialized(WebView2 webView2, CoreWebView2InitializedEventArgs args)
+    {
+        InitializeCoreWebView2HandlersAsync().FireAndForget();
+    }
+
+    private async Task InitializeCoreWebView2HandlersAsync()
     {
         try
         {

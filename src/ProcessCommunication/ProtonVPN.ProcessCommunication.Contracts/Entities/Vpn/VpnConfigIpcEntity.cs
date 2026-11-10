@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -62,6 +62,12 @@ public class VpnConfigIpcEntity
 
     [DataMember(Order = 13, IsRequired = true)]
     public DnsBlockModeIpcEntity DnsBlockMode { get; set; }
+
+    [DataMember(Order = 14, IsRequired = true)]
+    public bool ShouldDisableWeakHostSetting { get; set; }
+
+    [DataMember(Order = 15, IsRequired = true)]
+    public bool IsWireGuardServerRouteEnabled { get; set; }
 
     public VpnConfigIpcEntity()
     {

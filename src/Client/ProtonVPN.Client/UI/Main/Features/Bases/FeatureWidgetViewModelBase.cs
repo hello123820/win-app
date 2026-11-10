@@ -41,6 +41,7 @@ using ProtonVPN.Client.UI.Main.Settings;
 using ProtonVPN.Client.UI.Main.Settings.Bases;
 using ProtonVPN.Client.UI.Main.Widgets.Bases;
 using ProtonVPN.Client.UI.Main.Widgets.Contracts;
+using ProtonVPN.StatisticalEvents.Contracts;
 using ProtonVPN.StatisticalEvents.Contracts.Dimensions;
 
 namespace ProtonVPN.Client.UI.Main.Features.Bases;
@@ -75,7 +76,7 @@ public abstract partial class FeatureWidgetViewModelBase : SideWidgetViewModelBa
 
     public virtual bool IsRestricted => !Settings.VpnPlan.IsPaid;
 
-    protected abstract UpsellFeatureType? UpsellFeature { get; }
+    protected virtual UpsellModalContext ModalContext { get; } = UpsellModalContext.Undefined;
 
     public virtual bool IsFeatureOverridden => false;
 
@@ -113,7 +114,7 @@ public abstract partial class FeatureWidgetViewModelBase : SideWidgetViewModelBa
     {
         if (IsRestricted)
         {
-            return await UpsellCarouselWindowActivator.ActivateAsync(UpsellFeature);
+            return await UpsellCarouselWindowActivator.ActivateAsync(ModalContext);
         }
 
         if (IsFeatureOverridden && CurrentProfile != null)
@@ -212,7 +213,7 @@ public abstract partial class FeatureWidgetViewModelBase : SideWidgetViewModelBa
             {
                 Title = Localizer.Get("Settings_Reconnection_Title"),
                 PrimaryButtonText = Localizer.Get("Common_Actions_Reconnect"),
-                CloseButtonText = Localizer.Get("Common_Actions_Cancel"),
+                CloseButtonText = Localizer.Get("Settings_DiscardChanges_Confirmation_Action"),
             });
             if (result != ContentDialogResult.Primary)
             {
@@ -246,6 +247,11 @@ public abstract partial class FeatureWidgetViewModelBase : SideWidgetViewModelBa
     partial void OnIsFeatureFlyoutOpenedChanged(bool value)
     {
         InvalidateIsSelected();
+
+        if (value)
+        {
+            OnFeatureFlyoutOpened();
+        }
     }
 
     private bool IsReconnectionRequired(List<ChangedSettingArgs> changedSettings, List<ISettingsConflict> conflicts)
@@ -268,4 +274,7 @@ public abstract partial class FeatureWidgetViewModelBase : SideWidgetViewModelBa
     {
         return conflicts.Any(c => c.IsReconnectionRequired);
     }
+
+    protected virtual void OnFeatureFlyoutOpened()
+    { }
 }

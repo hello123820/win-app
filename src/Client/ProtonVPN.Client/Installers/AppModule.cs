@@ -42,20 +42,24 @@ using ProtonVPN.Client.Logic.Updates.Installers;
 using ProtonVPN.Client.Logic.Users.Installers;
 using ProtonVPN.Client.Models.Announcements;
 using ProtonVPN.Client.Notifications.Installers;
+using ProtonVPN.Client.Services;
 using ProtonVPN.Client.Services.Activation;
 using ProtonVPN.Client.Services.Bootstrapping;
 using ProtonVPN.Client.Services.Bootstrapping.Activators;
 using ProtonVPN.Client.Services.Browsing;
+using ProtonVPN.Client.Services.DefaultConnections;
 using ProtonVPN.Client.Services.Dispatching;
 using ProtonVPN.Client.Services.Edition;
 using ProtonVPN.Client.Services.Enabling;
 using ProtonVPN.Client.Services.Lifecycle;
+using ProtonVPN.Client.Services.LocationExclusion;
 using ProtonVPN.Client.Services.Mapping;
 using ProtonVPN.Client.Services.Navigation;
 using ProtonVPN.Client.Services.PortForwarding;
 using ProtonVPN.Client.Services.ProcessCommunication;
 using ProtonVPN.Client.Services.Selection;
 using ProtonVPN.Client.Services.SignoutHandling;
+using ProtonVPN.Client.Services.TeachingTips;
 using ProtonVPN.Client.Services.Upselling;
 using ProtonVPN.Client.Services.Validation;
 using ProtonVPN.Client.Services.Verification;
@@ -101,7 +105,7 @@ using ProtonVPN.Client.UI.Main.Settings.Pages;
 using ProtonVPN.Client.UI.Main.Settings.Pages.About;
 using ProtonVPN.Client.UI.Main.Settings.Pages.Advanced;
 using ProtonVPN.Client.UI.Main.Settings.Pages.Connection;
-using ProtonVPN.Client.UI.Main.Settings.Pages.DefaultConnections;
+using ProtonVPN.Client.UI.Main.Settings.Pages.ConnectionPreferences;
 using ProtonVPN.Client.UI.Main.Sidebar;
 using ProtonVPN.Client.UI.Main.Sidebar.Connections;
 using ProtonVPN.Client.UI.Main.Sidebar.Connections.Countries;
@@ -117,6 +121,7 @@ using ProtonVPN.Client.UI.Main.Widgets;
 using ProtonVPN.Client.UI.Overlays.HumanVerification;
 using ProtonVPN.Client.UI.Overlays.Information;
 using ProtonVPN.Client.UI.Overlays.Information.Notification;
+using ProtonVPN.Client.UI.Overlays.Selection;
 using ProtonVPN.Client.UI.Overlays.Upsell;
 using ProtonVPN.Client.UI.Overlays.Welcome;
 using ProtonVPN.Client.UI.Overlays.WhatsNew;
@@ -142,9 +147,9 @@ using ProtonVPN.OperatingSystems.Registries.Installers;
 using ProtonVPN.OperatingSystems.Services.Installers;
 using ProtonVPN.OperatingSystems.WebAuthn.Installers;
 using ProtonVPN.ProcessCommunication.Client.Installers;
-using ProtonVPN.ProcessCommunication.Installers;
 using ProtonVPN.Serialization.Installers;
 using ProtonVPN.StatisticalEvents.Installers;
+using ProtonVPN.Client.UI.Main.Home.Card.Feedback;
 
 namespace ProtonVPN.Client.Installers;
 
@@ -189,7 +194,6 @@ public class AppModule : Module
                .RegisterModule<ConnectionLogicModule>()
                .RegisterModule<ClientProcessCommunicationModule>()
                .RegisterModule<EntityMappingModule>()
-               .RegisterModule<ProcessCommunicationModule>()
                .RegisterModule<LocalizationModule>()
                .RegisterModule<EventMessagingModule>()
                .RegisterModule<RecentsLogicModule>()
@@ -263,6 +267,9 @@ public class AppModule : Module
         builder.RegisterType<OneTimeAnnouncementWindowActivator>().AsSelf().AsImplementedInterfaces().SingleInstance();
         builder.RegisterType<NpsSurveyWindowActivator>().AsSelf().AsImplementedInterfaces().SingleInstance();
 
+        builder.RegisterType<ClientWindowsActivator>().AsSelf().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<ClientViewsNavigator>().AsSelf().AsImplementedInterfaces().SingleInstance();
+
         builder.RegisterType<ApplicationIconSelector>().AsSelf().AsImplementedInterfaces().SingleInstance();
         builder.RegisterType<ApplicationThemeSelector>().AsSelf().AsImplementedInterfaces().SingleInstance();
         builder.RegisterType<WebBrowserAppSelector>().AsSelf().AsImplementedInterfaces().SingleInstance();
@@ -281,6 +288,16 @@ public class AppModule : Module
         builder.RegisterType<ServiceCommunicationErrorHandler>().AsImplementedInterfaces().SingleInstance();
 
         builder.RegisterType<EfficiencyModeEnabler>().AsImplementedInterfaces().SingleInstance();
+
+        builder.RegisterType<SettingsHeartbeatService>().AsImplementedInterfaces().SingleInstance().AutoActivate();
+
+        builder.RegisterType<P2PDetectionWindowActivator>().AsSelf().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<StreamingDetectionWindowActivator>().AsSelf().AsImplementedInterfaces().SingleInstance();
+
+        builder.RegisterType<DefaultConnectionSelectionManager>().AsImplementedInterfaces().SingleInstance();
+
+        builder.RegisterType<ExcludeLocationsManager>().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<TeachingTipService>().AsImplementedInterfaces().SingleInstance();
     }
 
     private void RegisterLocalHandlers(ContainerBuilder builder)
@@ -338,6 +355,7 @@ public class AppModule : Module
         RegisterViewModel<HomeComponentViewModel>(builder);
         RegisterViewModel<MapComponentViewModel>(builder).AutoActivate();
         RegisterViewModel<ConnectionCardComponentViewModel>(builder);
+        RegisterViewModel<ConnectionFeedbackComponentViewModel>(builder);
         RegisterViewModel<DefaultConnectionSelectorViewModel>(builder);
         RegisterViewModel<ChangeServerComponentViewModel>(builder);
         RegisterViewModel<ConnectionCardUpsellBannerViewModel>(builder);
@@ -359,7 +377,7 @@ public class AppModule : Module
         RegisterViewModel<CommonSettingsPageViewModel>(builder);
         RegisterViewModel<AdvancedSettingsPageViewModel>(builder);
         RegisterViewModel<ProtocolSettingsPageViewModel>(builder);
-        RegisterViewModel<DefaultConnectionSettingsPageViewModel>(builder);
+        RegisterViewModel<ConnectionPreferencesSettingsPageViewModel>(builder);
         RegisterViewModel<VpnAcceleratorSettingsPageViewModel>(builder);
         RegisterViewModel<CustomDnsServersViewModel>(builder);
         RegisterViewModel<DebugLogsPageViewModel>(builder);
@@ -368,7 +386,7 @@ public class AppModule : Module
         RegisterViewModel<CensorshipSettingsPageViewModel>(builder);
         RegisterViewModel<AutoStartupSettingsPageViewModel>(builder);
         RegisterViewModel<SideWidgetsHostComponentViewModel>(builder);
-        RegisterViewModel<VpnSpeedViewModel>(builder);
+        RegisterViewModel<SpeedChartComponentViewModel>(builder);
         RegisterViewModel<ConnectionIntentSelectorViewModel>(builder);
         RegisterViewModel<ProfileIconSelectorViewModel>(builder);
         RegisterViewModel<ProfileSettingsSelectorViewModel>(builder);
@@ -416,6 +434,8 @@ public class AppModule : Module
         RegisterViewModel<WelcomeToVpnUnlimitedOverlayViewModel>(builder);
         RegisterViewModel<WelcomeToVpnB2BOverlayViewModel>(builder);
         RegisterViewModel<WhatsNewOverlayViewModel>(builder);
+        RegisterViewModel<IpSelectorOverlayViewModel>(builder);
+        RegisterViewModel<AppSelectorOverlayViewModel>(builder);
 
         RegisterViewModel<KillSwitchIconViewModel>(builder);
         RegisterViewModel<ProtocolIconViewModel>(builder);
@@ -438,6 +458,9 @@ public class AppModule : Module
         RegisterViewModel<OneTimeAnnouncementShellViewModel>(builder).AutoActivate();
         RegisterViewModel<NpsSurveyShellViewModel>(builder).AutoActivate();
         RegisterViewModel<TroubleshootingShellViewModel>(builder);
+
+        RegisterViewModel<P2PDetectionShellViewModel>(builder);
+        RegisterViewModel<StreamingDetectionShellViewModel>(builder);
 
         builder.RegisterType<ReleaseViewModelFactory>().SingleInstance();
     }

@@ -19,141 +19,149 @@
 
 using System.Runtime.Serialization;
 
-namespace ProtonVPN.ProcessCommunication.Contracts.Entities.Vpn
+namespace ProtonVPN.ProcessCommunication.Contracts.Entities.Vpn;
+
+[DataContract]
+public enum VpnErrorTypeIpcEntity
 {
-    [DataContract]
-    public enum VpnErrorTypeIpcEntity
-    {
-        [EnumMember]
-        None,
+    [EnumMember]
+    None,
 
-        [EnumMember]
-        NoneKeepEnabledKillSwitch,
+    [EnumMember]
+    NoneKeepEnabledKillSwitch,
 
-        [EnumMember]
-        NetshError,
+    [EnumMember]
+    NetshError,
 
-        [EnumMember]
-        TapAdapterInUseError,
+    [EnumMember]
+    TapAdapterInUseError,
 
-        [EnumMember]
-        NoTapAdaptersError,
+    [EnumMember]
+    NoTapAdaptersError,
 
-        [EnumMember]
-        TapRequiresUpdateError,
+    [EnumMember]
+    TapRequiresUpdateError,
 
-        [EnumMember]
-        TlsError,
+    [EnumMember]
+    TlsError,
 
-        [EnumMember]
-        TlsCertificateError,
+    [EnumMember]
+    TlsCertificateError,
 
-        [EnumMember]
-        PingTimeoutError,
+    [EnumMember]
+    PingTimeoutError,
 
-        [EnumMember]
-        Unpaid,
+    [EnumMember]
+    Unpaid,
 
-        [EnumMember]
-        ServerOffline,
+    [EnumMember]
+    ServerOffline,
 
-        [EnumMember]
-        ServerRemoved,
+    [EnumMember]
+    ServerRemoved,
 
-        [EnumMember]
-        NoServers,
+    [EnumMember]
+    NoServers,
 
-        [EnumMember]
-        Unknown,
+    [EnumMember]
+    AllServersExcluded,
 
-        [EnumMember]
-        RpcServerUnavailable,
+    [EnumMember]
+    Unknown,
 
-        [EnumMember]
-        ServerUnreachable,
+    [EnumMember]
+    RpcServerUnavailable,
 
-        [EnumMember]
-        AdapterTimeoutError,
+    [EnumMember]
+    ServerUnreachable,
 
-        [EnumMember]
-        ClientKeyMismatch,
+    [EnumMember]
+    AdapterTimeoutError,
 
-        [EnumMember]
-        WireGuardAdapterInUseError,
+    [EnumMember]
+    ClientKeyMismatch,
 
-        [EnumMember]
-        ServerValidationError,
+    [EnumMember]
+    WireGuardAdapterInUseError,
 
-        [EnumMember]
-        NoServerValidationPublicKey,
+    [EnumMember]
+    ServerValidationError,
 
-        [EnumMember]
-        MissingConnectionCertificate,
+    [EnumMember]
+    NoServerValidationPublicKey,
 
-        [EnumMember]
-        BaseFilteringEngineServiceNotRunning,
+    [EnumMember]
+    MissingConnectionCertificate,
 
-        [EnumMember]
-        InterfaceHasForwardingEnabled,
+    [EnumMember]
+    BaseFilteringEngineServiceNotRunning,
 
-        [EnumMember]
-        CertificateExpired = 86101,
+    [EnumMember]
+    InterfaceHasForwardingEnabled,
 
-        [EnumMember]
-        CertificateRevoked = 86102,
+    [EnumMember]
+    NetworkUnavailable,
 
-        [EnumMember]
-        SessionKilledDueToMultipleKeys = 86103,
+    [EnumMember]
+    CertificateExpired = 86101,
 
-        [EnumMember]
-        UnableToVerifyCert = 86104,
+    [EnumMember]
+    CertificateRevoked = 86102,
 
-        [EnumMember]
-        CertCARevokedOrExpired = 86105,
+    [EnumMember]
+    SessionKilledDueToMultipleKeys = 86103,
 
-        [EnumMember]
-        CertificateNotYetProvided = 86106,
+    [EnumMember]
+    UnableToVerifyCert = 86104,
 
-        [EnumMember]
-        SessionBeingInstalled = 86107,
+    [EnumMember]
+    CertCARevokedOrExpired = 86105,
 
-        [EnumMember]
-        SystemErrorOnTheServer = 86150,
+    [EnumMember]
+    CertificateNotYetProvided = 86106,
 
-        [EnumMember]
-        SessionLimitReachedFree = 86111,
+    [EnumMember]
+    SessionBeingInstalled = 86107,
 
-        [EnumMember]
-        SessionLimitReachedBasic = 86112,
+    [EnumMember]
+    SystemErrorOnTheServer = 86150,
 
-        [EnumMember]
-        SessionLimitReachedPlus = 86113,
+    [EnumMember]
+    SessionLimitReachedFree = 86111,
 
-        [EnumMember]
-        SessionLimitReachedVisionary = 86114,
+    [EnumMember]
+    SessionLimitReachedBasic = 86112,
 
-        [EnumMember]
-        SessionLimitReachedPro = 86115,
+    [EnumMember]
+    SessionLimitReachedPlus = 86113,
 
-        [EnumMember]
-        SessionLimitReachedUnknown = 86110,
+    [EnumMember]
+    SessionLimitReachedVisionary = 86114,
 
-        [EnumMember]
-        TwoFactorRequiredReasonUnknown = 86120,
+    [EnumMember]
+    SessionLimitReachedPro = 86115,
 
-        [EnumMember]
-        TwoFactorExpired = 86121,
+    [EnumMember]
+    SessionLimitReachedUnknown = 86110,
 
-        [EnumMember]
-        TwoFactorNewConnection = 86122,
+    [EnumMember]
+    TwoFactorRequiredReasonUnknown = 86120,
 
-        [EnumMember]
-        PlanNeedsToBeUpgraded = 86151,
+    [EnumMember]
+    TwoFactorExpired = 86121,
 
-        [EnumMember]
-        ServerSessionDoesNotMatch = 86202,
+    [EnumMember]
+    TwoFactorNewConnection = 86122,
 
-        [EnumMember]
-        ServerSessionError = 86203,
-    }
+    [EnumMember]
+    PlanNeedsToBeUpgraded = 86151,
+
+    [EnumMember]
+    ServerSessionDoesNotMatch = 86202,
+
+    [EnumMember]
+    ServerSessionError = 86203,
+
+    [EnumMember]
+    PortForwardingNotSupported = 86223,
 }

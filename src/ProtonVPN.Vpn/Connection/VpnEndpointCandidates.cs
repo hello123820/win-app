@@ -26,15 +26,13 @@ using ProtonVPN.Vpn.Common;
 
 namespace ProtonVPN.Vpn.Connection;
 
-internal class VpnEndpointCandidates : IVpnEndpointCandidates
+public class VpnEndpointCandidates : IVpnEndpointCandidates
 {
-    private readonly IDictionary<VpnProtocol, ICollection<VpnHost>> _skippedHosts =
-        new Dictionary<VpnProtocol, ICollection<VpnHost>>();
-    private readonly Dictionary<VpnProtocol, ICollection<string>> _skippedIps = new();
+    private readonly Dictionary<VpnProtocol, ICollection<string>> _skippedIps = [];
 
-    private IReadOnlyList<VpnHost> _all = new List<VpnHost>(0);
+    private IReadOnlyList<VpnHost> _all = [];
 
-    public VpnEndpoint Current { get; private set; }
+    public VpnEndpoint? Current { get; private set; }
 
     public VpnEndpointCandidates()
     {
@@ -45,7 +43,6 @@ internal class VpnEndpointCandidates : IVpnEndpointCandidates
     {
         foreach (VpnProtocol protocol in (VpnProtocol[])Enum.GetValues(typeof(VpnProtocol)))
         {
-            _skippedHosts[protocol] = new HashSet<VpnHost>();
             _skippedIps[protocol] = new HashSet<string>();
         }
     }
@@ -55,32 +52,48 @@ internal class VpnEndpointCandidates : IVpnEndpointCandidates
         _all = servers;
     }
 
-    public VpnEndpoint NextHost(VpnConfig config)
-    {
-        if (!string.IsNullOrEmpty(Current.Server.Ip))
-        {
-            _skippedHosts[config.VpnProtocol].Add(Current.Server);
-        }
-
-        return NextEndpoint(config);
-    }
-
     private VpnEndpoint NextEndpoint(VpnConfig config)
     {
-        VpnHost server = _all.FirstOrDefault(h =>
-            _skippedHosts[config.VpnProtocol].All(skippedHost => h != skippedHost) &&
-            _skippedIps[config.VpnProtocol].All(skippedIp => h.Ip != skippedIp));
+        VpnHost server = _all.FirstOrDefault(h => HasUntriedIp(h, config));
 
         Current = CreateVpnEndpoint(server, config.VpnProtocol);
 
         return Current;
     }
 
+    private bool HasUntriedIp(VpnHost host, VpnConfig config)
+    {
+        foreach (string ip in GetCandidateIps(host, config))
+        {
+            if (!_skippedIps[config.VpnProtocol].Contains(ip))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static IEnumerable<string> GetCandidateIps(VpnHost host, VpnConfig config)
+    {
+        foreach (VpnProtocol preferredProtocol in config.PreferredProtocols)
+        {
+            string ip = host.GetIp(preferredProtocol);
+            if (!string.IsNullOrEmpty(ip))
+            {
+                yield return ip;
+            }
+        }
+    }
+
     public VpnEndpoint NextIp(VpnConfig config)
     {
-        if (!string.IsNullOrEmpty(Current.Server.Ip))
+        if (Current is not null && !Current.IsEmpty)
         {
-            _skippedIps[config.VpnProtocol].Add(Current.Server.Ip);
+            foreach (string ip in GetCandidateIps(Current.Server, config))
+            {
+                _skippedIps[config.VpnProtocol].Add(ip);
+            }
         }
 
         return NextEndpoint(config);
@@ -93,11 +106,6 @@ internal class VpnEndpointCandidates : IVpnEndpointCandidates
 
     public void Reset()
     {
-        foreach (ICollection<VpnHost> skipped in _skippedHosts.Values)
-        {
-            skipped.Clear();
-        }
-
         foreach (ICollection<string> skipped in _skippedIps.Values)
         {
             skipped.Clear();
@@ -109,11 +117,6 @@ internal class VpnEndpointCandidates : IVpnEndpointCandidates
     public bool Contains(VpnEndpoint endpoint)
     {
         return _all.Any(s => s == endpoint.Server);
-    }
-
-    public int CountHosts()
-    {
-        return _all.Count;
     }
 
     public int CountIPs()

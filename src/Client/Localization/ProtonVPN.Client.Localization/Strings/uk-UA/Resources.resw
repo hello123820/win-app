@@ -123,14 +123,11 @@
   <data name="Automation_Properties_ConnectionDetails_Page">
     <value>Сторінка подробиць з'єднання</value>
   </data>
+  <data name="Automation_Properties_ConnectionPreferences_Page">
+    <value>Сторінка параметрів з'єднання</value>
+  </data>
   <data name="Automation_Properties_Connection_Card_Component">
     <value>Картка з’єднання</value>
-  </data>
-  <data name="Automation_Properties_Features_Bar">
-    <value>Панель функцій</value>
-  </data>
-  <data name="Automation_Properties_Home_Page">
-    <value>Домівка</value>
   </data>
   <data name="Automation_Properties_KillSwitch_Page">
     <value>Сторінка Kill Switch</value>
@@ -189,18 +186,11 @@
   <data name="Automation_Properties_SplitTunneling_Page">
     <value>Сторінка роздільного тунелювання</value>
   </data>
-  <data name="Cities">
-    <value>Міста</value>
-  </data>
   <data name="City_Fastest">
     <value>Найшвидше місто</value>
   </data>
   <data name="City_Random">
     <value>Випадкове місто</value>
-  </data>
-  <data name="Common_Actions_ActionsFor">
-    <value>Дії для {0}</value>
-    <comment>Used for accessibility purposes (Narrator) in the recents list to open the alternate actions menu (pin, unpin...). {0} is a place holder which can be a country, a city, a server...</comment>
   </data>
   <data name="Common_Actions_Add">
     <value>Додати</value>
@@ -220,25 +210,14 @@
   <data name="Common_Actions_Connect">
     <value>З'єднатися</value>
   </data>
-  <data name="Common_Actions_ConnectTo">
-    <value>З'єднатися з {0}</value>
-    <comment>Used for accessibility purposes (Narrator) to describe the action to Connect to something. {0} is a place holder which can be a country, a city, a server...</comment>
-  </data>
   <data name="Common_Actions_ContactUs">
     <value>Зв'язок з нами</value>
-  </data>
-  <data name="Common_Actions_Customize">
-    <value>Налаштувати</value>
   </data>
   <data name="Common_Actions_Delete">
     <value>Видалити</value>
   </data>
   <data name="Common_Actions_Disconnect">
     <value>Від'єднатися</value>
-  </data>
-  <data name="Common_Actions_DisconnectFrom">
-    <value>Від'єднатися від {0}</value>
-    <comment>Used for accessibility purposes (Narrator) to describe the action to disconnect from something. {0} is a place holder which can be a country, a city, a server...</comment>
   </data>
   <data name="Common_Actions_Duplicate">
     <value>Дублювати</value>
@@ -300,17 +279,14 @@
   <data name="Common_Links_LearnMore">
     <value>Докладніше</value>
   </data>
-  <data name="Common_Message_Loading">
-    <value>Завантаження...</value>
+  <data name="Common_Message_AppNotFound">
+    <value>Програму не знайдено</value>
   </data>
   <data name="Common_States_Off">
     <value>Вимкнено</value>
   </data>
   <data name="Common_States_On">
     <value>Увімкнено</value>
-  </data>
-  <data name="Common_States_Updating">
-    <value>Оновлення...</value>
   </data>
   <data name="Common_Tags_Beta">
     <value>БЕТА</value>
@@ -336,11 +312,26 @@
   <data name="Components_Update_UpdateProtonVpn">
     <value>Оновити Proton VPN</value>
   </data>
+  <data name="Connection_Error_AllServersExcluded">
+    <value>У ваших налаштуваннях усі доступні сервери додано до винятків. Щоб під'єднатися, змініть винятки.</value>
+  </data>
+  <data name="Connection_Error_AllServersExcluded_Action">
+    <value>Винятки розташувань</value>
+  </data>
+  <data name="Connection_Error_ConflictingAdapter_Description">
+    <value>Щоб виправити це, закрийте або видаліть програму, пов'язану з:</value>
+  </data>
+  <data name="Connection_Error_ConflictingAdapter_Title">
+    <value>Інша програма може перешкоджати встановленню з'єднання Proton VPN</value>
+  </data>
   <data name="Connection_Error_EditProfile">
     <value>Редагувати профіль</value>
   </data>
   <data name="Connection_Error_MissingConnectionCertificate">
     <value>Proton VPN не вдалося одержати сертифікат автентифікацій через проблему мережі.</value>
+  </data>
+  <data name="Connection_Error_MobileHotspotEnabled">
+    <value>З'єднання заблоковано мережевими налаштуваннями на вашому пристрої. Причиною може бути мобільна точка доступу, інша програма VPN або програмне забезпечення для віртуалізації. Перевірте конфігурацію своєї мережі або зверніться по допомогу до служби підтримки.</value>
   </data>
   <data name="Connection_Error_NoServers">
     <value>Усі вибрані вами сервери недоступні. Розширте вибір або повторіть спробу пізніше.</value>
@@ -357,6 +348,9 @@
   </data>
   <data name="Connection_Error_RpcServerUnavailable">
     <value>Proton VPN не може під'єднатися, оскільки сервер RPC недоступний у вашій системі.</value>
+  </data>
+  <data name="Connection_Error_ServerValidation">
+    <value>Не вдається перевірити відомості про сервер. Спробуйте під'єднатися до іншого сервера або повідомте про цю проблему нашу команду підтримки клієнтів.</value>
   </data>
   <data name="Connection_Error_SessionLimitReachedFreeUser">
     <value>Ви досягли максимальної кількості пристроїв. Щоб під'єднати цей пристрій, спочатку від'єднайте інший, або передплатіть тарифний план PLUS для одночасного під'єднання до 10 пристроїв.</value>
@@ -377,15 +371,15 @@
     <value>Виникла проблема з перевіркою сертифіката VPN-сервера, що може свідчити про те, що мережеве з'єднання намагаються підмінити або сервер, до якого ви намагаєтеся під'єднатися, має проблеми з конфігурацією. Зверніться по допомогу до нашої служби підтримки, надіславши звіт про проблему.</value>
   </data>
   <data name="Connection_Error_TwoFactorRequired_Description">
-    <value>To connect to VPN, go to your organization's 2FA portal and tap your security key.</value>
+    <value>Щоб під'єднатися до VPN, перейдіть на портал 2FA вашої організації та виберіть свій ключ безпеки.</value>
   </data>
   <data name="Connection_Error_TwoFactorRequired_Title">
-    <value>Two-factor authentication (2FA) required</value>
+    <value>Двоетапна перевірка (2FA) є обов'язковою</value>
   </data>
   <data name="Connection_Error_Unknown">
-    <value>Check your internet connection and try again. If that doesn't work, contact our customer support team.
+    <value>Перевірте своє інтернет-з'єднання і спробуйте ще раз. Якщо це не допоможе, зверніться до нашої команди клієнтської підтримки.
 
-Error code: {0}</value>
+Код помилки: {0}</value>
   </data>
   <data name="Connection_Error_ViewPossibleSolutions">
     <value>Переглянути виправлення</value>
@@ -393,17 +387,12 @@ Error code: {0}</value>
   <data name="Connection_Error_WireGuardAdapterInUse">
     <value>Ваш адаптер WireGuard на пристрої використовується. Від'єднайтеся від будь-якої іншої VPN, що працює на вашому пристрої, а потім повторіть спробу.</value>
   </data>
+  <data name="Connection_Feedback_Question">
+    <value>Оцініть якість свого з'єднання?</value>
+  </data>
   <data name="Connection_Intent_AutoSelected">
     <value>Автоматично вибрано з</value>
     <comment>Appears in the connection card for free users. A set of flags is displayed after the text (eg. Auto-selected from [us-flag] [jp-flag]...)</comment>
-  </data>
-  <data name="Connection_Intent_City_Server">
-    <value>{0} #{1}</value>
-    <comment>Name of the server including city name. {0} is a placeholder for the city name. {1} is a placeholder for the number associated to the server (eg. Zurich #20)</comment>
-  </data>
-  <data name="Connection_Intent_Country_Server">
-    <value>{0} #{1}</value>
-    <comment>Name of the server including country name. {0} is a placeholder for the country name. {1} is a placeholder for the number associated to the server (eg. Switzerland #20)</comment>
   </data>
   <data name="Connection_Via_SecureCore">
     <value>через {0}</value>
@@ -461,16 +450,16 @@ Error code: {0}</value>
     <value>Найшвидша</value>
   </data>
   <data name="Connections_Free_Servers_One">
-    <value>Free server</value>
+    <value>Сервер Free</value>
   </data>
   <data name="Connections_Free_Servers_Few">
-    <value>Free servers</value>
+    <value>Сервери Free</value>
   </data>
   <data name="Connections_Free_Servers_Many">
-    <value>Free servers</value>
+    <value>Сервери Free</value>
   </data>
   <data name="Connections_Free_Servers_Other">
-    <value>Free servers</value>
+    <value>Сервери Free</value>
   </data>
   <data name="Connections_Gateway">
     <value>Мережевий шлюз</value>
@@ -533,16 +522,16 @@ Error code: {0}</value>
     <value>Країни P2P ({0})</value>
   </data>
   <data name="Connections_P2P_Servers_One">
-    <value>P2P server</value>
+    <value>Сервер P2P</value>
   </data>
   <data name="Connections_P2P_Servers_Few">
-    <value>P2P servers</value>
+    <value>Сервери P2P</value>
   </data>
   <data name="Connections_P2P_Servers_Many">
-    <value>P2P servers</value>
+    <value>Сервери P2P</value>
   </data>
   <data name="Connections_P2P_Servers_Other">
-    <value>P2P servers</value>
+    <value>Сервери P2P</value>
   </data>
   <data name="Connections_P2P_States_One">
     <value>Штат P2P ({0})</value>
@@ -610,15 +599,6 @@ Error code: {0}</value>
     <value>Профілі доступні з VPN Plus</value>
     <comment>The text in the tooltip when hovering a profile and the user has a free plan</comment>
   </data>
-  <data name="Connections_Profiles_Settings_Description">
-    <value>Налаштування профілю перевизначають глобальні налаштування VPN.</value>
-  </data>
-  <data name="Connections_Profiles_Settings_Header">
-    <value>Додайте власні налаштування</value>
-  </data>
-  <data name="Connections_Random">
-    <value>Випадковий</value>
-  </data>
   <data name="Connections_Recents_One">
     <value>Нещодавнє ({0})</value>
   </data>
@@ -662,55 +642,16 @@ Error code: {0}</value>
     <value>Країни Secure Core ({0})</value>
   </data>
   <data name="Connections_SecureCore_Servers_One">
-    <value>Secure Core server</value>
+    <value>Сервер Secure Core</value>
   </data>
   <data name="Connections_SecureCore_Servers_Few">
-    <value>Secure Core servers</value>
+    <value>Сервери Secure Core</value>
   </data>
   <data name="Connections_SecureCore_Servers_Many">
-    <value>Secure Core servers</value>
+    <value>Сервери Secure Core</value>
   </data>
   <data name="Connections_SecureCore_Servers_Other">
-    <value>Secure Core servers</value>
-  </data>
-  <data name="Connections_SeeCities_One">
-    <value>Див. місто ({0})</value>
-  </data>
-  <data name="Connections_SeeCities_Few">
-    <value>Див. міста ({0})</value>
-  </data>
-  <data name="Connections_SeeCities_Many">
-    <value>Див. міста ({0})</value>
-  </data>
-  <data name="Connections_SeeCities_Other">
-    <value>Див. міста ({0})</value>
-  </data>
-  <data name="Connections_SeeServers_One">
-    <value>Див. сервер ({0})</value>
-  </data>
-  <data name="Connections_SeeServers_Few">
-    <value>Див. сервери ({0})</value>
-  </data>
-  <data name="Connections_SeeServers_Many">
-    <value>Див. сервери ({0})</value>
-  </data>
-  <data name="Connections_SeeServers_Other">
-    <value>Див. сервери ({0})</value>
-  </data>
-  <data name="Connections_SeeStates_One">
-    <value>Див. штат ({0})</value>
-  </data>
-  <data name="Connections_SeeStates_Few">
-    <value>Див. штати ({0})</value>
-  </data>
-  <data name="Connections_SeeStates_Many">
-    <value>Див. штати ({0})</value>
-  </data>
-  <data name="Connections_SeeStates_Other">
-    <value>Див. штати ({0})</value>
-  </data>
-  <data name="Connections_Server">
-    <value>Сервер</value>
+    <value>Сервери Secure Core</value>
   </data>
   <data name="Connections_Server_Restricted">
     <value>Сервер доступний з VPN Plus</value>
@@ -719,16 +660,16 @@ Error code: {0}</value>
     <value>Цей сервер на обслуговуванні</value>
   </data>
   <data name="Connections_Servers_One">
-    <value>Server</value>
+    <value>Сервер</value>
   </data>
   <data name="Connections_Servers_Few">
-    <value>Servers</value>
+    <value>Сервери</value>
   </data>
   <data name="Connections_Servers_Many">
-    <value>Servers</value>
+    <value>Сервери</value>
   </data>
   <data name="Connections_Servers_Other">
-    <value>Servers</value>
+    <value>Сервери</value>
   </data>
   <data name="Connections_State">
     <value>Стан</value>
@@ -766,16 +707,16 @@ Error code: {0}</value>
     <value>Країни Tor ({0})</value>
   </data>
   <data name="Connections_Tor_Servers_One">
-    <value>Tor server</value>
+    <value>Сервер Tor</value>
   </data>
   <data name="Connections_Tor_Servers_Few">
-    <value>Tor servers</value>
+    <value>Сервери Tor</value>
   </data>
   <data name="Connections_Tor_Servers_Many">
-    <value>Tor servers</value>
+    <value>Сервери Tor</value>
   </data>
   <data name="Connections_Tor_Servers_Other">
-    <value>Tor servers</value>
+    <value>Сервери Tor</value>
   </data>
   <data name="Countries">
     <value>Країни</value>
@@ -783,50 +724,11 @@ Error code: {0}</value>
   <data name="Countries_All">
     <value>Всі</value>
   </data>
-  <data name="Countries_City_One">
-    <value>{0} місто</value>
-  </data>
-  <data name="Countries_City_Few">
-    <value>{0} міста</value>
-  </data>
-  <data name="Countries_City_Many">
-    <value>{0} міст</value>
-  </data>
-  <data name="Countries_City_Other">
-    <value>{0} міст</value>
-  </data>
-  <data name="Countries_Connect">
-    <value>З'єднатися</value>
-    <comment>Connect button label on a country row in the countries tab</comment>
-  </data>
-  <data name="Countries_Fastest">
-    <value>Найшвидша країна</value>
-  </data>
-  <data name="Countries_NoSearchResults">
-    <value>Результатів не знайдено</value>
-  </data>
-  <data name="Countries_NumberOfServers">
-    <value>Сервери ({0})</value>
-    <comment>{0} represents a number of servers</comment>
-  </data>
   <data name="Countries_P2P">
     <value>P2P</value>
   </data>
-  <data name="Countries_P2P_Cities">
-    <value>Міста P2P ({0})</value>
-    <comment>{0} represents a number of P2P cities in the country</comment>
-  </data>
   <data name="Countries_P2P_Description">
     <value>Завантажуйте файли через мережі P2P (peer-to-peer) і вдоскональте якість онлайн-ігор та відеовикликів.</value>
-  </data>
-  <data name="Countries_Page_FreeUser_Description">
-    <value>Розблокуйте вибір країни з VPN Plus</value>
-  </data>
-  <data name="Countries_SearchPlaceholder">
-    <value>Я хочу переглядати з...</value>
-  </data>
-  <data name="Countries_Section_Header">
-    <value>VPN-з'єднання</value>
   </data>
   <data name="Countries_SecureCore">
     <value>Secure Core</value>
@@ -840,18 +742,15 @@ Error code: {0}</value>
   <data name="Countries_SmartRouting">
     <value>Smart Routing</value>
   </data>
+  <data name="Countries_SmartRouting_RoutedThrough">
+    <value>Smart-спрямування через {0}</value>
+    <comment>Label used when server is virtual. {0} is a place holder for the name of the country the server is routed through.</comment>
+  </data>
   <data name="Countries_Tor">
     <value>Tor</value>
   </data>
-  <data name="Countries_TorServers">
-    <value>Сервери Tor ({0})</value>
-    <comment>{0} represents a number of tor servers in the country</comment>
-  </data>
   <data name="Countries_Tor_Description">
     <value>Користуйтеся мережею Tor через VPN-з'єднання для додаткової приватності.</value>
-  </data>
-  <data name="Countries_TryDifferentKeyword">
-    <value>Будь ласка, спробуйте інше ключове слово</value>
   </data>
   <data name="Country_Fastest">
     <value>Найшвидша країна</value>
@@ -1845,6 +1744,10 @@ Error code: {0}</value>
     <value>Самоа</value>
     <comment>The name of WS country</comment>
   </data>
+  <data name="Country_val_XK">
+    <value>Косово</value>
+    <comment>The name of XK country</comment>
+  </data>
   <data name="Country_val_YE">
     <value>Ємен</value>
     <comment>The name of YE country</comment>
@@ -1926,32 +1829,6 @@ Error code: {0}</value>
   <data name="Dialogs_FreeConnections_Title">
     <value>Безплатні з'єднання</value>
   </data>
-  <data name="Dialogs_Latency_Description">
-    <value>Затримка показує, скільки часу потрібно серверу, щоб відповісти на запит.
-
-Висока затримка може сповільнити ваше з'єднання.</value>
-  </data>
-  <data name="Dialogs_Latency_HighRange_Description">
-    <value>VPN може працювати повільніше</value>
-  </data>
-  <data name="Dialogs_Latency_HighRange_Title">
-    <value>Висока (понад 150 мс)</value>
-  </data>
-  <data name="Dialogs_Latency_LowRange_Description">
-    <value>Блискавична швидкість</value>
-  </data>
-  <data name="Dialogs_Latency_LowRange_Title">
-    <value>Низька (1 - 50 мс)</value>
-  </data>
-  <data name="Dialogs_Latency_MediumRange_Description">
-    <value>Майже не впливає на швидкість VPN</value>
-  </data>
-  <data name="Dialogs_Latency_MediumRange_Title">
-    <value>Середня (50 - 150 мс)</value>
-  </data>
-  <data name="Dialogs_Latency_Title">
-    <value>Що таке затримка?</value>
-  </data>
   <data name="Dialogs_NpsSurvey_CommentLabel">
     <value>Повідомте, чому ви поставили таку оцінку</value>
   </data>
@@ -1986,53 +1863,13 @@ Error code: {0}</value>
     <value>Повторити спробу</value>
   </data>
   <data name="Dialogs_P2PDetection_Description">
-    <value>Ваше з'єднання було вимкнено, тому що ви користуєтеся сервером, що не підтримує одноранговий трафік (P2P). P2P не підтримується на безплатних серверах. Використайте інший сервер для P2P.</value>
+    <value>Перейдіть на тарифний план вищого рівня, щоб розблокувати сервери P2P (peer-to-peer) для онлайн ігор і торентів, або завершіть свою діяльність P2P, щоб відновити з'єднання.</value>
   </data>
   <data name="Dialogs_P2PDetection_Title">
-    <value>Виявлено трафік P2P</value>
+    <value>P2P не дозволено на безплатних серверах VPN</value>
   </data>
-  <data name="Dialogs_P2P_HowToTorrentLink">
-    <value>Як користуватися торентами за допомогою P2P</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_Title">
-    <value>P2P</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsP2PServer">
-    <value>Що таке P2P-сервер?</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsP2PServer_Description">
-    <value>P2P (peer-to-peer) VPN-сервери розблоковують торент-сайти.</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsTorrenting">
-    <value>Що таке торент?</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsTorrenting_Description">
-    <value>Швидкий обмін та завантаження великих файлів через мережу peer-to-peer (P2P).</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhyUse">
-    <value>Чому варто використовувати P2P-сервер під час завантаження торентів?</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhyUse_Description">
-    <value>• Збільшена швидкість вивантаження і завантаження
-• Немає журналів активності
-• Маскування вашої IP-адреси від провайдера інтернету й інших користувачів</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_Protocol_Description">
-    <value>Протокол – це набір інструкцій, яких дотримується ваш пристрій для з'єднання й обміну даними з сервером.</value>
-  </data>
-  <data name="Dialogs_Protocol_SwitchHeader">
-    <value>Перемкнути протокол VPN</value>
-  </data>
-  <data name="Dialogs_Protocol_Title">
-    <value>Що таке протокол VPN?</value>
+  <data name="Dialogs_P2PDetection_WindowTitle">
+    <value>Ознайомтеся з VPN Plus</value>
   </data>
   <data name="Dialogs_ReportIssue_ContactForm_Email">
     <value>Е-пошта</value>
@@ -2090,34 +1927,14 @@ Error code: {0}</value>
   <data name="Dialogs_ReportIssue_Title">
     <value>Повідомити про проблему</value>
   </data>
-  <data name="Dialogs_ServerLoad_Description">
-    <value>Навантаження сервера показує відсоток використання своєї максимальної потужності.
-
-Високе навантаження може сповільнити ваше з'єднання.</value>
+  <data name="Dialogs_StreamingDetection_WindowTitle">
+    <value>Ознайомтеся з VPN Plus</value>
   </data>
-  <data name="Dialogs_ServerLoad_HighRange_Description">
-    <value>VPN може працювати повільніше</value>
+  <data name="Dialogs_StreamingWarning_Description">
+    <value>Сервери VPN Plus забезпечують можливість переглядати ваші улюблені фільми й телепрограми з усього світу.</value>
   </data>
-  <data name="Dialogs_ServerLoad_HighRange_Title">
-    <value>Високе (91–100%)</value>
-  </data>
-  <data name="Dialogs_ServerLoad_LowRange_Description">
-    <value>Блискавична швидкість</value>
-  </data>
-  <data name="Dialogs_ServerLoad_LowRange_Title">
-    <value>Низьке (1–75%)</value>
-  </data>
-  <data name="Dialogs_ServerLoad_MediumRange_Description">
-    <value>Майже не впливає на швидкість VPN</value>
-  </data>
-  <data name="Dialogs_ServerLoad_MediumRange_Title">
-    <value>Середнє (76–90%)</value>
-  </data>
-  <data name="Dialogs_ServerLoad_Title">
-    <value>Що таке навантаження сервера?</value>
-  </data>
-  <data name="Dialogs_SmartRouting_Title">
-    <value>Smart Routing</value>
+  <data name="Dialogs_StreamingWarning_Title">
+    <value>Передплатіть для обходу блокування VPN</value>
   </data>
   <data name="Dialogs_SubscriptionExpired_MaybeLater">
     <value>Можливо пізніше</value>
@@ -2125,20 +1942,8 @@ Error code: {0}</value>
   <data name="Dialogs_SystemProxy_Description">
     <value>Схоже, ваш пристрій використовує проксі-сервер. Це може перешкоджати захисту VPN.</value>
   </data>
-  <data name="Dialogs_SystemProxy_Disable">
-    <value>Вимкнути проксі</value>
-  </data>
   <data name="Dialogs_SystemProxy_Title">
     <value>Виявлено проксі-сервер</value>
-  </data>
-  <data name="Dialogs_Tor_Description">
-    <value>Під'єднайтеся до сервера Tor, щоб отримати доступ до прихованих сервісів і сайтів onion, використовуючи будь-який браузер.</value>
-  </data>
-  <data name="Dialogs_Tor_LearnMore">
-    <value>Як отримати доступ до мережі Tor</value>
-  </data>
-  <data name="Dialogs_Tor_Title">
-    <value>Tor</value>
   </data>
   <data name="Dialogs_Troubleshooting_Antivirus">
     <value>Вимкніть антивірусне програмне забезпечення або мережевий екран</value>
@@ -2236,26 +2041,12 @@ Error code: {0}</value>
   <data name="Dialogs_WelcomeToVpnPlus_Title">
     <value>Вітаємо у VPN Plus</value>
   </data>
-  <data name="Dialogs_WelcomeUnlimited_Description1">
-    <value>Вітаємо! Ви розблокували функції безпеки й продуктивності рівня преміум у всіх службах Proton.</value>
-  </data>
-  <data name="Dialogs_WelcomeUnlimited_Description2">
-    <value>Відчуйте всі переваги приватності від Proton.</value>
+  <data name="Dialogs_WelcomeUnlimited_Description">
+    <value>Ви розблокували всі преміальні функції Proton VPN, Mail, Календаря, Диска та Pass.</value>
   </data>
   <data name="Dialogs_WelcomeUnlimited_Title">
-    <value>Вітаємо у Proton Unlimited</value>
-  </data>
-  <data name="Dialogs_Welcome_Message">
-    <value>Триває підготовка до вашої роботи з VPN. За мить все буде готово.</value>
-  </data>
-  <data name="Dialogs_Welcome_Title">
-    <value>Вітаємо у Proton VPN</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Gateways_Description">
-    <value>Тепер ви можете вибирати виділені сервери своєї організації на головній бічній панелі.</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Gateways_Title">
-    <value>Мережеві шлюзи переміщено</value>
+    <value>Вітаємо у {0}</value>
+    <comment>Title to welcome the user after an account upgrade. {0} is a placeholder for the name of the new plan (eg. Proton Unlimited, Proton Duo, Proton Family).</comment>
   </data>
   <data name="Dialogs_WhatsNew_LanConnections_Description">
     <value>Тепер ви можете з'єднатися з принтерами, гучномовцями та іншими пристроями у вашій локальній мережі (LAN), в обхід тунелю VPN.</value>
@@ -2263,29 +2054,11 @@ Error code: {0}</value>
   <data name="Dialogs_WhatsNew_LanConnections_Title">
     <value>LAN-з'єднання</value>
   </data>
-  <data name="Dialogs_WhatsNew_NewLook_Description">
-    <value>Ми оновили дизайн і дещо змінили, щоб програмою було легше користуватися.</value>
-  </data>
-  <data name="Dialogs_WhatsNew_NewLook_Title">
-    <value>Новий вигляд, той самий захист</value>
-  </data>
   <data name="Dialogs_WhatsNew_PortNumber_Description">
     <value>Тепер, якщо ввімкнено переспрямування портів, ви побачите номер активного порту на головному екрані.</value>
   </data>
   <data name="Dialogs_WhatsNew_PortNumber_Title">
     <value>Номер активного порту</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Profiles_Description">
-    <value>Додайте розширені налаштування профілю, як-от NetShield і переспрямування портів, або налаштуйте відкриття вебсайту після з'єднання з VPN.</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Profiles_Title">
-    <value>Більш функціональні профілі</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Recents_Description">
-    <value>Тепер ще простіше повторно під'єднуватися до улюблених серверів. Переглядайте останні з'єднання на головному екрані або закріплюйте їх для швидкого доступу.</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Recents_Title">
-    <value>Представляємо Останні з'єднання</value>
   </data>
   <data name="Dialogs_WhatsNew_TakeALook">
     <value>Ознайомитись</value>
@@ -2298,6 +2071,30 @@ Error code: {0}</value>
   </data>
   <data name="Dialogs_WhatsNew_TrayApp_Title">
     <value>Нова програма для системного лотка</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_ExcludeLocations">
+    <value>Винятки розташувань</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Message">
+    <value>Якщо ви не хочете автоматично під'єднуватись до певних розташувань, додайте їх до винятків для найшвидшої та випадкової країни.</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Skip">
+    <value>Пропустити</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Title">
+    <value>Не та країна, яку ви шукали?</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_ActionButton">
+    <value>Винятки розташувань</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_CloseButton">
+    <value>Можливо пізніше</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_Subtitle">
+    <value>Тепер ви можете виключати країни або міста з найшвидших і випадкових з'єднань.</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_Title">
+    <value>Уникайте небажаних розташувань</value>
   </data>
   <data name="Exit_Confirmation_Title">
     <value>Вийти з Proton VPN?</value>
@@ -2389,17 +2186,20 @@ Error code: {0}</value>
   <data name="Flyouts_KillSwitch_Warning_Disconnected">
     <value>Щоб відновити доступ до інтернету, під'єднайтеся до VPN або вимкніть розширений Kill Switch</value>
   </data>
+  <data name="Flyouts_NetShield_AdsMalwareTrackersAdultContent_Success">
+    <value>Ви захищені від реклами, стеження, зловмисних програм і вмісту для дорослих.</value>
+  </data>
   <data name="Flyouts_NetShield_AdsMalwareTrackers_Success">
-    <value>Ви захищаєтеся від реклами, стеження і зловмисних програм</value>
+    <value>Ви захищені від реклами, стеження і зловмисних програм.</value>
   </data>
   <data name="Flyouts_NetShield_Info">
-    <value>Захистіться від реклами, стеження і зловмисних програм на вебсайтах і в програмах</value>
+    <value>Захистіть свій перегляд на вебсайтах і в програмах.</value>
   </data>
   <data name="Flyouts_NetShield_MalwareOnly_Success">
-    <value>Ви захищаєтесь лише від зловмисних програм</value>
+    <value>Ви захищені лише від зловмисних програм.</value>
   </data>
   <data name="Flyouts_NetShield_Upsell_Description">
-    <value>Блокуйте рекламу, стеження і зловмисні програми з VPN Plus.</value>
+    <value>Блокуйте рекламу, стеження, зловмисні програми та вміст для дорослих з VPN Plus.</value>
   </data>
   <data name="Flyouts_NetShield_Upsell_Title">
     <value>Насолоджуйтеся відсутністю реклами</value>
@@ -2407,8 +2207,11 @@ Error code: {0}</value>
   <data name="Flyouts_PortForwarding_ActivePort">
     <value>Номер активного порту</value>
   </data>
+  <data name="Flyouts_PortForwarding_ActivePort_Error">
+    <value>Не вдається отримати номер активного порту. Перезапустіть з'єднання і спробуйте ще раз.</value>
+  </data>
   <data name="Flyouts_PortForwarding_ActivePort_Info">
-    <value>Введіть номер активного порту в програмі BitTorrent, щоб покращити швидкість P2P</value>
+    <value>Введіть номер активного порту у своєму торент-клієнті або програмі P2P для підвищеної продуктивності.</value>
   </data>
   <data name="Flyouts_PortForwarding_Info">
     <value>Покращення швидкості завантажень peer-to-peer</value>
@@ -2457,9 +2260,6 @@ Error code: {0}</value>
   </data>
   <data name="Flyouts_ServerLoad_Title">
     <value>Навантаження сервера</value>
-  </data>
-  <data name="Flyouts_Speed_BoostedByVpnAccelerator">
-    <value>Прискорено завдяки VPN Accelerator</value>
   </data>
   <data name="Flyouts_Speed_Description1">
     <value>Інформація в реальному часі про обсяг даних, що проходить через VPN-тунель.</value>
@@ -2557,10 +2357,6 @@ Error code: {0}</value>
   <data name="Flyouts_Volume_Upload">
     <value>Вивантажити</value>
     <comment>Refers to the uploaded volume (e.g., Upload [new line] 250 MB).</comment>
-  </data>
-  <data name="Format_Milliseconds">
-    <value>{0} мс</value>
-    <comment>Format a number as a time in milliseconds. {0} is a place holder for the number of milliseconds (eg. 46ms)</comment>
   </data>
   <data name="Format_Size_Bytes">
     <value>{0} Б</value>
@@ -2734,9 +2530,6 @@ Error code: {0}</value>
   <data name="Gateways_Page_Title">
     <value>Мережеві шлюзи</value>
   </data>
-  <data name="Gateways_Server">
-    <value>Виділений сервер</value>
-  </data>
   <data name="Home_Account_SignOut">
     <value>Вийти</value>
   </data>
@@ -2744,46 +2537,17 @@ Error code: {0}</value>
     <value>Вийти з {0}?</value>
     <comment>{0} is a placeholder for the username</comment>
   </data>
-  <data name="Home_Account_Title">
-    <value>Мій обліковий запис</value>
-  </data>
   <data name="Home_ConnectionCard_ChangeDefaultConnection">
     <value>Змінити типове з'єднання</value>
   </data>
   <data name="Home_ConnectionCard_ChangeServer">
     <value>Змінити сервер</value>
   </data>
-  <data name="Home_ConnectionCard_Header_BrowseSafely">
-    <value>Безпечний перегляд з</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_ConnectingTo">
-    <value>З'єднання з...</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_DefaultConnection">
-    <value>Типове з'єднання</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_FreeConnection">
-    <value>Безплатне з'єднання</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_LastConnectedTo">
-    <value>Востаннє під'єднано до</value>
-  </data>
-  <data name="Home_ConnectionCard_Landmark">
-    <value>Картка з'єднання</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
   <data name="Home_ConnectionDetails_AdvancedKillSwitchActivated">
     <value>Розширений Kill Switch активовано</value>
   </data>
-  <data name="Home_ConnectionDetails_City">
-    <value>Місто</value>
-  </data>
   <data name="Home_ConnectionDetails_ConnectToRestoreConnection">
     <value>Під'єднайтеся до VPN, щоб відновити інтернет-з'єднання.</value>
-  </data>
-  <data name="Home_ConnectionDetails_ConnectedFor">
-    <value>Тривалість з'єднання</value>
-    <comment>Label for the time the session has been active. (eg. Connected for     1 h 25 min 2s)</comment>
   </data>
   <data name="Home_ConnectionDetails_Connecting">
     <value>З'єднання</value>
@@ -2794,28 +2558,8 @@ Error code: {0}</value>
   <data name="Home_ConnectionDetails_Country">
     <value>Країна</value>
   </data>
-  <data name="Home_ConnectionDetails_Gateway">
-    <value>Мережевий шлюз</value>
-  </data>
-  <data name="Home_ConnectionDetails_Hide">
-    <value>Сховати подробиці з'єднання</value>
-  </data>
-  <data name="Home_ConnectionDetails_HideIP">
-    <value>Приховати</value>
-    <comment>Tooltip displayed when the user hover the button to hide the User IP Address</comment>
-  </data>
-  <data name="Home_ConnectionDetails_HideIP_Description">
-    <value>Приховати IP-адресу користувача</value>
-  </data>
   <data name="Home_ConnectionDetails_Isp">
     <value>Провайдер</value>
-  </data>
-  <data name="Home_ConnectionDetails_Landmark">
-    <value>Подробиці з'єднання</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_ConnectionDetails_MyIp">
-    <value>Моя IP-адреса</value>
   </data>
   <data name="Home_ConnectionDetails_Protected">
     <value>Захищено</value>
@@ -2823,33 +2567,14 @@ Error code: {0}</value>
   <data name="Home_ConnectionDetails_Protocol">
     <value>Протокол</value>
   </data>
-  <data name="Home_ConnectionDetails_Server">
-    <value>Сервер</value>
-  </data>
   <data name="Home_ConnectionDetails_ServerLoad">
     <value>Навантаження сервера</value>
   </data>
-  <data name="Home_ConnectionDetails_Show">
-    <value>Подробиці з'єднання</value>
-  </data>
-  <data name="Home_ConnectionDetails_ShowIP">
-    <value>Показати</value>
-    <comment>Tooltip displayed when the user hover the button to show the User IP Address</comment>
-  </data>
-  <data name="Home_ConnectionDetails_ShowIP_Description">
-    <value>Показати IP-адресу користувача</value>
-  </data>
-  <data name="Home_ConnectionDetails_State">
-    <value>Стан</value>
-  </data>
-  <data name="Home_ConnectionDetails_Title">
-    <value>Подробиці з'єднання</value>
-  </data>
   <data name="Home_ConnectionDetails_TwoFactorRequired_Description">
-    <value>Re-authenticate in your organization's 2FA portal to continue.</value>
+    <value>Щоб продовжити, повторно пройдіть автентифікацію на порталі 2FA вашої організації.</value>
   </data>
   <data name="Home_ConnectionDetails_TwoFactorRequired_Title">
-    <value>2FA expired</value>
+    <value>2FA протерміновано</value>
   </data>
   <data name="Home_ConnectionDetails_Unprotected">
     <value>Незахищено</value>
@@ -2860,15 +2585,6 @@ Error code: {0}</value>
   <data name="Home_ConnectionDetails_Volume">
     <value>Загальний трафік</value>
   </data>
-  <data name="Home_ConnectionDetails_Volume_Download">
-    <value>Завантажено</value>
-  </data>
-  <data name="Home_ConnectionDetails_Volume_Total">
-    <value>Загальний обсяг</value>
-  </data>
-  <data name="Home_ConnectionDetails_Volume_Upload">
-    <value>Вивантажено</value>
-  </data>
   <data name="Home_ConnectionDetails_VpnIp">
     <value>VPN IP</value>
   </data>
@@ -2877,13 +2593,6 @@ Error code: {0}</value>
   </data>
   <data name="Home_FreeConnections_About">
     <value>Докладніше про безплатні з'єднання</value>
-  </data>
-  <data name="Home_Help_Title">
-    <value>Довідка</value>
-  </data>
-  <data name="Home_Map_Landmark">
-    <value>Карта</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
   </data>
   <data name="Home_NetShield_AdsBlocked_One">
     <value>Заблоковані оголошення</value>
@@ -2906,13 +2615,6 @@ Error code: {0}</value>
   <data name="Home_NetShield_DataSaved_Description">
     <value>Орієнтовний обсяг заощаджених даних завдяки блокуванню небажаної реклами, стеження і зловмисних програм.</value>
   </data>
-  <data name="Home_NetShield_Landmark">
-    <value>Статистика NetShield</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_NetShield_Title">
-    <value>Статистика NetShield</value>
-  </data>
   <data name="Home_NetShield_TrackersStopped_One">
     <value>Зупинені вистежувачі</value>
   </data>
@@ -2928,21 +2630,11 @@ Error code: {0}</value>
   <data name="Home_NetShield_TrackersStopped_Description">
     <value>Вистежувачі – це файли cookie та сторонні вебсайти, які збирають, зберігають і продають інформацію про вашу вебдіяльність.</value>
   </data>
-  <data name="Home_Page_Title">
-    <value>Домівка</value>
-  </data>
-  <data name="Home_Recents_Landmark">
-    <value>Недавні з'єднання</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
   <data name="Home_Recents_Pin">
     <value>Прикріпити</value>
   </data>
   <data name="Home_Recents_Restricted">
     <value>Сервер доступний з VPN Plus</value>
-  </data>
-  <data name="Home_Recents_SecondaryActions_ToolTip">
-    <value>Дії</value>
   </data>
   <data name="Home_Recents_ServerUnderMaintenance">
     <value>Сервер обслуговується</value>
@@ -2954,7 +2646,7 @@ Error code: {0}</value>
     <value>Відкріпити</value>
   </data>
   <data name="Home_TitleBar_Menu_About">
-    <value>Про нас</value>
+    <value>Про програму</value>
   </data>
   <data name="Home_TitleBar_Menu_Account">
     <value>Обліковий запис</value>
@@ -2977,33 +2669,23 @@ Error code: {0}</value>
   <data name="Home_TitleBar_Menu_UpdateNow">
     <value>Оновити</value>
   </data>
-  <data name="Home_Update_UpdateAvailable">
-    <value>Доступне оновлення</value>
-  </data>
-  <data name="Home_Update_UpdateReady">
-    <value>Оновлення готове</value>
-  </data>
-  <data name="Home_VpnStatus_Landmark">
-    <value>Стан VPN</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_VpnStatus_Subtitle_Connecting">
-    <value>Захист ваших цифрових особистих даних...</value>
-  </data>
-  <data name="Home_VpnStatus_Subtitle_Disconnected">
-    <value>Ви не захищені</value>
-  </data>
-  <data name="Home_VpnStatus_Title_Connected">
-    <value>Захищено</value>
-  </data>
   <data name="LoadingPage_Tip">
     <value>Кращий світ починається з приватності та цифрової свободи.</value>
   </data>
   <data name="Login_Error_GetSessionDetailsFailed">
     <value>Під час отримання подробиць сеансу сталася помилка. Спробуйте ще раз.</value>
   </data>
+  <data name="Login_Error_GuestHoleFailedDueToMobileHotspot">
+    <value>Неможливо виконати вхід через мережеві налаштування на вашому пристрої. Причиною може бути мобільна точка доступу, інша програма VPN або програмне забезпечення для віртуалізації. Перевірте конфігурацію своєї мережі або зверніться по допомогу до служби підтримки.</value>
+  </data>
   <data name="Login_Error_IncorrectTwoFactorCode">
     <value>Неправильний код. Повторіть спробу.</value>
+  </data>
+  <data name="Login_Error_MissingSrpDll_Message">
+    <value>Не знайдено файл, необхідний для входу в систему. Щоб виправити цю проблему, перевстановіть Proton VPN.</value>
+  </data>
+  <data name="Login_Error_MissingSrpDll_Title">
+    <value>Не вдається увійти</value>
   </data>
   <data name="Login_Error_SessionExpired">
     <value>Термін дії вашого сеансу завершився. Увійдіть знову.</value>
@@ -3012,14 +2694,11 @@ Error code: {0}</value>
   <data name="Login_Error_SsoAuthFailed">
     <value>Збій автентифікації SSO. Повторіть спробу.</value>
   </data>
-  <data name="Login_Error_TwoFactorAuthFailed">
-    <value>Неправильне ім'я користувача або пароль. Спробуйте ще раз.</value>
-  </data>
   <data name="Login_Error_TwoFactorFailed">
     <value>Збій двоетапної перевірки. Увійдіть знову.</value>
   </data>
   <data name="Login_Error_WebAuthnNotSupported">
-    <value>Security key authentication is not available for your device or remote desktop connection.</value>
+    <value>Автентифікація за допомогою ключа безпеки недоступна для вашого пристрою або віддаленого з'єднання з робочим столом.</value>
   </data>
   <data name="Login_TwoFactorForm_Authenticate">
     <value>Автентифікація</value>
@@ -3102,6 +2781,9 @@ Error code: {0}</value>
   <data name="NoServers_Title">
     <value>Немає доступних з'єднань VPN</value>
   </data>
+  <data name="NoServers_UnderMaintenance_Tip">
+    <value>Не вдається завантажити сервери. Натисніть "Оновити", щоб повторити спробу.</value>
+  </data>
   <data name="Notifications_KillSwitch_Description">
     <value>Щоб захистити вашу IP-адресу, Kill Switch блокує інтернет-з'єднання.</value>
   </data>
@@ -3109,7 +2791,7 @@ Error code: {0}</value>
     <value>Копіювати номер порту</value>
   </data>
   <data name="Notifications_PortForwarding_Description">
-    <value>Встановіть це значення у вашій програмі BitTorrent для вищої швидкості.</value>
+    <value>Відкрийте свій торент-клієнт або програму P2P та введіть цей номер.</value>
   </data>
   <data name="Notifications_SessionLimit_Description">
     <value>Ви досягли ліміту пристроїв. Щоб під'єднати цей пристрій до VPN, від'єднайте інший.</value>
@@ -3128,7 +2810,7 @@ Error code: {0}</value>
     <comment>The window title displayed at the top of the NPS (Net Promoter Score) survey</comment>
   </data>
   <data name="Overlay_Ipv6Disabled_Description">
-    <value>Щоб використовувати цю адресу, потрібно дозволити з'єднання IPv6 через тунель VPN.</value>
+    <value>Щоб включити адреси IPv6, потрібно дозволити з'єднання IPv6 через тунель VPN.</value>
   </data>
   <data name="Overlay_Ipv6Disabled_PrimaryButton">
     <value>Увімкнути IPv6</value>
@@ -3248,7 +2930,7 @@ VPN-з'єднання</value>
     <value>Завантаження сервера</value>
   </data>
   <data name="Overlay_SmartRouting_Description1">
-    <value>Smart Routing використовує віртуальні сервери для забезпечення VPN-покриття у важкодоступних країнах.</value>
+    <value>Завдяки Smart Routing ми можемо забезпечити VPN-покриття у важкодоступних країнах.</value>
   </data>
   <data name="Overlay_SmartRouting_Description2">
     <value>Під'єднавшись до сервера Smart Routing, здаватиметься, що ви користуєтесь інтернетом у країні призначення, хоча фізичний сервер розташований в іншому місці.</value>
@@ -3257,10 +2939,8 @@ VPN-з'єднання</value>
     <value>Smart Routing зазвичай використовується для обходу законів, що порушують приватність, та інших форм цензури.</value>
   </data>
   <data name="Overlay_SmartRouting_Header">
-    <value>Сервери фізично розташовані в {0}, але здаватиметься, що ви користуєтеся інтернетом з {1}</value>
-    <comment>{0} is a placeholder for the physical server location country. {1} is a placeholder for the destination country
-    Warning: country names are inserted in the nominative case. For INFLECTED languages, use alternative wording as follows:
-    Connects you to your destination country ({1}) through servers that are physically located somewhere else ({0})</comment>
+    <value>З'єднання з країною призначення через сервери, які фізично розташовані в іншому місці: {0}.</value>
+    <comment>{0} is a placeholder for the countries where the physical servers are. Can be either one country or multiple countries separated with comma.</comment>
   </data>
   <data name="Overlay_SmartRouting_LearnMore">
     <value>Що таке Smart Routing?</value>
@@ -3304,9 +2984,6 @@ VPN-з'єднання</value>
   <data name="Profile_Options_ConnectAndGo_Application">
     <value>Відкрити програму</value>
   </data>
-  <data name="Profile_Options_ConnectAndGo_DefaultBrowser">
-    <value>Типовий браузер</value>
-  </data>
   <data name="Profile_Options_ConnectAndGo_PrivateBrowsingMode">
     <value>Використовувати режим приватного перегляду</value>
   </data>
@@ -3333,9 +3010,6 @@ VPN-з'єднання</value>
   </data>
   <data name="Profiles_Default_MaxSecurity">
     <value>Максимальна безпека</value>
-  </data>
-  <data name="Profiles_Default_Office">
-    <value>Офіс</value>
   </data>
   <data name="Profiles_Default_P2P">
     <value>P2P</value>
@@ -3421,9 +3095,6 @@ VPN-з'єднання</value>
   <data name="Servers">
     <value>Сервери</value>
   </data>
-  <data name="Settings_About">
-    <value>Про нас</value>
-  </data>
   <data name="Settings_About_Changelog">
     <value>Список змін</value>
   </data>
@@ -3443,7 +3114,7 @@ VPN-з'єднання</value>
     <value>Завантаження</value>
   </data>
   <data name="Settings_About_Title">
-    <value>Про нас</value>
+    <value>Про програму</value>
   </data>
   <data name="Settings_Account_Account">
     <value>Обліковий запис</value>
@@ -3486,9 +3157,6 @@ VPN-з'єднання</value>
     <value>192.0.2.0</value>
     <comment>Watermark for the IP Address field in the Custom DNS servers settings page</comment>
   </data>
-  <data name="Settings_Common_Ipv6WarningButton">
-    <value>Попередження – докладніше</value>
-  </data>
   <data name="Settings_Connection">
     <value>З'єднання</value>
   </data>
@@ -3520,12 +3188,15 @@ VPN-з'єднання</value>
   <data name="Settings_Connection_Advanced_CustomDnsServers_Footer">
     <value>Ми спробуємо з'єднатися з цими серверами у вказаному порядку. Якщо жоден з них не працюватиме, застосується типовий DNS-сервер Proton VPN.</value>
   </data>
-  <data name="Settings_Connection_Advanced_CustomDnsServers_Header">
+  <data name="Settings_Connection_Advanced_CustomDnsServers_FormattedHeader">
     <value>DNS-сервери ({0})</value>
     <comment>Header for the list of Custom DNS servers defined. {0} is a placeholder for the number of DNS servers in the list. (eg. "DNS servers (4)")</comment>
   </data>
-  <data name="Settings_Connection_Advanced_CustomDnsServers_IpAddress_Description">
-    <value>Введіть адресу IPv4 або IPv6 сервера</value>
+  <data name="Settings_Connection_Advanced_CustomDnsServers_Header">
+    <value>DNS-сервери</value>
+  </data>
+  <data name="Settings_Connection_Advanced_CustomDnsServers_Select">
+    <value>Вибір DNS-серверів</value>
   </data>
   <data name="Settings_Connection_Advanced_Ipv6">
     <value>Підтримка IPv6</value>
@@ -3546,7 +3217,7 @@ VPN-з'єднання</value>
     <value>Можливість під'єднуватися до принтерів, гучномовців та інших пристроїв у вашій локальній мережі.</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections_LocalDns_Description">
-    <value>Встановлюйте з'єднання з пристроями, використовуючи імена, як-от "My-Printer" або "router.local", замість IP-адрес. Використовується локальне визначення DNS. Типово вимкнено для забезпечення вищої швидкості VPN.</value>
+    <value>Використання mDNS для під'єднання до пристроїв за іменами, як-от "My-Printer" або "router.local", замість IP-адрес. Стандартний DNS і надалі спрямовується через VPN-тунель. Типово цей параметр вимкнено для вищої швидкості VPN.</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections_LocalDns_Title">
     <value>Доступ до пристроїв за іменем</value>
@@ -3576,10 +3247,16 @@ VPN-з'єднання</value>
     <value>Обмеження щодо даних, які входять до вашої мережі. Цей параметр безпечніший, але може ускладнити безпосередні з'єднання peer-to-peer в іграх.</value>
   </data>
   <data name="Settings_Connection_Advanced_OpenVpnDriver_Tap">
-    <value>Маршрутизація трафіку між різними мережами.</value>
+    <value>Міст для мережевого трафіку. Повільніший, ніж TUN, але необхідний для деяких застарілих або спеціальних мережевих налаштувань.</value>
   </data>
   <data name="Settings_Connection_Advanced_OpenVpnDriver_Tun_Description">
-    <value>Використання мостів для з'єднання мереж. TUN забезпечує вищу швидкість, ніж TAP, але може бути менш стабільним.</value>
+    <value>Спрямовує трафік між різними мережами. TUN може бути швидшим і стабільнішим, ніж TAP.</value>
+  </data>
+  <data name="Settings_Connection_ConnectionPreferences">
+    <value>Параметри з'єднання</value>
+  </data>
+  <data name="Settings_Connection_ConnectionPreferences_Description">
+    <value>Типове з'єднання та винятки розташувань</value>
   </data>
   <data name="Settings_Connection_CustomDns_Conflict_Information_WhenDisabled">
     <value>Неможливо ввімкнути власну DNS, оскільки використовується з'єднання через профіль, у якому ввімкнено NetShield.</value>
@@ -3611,6 +3288,27 @@ VPN-з'єднання</value>
   <data name="Settings_Connection_Default_Recents">
     <value>Нещодавні</value>
   </data>
+  <data name="Settings_Connection_ExcludedLocations">
+    <value>Винятки розташувань</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Cities">
+    <value>Міста</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Countries">
+    <value>Країни</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Description">
+    <value>Вибрані розташування ніколи не використовуватимуться для найшвидшого чи випадкового з'єднання</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_NoLocations">
+    <value>Немає доступних розташувань</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Search">
+    <value>Вибрати...</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_States">
+    <value>Штати</value>
+  </data>
   <data name="Settings_Connection_KillSwitch">
     <value>Kill Switch</value>
   </data>
@@ -3620,17 +3318,8 @@ VPN-з'єднання</value>
   <data name="Settings_Connection_KillSwitch_Advanced_Description">
     <value>Дозволяти доступ до інтернету лише за наявності активного з'єднання Proton VPN. Розширений Kill Switch залишатиметься активним навіть після перезавантаження пристрою.</value>
   </data>
-  <data name="Settings_Connection_KillSwitch_Conflict_Description">
-    <value>Увімкнення цієї функції деактивує роздільне тунелювання.</value>
-  </data>
-  <data name="Settings_Connection_KillSwitch_Conflict_Title">
-    <value>Увімкнути Kill Switch?</value>
-  </data>
   <data name="Settings_Connection_KillSwitch_Description">
     <value>Захист вашої IP-адреси шляхом блокування доступу до інтернету, якщо втрачено VPN-з'єднання.</value>
-  </data>
-  <data name="Settings_Connection_KillSwitch_Footer">
-    <value>Якщо ввімкнено Kill Switch, ви не зможете встановлювати з'єднання з вебсайтами та програмами, доданими до винятків VPN-з'єднання за допомогою роздільного тунелювання.</value>
   </data>
   <data name="Settings_Connection_KillSwitch_Standard">
     <value>Стандартний</value>
@@ -3642,7 +3331,10 @@ VPN-з'єднання</value>
     <value>NetShield</value>
   </data>
   <data name="Settings_Connection_NetShield_BlockAdsMalwareTrackers">
-    <value>Блокувати зловмисні програми, рекламу і стеження</value>
+    <value>Блокувати рекламу, стеження і зловмисні програми</value>
+  </data>
+  <data name="Settings_Connection_NetShield_BlockAdsMalwareTrackersAdultContent">
+    <value>Блокувати рекламу, стеження, зловмисні програми та вміст для дорослих</value>
   </data>
   <data name="Settings_Connection_NetShield_BlockMalwareOnly">
     <value>Блокувати лише зловмисні програми</value>
@@ -3657,7 +3349,7 @@ VPN-з'єднання</value>
     <value>Увімкнути NetShield?</value>
   </data>
   <data name="Settings_Connection_NetShield_Description">
-    <value>Захистіться від реклами, зловмисних програм і стеження на вебсайтах і в програмах.</value>
+    <value>Захистіть свій перегляд на вебсайтах і в програмах.</value>
   </data>
   <data name="Settings_Connection_NetShield_Footer">
     <value>Деякі вебсайти можуть не завантажуватися правильно, якщо блокується реклама і стеження.</value>
@@ -3669,7 +3361,7 @@ VPN-з'єднання</value>
     <value>Переспрямування портів</value>
   </data>
   <data name="Settings_Connection_PortForwarding_ActivePort">
-    <value>Активний порт:</value>
+    <value>Номер активного порту:</value>
   </data>
   <data name="Settings_Connection_PortForwarding_ActivePort_Copy">
     <value>Копіювати номер порту</value>
@@ -3699,41 +3391,41 @@ VPN-з'єднання</value>
   <data name="Settings_Connection_PortForwarding_Notifications_Description">
     <value>Отримувати сповіщення, коли змінюється номер активного порту.</value>
   </data>
+  <data name="Settings_Connection_PortForwarding_Unavailable">
+    <value>Недоступно</value>
+  </data>
   <data name="Settings_Connection_Protocol">
     <value>Протокол</value>
   </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Action">
-    <value>Перейти до профілів</value>
-  </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Message">
-    <value>Зараз використовується з'єднання через профіль VPN.
-
-• Від'єднайтеся, а потім змініть протокол у своєму профілі.
-
-• Щоб змінити протокол для інших VPN-з'єднань, спочатку потрібно від'єднатися від свого профілю.</value>
-  </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Title">
-    <value>Змінити протокол в профілях</value>
-  </data>
   <data name="Settings_Connection_SplitTunneling">
     <value>Роздільне тунелювання</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_Description">
+    <value>Виберіть програми, які не захищатимуться VPN-з'єднанням</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_FormattedHeader">
+    <value>Винятки для програм ({0})</value>
+    <comment>Header for the list of apps to exclude for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Excluded apps (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_Header">
+    <value>Винятки програм</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Apps_FilesFilterName">
     <value>Файли програм</value>
     <comment>Describe the name of the filter used to select executable files in the Open file dialog</comment>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Apps_Header">
-    <value>Вибрані програми ({0})</value>
-    <comment>Header for the list of Apps defined for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Selected apps (2)")</comment>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_Description">
+    <value>Виберіть програми, які захищатимуться VPN-з'єднанням</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Apps_Remove">
-    <value>Вилучити програму</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_FormattedHeader">
+    <value>Включені програми ({0})</value>
+    <comment>Header for the list of apps to include for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Included apps (2)")</comment>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Conflict_Description">
-    <value>Ця дія призведе до вимкнення Kill Switch.</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_Header">
+    <value>Включені програми</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Conflict_Title">
-    <value>Увімкнути роздільне тунелювання?</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Select">
+    <value>Вибрати програми</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Description">
     <value>Налаштуйте своє з'єднання, визначивши програми та IP-адреси, які захищаються VPN.</value>
@@ -3751,12 +3443,28 @@ VPN-з'єднання</value>
   <data name="Settings_Connection_SplitTunneling_IpAddresses_AddNew">
     <value>Додати нову адресу IPv4 або IPv6</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_IpAddresses_Header">
-    <value>Вибрані IP-адреси ({0})</value>
-    <comment>Header for the list of IP addresses defined for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Selected IP addresses (2)")</comment>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_Description">
+    <value>Виберіть IP-адреси, які не захищатимуться VPN-з'єднанням</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_IpAddresses_Remove">
-    <value>Вилучити IP-адресу</value>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_FormattedHeader">
+    <value>Винятки IP-адрес ({0})</value>
+    <comment>Header for the list of IP addresses to exclude for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Excluded IP addresses (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_Header">
+    <value>Винятки IP-адрес</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_Description">
+    <value>Виберіть IP-адреси, які захищатимуться VPN-з'єднанням</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_FormattedHeader">
+    <value>Включені IP-адреси ({0})</value>
+    <comment>Header for the list of IP addresses to include for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Included IP addresses (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_Header">
+    <value>Включені IP-адреси</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Select">
+    <value>Вибрати IP-адреси</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Standard">
     <value>Режим винятків</value>
@@ -3780,9 +3488,6 @@ VPN-з'єднання</value>
   <data name="Settings_DiscardChanges_Confirmation_Title">
     <value>Відхилити незбережені зміни?</value>
   </data>
-  <data name="Settings_Features">
-    <value>можливостей VPN</value>
-  </data>
   <data name="Settings_General">
     <value>Загальні</value>
   </data>
@@ -3794,12 +3499,6 @@ VPN-з'єднання</value>
   </data>
   <data name="Settings_General_AutoStartup_AutoConnect_Description">
     <value>Автоматичне встановлення вашого типового з'єднання під час відкриття Proton VPN.</value>
-  </data>
-  <data name="Settings_General_AutoStartup_AutoConnect_Fastest">
-    <value>Найшвидше з'єднання</value>
-  </data>
-  <data name="Settings_General_AutoStartup_AutoConnect_Latest">
-    <value>Останнє з'єднання</value>
   </data>
   <data name="Settings_General_AutoStartup_AutoLaunch">
     <value>Автозапуск</value>
@@ -3843,20 +3542,8 @@ VPN-з'єднання</value>
   <data name="Settings_General_OpenVpnNetworkDriver">
     <value>Драйвер мережі OpenVPN</value>
   </data>
-  <data name="Settings_General_OpenVpnNetworkDriver_Description">
-    <value>Мережеві драйвери можуть впливати на швидкість вашого з'єднання. Новий адаптер TUN забезпечує вищу швидкість і перемикається на адаптер TAP у разі виникнення проблем зі з'єднанням.</value>
-  </data>
   <data name="Settings_General_Theme">
     <value>Тема</value>
-  </data>
-  <data name="Settings_General_Theme_Dark">
-    <value>Темна</value>
-  </data>
-  <data name="Settings_General_Theme_Default">
-    <value>Типово</value>
-  </data>
-  <data name="Settings_General_Theme_Light">
-    <value>Світла</value>
   </data>
   <data name="Settings_Improve">
     <value>Покращити Proton</value>
@@ -3898,6 +3585,30 @@ VPN-з'єднання</value>
   </data>
   <data name="Settings_Protocols_OpenVpnUdp_Title">
     <value>OpenVPN</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTcp_Description">
+    <value>Наше нове рішення на основі WireGuard для вдосконаленої стабільності, функціональності, а також протистоянню цензурі.</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTcp_Title">
+    <value>Proton WireGuard</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTls_Description">
+    <value>Наше нове рішення на основі WireGuard для вдосконаленої стабільності, функціональності, а також протистоянню цензурі.</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTls_Title">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="Settings_Protocols_ProTunUdp_Description">
+    <value>Наше нове рішення на основі WireGuard для вдосконаленої стабільності, функціональності, а також протистоянню цензурі.</value>
+  </data>
+  <data name="Settings_Protocols_ProTunUdp_Title">
+    <value>Proton WireGuard</value>
+  </data>
+  <data name="Settings_Protocols_ProtonProtocols_Description">
+    <value>Використання власних впроваджень WireGuard від Proton VPN. Це експериментальна функція, тому ви можете помітити нестабільну роботу.</value>
+  </data>
+  <data name="Settings_Protocols_ProtonProtocols_Title">
+    <value>Протоколи Proton</value>
   </data>
   <data name="Settings_Protocols_Smart_Description">
     <value>Автоматичний вибір найкращого протоколу для вашого з'єднання.</value>
@@ -3953,6 +3664,15 @@ VPN-з'єднання</value>
   <data name="Settings_SelectedProtocol_OpenVpnUdp">
     <value>OpenVPN (UDP)</value>
   </data>
+  <data name="Settings_SelectedProtocol_ProTunTcp">
+    <value>Proton WireGuard (TCP)</value>
+  </data>
+  <data name="Settings_SelectedProtocol_ProTunTls">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="Settings_SelectedProtocol_ProTunUdp">
+    <value>Proton WireGuard (UDP)</value>
+  </data>
   <data name="Settings_SelectedProtocol_Smart">
     <value>Smart</value>
   </data>
@@ -3997,9 +3717,6 @@ VPN-з'єднання</value>
   </data>
   <data name="Settings_VpnAccelerator_Description">
     <value>Збільште швидкість з'єднання до 400% за допомогою технологій, що підвищують продуктивність.</value>
-  </data>
-  <data name="SignIn_Form">
-    <value>Форма входу</value>
   </data>
   <data name="SignIn_Form_AdvancedKillSwitchDescription">
     <value>Розширений Kill Switch блокує ваше інтернет-з'єднання.</value>
@@ -4094,12 +3811,37 @@ VPN-з'єднання</value>
   <data name="SystemNotification_Disconnected">
     <value>Від'єднано</value>
   </data>
+  <data name="SystemNotification_P2PWarning_Description">
+    <value>Розблокуйте доступ до торентів та онлайн ігор через протоколи P2P (peer-to-peer) за допомогою платних серверів VPN.</value>
+  </data>
+  <data name="SystemNotification_P2PWarning_Title">
+    <value>Функція P2P недоступна для VPN Free</value>
+  </data>
+  <data name="SystemNotification_StreamingWarning_Description">
+    <value>Деякі вебсайти й сервіси потокової трансляції блокують користувачів безплатних VPN. Щоб обійти ці блокування, перейдіть на Proton VPN Plus.</value>
+  </data>
+  <data name="SystemNotification_StreamingWarning_Title">
+    <value>Заблокований вебсайт?</value>
+  </data>
+  <data name="System_Tray_Actions_Connect">
+    <value>З'єднатися</value>
+  </data>
+  <data name="System_Tray_Actions_Disconnect">
+    <value>Від'єднатися</value>
+  </data>
+  <data name="System_Tray_Actions_ExitApplication">
+    <value>Вийти</value>
+  </data>
+  <data name="System_Tray_Actions_OpenApplication">
+    <value>Відкрити {0}</value>
+    <comment>Button displayed in the tray icon to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
+  </data>
   <data name="Tray_Actions_ExitApplication">
     <value>Вийти</value>
   </data>
   <data name="Tray_Actions_OpenApplication">
     <value>Відкрити {0}</value>
-    <comment>Button displayed in the tray icon to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
+    <comment>Button displayed in the tray window to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
   </data>
   <data name="Tray_Actions_OpenApplicationToSignIn">
     <value>Відкрийте програму, щоб увійти</value>
@@ -4132,11 +3874,11 @@ VPN-з'єднання</value>
     <value>ТБ/с</value>
     <comment>Unit for Terabytes per second</comment>
   </data>
-  <data name="UpsellBanner_NetShield_Description">
-    <value>Блокуйте рекламу, стеження та зловмисні програми на вебсайтах і в програмах</value>
+  <data name="UpsellBanner_P2P_Description">
+    <value>Завантажуйте файли через BitTorrent й інші протоколи обміну файлами.</value>
   </data>
-  <data name="UpsellBanner_NetShield_Title">
-    <value>NetShield</value>
+  <data name="UpsellBanner_P2P_Title">
+    <value>Підтримка P2P</value>
   </data>
   <data name="UpsellBanner_WrongCountry_Description">
     <value>Покращте, щоб обирати будь-який сервер.</value>
@@ -4268,9 +4010,6 @@ VPN-з'єднання</value>
   <data name="Upsell_Carousel_Streaming_Platforms_HBO">
     <value>HBO Max</value>
   </data>
-  <data name="Upsell_Carousel_Streaming_Platforms_Hulu">
-    <value>Hulu</value>
-  </data>
   <data name="Upsell_Carousel_Streaming_Platforms_Netflix">
     <value>Netflix</value>
   </data>
@@ -4343,6 +4082,24 @@ VPN-з'єднання</value>
   </data>
   <data name="VpnProtocol_OpenVPN_Udp_Description">
     <value>Надійний, перевірений і безпечний</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tcp">
+    <value>Proton WireGuard (TCP)</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tcp_Description">
+    <value>Найдосконаліший протокол для безпеки та швидкодії</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tls">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tls_Description">
+    <value>Обходить блокування VPN, приховуючи ваше з'єднання від цензорів</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Udp">
+    <value>Proton WireGuard (UDP)</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Udp_Description">
+    <value>Найдосконаліший протокол для безпеки та швидкодії</value>
   </data>
   <data name="VpnProtocol_Smart">
     <value>Smart</value>

@@ -1,0 +1,33 @@
+﻿/*
+ * Copyright (c) 2025 Proton AG
+ *
+ * This file is part of ProtonVPN.
+ *
+ * ProtonVPN is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonVPN is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+using ProtonVPN.NetworkFilter;
+
+namespace ProtonVPN.Service.Firewall;
+
+public interface IPermittedRemoteAddress : IFilterCollection
+{
+    void Add(string[] addresses, Action action);
+
+    /// <summary>
+    /// Replaces all current filters with new ones. The new filters are added before the old ones
+    /// are removed, so the addresses are never left without filters in between.
+    /// </summary>
+    void Replace(string[] addresses, Action action);
+}

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -17,10 +17,12 @@
  * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System.Threading;
 using NUnit.Framework;
 using ProtonVPN.UI.Tests.Robots;
 using ProtonVPN.UI.Tests.TestBase;
 using ProtonVPN.UI.Tests.TestsHelper;
+using ProtonVPN.UI.Tests.TestsHelper.UiFlows;
 
 namespace ProtonVPN.UI.Tests.Tests.E2ETests;
 
@@ -36,32 +38,36 @@ public class LogoutTests : FreshSessionSetUp
     }
 
     [Test]
+    [Property("TestCaseId", "602331")]
     public void LogoutWhileConnectedToVpn()
     {
-        HomeRobot.ConnectViaConnectionCard()
+        HomeRobot
+            .ConnectViaConnectionCard()
             .Verify.IsConnected();
 
+        // Delay to give it time to get the connected ip
+        Thread.Sleep(TestConstants.FiveSecondsTimeout);
         string ipAddressConnected = NetworkUtils.GetIpAddressWithRetry();
 
-        HomeRobot.ExpandKebabMenuButton();
-        SettingRobot
-            .SignOut()
-            .ConfirmSignOut();
+        CommonUiFlows.Logout();
 
-        LoginRobot.Verify.IsLoginWindowDisplayed();
-
+        // Delay to make sure the ip gets back.
+        Thread.Sleep(TestConstants.FiveSecondsTimeout);
         string ipAddressAfterLogout = NetworkUtils.GetIpAddressWithRetry();
 
         Assert.That(ipAddressConnected.Equals(ipAddressAfterLogout), Is.False, "User was not disconnected on logout.");
     }
 
     [Test]
+    [Property("TestCaseId", "602332")]
     public void CancelLogoutWhileConnectedToVpn()
     {
-        HomeRobot.ConnectViaConnectionCard()
+        HomeRobot
+            .ConnectViaConnectionCard()
             .Verify.IsConnected();
 
-        HomeRobot.ExpandKebabMenuButton();
+        HomeRobot
+            .ExpandKebabMenuButton();
         SettingRobot
             .SignOut()
             .CancelSignOut();
@@ -71,22 +77,25 @@ public class LogoutTests : FreshSessionSetUp
     }
 
     [Test]
+    [Property("TestCaseId", "602391")]
+    [Category("SMOKE_1")]
     public void LogoutViaKebabMenu()
     {
-        HomeRobot.ExpandKebabMenuButton();
-        SettingRobot.SignOut()
-            .ConfirmSignOut();
-        LoginRobot.Verify.IsLoginWindowDisplayed();
+        CommonUiFlows.Logout();
     }
 
     [Test]
+    [Property("TestCaseId", "602330")]
     public void LogoutViaAccountMenu()
     {
-        SettingRobot.OpenSettings()
+        SettingRobot
+            .OpenSettings()
             .Verify.IsSettingsPageDisplayed()
             .ExpandAccountDropdown()
             .SignOut()
             .ConfirmSignOut();
-        LoginRobot.Verify.IsLoginWindowDisplayed();
+
+        LoginRobot
+            .Verify.IsLoginWindowDisplayed();
     }
 }

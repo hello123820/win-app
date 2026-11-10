@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -17,8 +17,9 @@
  * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using FlaUI.Core.Conditions;
 using System;
+using FlaUI.Core.Conditions;
+using FlaUI.Core.AutomationElements;
 
 namespace ProtonVPN.UI.Tests.UiTools;
 
@@ -26,13 +27,16 @@ public class Element
 {
     public string SelectorName;
     public Func<ConditionFactory, ConditionBase> Condition;
-    public Element ChildElement;
+    public Element? ChildElement;
+    public bool UseDescendantSearch;
+    public static AutomationElement? Root { get; set; } = null;
 
-    public Element(Func<ConditionFactory, ConditionBase> selector, string selectorName, Element child = null)
+    public Element(Func<ConditionFactory, ConditionBase> selector, string selectorName, Element? child = null)
     {
         SelectorName = selectorName;
         Condition = selector;
         ChildElement = child;
+        UseDescendantSearch = false;
     }
 
     public static Element ByAutomationId(string automationId)

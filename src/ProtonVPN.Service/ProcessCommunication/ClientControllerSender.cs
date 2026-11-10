@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -17,6 +17,7 @@
  * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -27,70 +28,75 @@ using ProtonVPN.Common.Core.Networking;
 using ProtonVPN.Common.Legacy;
 using ProtonVPN.Common.Legacy.NetShield;
 using ProtonVPN.Common.Legacy.PortForwarding;
+using ProtonVPN.Common.Legacy.Restrictions;
 using ProtonVPN.Common.Legacy.Vpn;
 using ProtonVPN.EntityMapping.Contracts;
 using ProtonVPN.Logging.Contracts;
 using ProtonVPN.Logging.Contracts.Events.AppServiceLogs;
+using ProtonVPN.Logging.Contracts.Events.ConnectLogs;
 using ProtonVPN.Logging.Contracts.Events.ProcessCommunicationLogs;
 using ProtonVPN.ProcessCommunication.Contracts.Controllers;
 using ProtonVPN.ProcessCommunication.Contracts.Entities.NetShield;
 using ProtonVPN.ProcessCommunication.Contracts.Entities.PortForwarding;
+using ProtonVPN.ProcessCommunication.Contracts.Entities.Restrictions;
 using ProtonVPN.ProcessCommunication.Contracts.Entities.Settings;
 using ProtonVPN.ProcessCommunication.Contracts.Entities.Update;
 using ProtonVPN.ProcessCommunication.Contracts.Entities.Vpn;
+using ProtonVPN.Service.KillSwitch;
 using ProtonVPN.Service.Settings;
-using ProtonVPN.Vpn.Common;
-using ProtonVPN.Vpn.NetShield;
+using ProtonVPN.Service.StateMachine;
+using ProtonVPN.Vpn.Connection;
+using ProtonVPN.Vpn.LocalAgent;
 using ProtonVPN.Vpn.PortMapping;
 
 namespace ProtonVPN.Service.ProcessCommunication;
 
 public class ClientControllerSender : IClientController, IClientControllerSender, IServiceSettingsAware
 {
-    private readonly KillSwitch.KillSwitch _killSwitch;
+    private readonly IKillSwitch _killSwitch;
     private readonly ILogger _logger;
     private readonly IEntityMapper _entityMapper;
-    private readonly IVpnConnection _vpnConnection;
+    private readonly ILocalAgent _localAgent;
+    private readonly ILocalAgentEventReceiver _localAgentEventReceiver;
+    private readonly IVpnConnectionStateMachine _vpnControllerStateMachine;
     private readonly IPortMappingProtocolClient _portMappingProtocolClient;
-    private readonly INetShieldStatisticEventManager _netShieldStatisticEventManager;
 
     private VpnState _vpnState = VpnState.Default;
-    private PortForwardingState _portForwardingState;
+    private PortForwardingState? _portForwardingState;
 
-    private CancellationTokenSource _vpnStateCancellationTokenSource;
-    private CancellationTokenSource _portForwardingStateCancellationTokenSource;
-    private CancellationTokenSource _connectionDetailsCancellationTokenSource;
-    private CancellationTokenSource _netShieldStatisticCancellationTokenSource;
-    private CancellationTokenSource _updateStateCancellationTokenSource;
-    private object _streamCancellationTokenLock = new();
-
+    private CancellationTokenSource? _vpnStateCancellationTokenSource;
+    private CancellationTokenSource? _portForwardingStateCancellationTokenSource;
+    private CancellationTokenSource? _connectionDetailsCancellationTokenSource;
+    private CancellationTokenSource? _netShieldStatisticCancellationTokenSource;
+    private CancellationTokenSource? _restrictionsCancellationTokenSource;
+    private CancellationTokenSource? _updateStateCancellationTokenSource;
+    private readonly object _streamCancellationTokenLock = new();
 
     private readonly Channel<VpnStateIpcEntity> _vpnStateChannel = Channel.CreateUnbounded<VpnStateIpcEntity>();
     private readonly Channel<PortForwardingStateIpcEntity> _portForwardingStateChannel = Channel.CreateUnbounded<PortForwardingStateIpcEntity>();
-    private readonly Channel<ConnectionDetailsIpcEntity> _connectionDetailsChannel = Channel.CreateUnbounded<ConnectionDetailsIpcEntity>();
-    private readonly Channel<NetShieldStatisticIpcEntity> _netShieldStatisticChannel = Channel.CreateUnbounded<NetShieldStatisticIpcEntity>();
     private readonly Channel<UpdateStateIpcEntity> _updateStateChannel = Channel.CreateUnbounded<UpdateStateIpcEntity>();
 
     public ClientControllerSender(
-        KillSwitch.KillSwitch killSwitch,
+        IKillSwitch killSwitch,
         ILogger logger,
         IEntityMapper entityMapper,
-        IVpnConnection vpnConnection,
-        IPortMappingProtocolClient portMappingProtocolClient,
-        INetShieldStatisticEventManager netShieldStatisticEventManager)
+        ILocalAgent localAgent,
+        ILocalAgentEventReceiver localAgentEventReceiver,
+        IVpnConnectionStateMachine vpnControllerStateMachine,
+        IPortMappingProtocolClient portMappingProtocolClient)
     {
         _killSwitch = killSwitch;
         _logger = logger;
         _entityMapper = entityMapper;
-        _vpnConnection = vpnConnection;
-        _vpnConnection.StateChanged += OnVpnStateChanged;
-        _vpnConnection.ConnectionDetailsChanged += OnConnectionDetailsChanged;
-        _portMappingProtocolClient = portMappingProtocolClient;
-        _portMappingProtocolClient.StateChanged += OnPortForwardingStateChanged;
-        _netShieldStatisticEventManager = netShieldStatisticEventManager;
-        _netShieldStatisticEventManager.NetShieldStatisticChanged += OnNetShieldStatisticChanged;
-    }
+        _localAgent = localAgent;
+        _localAgentEventReceiver = localAgentEventReceiver;
+        _vpnControllerStateMachine = vpnControllerStateMachine;
 
+        _vpnControllerStateMachine.SubscribeToStateChanged(OnVpnStateChangedAsync);
+
+        _portMappingProtocolClient = portMappingProtocolClient;
+        _portMappingProtocolClient.StateChanged += OnPortForwardingStateChangedAsync;
+    }
 
     public IAsyncEnumerable<VpnStateIpcEntity> StreamVpnStateChangeAsync(CancellationToken cancelToken)
     {
@@ -100,16 +106,27 @@ public class ClientControllerSender : IClientController, IClientControllerSender
             _vpnStateCancellationTokenSource?.Cancel();
             _vpnStateCancellationTokenSource = cts;
         }
-        return StreamAsync(_vpnStateChannel, cts.Token);
+        return StreamAsync(_vpnStateChannel.Reader, cts.Token);
     }
 
-    private async IAsyncEnumerable<T> StreamAsync<T>(Channel<T> channel,
+    private async IAsyncEnumerable<T> StreamAsync<T>(ChannelReader<T> reader,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         while (!cancellationToken.IsCancellationRequested)
         {
-            T entity = await channel.Reader.ReadAsync(cancellationToken);
+            T entity = await reader.ReadAsync(cancellationToken);
             yield return entity;
+        }
+    }
+
+    private async IAsyncEnumerable<TOut> MapStreamAsync<TIn, TOut>(
+        ChannelReader<TIn> reader,
+        Func<TIn, TOut> mapper,
+        [EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        await foreach (TIn entity in StreamAsync(reader, cancellationToken))
+        {
+            yield return mapper(entity);
         }
     }
 
@@ -121,18 +138,22 @@ public class ClientControllerSender : IClientController, IClientControllerSender
             _portForwardingStateCancellationTokenSource?.Cancel();
             _portForwardingStateCancellationTokenSource = cts;
         }
-        return StreamAsync(_portForwardingStateChannel, cts.Token);
+        return StreamAsync(_portForwardingStateChannel.Reader, cts.Token);
     }
 
     public IAsyncEnumerable<ConnectionDetailsIpcEntity> StreamConnectionDetailsChangeAsync(CancellationToken cancelToken)
     {
-        CancellationTokenSource cts = new();
+        CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(cancelToken);
         lock (_streamCancellationTokenLock)
         {
             _connectionDetailsCancellationTokenSource?.Cancel();
             _connectionDetailsCancellationTokenSource = cts;
         }
-        return StreamAsync(_connectionDetailsChannel, cts.Token);
+
+        return MapStreamAsync(
+            _localAgentEventReceiver.ConnectionDetailsChannel.Reader,
+            MapConnectionDetails,
+            cts.Token);
     }
 
     public IAsyncEnumerable<NetShieldStatisticIpcEntity> StreamNetShieldStatisticChangeAsync(CancellationToken cancelToken)
@@ -143,7 +164,26 @@ public class ClientControllerSender : IClientController, IClientControllerSender
             _netShieldStatisticCancellationTokenSource?.Cancel();
             _netShieldStatisticCancellationTokenSource = cts;
         }
-        return StreamAsync(_netShieldStatisticChannel, cts.Token);
+
+        return MapStreamAsync(
+            _localAgentEventReceiver.NetShieldStatsChannel.Reader,
+            MapNetShieldStatistic,
+            cts.Token);
+    }
+
+    public IAsyncEnumerable<RestrictionListIpcEntity> StreamRestrictionsChangeAsync(CancellationToken cancelToken)
+    {
+        CancellationTokenSource cts = new();
+        lock (_streamCancellationTokenLock)
+        {
+            _restrictionsCancellationTokenSource?.Cancel();
+            _restrictionsCancellationTokenSource = cts;
+        }
+
+        return MapStreamAsync(
+            _localAgentEventReceiver.RestrictionsChannel.Reader,
+            MapRestrictions,
+            cts.Token);
     }
 
     public IAsyncEnumerable<UpdateStateIpcEntity> StreamUpdateStateChangeAsync(CancellationToken cancelToken)
@@ -154,7 +194,7 @@ public class ClientControllerSender : IClientController, IClientControllerSender
             _updateStateCancellationTokenSource?.Cancel();
             _updateStateCancellationTokenSource = cts;
         }
-        return StreamAsync(_updateStateChannel, cts.Token);
+        return StreamAsync(_updateStateChannel.Reader, cts.Token);
     }
 
     public async Task SendCurrentVpnStateAsync()
@@ -162,15 +202,15 @@ public class ClientControllerSender : IClientController, IClientControllerSender
         await SendStateChangeAsync(_vpnState);
     }
 
-    private async void OnVpnStateChanged(object sender, EventArgs<VpnState> e)
+    private async Task OnVpnStateChangedAsync(VpnState state)
     {
-        VpnState state = e.Data;
+        _vpnState = state;
+
         _logger.Info<AppServiceLog>($"VPN state changed - {GetVpnStatusLogMessage(state)}");
-        _vpnState = state ?? VpnState.Default;
         await SendStateChangeAsync(state);
     }
 
-    private string GetVpnStatusLogMessage(VpnState state)
+    private static string GetVpnStatusLogMessage(VpnState state)
     {
         return $"Status '{state.Status}', Error: '{state.Error}', LocalIp: '{state.LocalIp}', " +
             $"RemoteIp: '{state.RemoteIp}', Port: {state.EndpointPort}, Label: '{state.Label}', " +
@@ -185,7 +225,7 @@ public class ClientControllerSender : IClientController, IClientControllerSender
 
     private VpnStateIpcEntity CreateVpnStateIpcEntity(VpnState state)
     {
-        bool killSwitchEnabled = _killSwitch.ExpectedLeakProtectionStatus(state);
+        bool killSwitchEnabled = _killSwitch.GetExpectedLeakProtectionStatus(state);
         if (!killSwitchEnabled)
         {
             _vpnState = new VpnState(state.Status, state.Error, state.VpnProtocol);
@@ -201,28 +241,24 @@ public class ClientControllerSender : IClientController, IClientControllerSender
             OpenVpnAdapterType = _entityMapper.MapNullableStruct<OpenVpnAdapter, OpenVpnAdapterIpcEntity>(state.OpenVpnAdapter),
             VpnProtocol = _entityMapper.Map<VpnProtocol, VpnProtocolIpcEntity>(state.VpnProtocol),
             Label = state.Label,
-            ConnectionCertificatePem = state.ConnectionCertificate?.Pem
+            ConnectionCertificatePem = state.ConnectionCertificate?.Pem,
         };
     }
 
-    private async void OnConnectionDetailsChanged(object sender, ConnectionDetails connectionDetails)
-    {
-        await SendConnectionDetailsChangeAsync(connectionDetails);
-    }
-
-    private async Task SendConnectionDetailsChangeAsync(ConnectionDetails connectionDetails)
+    private ConnectionDetailsIpcEntity MapConnectionDetails(ConnectionDetails connectionDetails)
     {
         _logger.Info<ProcessCommunicationLog>("Sending ConnectionDetails change while connected " +
             $"to server with '{connectionDetails.ServerIpAddress}'");
 
-        ConnectionDetailsIpcEntity connectionDetailsIpcEntity =
-            _entityMapper.Map<ConnectionDetails, ConnectionDetailsIpcEntity>(connectionDetails);
-        await _connectionDetailsChannel.Writer.WriteAsync(connectionDetailsIpcEntity);
+        return _entityMapper.Map<ConnectionDetails, ConnectionDetailsIpcEntity>(connectionDetails);
     }
 
     public async Task SendCurrentPortForwardingStateAsync()
     {
-        await SendPortForwardingStateChangeAsync(_portForwardingState);
+        if (_portForwardingState is not null)
+        {
+            await SendPortForwardingStateChangeAsync(_portForwardingState);
+        }
     }
 
     public async Task SendUpdateStateAsync(UpdateStateIpcEntity updateState)
@@ -230,7 +266,7 @@ public class ClientControllerSender : IClientController, IClientControllerSender
         await _updateStateChannel.Writer.WriteAsync(updateState);
     }
 
-    private async void OnPortForwardingStateChanged(object sender, EventArgs<PortForwardingState> e)
+    private async void OnPortForwardingStateChangedAsync(object? sender, EventArgs<PortForwardingState> e)
     {
         PortForwardingState state = e.Data;
         _logger.Debug<AppServiceLog>($"Port Forwarding state changed - {GetPortForwardingStateLogMessage(state)}");
@@ -259,15 +295,21 @@ public class ClientControllerSender : IClientController, IClientControllerSender
         await _portForwardingStateChannel.Writer.WriteAsync(stateIpcEntity);
     }
 
-    private async void OnNetShieldStatisticChanged(object sender, NetShieldStatistic stats)
+    private NetShieldStatisticIpcEntity MapNetShieldStatistic(NetShieldStatistic stats)
     {
         _logger.Info<ProcessCommunicationLog>($"Sending NetShield statistic triggered at '{stats.TimestampUtc}' " +
             $"[Ads: '{stats.NumOfAdvertisementUrlsBlocked}']" +
             $"[Malware: '{stats.NumOfMaliciousUrlsBlocked}']" +
-            $"[Trackers: '{stats.NumOfTrackingUrlsBlocked}']");
-        NetShieldStatisticIpcEntity statsIpcEntity =
-            _entityMapper.Map<NetShieldStatistic, NetShieldStatisticIpcEntity>(stats);
-        await _netShieldStatisticChannel.Writer.WriteAsync(statsIpcEntity);
+            $"[Trackers: '{stats.NumOfTrackingUrlsBlocked}']" + 
+            $"[Adult content: '{stats.NumOfAdultContentUrlsBlocked}']");
+
+        return _entityMapper.Map<NetShieldStatistic, NetShieldStatisticIpcEntity>(stats);
+    }
+
+    private RestrictionListIpcEntity MapRestrictions(RestrictionsList restrictions)
+    {
+        _logger.Info<ProcessCommunicationLog>($"Sending restrictions '{string.Join(',', restrictions.Restrictions)}'");
+        return _entityMapper.Map<RestrictionsList, RestrictionListIpcEntity>(restrictions);
     }
 
     public async void OnServiceSettingsChanged(MainSettingsIpcEntity settings)
@@ -281,11 +323,19 @@ public class ClientControllerSender : IClientController, IClientControllerSender
         }
         else if (vpnState.Status == VpnStatus.Connected)
         {
-            _vpnConnection.SetFeatures(CreateVpnFeatures(settings));
+            if (!settings.PortForwarding)
+            {
+                _logger.Debug<ConnectLog>("Requesting NAT-PMP client to stop.");
+                await _portMappingProtocolClient.StopAsync();
+            }
+
+            VpnFeatures vpnFeatures = CreateVpnFeatures(settings);
+            _vpnControllerStateMachine.UpdateVpnConfig(vpnFeatures);
+            _localAgent.SetFeatures(vpnFeatures);
         }
     }
 
-    private VpnFeatures CreateVpnFeatures(MainSettingsIpcEntity settings)
+    private static VpnFeatures CreateVpnFeatures(MainSettingsIpcEntity settings)
     {
         return new()
         {

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -63,15 +63,20 @@ public class ReconnectionRequestCreator : ConnectionRequestCreator, IReconnectio
         // If the protocol in the settings is a specific one (not Smart), put it at the top of the smart protocol list
         if (settings.VpnProtocol != VpnProtocolIpcEntity.Smart)
         {
-            IList<VpnProtocolIpcEntity> smartProtocols = GetPreferredSmartProtocols();
-            smartProtocols.Remove(settings.VpnProtocol);
-            // Insert even if the protocol doesn't exist in the smart protocol list (ex.: Countries with only Stealth)
-            smartProtocols.Insert(0, settings.VpnProtocol);
+            IList<VpnProtocolIpcEntity> smartProtocols = GetPreferredProtocol(VpnProtocolIpcEntity.Smart, connectionIntent);
+            VpnProtocolIpcEntity? specificProtocol = GetPreferredProtocol(settings.VpnProtocol, connectionIntent).FirstOrDefault();
+            if (specificProtocol is not null)
+            {
+                smartProtocols.Remove(specificProtocol.Value);
+                smartProtocols.Insert(0, specificProtocol.Value);
+            }
             config.PreferredProtocols = smartProtocols;
         }
 
         List<VpnProtocol> preferredProtocols = EntityMapper.Map<VpnProtocolIpcEntity, VpnProtocol>(config.PreferredProtocols);
-        IEnumerable<PhysicalServer> physicalServers = GetReconnectionPhysicalServers(connectionIntent, preferredProtocols);
+        ServerListResult serverListResult = GetReconnectionServerListResult(connectionIntent, preferredProtocols);
+        VpnServerIpcEntity[] servers = PhysicalServersToVpnServerIpcEntities(serverListResult.PhysicalServers);
+        bool areAllServersExcluded = servers.Length == 0 && serverListResult.Diagnostic.AreAllCandidatesExcluded;
 
         ConnectionRequestIpcEntity request = new()
         {
@@ -79,26 +84,33 @@ public class ReconnectionRequestCreator : ConnectionRequestCreator, IReconnectio
             Config = config,
             Credentials = await GetVpnCredentialsAsync(),
             Protocol = VpnProtocolIpcEntity.Smart,
-            Servers = PhysicalServersToVpnServerIpcEntities(physicalServers),
+            Servers = servers,
             Settings = settings,
+            AreAllServersExcludedByUserPreference = areAllServersExcluded,
         };
 
         return request;
     }
 
-    private IEnumerable<PhysicalServer> GetReconnectionPhysicalServers(IConnectionIntent connectionIntent, IList<VpnProtocol> preferredProtocols)
+    private ServerListResult GetReconnectionServerListResult(IConnectionIntent connectionIntent, IList<VpnProtocol> preferredProtocols)
     {
-        IEnumerable<PhysicalServer> intentServers = ServerListGenerator.Generate(connectionIntent, preferredProtocols);
+        ServerListResult intentResult = ServerListGenerator.Generate(connectionIntent, preferredProtocols);
 
         if (IsToBypassSmartServerListGenerator(connectionIntent))
         {
-            return intentServers;
+            return intentResult;
         }
 
-        List<PhysicalServer> smartList = SmartServerListGenerator.Generate(connectionIntent, preferredProtocols).ToList();
+        ServerListResult smartResult = SmartServerListGenerator.Generate(connectionIntent, preferredProtocols);
 
-        smartList.AddRange(intentServers.Where(ips => !smartList.Any(slps => slps.Id == ips.Id)));
+        // Merge physical servers, avoiding duplicates by Id
+        List<PhysicalServer> mergedServers = smartResult.PhysicalServers.ToList();
+        mergedServers.AddRange(intentResult.PhysicalServers.Where(ips => !mergedServers.Any(slps => slps.Id == ips.Id)));
 
-        return smartList;
+        // Combine both diagnostics together, considering all candidates are excluded if both generators excluded them all
+        ServerListDiagnostic mergedDiagnostic = new ServerListDiagnostic(
+            intentResult.Diagnostic.AreAllCandidatesExcluded && smartResult.Diagnostic.AreAllCandidatesExcluded);
+
+        return new ServerListResult(mergedServers, mergedDiagnostic);
     }
 }

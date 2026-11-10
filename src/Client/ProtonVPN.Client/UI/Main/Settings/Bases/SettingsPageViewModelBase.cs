@@ -35,6 +35,7 @@ using ProtonVPN.Client.Settings.Contracts.Conflicts.Bases;
 using ProtonVPN.Client.Settings.Contracts.Messages;
 using ProtonVPN.Client.Settings.Contracts.RequiredReconnections;
 using ProtonVPN.Client.UI.Main.Settings.Bases;
+using ProtonVPN.Common.Core.Extensions;
 using ProtonVPN.StatisticalEvents.Contracts.Dimensions;
 
 namespace ProtonVPN.Client.UI.Main;
@@ -127,13 +128,13 @@ public abstract partial class SettingsPageViewModelBase : PageViewModelBase<ISet
         });
     }
 
-    public override async void OnNavigatedTo(object parameter, bool isBackNavigation)
+    public override void OnNavigatedTo(object parameter, bool isBackNavigation)
     {
         base.OnNavigatedTo(parameter, isBackNavigation);
 
         _isNavigationFromHomePage = Convert.ToBoolean(parameter ?? false);
 
-        await RetrieveSettingsAsync();
+        RetrieveSettingsAsync().FireAndForget();
     }
 
     public override async Task<bool> CanNavigateFromAsync()
@@ -172,10 +173,7 @@ public abstract partial class SettingsPageViewModelBase : PageViewModelBase<ISet
     protected virtual void OnSettingsChanged(string propertyName)
     { }
 
-    protected virtual void OnIpv6WarningClosedWithPrimaryAction()
-    { }
-
-    protected async Task ShowIpv6DisabledWarningAsync()
+    protected async Task<bool> ShowIpv6DisabledWarningAsync()
     {
         ContentDialogResult result = await MainWindowOverlayActivator.ShowMessageAsync(new()
         {
@@ -185,11 +183,7 @@ public abstract partial class SettingsPageViewModelBase : PageViewModelBase<ISet
             SecondaryButtonText = Localizer.Get("Overlay_Ipv6Disabled_SecondaryButton"),
         });
 
-        if (result == ContentDialogResult.Primary)
-        {
-            Settings.IsIpv6Enabled = true;
-            OnIpv6WarningClosedWithPrimaryAction();
-        }
+        return result == ContentDialogResult.Primary;
     }
 
     private async Task SaveSettingsAsync()
@@ -236,7 +230,7 @@ public abstract partial class SettingsPageViewModelBase : PageViewModelBase<ISet
         return Task.CompletedTask;
     }
 
-    protected override async void OnPropertyChanged(PropertyChangedEventArgs e)
+    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
 
@@ -255,11 +249,16 @@ public abstract partial class SettingsPageViewModelBase : PageViewModelBase<ISet
 
         if (conflict != null)
         {
-            ContentDialogResult result = await MainWindowOverlayActivator.ShowMessageAsync(conflict.MessageParameters);
-            if (result != ContentDialogResult.Primary)
-            {
-                GetType()?.GetProperty(e.PropertyName)?.SetValue(this, conflict.SettingsResetValue);
-            }
+            HandleSettingsConflictAsync(e, conflict).FireAndForget();
+        }
+    }
+
+    private async Task HandleSettingsConflictAsync(PropertyChangedEventArgs e, ISettingsConflict conflict)
+    {
+        ContentDialogResult result = await MainWindowOverlayActivator.ShowMessageAsync(conflict.MessageParameters);
+        if (result != ContentDialogResult.Primary)
+        {
+            GetType()?.GetProperty(e.PropertyName)?.SetValue(this, conflict.SettingsResetValue);
         }
     }
 

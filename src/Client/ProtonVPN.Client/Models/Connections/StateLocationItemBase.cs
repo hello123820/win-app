@@ -35,7 +35,7 @@ public abstract class StateLocationItemBase : HostLocationItemBase<State>
 {
     public State State { get; }
 
-    public override string Header => State.Name;
+    public override string Header => Localizer.GetStateName(State.Name, State.CountryCode);
 
     public override string Description => Localizer.GetCountryName(State.CountryCode);
 
@@ -95,6 +95,6 @@ public abstract class StateLocationItemBase : HostLocationItemBase<State>
             && !currentConnectionDetails.IsGateway
             && State.CountryCode == currentConnectionDetails.ExitCountryCode
             && State.Name == currentConnectionDetails.State
-            && (FeatureIntent?.GetType().IsAssignableTo(currentConnectionDetails.OriginalConnectionIntent.Feature?.GetType()) ?? true);
+            && (FeatureIntent?.IsSupported(currentConnectionDetails.Server) ?? true);
     }
 }

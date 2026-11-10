@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -30,6 +30,16 @@ public sealed partial class TrayIconComponentView : IContextAware
         ViewModel = App.GetService<TrayIconComponentViewModel>();
 
         InitializeComponent();
+    }
+
+    public void DisposeTrayIcon()
+    {
+        // Messages received while the app is shutting down keep invalidating the icon source.
+        // H.NotifyIcon applies those updates asynchronously (async void), so a late update would
+        // throw ObjectDisposedException on the dispatcher. Detach the bindings before disposing.
+        Bindings.StopTracking();
+
+        TrayIcon.Dispose();
     }
 
     public object GetContext()

@@ -18,15 +18,14 @@
  */
 
 using System.Threading.Tasks;
-using ProtonVPN.Client.Contracts.Services.Activation.Bases;
-using ProtonVPN.Client.Core.Enums;
+using ProtonVPN.Client.Core.Services.Activation.Bases;
 using ProtonVPN.StatisticalEvents.Contracts;
 
 namespace ProtonVPN.Client.Core.Services.Activation;
 
 public interface IUpsellCarouselWindowActivator : IWindowActivator
 {
-    ModalSource ModalSource { get; }
+    UpsellModalContext ModalContext { get; }
 
-    Task<bool> ActivateAsync(UpsellFeatureType? upsellFeatureType);
+    Task<bool> ActivateAsync(UpsellModalContext context);
 }

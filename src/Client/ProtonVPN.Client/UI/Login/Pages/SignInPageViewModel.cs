@@ -38,7 +38,8 @@ using ProtonVPN.Client.UI.Login.Enums;
 using ProtonVPN.Client.UI.Login.Overlays;
 using ProtonVPN.Common.Core.Extensions;
 using ProtonVPN.Common.Legacy.Abstract;
-using Windows.System;
+using ProtonVPN.Logging.Contracts.Events.AppLogs;
+using ProtonVPN.Logging.Contracts.Events.UserLogs;
 
 namespace ProtonVPN.Client.UI.Login.Pages;
 
@@ -52,6 +53,9 @@ public partial class SignInPageViewModel : LoginPageViewModelBase
     private readonly ISessionSettings _sessionSettings;
     private readonly IUnauthSessionManager _unauthSessionManager;
     private readonly SsoLoginOverlayViewModel _ssoLoginOverlayViewModel;
+    private readonly IMainWindowViewNavigator _mainWindowViewNavigator;
+
+    public event EventHandler? OnPasswordClearRequested;
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(SignInCommand))]
@@ -73,7 +77,7 @@ public partial class SignInPageViewModel : LoginPageViewModelBase
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(SignInCommand))]
-    private string _password = string.Empty;
+    private SecureString _password = new();
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(CreateAccountCommand))]
@@ -124,7 +128,8 @@ public partial class SignInPageViewModel : LoginPageViewModelBase
         ISessionSettings sessionSettings,
         IUnauthSessionManager unauthSessionManager,
         SsoLoginOverlayViewModel ssoLoginOverlayViewModel,
-        IViewModelHelper viewModelHelper)
+        IViewModelHelper viewModelHelper,
+        IMainWindowViewNavigator mainWindowViewNavigator)
         : base(parentViewNavigator, viewModelHelper)
     {
         _urlsBrowser = urlsBrowser;
@@ -135,6 +140,7 @@ public partial class SignInPageViewModel : LoginPageViewModelBase
         _sessionSettings = sessionSettings;
         _unauthSessionManager = unauthSessionManager;
         _ssoLoginOverlayViewModel = ssoLoginOverlayViewModel;
+        _mainWindowViewNavigator = mainWindowViewNavigator;
     }
 
     [RelayCommand(CanExecute = nameof(CanSignIn))]
@@ -167,8 +173,13 @@ public partial class SignInPageViewModel : LoginPageViewModelBase
                 HandleError(result);
             }
         }
+        catch (OperationCanceledException)
+        {
+            Logger.Info<UserLog>("Authentication was cancelled by the user.");
+        }
         catch (Exception e)
         {
+            Logger.Error<UserLog>("An error occurred during authentication.", e);
             _eventMessageSender.Send(new LoginStateChangedMessage(LoginState.Error, AuthError.Unknown, e.Message));
         }
         finally
@@ -183,10 +194,10 @@ public partial class SignInPageViewModel : LoginPageViewModelBase
         {
             case SignInFormType.SRP:
                 IsToShowUsernameError = string.IsNullOrWhiteSpace(Username);
-                IsToShowPasswordError = string.IsNullOrWhiteSpace(Password);
+                IsToShowPasswordError = Password is null || Password.Length == 0;
                 break;
             case SignInFormType.SSO:
-                Username = Username.Trim();
+                Username = Username?.Trim() ?? string.Empty;
                 IsToShowUsernameError = string.IsNullOrWhiteSpace(Username) || !Username.IsValidEmailAddress();
                 break;
         }
@@ -201,10 +212,17 @@ public partial class SignInPageViewModel : LoginPageViewModelBase
 
     private async Task<AuthResult> HandleSrpLoginAsync()
     {
-        SecureString securePassword = Password.ToSecureString();
-        Password = string.Empty;
-
-        return await _userAuthenticator.LoginUserAsync(Username, securePassword);
+        // Copy password so it can be cleared immediately without affecting the ongoing authentication.
+        SecureString password = Password;
+        try
+        {
+            return await _userAuthenticator.LoginUserAsync(Username, password);
+        }
+        finally
+        {
+            Password = new();
+            OnPasswordClearRequested?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     private async Task<AuthResult> HandleSsoLoginAsync()
@@ -230,6 +248,10 @@ public partial class SignInPageViewModel : LoginPageViewModelBase
         {
             case AuthError.TwoFactorRequired:
                 _eventMessageSender.Send(new LoginStateChangedMessage(LoginState.TwoFactorRequired));
+                break;
+
+            case AuthError.NoVpnAccess:
+                _mainWindowViewNavigator.NavigateToNoServersViewAsync();
                 break;
 
             case AuthError.SwitchToSSO:
@@ -260,15 +282,33 @@ public partial class SignInPageViewModel : LoginPageViewModelBase
         try
         {
             IsToShowCreateAccountSpinner = true;
+
+            Result? result;
+
             bool isSignUpPageAccessible = await _apiAvailabilityVerifier.IsSignUpPageAccessibleAsync();
             if (isSignUpPageAccessible)
             {
-                await OpenCreateAccountPageAsync();
+                Logger.Info<AppLog>("Opening create account page.");
+                result = await OpenCreateAccountPageAsync();
             }
             else
             {
-                await _guestHoleManager.ExecuteAsync<Result>(OpenCreateAccountPageAsync);
+                Logger.Info<AppLog>("API is not accessible, opening create account page through guest hole.");
+                result = await _guestHoleManager.ExecuteAsync<Result>(OpenCreateAccountPageAsync);
             }
+
+            if (result?.Success == true)
+            {
+                Logger.Info<AppLog>("Create account page opened successfully.");
+            }
+            else
+            {
+                Logger.Error<AppLog>($"Failed to open create account page. Error: {result?.Error ?? "null"}");
+            }
+        }
+        catch (Exception e)
+        {
+            Logger.Error<AppLog>("Failed to open create account page.", e);
         }
         finally
         {
@@ -278,8 +318,17 @@ public partial class SignInPageViewModel : LoginPageViewModelBase
 
     private async Task<Result> OpenCreateAccountPageAsync()
     {
-        await Launcher.LaunchUriAsync(new Uri(_urlsBrowser.CreateAccount));
-        return Result.Ok();
+        try
+        {
+            _urlsBrowser.BrowseTo(_urlsBrowser.CreateAccount);
+            // Delay for page to load
+            await Task.Delay(3000); 
+            return Result.Ok();
+        }
+        catch (Exception e)
+        {
+            return Result.Fail(e.Message);
+        }
     }
 
     protected override void OnActivated()
@@ -296,7 +345,7 @@ public partial class SignInPageViewModel : LoginPageViewModelBase
 
                 if (!string.IsNullOrEmpty(_sessionSettings.Password)) 
                 {
-                    Password = _sessionSettings.Password.Trim();
+                    Password = _sessionSettings.Password.Trim().ToSecureString();
 
                     SignInCommand.Execute(null);
                 }

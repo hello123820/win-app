@@ -123,14 +123,11 @@
   <data name="Automation_Properties_ConnectionDetails_Page">
     <value>Página de detalhes de conexão</value>
   </data>
+  <data name="Automation_Properties_ConnectionPreferences_Page">
+    <value>Página de preferências de conexão</value>
+  </data>
   <data name="Automation_Properties_Connection_Card_Component">
     <value>Cartão de conexão</value>
-  </data>
-  <data name="Automation_Properties_Features_Bar">
-    <value>Barra de recursos</value>
-  </data>
-  <data name="Automation_Properties_Home_Page">
-    <value>Página inicial</value>
   </data>
   <data name="Automation_Properties_KillSwitch_Page">
     <value>Página de kill switch</value>
@@ -189,18 +186,11 @@
   <data name="Automation_Properties_SplitTunneling_Page">
     <value>Página de tunelamento dividido</value>
   </data>
-  <data name="Cities">
-    <value>Cidades</value>
-  </data>
   <data name="City_Fastest">
     <value>Cidade mais rápida</value>
   </data>
   <data name="City_Random">
     <value>Cidade aleatória</value>
-  </data>
-  <data name="Common_Actions_ActionsFor">
-    <value>Ações para {0}</value>
-    <comment>Used for accessibility purposes (Narrator) in the recents list to open the alternate actions menu (pin, unpin...). {0} is a place holder which can be a country, a city, a server...</comment>
   </data>
   <data name="Common_Actions_Add">
     <value>Adicionar</value>
@@ -220,25 +210,14 @@
   <data name="Common_Actions_Connect">
     <value>Conectar</value>
   </data>
-  <data name="Common_Actions_ConnectTo">
-    <value>Conectar a {0}</value>
-    <comment>Used for accessibility purposes (Narrator) to describe the action to Connect to something. {0} is a place holder which can be a country, a city, a server...</comment>
-  </data>
   <data name="Common_Actions_ContactUs">
     <value>Fale conosco</value>
-  </data>
-  <data name="Common_Actions_Customize">
-    <value>Personalizar</value>
   </data>
   <data name="Common_Actions_Delete">
     <value>Excluir</value>
   </data>
   <data name="Common_Actions_Disconnect">
     <value>Desconectar</value>
-  </data>
-  <data name="Common_Actions_DisconnectFrom">
-    <value>Desconectar de {0}</value>
-    <comment>Used for accessibility purposes (Narrator) to describe the action to disconnect from something. {0} is a place holder which can be a country, a city, a server...</comment>
   </data>
   <data name="Common_Actions_Duplicate">
     <value>Duplicar</value>
@@ -300,17 +279,14 @@
   <data name="Common_Links_LearnMore">
     <value>Saiba mais</value>
   </data>
-  <data name="Common_Message_Loading">
-    <value>Carregando...</value>
+  <data name="Common_Message_AppNotFound">
+    <value>Aplicativo não encontrado</value>
   </data>
   <data name="Common_States_Off">
     <value>Desativado</value>
   </data>
   <data name="Common_States_On">
     <value>Ativado</value>
-  </data>
-  <data name="Common_States_Updating">
-    <value>Atualizando...</value>
   </data>
   <data name="Common_Tags_Beta">
     <value>BETA</value>
@@ -336,11 +312,26 @@
   <data name="Components_Update_UpdateProtonVpn">
     <value>Atualizar Proton VPN</value>
   </data>
+  <data name="Connection_Error_AllServersExcluded">
+    <value>Your preferences exclude all available servers. Adjust exclusions to connect.</value>
+  </data>
+  <data name="Connection_Error_AllServersExcluded_Action">
+    <value>Localizações excluídas</value>
+  </data>
+  <data name="Connection_Error_ConflictingAdapter_Description">
+    <value>To fix it, close or uninstall the app associated with:</value>
+  </data>
+  <data name="Connection_Error_ConflictingAdapter_Title">
+    <value>Another app might be preventing Proton VPN from connecting</value>
+  </data>
   <data name="Connection_Error_EditProfile">
     <value>Editar perfil</value>
   </data>
   <data name="Connection_Error_MissingConnectionCertificate">
     <value>Não foi possível para o Proton VPN buscar o certificado de autenticação devido a um problema de rede.</value>
+  </data>
+  <data name="Connection_Error_MobileHotspotEnabled">
+    <value>The connection was blocked by network settings on your device. This may be caused by a mobile hotspot, another VPN application, or virtual machine software. Please review your network configuration or contact support for assistance.</value>
   </data>
   <data name="Connection_Error_NoServers">
     <value>Todos os serviços da sua seleção estão indisponíveis. Expanda a seleção ou tente novamente.</value>
@@ -357,6 +348,9 @@
   </data>
   <data name="Connection_Error_RpcServerUnavailable">
     <value>O Proton VPN não consegue se conectar porque o servidor RPC não está disponível em seu sistema.</value>
+  </data>
+  <data name="Connection_Error_ServerValidation">
+    <value>The server details couldn't be verified. Try another server, or report the issue to our Customer Support team.</value>
   </data>
   <data name="Connection_Error_SessionLimitReachedFreeUser">
     <value>Você atingiu seu limite máximo de dispositivos. Desconecte outro dispositivo para conectar este ou atualize para PLUS para conectar até 10 dispositivos ao mesmo tempo.</value>
@@ -377,7 +371,7 @@
     <value>Há um problema ao validar o certificado do servidor VPN, o que pode indicar que a conexão de rede está sendo violada ou que o servidor ao qual você está tentando se conectar tem um problema de configuração. Obtenha ajuda do nosso suporte ao cliente enviando um Relatório de Problemas.</value>
   </data>
   <data name="Connection_Error_TwoFactorRequired_Description">
-    <value>To connect to VPN, go to your organization's 2FA portal and tap your security key.</value>
+    <value>Para conectar à VPN, vá para o portal A2F de sua organização e clique em sua chave de segurança.</value>
   </data>
   <data name="Connection_Error_TwoFactorRequired_Title">
     <value>Autenticação de dois fatores (A2F) obrigatório</value>
@@ -393,17 +387,12 @@ Código de erro: {0}</value>
   <data name="Connection_Error_WireGuardAdapterInUse">
     <value>O adaptador WireGuard do seu dispositivo está em uso. Desconecte-se de qualquer outra VPN em execução e tente novamente.</value>
   </data>
+  <data name="Connection_Feedback_Question">
+    <value>Como está sua conexão?</value>
+  </data>
   <data name="Connection_Intent_AutoSelected">
     <value>Seleção automática de</value>
     <comment>Appears in the connection card for free users. A set of flags is displayed after the text (eg. Auto-selected from [us-flag] [jp-flag]...)</comment>
-  </data>
-  <data name="Connection_Intent_City_Server">
-    <value>{0} #{1}</value>
-    <comment>Name of the server including city name. {0} is a placeholder for the city name. {1} is a placeholder for the number associated to the server (eg. Zurich #20)</comment>
-  </data>
-  <data name="Connection_Intent_Country_Server">
-    <value>{0} #{1}</value>
-    <comment>Name of the server including country name. {0} is a placeholder for the country name. {1} is a placeholder for the number associated to the server (eg. Switzerland #20)</comment>
   </data>
   <data name="Connection_Via_SecureCore">
     <value>via {0}</value>
@@ -550,15 +539,6 @@ Código de erro: {0}</value>
     <value>Perfis disponíveis com VPN Plus</value>
     <comment>The text in the tooltip when hovering a profile and the user has a free plan</comment>
   </data>
-  <data name="Connections_Profiles_Settings_Description">
-    <value>Ao fazer a conexão, as configurações do perfil substituirão as configurações da VPN.</value>
-  </data>
-  <data name="Connections_Profiles_Settings_Header">
-    <value>Adicionar configurações personalizadas</value>
-  </data>
-  <data name="Connections_Random">
-    <value>Aleatório</value>
-  </data>
   <data name="Connections_Recents_One">
     <value>Recente ({0})</value>
   </data>
@@ -588,27 +568,6 @@ Código de erro: {0}</value>
   </data>
   <data name="Connections_SecureCore_Servers_Other">
     <value>Servidores Secure Core</value>
-  </data>
-  <data name="Connections_SeeCities_One">
-    <value>Ver cidade ({0})</value>
-  </data>
-  <data name="Connections_SeeCities_Other">
-    <value>Ver cidades ({0})</value>
-  </data>
-  <data name="Connections_SeeServers_One">
-    <value>Ver servidor ({0})</value>
-  </data>
-  <data name="Connections_SeeServers_Other">
-    <value>Ver servidores ({0})</value>
-  </data>
-  <data name="Connections_SeeStates_One">
-    <value>Ver estado ({0})</value>
-  </data>
-  <data name="Connections_SeeStates_Other">
-    <value>Ver estados ({0})</value>
-  </data>
-  <data name="Connections_Server">
-    <value>Servidor</value>
   </data>
   <data name="Connections_Server_Restricted">
     <value>Servidor disponível com VPN Plus</value>
@@ -657,44 +616,11 @@ Código de erro: {0}</value>
   <data name="Countries_All">
     <value>Todos</value>
   </data>
-  <data name="Countries_City_One">
-    <value>{0} cidade</value>
-  </data>
-  <data name="Countries_City_Other">
-    <value>{0} cidades</value>
-  </data>
-  <data name="Countries_Connect">
-    <value>Conectar</value>
-    <comment>Connect button label on a country row in the countries tab</comment>
-  </data>
-  <data name="Countries_Fastest">
-    <value>País mais rápido</value>
-  </data>
-  <data name="Countries_NoSearchResults">
-    <value>Nenhum resultado encontrado</value>
-  </data>
-  <data name="Countries_NumberOfServers">
-    <value>Servidores ({0})</value>
-    <comment>{0} represents a number of servers</comment>
-  </data>
   <data name="Countries_P2P">
     <value>P2P</value>
   </data>
-  <data name="Countries_P2P_Cities">
-    <value>Cidades P2P ({0})</value>
-    <comment>{0} represents a number of P2P cities in the country</comment>
-  </data>
   <data name="Countries_P2P_Description">
     <value>Baixe arquivos em redes P2P (peer-to-peer) e melhore sua experiência de jogos on-line e videochamadas.</value>
-  </data>
-  <data name="Countries_Page_FreeUser_Description">
-    <value>Desbloqueie a seleção de países com VPN Plus</value>
-  </data>
-  <data name="Countries_SearchPlaceholder">
-    <value>Quero navegar de...</value>
-  </data>
-  <data name="Countries_Section_Header">
-    <value>Conexões VPN</value>
   </data>
   <data name="Countries_SecureCore">
     <value>Secure Core</value>
@@ -708,18 +634,15 @@ Código de erro: {0}</value>
   <data name="Countries_SmartRouting">
     <value>Smart routing</value>
   </data>
+  <data name="Countries_SmartRouting_RoutedThrough">
+    <value>Smart routed through {0}</value>
+    <comment>Label used when server is virtual. {0} is a place holder for the name of the country the server is routed through.</comment>
+  </data>
   <data name="Countries_Tor">
     <value>Tor</value>
   </data>
-  <data name="Countries_TorServers">
-    <value>Servidores Tor ({0})</value>
-    <comment>{0} represents a number of tor servers in the country</comment>
-  </data>
   <data name="Countries_Tor_Description">
     <value>Use a rede Tor sobre sua conexão VPN para privacidade extra.</value>
-  </data>
-  <data name="Countries_TryDifferentKeyword">
-    <value>Tente uma palavra-chave diferente</value>
   </data>
   <data name="Country_Fastest">
     <value>País mais rápido</value>
@@ -1713,6 +1636,10 @@ Código de erro: {0}</value>
     <value>Samoa</value>
     <comment>The name of WS country</comment>
   </data>
+  <data name="Country_val_XK">
+    <value>Kosovo</value>
+    <comment>The name of XK country</comment>
+  </data>
   <data name="Country_val_YE">
     <value>Iêmen</value>
     <comment>The name of YE country</comment>
@@ -1782,32 +1709,6 @@ Código de erro: {0}</value>
   <data name="Dialogs_FreeConnections_Title">
     <value>Conexões gratuitas</value>
   </data>
-  <data name="Dialogs_Latency_Description">
-    <value>A latência mostra quanto tempo leva para um servidor responder às requisições.
-
-Latências altas podem reduzir a velocidade da conexão.</value>
-  </data>
-  <data name="Dialogs_Latency_HighRange_Description">
-    <value>A VPN pode funcionar mais lentamente que o normal</value>
-  </data>
-  <data name="Dialogs_Latency_HighRange_Title">
-    <value>Alta (150ms+)</value>
-  </data>
-  <data name="Dialogs_Latency_LowRange_Description">
-    <value>Velocidade ultrarrápida</value>
-  </data>
-  <data name="Dialogs_Latency_LowRange_Title">
-    <value>Baixa (1ms - 50ms)</value>
-  </data>
-  <data name="Dialogs_Latency_MediumRange_Description">
-    <value>É improvável que afete a velocidade da VPN</value>
-  </data>
-  <data name="Dialogs_Latency_MediumRange_Title">
-    <value>Média (50ms - 150ms)</value>
-  </data>
-  <data name="Dialogs_Latency_Title">
-    <value>O que é latência?</value>
-  </data>
   <data name="Dialogs_NpsSurvey_CommentLabel">
     <value>Diga-nos por que você deu essa classificação</value>
   </data>
@@ -1842,53 +1743,13 @@ Latências altas podem reduzir a velocidade da conexão.</value>
     <value>Tente novamente</value>
   </data>
   <data name="Dialogs_P2PDetection_Description">
-    <value>Sua conexão foi desativada porque você está usando um servidor que não oferece suporte a tráfego peer-to-peer (P2P). P2P não é compatível com servidores gratuitos. Use um servidor diferente para P2P.</value>
+    <value>Faça o upgrade para desbloquear servidores P2P (peer-to-peer) para jogos on-line rápidos e torrents, ou encerre sua atividade P2P para restaurar sua conexão.</value>
   </data>
   <data name="Dialogs_P2PDetection_Title">
-    <value>Tráfego P2P detectado</value>
+    <value>O P2P não é permitido em servidores VPN gratuitos.</value>
   </data>
-  <data name="Dialogs_P2P_HowToTorrentLink">
-    <value>Como fazer torrent com P2P</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_Title">
-    <value>P2P</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsP2PServer">
-    <value>Oque é um servidor P2P?</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsP2PServer_Description">
-    <value>Servidores de VPN P2P (peer-to-peer) desbloqueiam sites de torrent.</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsTorrenting">
-    <value>O que é torrent?</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsTorrenting_Description">
-    <value>O compartilhamento e download rápido de arquivos grandes em uma rede peer-to-peer (P2P).</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhyUse">
-    <value>Por que usar um servidor P2P ao fazer torrent?</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhyUse_Description">
-    <value>• Maiores velocidades de upload e download
-• Sem registros de atividades
-• Oculte seu endereço IP do seu provedor de serviços e de seus pares</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_Protocol_Description">
-    <value>Um protocolo é um conjunto de instruções que o seu dispositivo segue para se conectar e se comunicar com um servidor.</value>
-  </data>
-  <data name="Dialogs_Protocol_SwitchHeader">
-    <value>Trocar protocolo VPN</value>
-  </data>
-  <data name="Dialogs_Protocol_Title">
-    <value>O que é um protocolo VPN?</value>
+  <data name="Dialogs_P2PDetection_WindowTitle">
+    <value>Descubra VPN Plus</value>
   </data>
   <data name="Dialogs_ReportIssue_ContactForm_Email">
     <value>E-mail</value>
@@ -1946,34 +1807,14 @@ Latências altas podem reduzir a velocidade da conexão.</value>
   <data name="Dialogs_ReportIssue_Title">
     <value>Reportar um problema</value>
   </data>
-  <data name="Dialogs_ServerLoad_Description">
-    <value>A carga do servidor mostra o quão próximo um servidor está da capacidade máxima.
-
-Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
+  <data name="Dialogs_StreamingDetection_WindowTitle">
+    <value>Descubra VPN Plus</value>
   </data>
-  <data name="Dialogs_ServerLoad_HighRange_Description">
-    <value>A VPN pode funcionar mais lentamente que o normal</value>
+  <data name="Dialogs_StreamingWarning_Description">
+    <value>Os servidores VPN Plus permitem que você assista aos seus filmes e programas de TV favoritos de todo o mundo.</value>
   </data>
-  <data name="Dialogs_ServerLoad_HighRange_Title">
-    <value>Alta (91-100%)</value>
-  </data>
-  <data name="Dialogs_ServerLoad_LowRange_Description">
-    <value>Velocidade ultrarrápida</value>
-  </data>
-  <data name="Dialogs_ServerLoad_LowRange_Title">
-    <value>Baixa (1–75%)</value>
-  </data>
-  <data name="Dialogs_ServerLoad_MediumRange_Description">
-    <value>É improvável que afete a velocidade da VPN</value>
-  </data>
-  <data name="Dialogs_ServerLoad_MediumRange_Title">
-    <value>Média (76–90%)</value>
-  </data>
-  <data name="Dialogs_ServerLoad_Title">
-    <value>O que é carga do servidor?</value>
-  </data>
-  <data name="Dialogs_SmartRouting_Title">
-    <value>Smart Routing</value>
+  <data name="Dialogs_StreamingWarning_Title">
+    <value>Fazer upgrade para contornar bloqueios de VPN</value>
   </data>
   <data name="Dialogs_SubscriptionExpired_MaybeLater">
     <value>Talvez mais tarde</value>
@@ -1981,20 +1822,8 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Dialogs_SystemProxy_Description">
     <value>Parece que o aparelho está usando um servidor proxy. Isso pode interferir com a sua proteção VPN.</value>
   </data>
-  <data name="Dialogs_SystemProxy_Disable">
-    <value>Desativar proxy</value>
-  </data>
   <data name="Dialogs_SystemProxy_Title">
     <value>Servidor de proxy detectado</value>
-  </data>
-  <data name="Dialogs_Tor_Description">
-    <value>Conecte-se a um servidor Tor para acessar serviços ocultos e sites da rede onion usando qualquer navegador.</value>
-  </data>
-  <data name="Dialogs_Tor_LearnMore">
-    <value>Como acessar a rede Tor</value>
-  </data>
-  <data name="Dialogs_Tor_Title">
-    <value>Tor</value>
   </data>
   <data name="Dialogs_Troubleshooting_Antivirus">
     <value>Desative o ‘software’ de antivírus ou firewall.</value>
@@ -2086,26 +1915,12 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Dialogs_WelcomeToVpnPlus_Title">
     <value>Boas-vindas ao VPN Plus</value>
   </data>
-  <data name="Dialogs_WelcomeUnlimited_Description1">
-    <value>Parabéns! Você desbloqueou recursos de segurança e desempenho premium em todos os serviços Proton.</value>
-  </data>
-  <data name="Dialogs_WelcomeUnlimited_Description2">
-    <value>Aproveite o melhor da privacidade da Proton.</value>
+  <data name="Dialogs_WelcomeUnlimited_Description">
+    <value>Você desbloqueou todos os recursos premium do Proton VPN, Mail, Calendário, Drive e Pass</value>
   </data>
   <data name="Dialogs_WelcomeUnlimited_Title">
-    <value>Boas-vindas ao Proton Unlimited</value>
-  </data>
-  <data name="Dialogs_Welcome_Message">
-    <value>Estamos preparando sua nova experiência de VPN. Isso levará apenas um instante.</value>
-  </data>
-  <data name="Dialogs_Welcome_Title">
-    <value>Boas-vindas ao Proton VPN</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Gateways_Description">
-    <value>Agora você pode acessar os servidores dedicados da sua organização pela barra lateral principal.</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Gateways_Title">
-    <value>Os gateways mudaram de lugar</value>
+    <value>Bem-vindo ao {0}</value>
+    <comment>Title to welcome the user after an account upgrade. {0} is a placeholder for the name of the new plan (eg. Proton Unlimited, Proton Duo, Proton Family).</comment>
   </data>
   <data name="Dialogs_WhatsNew_LanConnections_Description">
     <value>Agora você pode se conectar a impressoras, alto-falantes e outros dispositivos na sua rede local (LAN), ignorando o túnel VPN.</value>
@@ -2113,29 +1928,11 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Dialogs_WhatsNew_LanConnections_Title">
     <value>Conexões LAN</value>
   </data>
-  <data name="Dialogs_WhatsNew_NewLook_Description">
-    <value>Atualizamos nosso design e mudamos algumas coisas de lugar para facilitar o uso do aplicativo.</value>
-  </data>
-  <data name="Dialogs_WhatsNew_NewLook_Title">
-    <value>Nova aparência, mesma proteção</value>
-  </data>
   <data name="Dialogs_WhatsNew_PortNumber_Description">
     <value>Quando o encaminhamento de porta está ativado, você verá o número da sua porta ativa na tela inicial.</value>
   </data>
   <data name="Dialogs_WhatsNew_PortNumber_Title">
     <value>Número de porta ativo</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Profiles_Description">
-    <value>Adicione configurações avançadas de perfil, como NetShield e encaminhamento de porta, ou configure o Connect and Go para iniciar um site de sua escolha ao se conectar.</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Profiles_Title">
-    <value>Perfis ainda mais avançados</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Recents_Description">
-    <value>Agora ficou ainda mais fácil se reconectar aos seus servidores favoritos. Veja suas conexões mais recentes na tela inicial ou fixe-as para acesso rápido.</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Recents_Title">
-    <value>Conheça o recurso Recentes</value>
   </data>
   <data name="Dialogs_WhatsNew_TakeALook">
     <value>Dê uma olhada</value>
@@ -2148,6 +1945,30 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   </data>
   <data name="Dialogs_WhatsNew_TrayApp_Title">
     <value>Novo aplicativo na bandeja do sistema</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_ExcludeLocations">
+    <value>Excluir localizações</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Message">
+    <value>Se houver locais aos quais você não deseja ser conectado automaticamente, é possível excluí-los da opção País mais rápido e Aleatório.</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Skip">
+    <value>Pular</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Title">
+    <value>Não é o país que você queria?</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_ActionButton">
+    <value>Excluir localizações</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_CloseButton">
+    <value>Talvez mais tarde</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_Subtitle">
+    <value>Agora você pode excluir países ou cidades das conexões mais rápidas e aleatórias.</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_Title">
+    <value>Evite locais indesejados</value>
   </data>
   <data name="Exit_Confirmation_Title">
     <value>Sair do Proton VPN?</value>
@@ -2239,17 +2060,20 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Flyouts_KillSwitch_Warning_Disconnected">
     <value>Para voltar a ficar on-line, conecte-se à VPN ou desative o kill switch avançado</value>
   </data>
+  <data name="Flyouts_NetShield_AdsMalwareTrackersAdultContent_Success">
+    <value>Você está protegido contra anúncios, rastreadores, malware e conteúdo adulto.</value>
+  </data>
   <data name="Flyouts_NetShield_AdsMalwareTrackers_Success">
-    <value>Você tem proteção contra anúncios, rastreadores e malware.</value>
+    <value>Você tem proteção contra anúncios, rastreadores e malware</value>
   </data>
   <data name="Flyouts_NetShield_Info">
-    <value>Proteja-se contra anúncios, rastreadores e malware em sites e aplicativos</value>
+    <value>Proteja sua navegação em sites e aplicativos.</value>
   </data>
   <data name="Flyouts_NetShield_MalwareOnly_Success">
-    <value>Sua única proteção é contra malware</value>
+    <value>Sua única proteção é contra malware.</value>
   </data>
   <data name="Flyouts_NetShield_Upsell_Description">
-    <value>Bloqueie anúncios, rastreadores e malware com o VPN Plus.</value>
+    <value>Bloqueie anúncios, rastreadores, malware e conteúdo adulto com o VPN Plus.</value>
   </data>
   <data name="Flyouts_NetShield_Upsell_Title">
     <value>Desfrute de uma navegação sem anúncios</value>
@@ -2257,8 +2081,11 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Flyouts_PortForwarding_ActivePort">
     <value>Número de porta ativo</value>
   </data>
+  <data name="Flyouts_PortForwarding_ActivePort_Error">
+    <value>Não é possível recuperar o número ativo da porta. Reinicie sua conexão e tente novamente.</value>
+  </data>
   <data name="Flyouts_PortForwarding_ActivePort_Info">
-    <value>Insira o número da porta ativa em seu aplicativo BitTorrent para melhorar suas velocidades de P2P</value>
+    <value>Insira o número da porta ativa no seu cliente torrent ou aplicativo P2P para obter um desempenho aprimorado.</value>
   </data>
   <data name="Flyouts_PortForwarding_Info">
     <value>Melhora a velocidade de download peer-to-peer</value>
@@ -2307,9 +2134,6 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   </data>
   <data name="Flyouts_ServerLoad_Title">
     <value>Carga do servidor</value>
-  </data>
-  <data name="Flyouts_Speed_BoostedByVpnAccelerator">
-    <value>Acelerado pelo VPN Accelerator</value>
   </data>
   <data name="Flyouts_Speed_Description1">
     <value>Mostra quantos dados passam pelo túnel VPN em tempo real.</value>
@@ -2362,7 +2186,7 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
     <value>Endereços IP protegidos ({0})</value>
   </data>
   <data name="Flyouts_SplitTunneling_Standard_Info">
-    <value>Apenas esses aplicativos e endereços IP se conectam por meio da VPN, o restante do tráfego fica desprotegido.</value>
+    <value>Esses aplicativos e endereços IP se conectam sem a proteção da VPN. Todo o restante do tráfego fica protegido.</value>
   </data>
   <data name="Flyouts_SplitTunneling_Upsell_Description">
     <value>Divida seu tráfego em túneis VPN e não VPN com o VPN Plus.</value>
@@ -2383,10 +2207,6 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Flyouts_Volume_Upload">
     <value>Upload</value>
     <comment>Refers to the uploaded volume (e.g., Upload [new line] 250 MB).</comment>
-  </data>
-  <data name="Format_Milliseconds">
-    <value>{0}ms</value>
-    <comment>Format a number as a time in milliseconds. {0} is a place holder for the number of milliseconds (eg. 46ms)</comment>
   </data>
   <data name="Format_Size_Bytes">
     <value>{0} B</value>
@@ -2530,9 +2350,6 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Gateways_Page_Title">
     <value>Gateways</value>
   </data>
-  <data name="Gateways_Server">
-    <value>Servidor dedicado</value>
-  </data>
   <data name="Home_Account_SignOut">
     <value>Encerrar sessão</value>
   </data>
@@ -2540,46 +2357,17 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
     <value>Encerrar sessão de {0}?</value>
     <comment>{0} is a placeholder for the username</comment>
   </data>
-  <data name="Home_Account_Title">
-    <value>Minha conta</value>
-  </data>
   <data name="Home_ConnectionCard_ChangeDefaultConnection">
     <value>Alterar conexão padrão</value>
   </data>
   <data name="Home_ConnectionCard_ChangeServer">
     <value>Alterar servidor</value>
   </data>
-  <data name="Home_ConnectionCard_Header_BrowseSafely">
-    <value>Navegando com segurança de</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_ConnectingTo">
-    <value>Conectando com...</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_DefaultConnection">
-    <value>Conexão padrão</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_FreeConnection">
-    <value>Conexão gratuita</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_LastConnectedTo">
-    <value>Última conexão com</value>
-  </data>
-  <data name="Home_ConnectionCard_Landmark">
-    <value>Cartão de conexão</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
   <data name="Home_ConnectionDetails_AdvancedKillSwitchActivated">
     <value>O Kill switch avançado foi ativado.</value>
   </data>
-  <data name="Home_ConnectionDetails_City">
-    <value>Cidade</value>
-  </data>
   <data name="Home_ConnectionDetails_ConnectToRestoreConnection">
     <value>Conecte-se à VPN para restaurar sua conexão com a internet.</value>
-  </data>
-  <data name="Home_ConnectionDetails_ConnectedFor">
-    <value>Conectado para</value>
-    <comment>Label for the time the session has been active. (eg. Connected for     1 h 25 min 2s)</comment>
   </data>
   <data name="Home_ConnectionDetails_Connecting">
     <value>Conectando</value>
@@ -2590,28 +2378,8 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Home_ConnectionDetails_Country">
     <value>País</value>
   </data>
-  <data name="Home_ConnectionDetails_Gateway">
-    <value>Gateway</value>
-  </data>
-  <data name="Home_ConnectionDetails_Hide">
-    <value>Ocultar detalhes da conexão</value>
-  </data>
-  <data name="Home_ConnectionDetails_HideIP">
-    <value>Ocultar</value>
-    <comment>Tooltip displayed when the user hover the button to hide the User IP Address</comment>
-  </data>
-  <data name="Home_ConnectionDetails_HideIP_Description">
-    <value>Esconder endereço IP do usuário</value>
-  </data>
   <data name="Home_ConnectionDetails_Isp">
     <value>Provedor</value>
-  </data>
-  <data name="Home_ConnectionDetails_Landmark">
-    <value>Detalhes da conexão</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_ConnectionDetails_MyIp">
-    <value>Meu IP</value>
   </data>
   <data name="Home_ConnectionDetails_Protected">
     <value>Protegido</value>
@@ -2619,33 +2387,14 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Home_ConnectionDetails_Protocol">
     <value>Protocolo</value>
   </data>
-  <data name="Home_ConnectionDetails_Server">
-    <value>Servidor</value>
-  </data>
   <data name="Home_ConnectionDetails_ServerLoad">
     <value>Carga do servidor</value>
   </data>
-  <data name="Home_ConnectionDetails_Show">
-    <value>Mostrar detalhes da conexão</value>
-  </data>
-  <data name="Home_ConnectionDetails_ShowIP">
-    <value>Mostrar</value>
-    <comment>Tooltip displayed when the user hover the button to show the User IP Address</comment>
-  </data>
-  <data name="Home_ConnectionDetails_ShowIP_Description">
-    <value>Mostrar endereço IP do usuário</value>
-  </data>
-  <data name="Home_ConnectionDetails_State">
-    <value>Estado</value>
-  </data>
-  <data name="Home_ConnectionDetails_Title">
-    <value>Detalhes da conexão</value>
-  </data>
   <data name="Home_ConnectionDetails_TwoFactorRequired_Description">
-    <value>Re-authenticate in your organization's 2FA portal to continue.</value>
+    <value>Para continuar, autentique-se novamente no portal de A2F da sua organização.</value>
   </data>
   <data name="Home_ConnectionDetails_TwoFactorRequired_Title">
-    <value>2FA expired</value>
+    <value>A2F expirada</value>
   </data>
   <data name="Home_ConnectionDetails_Unprotected">
     <value>Desprotegido</value>
@@ -2656,15 +2405,6 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Home_ConnectionDetails_Volume">
     <value>Tráfego total</value>
   </data>
-  <data name="Home_ConnectionDetails_Volume_Download">
-    <value>Volume de download</value>
-  </data>
-  <data name="Home_ConnectionDetails_Volume_Total">
-    <value>Volume total</value>
-  </data>
-  <data name="Home_ConnectionDetails_Volume_Upload">
-    <value>Volume de upload:</value>
-  </data>
   <data name="Home_ConnectionDetails_VpnIp">
     <value>IP da VPN</value>
   </data>
@@ -2673,13 +2413,6 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   </data>
   <data name="Home_FreeConnections_About">
     <value>Mais informação sobre as conexões gratuitas</value>
-  </data>
-  <data name="Home_Help_Title">
-    <value>Ajuda</value>
-  </data>
-  <data name="Home_Map_Landmark">
-    <value>Mapa</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
   </data>
   <data name="Home_NetShield_AdsBlocked_One">
     <value>Anúncio bloqueado</value>
@@ -2696,13 +2429,6 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Home_NetShield_DataSaved_Description">
     <value>Dados economizados estimados pelo bloqueio de anúncios indesejados, rastreadores e malwares.</value>
   </data>
-  <data name="Home_NetShield_Landmark">
-    <value>Estatísticas NetShield</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_NetShield_Title">
-    <value>Estatísticas NetShield</value>
-  </data>
   <data name="Home_NetShield_TrackersStopped_One">
     <value>Rastreador parado</value>
   </data>
@@ -2712,21 +2438,11 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Home_NetShield_TrackersStopped_Description">
     <value>Rastreadores são cookies e sites de terceiros que coletam, armazenam e vendem informações sobre sua atividade na web.</value>
   </data>
-  <data name="Home_Page_Title">
-    <value>Início</value>
-  </data>
-  <data name="Home_Recents_Landmark">
-    <value>Conexões recentes</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
   <data name="Home_Recents_Pin">
     <value>Fixar</value>
   </data>
   <data name="Home_Recents_Restricted">
     <value>Servidor está disponível com VPN Plus</value>
-  </data>
-  <data name="Home_Recents_SecondaryActions_ToolTip">
-    <value>Ações</value>
   </data>
   <data name="Home_Recents_ServerUnderMaintenance">
     <value>O servidor está em manutenção</value>
@@ -2761,33 +2477,23 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Home_TitleBar_Menu_UpdateNow">
     <value>Atualizar agora</value>
   </data>
-  <data name="Home_Update_UpdateAvailable">
-    <value>Atualização disponível</value>
-  </data>
-  <data name="Home_Update_UpdateReady">
-    <value>Atualização pronta</value>
-  </data>
-  <data name="Home_VpnStatus_Landmark">
-    <value>Status de VPN</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_VpnStatus_Subtitle_Connecting">
-    <value>Protegendo sua identidade digital...</value>
-  </data>
-  <data name="Home_VpnStatus_Subtitle_Disconnected">
-    <value>Você está sem proteção</value>
-  </data>
-  <data name="Home_VpnStatus_Title_Connected">
-    <value>Protegido</value>
-  </data>
   <data name="LoadingPage_Tip">
     <value>Um mundo melhor começa com  privacidade e liberdade digital.</value>
   </data>
   <data name="Login_Error_GetSessionDetailsFailed">
     <value>Ocorreu um erro ao recuperar os detalhes da sessão. Tente novamente.</value>
   </data>
+  <data name="Login_Error_GuestHoleFailedDueToMobileHotspot">
+    <value>Unable to sign in due to network settings on your device. This may be caused by a mobile hotspot, another VPN application, or virtual machine software. Please review your network configuration or contact support for assistance.</value>
+  </data>
   <data name="Login_Error_IncorrectTwoFactorCode">
     <value>Código incorreto. Tente novamente.</value>
+  </data>
+  <data name="Login_Error_MissingSrpDll_Message">
+    <value>A file required for sign-in is missing from your installation. Please reinstall Proton VPN to fix this issue.</value>
+  </data>
+  <data name="Login_Error_MissingSrpDll_Title">
+    <value>Não foi possível iniciar sessão</value>
   </data>
   <data name="Login_Error_SessionExpired">
     <value>Sua sessão expirou. Inicie sessão novamente.</value>
@@ -2796,14 +2502,11 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Login_Error_SsoAuthFailed">
     <value>Falha na autenticação SSO. Tente novamente.</value>
   </data>
-  <data name="Login_Error_TwoFactorAuthFailed">
-    <value>Nome de usuário ou senha incorretos. Tente novamente.</value>
-  </data>
   <data name="Login_Error_TwoFactorFailed">
     <value>Falha na autenticação de dois fatores. Faça login novamente.</value>
   </data>
   <data name="Login_Error_WebAuthnNotSupported">
-    <value>Security key authentication is not available for your device or remote desktop connection.</value>
+    <value>A autenticação por chave de segurança não está disponível para o seu dispositivo ou conexão de área de trabalho remota.</value>
   </data>
   <data name="Login_TwoFactorForm_Authenticate">
     <value>Autenticar</value>
@@ -2886,6 +2589,9 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="NoServers_Title">
     <value>Nenhuma conexão VPN disponível</value>
   </data>
+  <data name="NoServers_UnderMaintenance_Tip">
+    <value>We couldn't load any servers. Click Refresh to update the server list.</value>
+  </data>
   <data name="Notifications_KillSwitch_Description">
     <value>Para proteger seu endereço IP, o kill switch está bloqueando sua conexão com a Internet.</value>
   </data>
@@ -2893,7 +2599,7 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
     <value>Copiar número da porta</value>
   </data>
   <data name="Notifications_PortForwarding_Description">
-    <value>Defina este número em seu aplicativo BitTorrent para maior velocidade.</value>
+    <value>Vá para o seu fornecedor torrent ou aplicativo P2P e insira este número.</value>
   </data>
   <data name="Notifications_SessionLimit_Description">
     <value>Você atingiu o limite máximo de dispositivos. Para se reconectar à VPN, desconecte-se de outro dispositivo.</value>
@@ -2912,7 +2618,7 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
     <comment>The window title displayed at the top of the NPS (Net Promoter Score) survey</comment>
   </data>
   <data name="Overlay_Ipv6Disabled_Description">
-    <value>Para incluir este endereço, é necessário permitir conexões IPv6 através do túnel VPN.</value>
+    <value>Para incluir endereços IPv6, você precisa permitir conexões IPv6 através do túnel VPN.</value>
   </data>
   <data name="Overlay_Ipv6Disabled_PrimaryButton">
     <value>Ativar IPv6</value>
@@ -3032,7 +2738,7 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
     <value>Carga do servidor</value>
   </data>
   <data name="Overlay_SmartRouting_Description1">
-    <value>O Smart Routing utiliza servidores virtuais para fornecer cobertura de VPN em países de difícil alcance.</value>
+    <value>O Smart Routing usa servidores virtuais para fornecer cobertura de VPN em países de difícil alcance.</value>
   </data>
   <data name="Overlay_SmartRouting_Description2">
     <value>Ao se conectar a um servidor Smart Routing, você parecerá estar navegando no seu país de destino, mesmo que o servidor físico esteja localizado em outro lugar.</value>
@@ -3041,10 +2747,8 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
     <value>O Smart Routing é geralmente utilizado para evitar leis anti privacidade e outras formas de censura.</value>
   </data>
   <data name="Overlay_SmartRouting_Header">
-    <value>Os servidores estão localizados fisicamente em {0}, mas você parece estar navegando em {1}</value>
-    <comment>{0} is a placeholder for the physical server location country. {1} is a placeholder for the destination country
-    Warning: country names are inserted in the nominative case. For INFLECTED languages, use alternative wording as follows:
-    Connects you to your destination country ({1}) through servers that are physically located somewhere else ({0})</comment>
+    <value>Connects you to your destination country through servers physically located elsewhere: {0}.</value>
+    <comment>{0} is a placeholder for the countries where the physical servers are. Can be either one country or multiple countries separated with comma.</comment>
   </data>
   <data name="Overlay_SmartRouting_LearnMore">
     <value>O que é Smart Routing?</value>
@@ -3088,9 +2792,6 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Profile_Options_ConnectAndGo_Application">
     <value>Abra um aplicativo</value>
   </data>
-  <data name="Profile_Options_ConnectAndGo_DefaultBrowser">
-    <value>Navegador padrão</value>
-  </data>
   <data name="Profile_Options_ConnectAndGo_PrivateBrowsingMode">
     <value>Usar modo de navegação privada</value>
   </data>
@@ -3117,9 +2818,6 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   </data>
   <data name="Profiles_Default_MaxSecurity">
     <value>Segurança máxima</value>
-  </data>
-  <data name="Profiles_Default_Office">
-    <value>Escritório</value>
   </data>
   <data name="Profiles_Default_P2P">
     <value>P2P</value>
@@ -3205,9 +2903,6 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Servers">
     <value>Servidores</value>
   </data>
-  <data name="Settings_About">
-    <value>Sobre</value>
-  </data>
   <data name="Settings_About_Changelog">
     <value>Registro de alterações</value>
   </data>
@@ -3270,9 +2965,6 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
     <value>192.0.2.0</value>
     <comment>Watermark for the IP Address field in the Custom DNS servers settings page</comment>
   </data>
-  <data name="Settings_Common_Ipv6WarningButton">
-    <value>Aviso - saiba mais</value>
-  </data>
   <data name="Settings_Connection">
     <value>Conexão</value>
   </data>
@@ -3304,12 +2996,15 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Settings_Connection_Advanced_CustomDnsServers_Footer">
     <value>Tentaremos conectar esses servidores em ordem. Se nenhum deles funcionar, o DNS padrão da Proton VPN será usado.</value>
   </data>
-  <data name="Settings_Connection_Advanced_CustomDnsServers_Header">
+  <data name="Settings_Connection_Advanced_CustomDnsServers_FormattedHeader">
     <value>Servidores de DNS ({0})</value>
     <comment>Header for the list of Custom DNS servers defined. {0} is a placeholder for the number of DNS servers in the list. (eg. "DNS servers (4)")</comment>
   </data>
-  <data name="Settings_Connection_Advanced_CustomDnsServers_IpAddress_Description">
-    <value>Insira o endereço IPv4 ou IPv6 do servidor</value>
+  <data name="Settings_Connection_Advanced_CustomDnsServers_Header">
+    <value>Servidores de DNS</value>
+  </data>
+  <data name="Settings_Connection_Advanced_CustomDnsServers_Select">
+    <value>Selecionar servidores de DNS</value>
   </data>
   <data name="Settings_Connection_Advanced_Ipv6">
     <value>Suporte a IPv6</value>
@@ -3330,7 +3025,7 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
     <value>Permite conectar-se a impressoras, alto-falantes e outros dispositivos na sua rede local.</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections_LocalDns_Description">
-    <value>Conectar a dispositivos usando nomes como 'Minha-Impressora' ou 'roteador.local' em vez de endereços IP. Usa resolução local de DNS. Desativado por padrão para manter velocidades de VPN mais rápidas.</value>
+    <value>Usa mDNS para se conectar a dispositivos usando nomes como 'Minha-Impressora' ou “roteador.local” em vez de endereços IP. O DNS padrão continua a ser roteado através do túnel VPN. Desativado por padrão para velocidades de VPN mais rápidas.</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections_LocalDns_Title">
     <value>Acessar dispositivos por nome</value>
@@ -3360,10 +3055,16 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
     <value>Restringe a entrada de dados na sua rede. Esta opção é mais segura, mas pode dificultar as conexões de jogos peer-to-peer.</value>
   </data>
   <data name="Settings_Connection_Advanced_OpenVpnDriver_Tap">
-    <value>Roteia o tráfego entre redes diferentes.</value>
+    <value>Encaminha o tráfego de rede. É mais lento que o TUN, mas é necessário para algumas configurações de rede legadas ou especiais.</value>
   </data>
   <data name="Settings_Connection_Advanced_OpenVpnDriver_Tun_Description">
-    <value>Usa bridging para conectar redes. TUN fornece velocidades mais altas que TAP, mas pode ser menos estável.</value>
+    <value>Roteia o tráfego entre diferentes redes. O TUN pode ser mais rápido e mais estável do que o TAP.</value>
+  </data>
+  <data name="Settings_Connection_ConnectionPreferences">
+    <value>Preferências de conexão</value>
+  </data>
+  <data name="Settings_Connection_ConnectionPreferences_Description">
+    <value>Conexão padrão e locais excluídos</value>
   </data>
   <data name="Settings_Connection_CustomDns_Conflict_Information_WhenDisabled">
     <value>O DNS personalizado não pode ser ativado porque a conexão a um perfil com o NetShield está ativada.</value>
@@ -3395,6 +3096,27 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Settings_Connection_Default_Recents">
     <value>Recentes</value>
   </data>
+  <data name="Settings_Connection_ExcludedLocations">
+    <value>Localizações excluídas</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Cities">
+    <value>Cidades</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Countries">
+    <value>Países</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Description">
+    <value>As localizações selecionadas nunca serão usadas quando você se conectar à mais rápida ou aleatória.</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_NoLocations">
+    <value>Nenhuma localização disponível</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Search">
+    <value>Selecionar...</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_States">
+    <value>Estados</value>
+  </data>
   <data name="Settings_Connection_KillSwitch">
     <value>Kill switch</value>
   </data>
@@ -3404,17 +3126,8 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Settings_Connection_KillSwitch_Advanced_Description">
     <value>Permitir acesso à Internet apenas quando conectado ao Proton VPN. O kill switch avançado permanecerá ativo mesmo quando você reiniciar o dispositivo.</value>
   </data>
-  <data name="Settings_Connection_KillSwitch_Conflict_Description">
-    <value>Isso desativará o tunelamento dividido.</value>
-  </data>
-  <data name="Settings_Connection_KillSwitch_Conflict_Title">
-    <value>Ativar kill switch?</value>
-  </data>
   <data name="Settings_Connection_KillSwitch_Description">
     <value>Protege seu endereço IP desconectando você da Internet caso você perca sua conexão VPN.</value>
-  </data>
-  <data name="Settings_Connection_KillSwitch_Footer">
-    <value>Quando o kill switch estiver ativado, você não conseguirá se conectar a sites e aplicativos excluídos da sua conexão VPN por meio do tunelamento dividido.</value>
   </data>
   <data name="Settings_Connection_KillSwitch_Standard">
     <value>Padrão</value>
@@ -3426,7 +3139,10 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
     <value>NetShield</value>
   </data>
   <data name="Settings_Connection_NetShield_BlockAdsMalwareTrackers">
-    <value>Bloquear anúncios, malware e rastreadores</value>
+    <value>Bloqueie anúncios, rastreadores e malware</value>
+  </data>
+  <data name="Settings_Connection_NetShield_BlockAdsMalwareTrackersAdultContent">
+    <value>Bloqueie anúncios, rastreadores, malware e conteúdo adulto</value>
   </data>
   <data name="Settings_Connection_NetShield_BlockMalwareOnly">
     <value>Bloquear apenas malware</value>
@@ -3441,7 +3157,7 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
     <value>Ativar NetShield?</value>
   </data>
   <data name="Settings_Connection_NetShield_Description">
-    <value>Proteja-se contra anúncios, malware e rastreadores em sites e aplicativos.</value>
+    <value>Proteja sua navegação em sites e aplicativos.</value>
   </data>
   <data name="Settings_Connection_NetShield_Footer">
     <value>Alguns sites podem não carregar corretamente quando anúncios e rastreadores estiverem bloqueados.</value>
@@ -3453,7 +3169,7 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
     <value>Redirecionamento de porta</value>
   </data>
   <data name="Settings_Connection_PortForwarding_ActivePort">
-    <value>Porta ativa:</value>
+    <value>Número de porta ativo:</value>
   </data>
   <data name="Settings_Connection_PortForwarding_ActivePort_Copy">
     <value>Copiar número da porta</value>
@@ -3483,41 +3199,41 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Settings_Connection_PortForwarding_Notifications_Description">
     <value>Seja notificado quando o número ativo da sua porta for alterado.</value>
   </data>
+  <data name="Settings_Connection_PortForwarding_Unavailable">
+    <value>Indisponível</value>
+  </data>
   <data name="Settings_Connection_Protocol">
     <value>Protocolo</value>
   </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Action">
-    <value>Ir para o perfil</value>
-  </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Message">
-    <value>Há uma conexão a um perfil de VPN ativa.
-
-• Para alterar o protocolo dessa conexão, desconecte-se e edite seu perfil.
-
-• Para alterar o protocolo de outras conexões VPN, será necessário desconectar-se do perfil primeiro.</value>
-  </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Title">
-    <value>Alterar protocolo em perfis</value>
-  </data>
   <data name="Settings_Connection_SplitTunneling">
     <value>Tunelamento dividido</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_Description">
+    <value>Selecione os aplicativos que serão excluídos da conexão VPN</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_FormattedHeader">
+    <value>Aplicativos excluídos ({0})</value>
+    <comment>Header for the list of apps to exclude for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Excluded apps (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_Header">
+    <value>Aplicativos excluídos</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Apps_FilesFilterName">
     <value>Arquivos do aplicativo</value>
     <comment>Describe the name of the filter used to select executable files in the Open file dialog</comment>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Apps_Header">
-    <value>Aplicativos selecionados ({0})</value>
-    <comment>Header for the list of Apps defined for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Selected apps (2)")</comment>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_Description">
+    <value>Selecione os aplicativos que serão incluídos na conexão VPN</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Apps_Remove">
-    <value>Remover aplicativo</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_FormattedHeader">
+    <value>Aplicativos incluído ({0})</value>
+    <comment>Header for the list of apps to include for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Included apps (2)")</comment>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Conflict_Description">
-    <value>Isso desativará o kill switch.</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_Header">
+    <value>Aplicativos incluídos</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Conflict_Title">
-    <value>Ativar tunelamento dividido?</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Select">
+    <value>Selecionar aplicativos</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Description">
     <value>Personalize sua conexão decidindo quais aplicativos e endereços IP são protegidos por VPN.</value>
@@ -3535,12 +3251,28 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Settings_Connection_SplitTunneling_IpAddresses_AddNew">
     <value>Adicionar endereço IPv4 ou IPv6</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_IpAddresses_Header">
-    <value>Endereços IP selecionados ({0})</value>
-    <comment>Header for the list of IP addresses defined for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Selected IP addresses (2)")</comment>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_Description">
+    <value>Selecione os endereços IP que serão excluídos da conexão VPN.</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_IpAddresses_Remove">
-    <value>Remover IP</value>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_FormattedHeader">
+    <value>Endereços IP excluídos ({0})</value>
+    <comment>Header for the list of IP addresses to exclude for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Excluded IP addresses (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_Header">
+    <value>Endereços de IP excluídos</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_Description">
+    <value>Selecione os endereços IP que serão incluídos na conexão VPN.</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_FormattedHeader">
+    <value>Endereços IP incluídos ({0})</value>
+    <comment>Header for the list of IP addresses to include for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Included IP addresses (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_Header">
+    <value>Endereços IP incluídos</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Select">
+    <value>Selecionar endereços IP</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Standard">
     <value>Modo de exclusão</value>
@@ -3564,9 +3296,6 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Settings_DiscardChanges_Confirmation_Title">
     <value>Descartar alterações não salvas?</value>
   </data>
-  <data name="Settings_Features">
-    <value>Caraterísticas da VPN</value>
-  </data>
   <data name="Settings_General">
     <value>Geral</value>
   </data>
@@ -3578,12 +3307,6 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   </data>
   <data name="Settings_General_AutoStartup_AutoConnect_Description">
     <value>Conecta-se automaticamente à sua conexão padrão assim que o Proton VPN é aberto.</value>
-  </data>
-  <data name="Settings_General_AutoStartup_AutoConnect_Fastest">
-    <value>Conexão mais rápida</value>
-  </data>
-  <data name="Settings_General_AutoStartup_AutoConnect_Latest">
-    <value>Última conexão</value>
   </data>
   <data name="Settings_General_AutoStartup_AutoLaunch">
     <value>Abrir automaticamente</value>
@@ -3627,20 +3350,8 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Settings_General_OpenVpnNetworkDriver">
     <value>Driver de rede OpenVPN</value>
   </data>
-  <data name="Settings_General_OpenVpnNetworkDriver_Description">
-    <value>Os drivers de rede podem afetar a velocidade da sua conexão. O novo adaptador TUN oferece maior velocidade e recorre ao adaptador TAP se encontrar algum problema de conectividade.</value>
-  </data>
   <data name="Settings_General_Theme">
     <value>Tema</value>
-  </data>
-  <data name="Settings_General_Theme_Dark">
-    <value>Escuro</value>
-  </data>
-  <data name="Settings_General_Theme_Default">
-    <value>Padrão</value>
-  </data>
-  <data name="Settings_General_Theme_Light">
-    <value>Claro</value>
   </data>
   <data name="Settings_Improve">
     <value>Melhorar a Proton</value>
@@ -3682,6 +3393,30 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   </data>
   <data name="Settings_Protocols_OpenVpnUdp_Title">
     <value>OpenVPN</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTcp_Description">
+    <value>Nossa nova estrutura baseada no WireGuard, que oferece maior estabilidade, funcionalidade e resistência à censura.</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTcp_Title">
+    <value>Proton WireGuard</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTls_Description">
+    <value>Nossa nova estrutura baseada no WireGuard, que oferece maior estabilidade, funcionalidade e resistência à censura.</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTls_Title">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="Settings_Protocols_ProTunUdp_Description">
+    <value>Nossa nova estrutura baseada no WireGuard, que oferece maior estabilidade, funcionalidade e resistência à censura.</value>
+  </data>
+  <data name="Settings_Protocols_ProTunUdp_Title">
+    <value>Proton WireGuard</value>
+  </data>
+  <data name="Settings_Protocols_ProtonProtocols_Description">
+    <value>Use a implementação própria do WireGuard do Proton VPN. Este é um recurso experimental, portanto, você pode enfrentar alguma instabilidade.</value>
+  </data>
+  <data name="Settings_Protocols_ProtonProtocols_Title">
+    <value>Protocolos da Proton</value>
   </data>
   <data name="Settings_Protocols_Smart_Description">
     <value>Seleciona automaticamente o melhor protocolo para sua conexão.</value>
@@ -3737,6 +3472,15 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="Settings_SelectedProtocol_OpenVpnUdp">
     <value>OpenVPN (UDP)</value>
   </data>
+  <data name="Settings_SelectedProtocol_ProTunTcp">
+    <value>Proton WireGuard (TCP)</value>
+  </data>
+  <data name="Settings_SelectedProtocol_ProTunTls">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="Settings_SelectedProtocol_ProTunUdp">
+    <value>Proton WireGuard (UDP)</value>
+  </data>
   <data name="Settings_SelectedProtocol_Smart">
     <value>Smart</value>
   </data>
@@ -3781,9 +3525,6 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   </data>
   <data name="Settings_VpnAccelerator_Description">
     <value>Aumente a velocidade da sua conexão em até 400% com tecnologias de melhoria de desempenho.</value>
-  </data>
-  <data name="SignIn_Form">
-    <value>Formulário de início de sessão</value>
   </data>
   <data name="SignIn_Form_AdvancedKillSwitchDescription">
     <value>O kill switch avançado está bloqueando sua conexão com a internet.</value>
@@ -3878,12 +3619,37 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   <data name="SystemNotification_Disconnected">
     <value>Desconectado</value>
   </data>
+  <data name="SystemNotification_P2PWarning_Description">
+    <value>Desbloqueie o torrent e jogos on-line em protocolos P2P (peer-to-peer) com servidores VPN pagos.</value>
+  </data>
+  <data name="SystemNotification_P2PWarning_Title">
+    <value>P2P não disponível com VPN gratuita</value>
+  </data>
+  <data name="SystemNotification_StreamingWarning_Description">
+    <value>Alguns sites e serviços de streaming bloqueiam usuários de VPN gratuita. Faça upgrade para o Proton VPN Plus para contornar esses bloqueios.</value>
+  </data>
+  <data name="SystemNotification_StreamingWarning_Title">
+    <value>Site bloqueado?</value>
+  </data>
+  <data name="System_Tray_Actions_Connect">
+    <value>Conectar</value>
+  </data>
+  <data name="System_Tray_Actions_Disconnect">
+    <value>Desconectar</value>
+  </data>
+  <data name="System_Tray_Actions_ExitApplication">
+    <value>Sair</value>
+  </data>
+  <data name="System_Tray_Actions_OpenApplication">
+    <value>Abrir {0}</value>
+    <comment>Button displayed in the tray icon to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
+  </data>
   <data name="Tray_Actions_ExitApplication">
     <value>Sair</value>
   </data>
   <data name="Tray_Actions_OpenApplication">
     <value>Abrir {0}</value>
-    <comment>Button displayed in the tray icon to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
+    <comment>Button displayed in the tray window to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
   </data>
   <data name="Tray_Actions_OpenApplicationToSignIn">
     <value>Abrir o aplicativo para iniciar sessão</value>
@@ -3916,11 +3682,11 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
     <value>TB/s</value>
     <comment>Unit for Terabytes per second</comment>
   </data>
-  <data name="UpsellBanner_NetShield_Description">
-    <value>Bloqueia anúncios, rastreadores e malware em sites e aplicativos</value>
+  <data name="UpsellBanner_P2P_Description">
+    <value>Baixe arquivos pelo BitTorrent e outros protocolos de compartilhamento de arquivos.</value>
   </data>
-  <data name="UpsellBanner_NetShield_Title">
-    <value>NetShield</value>
+  <data name="UpsellBanner_P2P_Title">
+    <value>Suporte a P2P</value>
   </data>
   <data name="UpsellBanner_WrongCountry_Description">
     <value>Faça upgrade para escolher qualquer servidor.</value>
@@ -4050,10 +3816,7 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
     <value>Disney+</value>
   </data>
   <data name="Upsell_Carousel_Streaming_Platforms_HBO">
-    <value>Max</value>
-  </data>
-  <data name="Upsell_Carousel_Streaming_Platforms_Hulu">
-    <value>Hulu</value>
+    <value>HBO Max</value>
   </data>
   <data name="Upsell_Carousel_Streaming_Platforms_Netflix">
     <value>Netflix</value>
@@ -4115,6 +3878,24 @@ Uma carga alta de servidor pode tornar sua conexão mais lenta.</value>
   </data>
   <data name="VpnProtocol_OpenVPN_Udp_Description">
     <value>Estabelecido, bem testado e seguro</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tcp">
+    <value>Proton WireGuard (TCP)</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tcp_Description">
+    <value>Protocolo de última geração em segurança e desempenho</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tls">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tls_Description">
+    <value>Evita bloqueios de VPN ocultando sua conexão de censores</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Udp">
+    <value>Proton WireGuard (UDP)</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Udp_Description">
+    <value>Protocolo de última geração em segurança e desempenho</value>
   </data>
   <data name="VpnProtocol_Smart">
     <value>Smart</value>

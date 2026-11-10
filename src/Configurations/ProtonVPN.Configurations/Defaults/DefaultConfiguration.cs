@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -92,6 +92,9 @@ public static class DefaultConfiguration
     /// <returns>C:\Program Files\Proton\VPN\v4.0.0\ProtonVPNService.exe</returns>
     public static string ServiceExePath => Path.Combine(_baseVersionDirectory.Value, "ProtonVPNService.exe");
 
+    /// <returns>C:\Program Files\Proton\VPN\v4.0.0\ProtonVPN.NrptWatchdog.exe</returns>
+    public static string NrptWatchdogExePath => Path.Combine(_baseVersionDirectory.Value, "ProtonVPN.NrptWatchdog.exe");
+
     public static string ProtocolActivationScheme = "proton-vpn";
 
     public static string LegacyProtocolActivationScheme = "protonvpn";
@@ -138,6 +141,9 @@ public static class DefaultConfiguration
     /// <returns>C:\Program Files\Proton\VPN\v4.0.0\ServiceData\ServiceSettings.json</returns>
     public static string ServiceSettingsFilePath => Path.Combine(_serviceDataPath.Value, "ServiceSettings.json");
 
+    /// <returns>C:\Program Files\Proton\VPN\v4.0.0\ServiceData\WireGuardServerRoutes.json</returns>
+    public static string WireGuardServerRoutesFilePath => Path.Combine(_serviceDataPath.Value, "WireGuardServerRoutes.json");
+
     /// <returns>C:\Users\{user}\AppData\Local\ProtonVPN</returns>
     public static string LegacyAppLocalData => Path.Combine(_localAppDataPath.Value, "ProtonVPN");
 
@@ -180,7 +186,8 @@ public static class DefaultConfiguration
     public static TimeSpan ConnectionCertificateUpdateInterval => TimeSpan.FromMinutes(5);
     public static TimeSpan ServerUpdateInterval => TimeSpan.FromHours(12);
     public static TimeSpan ServerLoadUpdateInterval => TimeSpan.FromMinutes(15);
-    public static TimeSpan MinimumServerLoadUpdateInterval => TimeSpan.FromMinutes(15);
+    public static TimeSpan OverdueServerLoadUpdateTimeout => TimeSpan.FromSeconds(1);
+    public static TimeSpan ResumeRefreshTimeout => TimeSpan.FromSeconds(5);
     public static TimeSpan AnnouncementsUpdateInterval => TimeSpan.FromMinutes(150);
     public static TimeSpan AlternativeRoutingCheckInterval => TimeSpan.FromMinutes(30);
     public static TimeSpan UpdateCheckInterval => TimeSpan.FromHours(3);
@@ -199,13 +206,16 @@ public static class DefaultConfiguration
     public static TimeSpan P2PTrafficDetectionInterval => TimeSpan.FromSeconds(60);
     public static TimeSpan StatisticalEventSendTriggerInterval => TimeSpan.FromMinutes(15);
     public static TimeSpan StatisticalEventMinimumWaitInterval => TimeSpan.FromMinutes(10);
+    public static TimeSpan ServerSearchDelay => TimeSpan.FromSeconds(2.5);
+    public static TimeSpan ConflictingAdapterCheckerDelay => TimeSpan.FromSeconds(5);
 
+    public static IProTunConfigurations ProTun => DefaultProTunConfigurationsFactory.Create();
+    public static IWireGuardConfigurations WireGuard => DefaultWireGuardConfigurationsFactory.Create(
+        baseDirectory: _baseVersionDirectory.Value,
+        commonAppDataProtonVpnPath: _serviceDataPath.Value);
     public static IOpenVpnConfigurations OpenVpn => DefaultOpenVpnConfigurationsFactory.Create(
         baseFolder: _baseVersionDirectory.Value,
         resourcesFolderPath: _resourcesFolderPath.Value, 
-        commonAppDataProtonVpnPath: _serviceDataPath.Value);
-    public static IWireGuardConfigurations WireGuard => DefaultWireGuardConfigurationsFactory.Create(
-        baseDirectory: _baseVersionDirectory.Value,
         commonAppDataProtonVpnPath: _serviceDataPath.Value);
 
     public static IList<string> DohProviders => DefaultDohProvidersFactory.Create();

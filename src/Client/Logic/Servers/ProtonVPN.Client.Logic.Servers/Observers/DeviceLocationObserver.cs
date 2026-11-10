@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -100,11 +100,11 @@ public class DeviceLocationObserver :
         UpdateDeviceLocation(ip, countryCode, isp);
     }
 
-    public async void Receive(ConnectionStatusChangedMessage message)
+    public void Receive(ConnectionStatusChangedMessage message)
     {
         if (_connectionManager.IsDisconnected)
         {
-            await FetchDeviceLocationAsync(DISCONNECTING_FETCH_DELAY_IN_MS);
+            FetchDeviceLocationAsync(DISCONNECTING_FETCH_DELAY_IN_MS).FireAndForget();
         }
     }
 
@@ -124,7 +124,12 @@ public class DeviceLocationObserver :
             if (response.Success)
             {
                 DeviceLocationResponse currentLocation = response.Value;
-                UpdateDeviceLocation(currentLocation.Ip, currentLocation.Country, currentLocation.Isp);
+                UpdateDeviceLocation(
+                    currentLocation.Ip,
+                    currentLocation.Country,
+                    currentLocation.Isp,
+                    currentLocation.Lat,
+                    currentLocation.Long);
             }
         }
         catch (Exception e)
@@ -133,14 +138,14 @@ public class DeviceLocationObserver :
         }
     }
 
-    private async void Initialize()
+    private void Initialize()
     {
-        await FetchDeviceLocationAsync(APP_START_FETCH_DELAY_IN_MS);
+        FetchDeviceLocationAsync(APP_START_FETCH_DELAY_IN_MS).FireAndForget();
     }
 
-    private async void OnNetworkAddressChanged(object? sender, EventArgs e)
+    private void OnNetworkAddressChanged(object? sender, EventArgs e)
     {
-        await FetchDeviceLocationAsync(NETWORK_CHANGED_FETCH_DELAY_IN_MS);
+        FetchDeviceLocationAsync(NETWORK_CHANGED_FETCH_DELAY_IN_MS).FireAndForget();
     }
 
     private async Task FetchDeviceLocationAsync(int delayInMs)
@@ -164,13 +169,22 @@ public class DeviceLocationObserver :
         }
     }
 
-    private void UpdateDeviceLocation(string ipAddress, string countryCode, string isp)
+    private void UpdateDeviceLocation(
+        string ipAddress,
+        string countryCode,
+        string isp,
+        double? latitude = null,
+        double? longitude = null)
     {
+        DeviceLocation? previousDeviceLocation = _settings.DeviceLocation;
+
         DeviceLocation deviceLocation = new()
         {
             IpAddress = ipAddress,
             CountryCode = countryCode.NormalizeCountryCode(),
-            Isp = isp
+            Isp = isp,
+            Latitude = latitude ?? previousDeviceLocation?.Latitude,
+            Longitude = longitude ?? previousDeviceLocation?.Longitude,
         };
 
         _settings.DeviceLocation = deviceLocation;
@@ -179,9 +193,20 @@ public class DeviceLocationObserver :
         {
             Logger.Warn<AppLog>($"Device country location is unknown.");
         }
+
         if (string.IsNullOrEmpty(deviceLocation.IpAddress))
         {
             Logger.Warn<AppLog>($"Device IP is unknown.");
+        }
+
+        if (deviceLocation.Latitude is null)
+        {
+            Logger.Warn<AppLog>($"Device latitude is unknown.");
+        }
+
+        if (deviceLocation.Longitude is null)
+        {
+            Logger.Warn<AppLog>($"Device longitude is unknown.");
         }
     }
 

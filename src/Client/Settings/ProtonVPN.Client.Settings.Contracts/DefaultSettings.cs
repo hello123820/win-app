@@ -29,13 +29,16 @@ namespace ProtonVPN.Client.Settings.Contracts;
 public static class DefaultSettings
 {
     public static string Theme = "Dark";
-    public static int WindowWidth = 1016;
-    public static int WindowHeight = 659;
+    public static WindowLocation WindowLocation = new()
+    {
+        Width = 1016,
+        Height = 659,
+    };
     public static string Language = "en-US";
+    public static bool AreProtonProtocolsEnabled = true;
     public static VpnProtocol VpnProtocol = VpnProtocol.Smart;
     public static NatType NatType = NatType.Strict;
     public static bool IsVpnAcceleratorEnabled = true;
-    public static bool IsWindowMaximized = false;
     public static bool IsNavigationPaneOpened = true;
     public static int SidebarWidth = 280;
     public static bool IsRecentsPaneOpened = true;
@@ -48,6 +51,9 @@ public static class DefaultSettings
     public static bool IsAlternativeRoutingEnabled = true;
     public static bool IsCustomDnsServersEnabled = false;
     public static List<CustomDnsServer> CustomDnsServersList = [];
+    public static int[] ProTunUdpPorts = [443, 88, 1224, 51820, 500, 4500];
+    public static int[] ProTunTcpPorts = [443];
+    public static int[] ProTunTlsPorts = [443];
     public static int[] WireGuardUdpPorts = [443, 88, 1224, 51820, 500, 4500];
     public static int[] WireGuardTcpPorts = [443];
     public static int[] WireGuardTlsPorts = [443];
@@ -73,10 +79,10 @@ public static class DefaultSettings
     public static VpnPlan VpnPlan = VpnPlan.Default;
     public static int MaxDevicesAllowed = 0;
     public static List<FeatureFlag> FeatureFlags = [];
-    public static bool IsFeatureConnectedServerCheckEnabled = true;
-    public static TimeSpan ConnectedServerCheckInterval = TimeSpan.FromMinutes(30);
     public static DefaultConnection DefaultConnection = DefaultConnection.Fastest;
     public static DateTimeOffset LogicalsLastModifiedDate = DateTimeOffset.UnixEpoch;
+    public static DateTimeOffset LastP2PTrafficNotificationUtcDate = DateTimeOffset.UnixEpoch;
+    public static DateTimeOffset LastStreamingNotificationUtcDate = DateTimeOffset.UnixEpoch;
     public static bool IsP2PInfoBannerDismissed = false;
     public static bool IsSecureCoreInfoBannerDismissed = false;
     public static bool IsTorInfoBannerDismissed = false;
@@ -86,9 +92,14 @@ public static class DefaultSettings
     public static int TotalServerCount = 9000;
     public static int WhatsNewOverlayVersion = 2;
     public static TimeSpan WireGuardConnectionTimeout = TimeSpan.FromSeconds(5);
+    public static TimeSpan ProlongedWireGuardConnectionTimeout = TimeSpan.FromSeconds(15);
     public static bool IsEfficiencyModeAllowed = false;
     public static DnsBlockMode DnsBlockMode = DnsBlockMode.Nrpt;
     public static bool IsLocalDnsEnabled = false;
+    public static DateTimeOffset? LastSettingsHeartbeatTimeUtc = null;
+    public static List<ExcludedLocation> ExcludedLocationsList = [];
+    public static bool ShouldDisableWeakHostSetting = true;
+    public static bool IsWireGuardServerRouteEnabled = true;
 
     public static ChangeServerSettings ChangeServerSettings = new()
     {

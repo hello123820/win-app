@@ -123,14 +123,11 @@
   <data name="Automation_Properties_ConnectionDetails_Page">
     <value>მიერთების დეტალების გვერდი</value>
   </data>
+  <data name="Automation_Properties_ConnectionPreferences_Page">
+    <value>კავშირის მორგების გვერდი</value>
+  </data>
   <data name="Automation_Properties_Connection_Card_Component">
     <value>მიერთების ბარათი</value>
-  </data>
-  <data name="Automation_Properties_Features_Bar">
-    <value>ფუნქციების ზოლი</value>
-  </data>
-  <data name="Automation_Properties_Home_Page">
-    <value>მთავარი გვერდი</value>
   </data>
   <data name="Automation_Properties_KillSwitch_Page">
     <value>Kill Switch-ის გვერდი</value>
@@ -148,7 +145,7 @@
     <value>NetShield-ის გვერდი</value>
   </data>
   <data name="Automation_Properties_NoServers_Page">
-    <value>No servers page</value>
+    <value>გვერდი 'სერვერების გარეშე'</value>
   </data>
   <data name="Automation_Properties_PortForwarding_Page">
     <value>პორტის გადამისამართების გვერდი</value>
@@ -189,18 +186,11 @@
   <data name="Automation_Properties_SplitTunneling_Page">
     <value>Split Tunneling-ის გვერდი</value>
   </data>
-  <data name="Cities">
-    <value>ქალაქები</value>
-  </data>
   <data name="City_Fastest">
-    <value>Fastest city</value>
+    <value>უსწრაფესი ქალაქი</value>
   </data>
   <data name="City_Random">
-    <value>Random city</value>
-  </data>
-  <data name="Common_Actions_ActionsFor">
-    <value>ქმედებები {0}-სთვის</value>
-    <comment>Used for accessibility purposes (Narrator) in the recents list to open the alternate actions menu (pin, unpin...). {0} is a place holder which can be a country, a city, a server...</comment>
+    <value>შემთხვევითი ქალაქი</value>
   </data>
   <data name="Common_Actions_Add">
     <value>დამატება</value>
@@ -220,25 +210,14 @@
   <data name="Common_Actions_Connect">
     <value>დაკავშირება</value>
   </data>
-  <data name="Common_Actions_ConnectTo">
-    <value>{0}-სთან დაკავშირება</value>
-    <comment>Used for accessibility purposes (Narrator) to describe the action to Connect to something. {0} is a place holder which can be a country, a city, a server...</comment>
-  </data>
   <data name="Common_Actions_ContactUs">
     <value>დაგვიკავშირდით</value>
-  </data>
-  <data name="Common_Actions_Customize">
-    <value>Customize</value>
   </data>
   <data name="Common_Actions_Delete">
     <value>წაშლა</value>
   </data>
   <data name="Common_Actions_Disconnect">
     <value>გათიშვა</value>
-  </data>
-  <data name="Common_Actions_DisconnectFrom">
-    <value>გათიშვა {0}-დან</value>
-    <comment>Used for accessibility purposes (Narrator) to describe the action to disconnect from something. {0} is a place holder which can be a country, a city, a server...</comment>
   </data>
   <data name="Common_Actions_Duplicate">
     <value>დუბლირება</value>
@@ -259,16 +238,16 @@
     <value>დაყენება</value>
   </data>
   <data name="Common_Actions_MoveDown">
-    <value>Move Down</value>
+    <value>ჩამოწევა</value>
   </data>
   <data name="Common_Actions_MoveUp">
-    <value>Move Up</value>
+    <value>ატანა</value>
   </data>
   <data name="Common_Actions_Reconnect">
     <value>თავიდან დაკავშირება</value>
   </data>
   <data name="Common_Actions_Refresh">
-    <value>Refresh</value>
+    <value>განახლება</value>
   </data>
   <data name="Common_Actions_Remove">
     <value>წაშლა</value>
@@ -300,8 +279,8 @@
   <data name="Common_Links_LearnMore">
     <value>გაიგეთ მეტი</value>
   </data>
-  <data name="Common_Message_Loading">
-    <value>ჩატვირთვა...</value>
+  <data name="Common_Message_AppNotFound">
+    <value>აპლიკაცია აღმოჩენილი არაა</value>
   </data>
   <data name="Common_States_Off">
     <value>გამორთ</value>
@@ -309,11 +288,8 @@
   <data name="Common_States_On">
     <value>ჩართ</value>
   </data>
-  <data name="Common_States_Updating">
-    <value>განახლება...</value>
-  </data>
   <data name="Common_Tags_Beta">
-    <value>BETA</value>
+    <value>ბეტა</value>
     <comment>This tag indicates that this version of the app is currently in beta (early access)</comment>
   </data>
   <data name="Common_Tags_New">
@@ -321,7 +297,7 @@
     <comment>This tag indicates that a newer version of the app is currently available</comment>
   </data>
   <data name="Common_Tags_Recommended">
-    <value>Recommended</value>
+    <value>რეკომენდებულია</value>
     <comment>This tag indicates that a given option in the settings is recommended by Proton</comment>
   </data>
   <data name="Components_Update_GetMostFromYourVpn">
@@ -336,14 +312,29 @@
   <data name="Components_Update_UpdateProtonVpn">
     <value>Proton VPN-ის განახლება</value>
   </data>
+  <data name="Connection_Error_AllServersExcluded">
+    <value>თქვენი პარამეტრები გამორიცხავს ყველა ხელმისაწვდომ სერვერს. დასაკავშირებლად გაასწორეთ გამორიცხვის წესები.</value>
+  </data>
+  <data name="Connection_Error_AllServersExcluded_Action">
+    <value>გამორიცხული მდებარეობები</value>
+  </data>
+  <data name="Connection_Error_ConflictingAdapter_Description">
+    <value>გასასწორებლად დახურეთ, ან წაშალეთ აპლიკაცია, რომელიც ასოცირებულია:</value>
+  </data>
+  <data name="Connection_Error_ConflictingAdapter_Title">
+    <value>შეიძლება, Protong VPN-ს დაკავშირებაში სხვა აპი უშლის ხელს</value>
+  </data>
   <data name="Connection_Error_EditProfile">
     <value>პროფილის ჩასწორება</value>
   </data>
   <data name="Connection_Error_MissingConnectionCertificate">
     <value>Proton VPN-მა ქსელის პრობლემის გამო ავთენტიკაციის სერტიფიკატი ვერ გამოითხოვა.</value>
   </data>
+  <data name="Connection_Error_MobileHotspotEnabled">
+    <value>კავშირი თქვენი მოწყობილობის ქსელის პარამეტრების გამო დაიბლოკა. ამისი მიზეზი, შეიძლება, იყოს მობილური ცხელი წერტილი, სხვა VPN აპლიკაცია ან ვირტუალური მანქანის პროგრამული უზრუნველყოფა. გადახედეთ თქვენს ქსელის კონფიგურაციას ან დაუკავშირდეთ მხარდაჭერის გუნდს.</value>
+  </data>
   <data name="Connection_Error_NoServers">
-    <value>All servers in your selection are unavailable. Please expand your selection or try again later.</value>
+    <value>თქვენს მიერ არჩეული ყველა სერვერი მიუწვდომელია. გთხოვთ, გააფართოვოთ თქვენი არჩევანი. ან სცადოთ მოგვიანებით.</value>
   </data>
   <data name="Connection_Error_NoServers_Profile">
     <value>თქვენი სერვერის არჩევანი '{0}'-სთვის ხელმიუწვდომელია. აირჩიეთ სხვა სერვერი, ან მოგვიანებით სცადეთ.</value>
@@ -357,6 +348,9 @@
   </data>
   <data name="Connection_Error_RpcServerUnavailable">
     <value>Proton VPN-ს მიერთება არ შეუძლია, რადგან თქვენს სისტემაზე RPC სერვერი ხელმიუწვდომელია.</value>
+  </data>
+  <data name="Connection_Error_ServerValidation">
+    <value>სერვერის დეტალების გადამოწმება შეუძლებელია. სცადეთ სხვა სერვერი, ან მიწერეთ ამ პრობლემის შესახებ ჩვენი დახმარების გუნდს.</value>
   </data>
   <data name="Connection_Error_SessionLimitReachedFreeUser">
     <value>მიაღწიეთ მოწყობლობების მაქსიმალურ დასაშვებ რაოდენობას. გათიშეთ სხვა მოწყობილობა, რომ ეს მიაერთოთ ან, 10 მოწყობილობის ერთდროულად მისაერთებლად, PLUS ტარიფამდე განახლდით.</value>
@@ -377,40 +371,35 @@
     <value>არსებობს პრობლემა VPN სერვერის სერტიფიკატის გადამოწმებასთან, რაც შეიძლება ნიშნავდეს, რომ თქვენი ქსელური შეერთება გზაში იცვლება, ან სერვერს, რომელთან მიერთებასაც ცდილობთ, პრობლემები აქვს. დაუკავშირდით ჩვენი მხარდაჭერის გუნდს ანგარიშის გაგზავნით.</value>
   </data>
   <data name="Connection_Error_TwoFactorRequired_Description">
-    <value>To connect to VPN, go to your organization's 2FA portal and tap your security key.</value>
+    <value>VPN-ზე დასაკავშირებლად გადადით თქვენი ორგანიზაციის 2FA პორტალზე და დაატყაპუნეთ თქვენი უსაფრთხოების გასაღებზე.</value>
   </data>
   <data name="Connection_Error_TwoFactorRequired_Title">
-    <value>Two-factor authentication (2FA) required</value>
+    <value>ორფაქტორიანი ავთენტიკაცია (2FA) აუცილებელია</value>
   </data>
   <data name="Connection_Error_Unknown">
-    <value>Check your internet connection and try again. If that doesn't work, contact our customer support team.
+    <value>შეამოწმეთ თქვენი ინტერნეტკავშირი და თავიდან სცადეთ. თუ არ იმუშავა, დაუკავშიერდით ჩვენი მომხმარებლის მხარდაჭერის გუნდს.
 
-Error code: {0}</value>
+შეცდომის კოდი: {0}</value>
   </data>
   <data name="Connection_Error_ViewPossibleSolutions">
     <value>გასწორებების ნახვა</value>
   </data>
   <data name="Connection_Error_WireGuardAdapterInUse">
-    <value>Your device's WireGuard adapter is in use. Disconnect from any other VPN running on your device, then try again.</value>
+    <value>თქვენი მოწყობილობის WireGuard ადაპტერი გამოიყენება. გათიშეთ ნებისმიერი სხვა VPN, რომელიც მუშაობს თქვენს მოწყობილობაზე და თავიდან სცადეთ.</value>
+  </data>
+  <data name="Connection_Feedback_Question">
+    <value>როგორია თქვენი შეერთება?</value>
   </data>
   <data name="Connection_Intent_AutoSelected">
     <value>ავტომატურადაა არჩეული წყაროდან</value>
     <comment>Appears in the connection card for free users. A set of flags is displayed after the text (eg. Auto-selected from [us-flag] [jp-flag]...)</comment>
-  </data>
-  <data name="Connection_Intent_City_Server">
-    <value>{0} #{1}</value>
-    <comment>Name of the server including city name. {0} is a placeholder for the city name. {1} is a placeholder for the number associated to the server (eg. Zurich #20)</comment>
-  </data>
-  <data name="Connection_Intent_Country_Server">
-    <value>{0} #{1}</value>
-    <comment>Name of the server including country name. {0} is a placeholder for the country name. {1} is a placeholder for the number associated to the server (eg. Switzerland #20)</comment>
   </data>
   <data name="Connection_Via_SecureCore">
     <value>{0}-ის გავლით</value>
     <comment>Label used when connecting through Secure Core. {0} is a place holder for the name of the country the user is going through.</comment>
   </data>
   <data name="Connections_Cities_One">
-    <value>City ({0})</value>
+    <value>ქალაქი ({0})</value>
   </data>
   <data name="Connections_Cities_Other">
     <value>ქალაქები ({0})</value>
@@ -425,7 +414,7 @@ Error code: {0}</value>
     <value>ამ ქალაქში ყველა სერვერი ტექმომსახურებაზეა</value>
   </data>
   <data name="Connections_Countries_One">
-    <value>Country ({0})</value>
+    <value>ქვეყანა ({0})</value>
   </data>
   <data name="Connections_Countries_Other">
     <value>ქვეყნები ({0})</value>
@@ -443,16 +432,16 @@ Error code: {0}</value>
     <value>ამ ქვეყანაში ყველა სერვერი ტექმომსახურებაზეა</value>
   </data>
   <data name="Connections_Country_UnderMaintenance_Title">
-    <value>Unable to connect</value>
+    <value>დაკავშირება შეუძლებელია</value>
   </data>
   <data name="Connections_Fastest">
     <value>უსწრაფესი</value>
   </data>
   <data name="Connections_Free_Servers_One">
-    <value>Free server</value>
+    <value>უფასო სერვერი</value>
   </data>
   <data name="Connections_Free_Servers_Other">
-    <value>Free servers</value>
+    <value>უფასო სერვერები</value>
   </data>
   <data name="Connections_Gateway">
     <value>კარიბჭე</value>
@@ -479,25 +468,25 @@ Error code: {0}</value>
     <value>გამოყოფილი სერვერი ({0})</value>
   </data>
   <data name="Connections_P2P_Cities_One">
-    <value>P2P city ({0})</value>
+    <value>P2P ქალაქი ({0})</value>
   </data>
   <data name="Connections_P2P_Cities_Other">
     <value>P2P ქალაქები ({0})</value>
   </data>
   <data name="Connections_P2P_Countries_One">
-    <value>P2P country ({0})</value>
+    <value>P2P ქვეყანა ({0})</value>
   </data>
   <data name="Connections_P2P_Countries_Other">
     <value>P2P ქვეყნები ({0})</value>
   </data>
   <data name="Connections_P2P_Servers_One">
-    <value>P2P server</value>
+    <value>P2P სერვერი</value>
   </data>
   <data name="Connections_P2P_Servers_Other">
-    <value>P2P servers</value>
+    <value>P2P სერვერები</value>
   </data>
   <data name="Connections_P2P_States_One">
-    <value>P2P state ({0})</value>
+    <value>P2P-ის ქვეყანა ({0})</value>
   </data>
   <data name="Connections_P2P_States_Other">
     <value>P2P შტატები ({0})</value>
@@ -550,15 +539,6 @@ Error code: {0}</value>
     <value>პროფილები ხელმისაწვდომია VPN Plus-თან ერთად</value>
     <comment>The text in the tooltip when hovering a profile and the user has a free plan</comment>
   </data>
-  <data name="Connections_Profiles_Settings_Description">
-    <value>პროფილის პარამეტრები გადაფარავენ თქვენი VPN-ის პარამეტრებს, როცა მიერთებულია.</value>
-  </data>
-  <data name="Connections_Profiles_Settings_Header">
-    <value>მომხმარებლის პარამეტრების დამატება</value>
-  </data>
-  <data name="Connections_Random">
-    <value>შემთხვევითი</value>
-  </data>
   <data name="Connections_Recents_One">
     <value>უახლესი ({0})</value>
   </data>
@@ -578,37 +558,16 @@ Error code: {0}</value>
     <value>მიმაგრებული ({0})</value>
   </data>
   <data name="Connections_SecureCore_Countries_One">
-    <value>Secure Core country ({0})</value>
+    <value>Secure Core-ის ქვეყანა ({0})</value>
   </data>
   <data name="Connections_SecureCore_Countries_Other">
     <value>Secure Core-ის ქვეყნები ({0})</value>
   </data>
   <data name="Connections_SecureCore_Servers_One">
-    <value>Secure Core server</value>
+    <value>Secure Core-ის სერვერი</value>
   </data>
   <data name="Connections_SecureCore_Servers_Other">
-    <value>Secure Core servers</value>
-  </data>
-  <data name="Connections_SeeCities_One">
-    <value>ქალაქის ნახვა ({0})</value>
-  </data>
-  <data name="Connections_SeeCities_Other">
-    <value>ქალაქის ნახვა ({0})</value>
-  </data>
-  <data name="Connections_SeeServers_One">
-    <value>სერვერის ნახვა ({0})</value>
-  </data>
-  <data name="Connections_SeeServers_Other">
-    <value>სერვერის ნახვა ({0})</value>
-  </data>
-  <data name="Connections_SeeStates_One">
-    <value>ქვეყნის ({0}) ნახვა</value>
-  </data>
-  <data name="Connections_SeeStates_Other">
-    <value>ქვეყნის ({0}) ნახვა</value>
-  </data>
-  <data name="Connections_Server">
-    <value>სერვერი</value>
+    <value>Secure Core-ის სერვერები</value>
   </data>
   <data name="Connections_Server_Restricted">
     <value>სერვერი ხელმისაწვდომია VPN Plus-ით</value>
@@ -617,10 +576,10 @@ Error code: {0}</value>
     <value>ეს სერვერი ტექმომსახურებაშია</value>
   </data>
   <data name="Connections_Servers_One">
-    <value>Server</value>
+    <value>სერვერი</value>
   </data>
   <data name="Connections_Servers_Other">
-    <value>Servers</value>
+    <value>სერვერი</value>
   </data>
   <data name="Connections_State">
     <value>მდგომარეობა</value>
@@ -634,22 +593,22 @@ Error code: {0}</value>
     <comment>Message appears as a tooltip whenever all the servers from that state are under maintenance. In this context, States refers to Country states (eg. Arizona, California... for USA)</comment>
   </data>
   <data name="Connections_States_One">
-    <value>State ({0})</value>
+    <value>შტატი ({0})</value>
   </data>
   <data name="Connections_States_Other">
     <value>შტატები ({0})</value>
   </data>
   <data name="Connections_Tor_Countries_One">
-    <value>Tor country ({0})</value>
+    <value>Tor-ის ქვეყანა ({0})</value>
   </data>
   <data name="Connections_Tor_Countries_Other">
     <value>Tor ქვეყნები ({0})</value>
   </data>
   <data name="Connections_Tor_Servers_One">
-    <value>Tor server</value>
+    <value>Tor-ის სერვერი</value>
   </data>
   <data name="Connections_Tor_Servers_Other">
-    <value>Tor servers</value>
+    <value>Tor-ის სერვერები</value>
   </data>
   <data name="Countries">
     <value>ქვეყნები</value>
@@ -657,44 +616,11 @@ Error code: {0}</value>
   <data name="Countries_All">
     <value>ყველა</value>
   </data>
-  <data name="Countries_City_One">
-    <value>{0} ქალაქი</value>
-  </data>
-  <data name="Countries_City_Other">
-    <value>{0} ქალაქი</value>
-  </data>
-  <data name="Countries_Connect">
-    <value>დაკავშირება</value>
-    <comment>Connect button label on a country row in the countries tab</comment>
-  </data>
-  <data name="Countries_Fastest">
-    <value>უსწრაფესი ქვეყანა</value>
-  </data>
-  <data name="Countries_NoSearchResults">
-    <value>შედეგების გარეშე</value>
-  </data>
-  <data name="Countries_NumberOfServers">
-    <value>სერვერები ({0})</value>
-    <comment>{0} represents a number of servers</comment>
-  </data>
   <data name="Countries_P2P">
     <value>P2P</value>
   </data>
-  <data name="Countries_P2P_Cities">
-    <value>P2P ქალაქები ({0})</value>
-    <comment>{0} represents a number of P2P cities in the country</comment>
-  </data>
   <data name="Countries_P2P_Description">
     <value>გადმოწერეთ ფაილები P2P (გამჭოლი) ქსელებით და გაიუმჯობესეთ თქვენი ინტერნეტში თამაშის და ვიდეოზარების ხარისხი.</value>
-  </data>
-  <data name="Countries_Page_FreeUser_Description">
-    <value>განბლოკეთ ქვეყნის არჩევანი VPN Plus-თან ერთად</value>
-  </data>
-  <data name="Countries_SearchPlaceholder">
-    <value>მე მინდა ვიმუშაო ქვეყნიდან...</value>
-  </data>
-  <data name="Countries_Section_Header">
-    <value>VPN შეერთებები</value>
   </data>
   <data name="Countries_SecureCore">
     <value>Secure Core</value>
@@ -708,18 +634,15 @@ Error code: {0}</value>
   <data name="Countries_SmartRouting">
     <value>Smart Routing</value>
   </data>
+  <data name="Countries_SmartRouting_RoutedThrough">
+    <value>ჭკვიანი მარშრუტიზაცია {0}-ის გავლით</value>
+    <comment>Label used when server is virtual. {0} is a place holder for the name of the country the server is routed through.</comment>
+  </data>
   <data name="Countries_Tor">
     <value>Tor</value>
   </data>
-  <data name="Countries_TorServers">
-    <value>Tor-ის სერვერები ({0})</value>
-    <comment>{0} represents a number of tor servers in the country</comment>
-  </data>
   <data name="Countries_Tor_Description">
     <value>გამოიყენეთ Tor-ის ქსელი თქვენი VPN მიერთების ზემოდან, დამატებითი კონფიდენციალობისთვის.</value>
-  </data>
-  <data name="Countries_TryDifferentKeyword">
-    <value>სცადეთ სხვა სიტყვა</value>
   </data>
   <data name="Country_Fastest">
     <value>უსწრაფესი ქვეყანა</value>
@@ -1713,6 +1636,10 @@ Error code: {0}</value>
     <value>სამოა</value>
     <comment>The name of WS country</comment>
   </data>
+  <data name="Country_val_XK">
+    <value>კოსოვო</value>
+    <comment>The name of XK country</comment>
+  </data>
   <data name="Country_val_YE">
     <value>იემენი</value>
     <comment>The name of YE country</comment>
@@ -1738,7 +1665,7 @@ Error code: {0}</value>
     <comment>The name of ZZ (unknown or not specified) country</comment>
   </data>
   <data name="Dialogs_BaseFilteringEngine_Description">
-    <value>The Base Filtering Engine (BFE) service on your Windows device is disabled. This service needs to be enabled for Proton VPN to work properly.</value>
+    <value>თქვენს Windows მოწყობილობაზე გამორთულია სერვისი Base Filtering Engine (BFE). Proton VPN-ის სწორად მუშაობისთვის ეს სერვისი ჩართული უნდა იყოს.</value>
   </data>
   <data name="Dialogs_BaseFilteringEngine_HowToEnable">
     <value>როგორ ჩავრთო Base Filtering Engine</value>
@@ -1762,13 +1689,13 @@ Error code: {0}</value>
     <value>ასწიეთ სატარიფო გეგმა Plus-ის სერვერებზე და სხვა ფუნქციებზე წვდომის დასაბრუნებლად.</value>
   </data>
   <data name="Dialogs_DisabledService_Description">
-    <value>Looks like the Proton VPN Service is disabled. You'll need to re-enable the service to connect.</value>
+    <value>როგორც ჩანს, Proton VPN სერვისი გამორთულია. დასაკავშირებლად საჭიროა სერვისის ხელახლა ჩართვა.</value>
   </data>
   <data name="Dialogs_DisabledService_Title">
     <value>გასაგრძელებლად ჩართეთ Windows-ის სერვისი</value>
   </data>
   <data name="Dialogs_FreeConnections_Description_One">
-    <value>Proton Free automatically connects you to the fastest available free server from our {0} free country. This will normally be the closest server to your location.</value>
+    <value>Proton Free ავტომატურად მიუერთდება უსწრაფეს უფასო ხელმისაწვდომ სერვერს ჩვენი {0} უფასო ქვეყნიდან. ეს ჩვეულებრივ თქვენს მდებარეობასთან არსებული უახლოესი სერვერია.</value>
   </data>
   <data name="Dialogs_FreeConnections_Description_Other">
     <value>Proton Free ავტომატურად მიუერთდება უსწრაფეს უფასო ხელმისაწვდომ სერვერს ჩვენი {0} უფასო ქვეყნიდან. ეს ჩვეულებრივ თქვენს მდებარეობასთან არსებული უახლოესი სერვერია.</value>
@@ -1782,113 +1709,47 @@ Error code: {0}</value>
   <data name="Dialogs_FreeConnections_Title">
     <value>უფასო მიერთებები</value>
   </data>
-  <data name="Dialogs_Latency_Description">
-    <value>დაყოვნება აჩვენებს, რამდენი დრო მიაქვს სერვერს, რომ მოთხოვნებზე გიპასუხოთ.
-
-მაღალი დაყოვნება თქვენს მიერთებას ანელებს.</value>
-  </data>
-  <data name="Dialogs_Latency_HighRange_Description">
-    <value>VPN-მა, შეიძლება, ნორმალურზე ნელა იმუშაოს</value>
-  </data>
-  <data name="Dialogs_Latency_HighRange_Title">
-    <value>მაღალი (150მწმ+)</value>
-  </data>
-  <data name="Dialogs_Latency_LowRange_Description">
-    <value>სინათლის სიჩქარე</value>
-  </data>
-  <data name="Dialogs_Latency_LowRange_Title">
-    <value>დაბალი (1მწმ- 50მწმ)</value>
-  </data>
-  <data name="Dialogs_Latency_MediumRange_Description">
-    <value>VPN-ის სიჩქარეზე გავლენა, ალბათ, არ ექნება</value>
-  </data>
-  <data name="Dialogs_Latency_MediumRange_Title">
-    <value>საშუალო (50მწმ - 150 მწმ)</value>
-  </data>
-  <data name="Dialogs_Latency_Title">
-    <value>რა არის დაყოვნება?</value>
-  </data>
   <data name="Dialogs_NpsSurvey_CommentLabel">
-    <value>Please let us know why you gave that rating</value>
+    <value>გვითხარით, რატომ მოგვეცით ეს რეიტინგი</value>
   </data>
   <data name="Dialogs_NpsSurvey_ErrorSubtitle">
-    <value>We couldn't send your feedback. Please check your connection and try again.</value>
+    <value>თქვენი უკუკავშირი ვერ გავგზავნეთ. შეამოწმეთ კავშირი და და თავიდან სცადეთ.</value>
   </data>
   <data name="Dialogs_NpsSurvey_ErrorTitle">
-    <value>Something went wrong</value>
+    <value>რაღაც არასწორად წავიდა</value>
   </data>
   <data name="Dialogs_NpsSurvey_HighRateDescription">
-    <value>10 is very likely</value>
+    <value>10 დიდი ალბათობით</value>
   </data>
   <data name="Dialogs_NpsSurvey_LowRateDescription">
-    <value>0 is very unlikely</value>
+    <value>ნულის შანსი მცირეა</value>
   </data>
   <data name="Dialogs_NpsSurvey_Optional">
-    <value>Optional</value>
+    <value>არასავალდებულო</value>
   </data>
   <data name="Dialogs_NpsSurvey_ShareAnonymously">
-    <value>Share anonymously</value>
+    <value>ანონიმურად გაზიარება</value>
   </data>
   <data name="Dialogs_NpsSurvey_SuccessSubtitle">
-    <value>Your feedback helps us improve Proton VPN.</value>
+    <value>თქვენი უკუკავშირი გვეხმარება Proton VPN-ის გაუმჯობესებაში.</value>
   </data>
   <data name="Dialogs_NpsSurvey_SuccessTitle">
-    <value>Thanks for your feedback</value>
+    <value>მადლობა გამოხმაურებისთვის</value>
   </data>
   <data name="Dialogs_NpsSurvey_Title">
-    <value>How likely are you to recommend Proton VPN to a friend?</value>
+    <value>რამხელაა შანსი, რომ Proton VPN-ს რეკომენდაციას გაუწევთ მეგობართან?</value>
   </data>
   <data name="Dialogs_NpsSurvey_TryAgain">
-    <value>Try again</value>
+    <value>კიდევ სცადეთ</value>
   </data>
   <data name="Dialogs_P2PDetection_Description">
-    <value>თქვენი შეერთება გათიშულია, რადგან იყენებთ სერვერს, რომელსაც P2P ტრაფიკის მხარდაჭერა არ გააჩნია. P2P მხარდაუჭერელია უფასო სერვერებზე. P2P-სთვის სხვა სერვერი აირჩიეთ.</value>
+    <value>ასწიეთ სატარიფო გეგმა P2P(გამჭოლი) სერვერების განსაბლოკად სწრაფი ონლაინტამაშებისა და ტორენთისთვის, ან დაასრულეთ თქვენი P2P აქტივობა და აღადგილეთ თქვენი კავშირი.</value>
   </data>
   <data name="Dialogs_P2PDetection_Title">
-    <value>აღმოჩენილია P2P ტრაფიკი</value>
+    <value>უფასო VPN სერვერებზე P2P დაშვებული არაა</value>
   </data>
-  <data name="Dialogs_P2P_HowToTorrentLink">
-    <value>როგორ ვიმუშაოთ ტორენტებთან P2P-ით</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_Title">
-    <value>P2P</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsP2PServer">
-    <value>რა არის P2P სერვერი?</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsP2PServer_Description">
-    <value>P2P (გამჭოლი) VPN სერვერები ტორენტის საიტებს განბლოკავენ.</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsTorrenting">
-    <value>რა არის ტორენტი?</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsTorrenting_Description">
-    <value>სწრაფი გაზიარება და დიდი ფაილების გადმოწერ P2P ქსელით.</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhyUse">
-    <value>რატომ გამოვიყენო P2P სერვერი ტორენტებთან მუშაობისას?</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhyUse_Description">
-    <value>• გაზრდლი ატვირთვისა და გადმოწერის სიჩქარე
-• აქტივობის ჟურნალის გარეშე
-• დამალეთ თქვენი IP მისამართი თქვენი სერვისის მომწოდებლებისგან და პარტნიორებისგან</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_Protocol_Description">
-    <value>პროტოკოლი ინსტრუქციების სეტია, რომელსაც თქვენი მოწყობილობა მიჰყვება სერვერთან დაკავშირებისა და ურთიერთობისათვის.</value>
-  </data>
-  <data name="Dialogs_Protocol_SwitchHeader">
-    <value>VPN-ის პროტოკოლის გადართვა</value>
-  </data>
-  <data name="Dialogs_Protocol_Title">
-    <value>რა არის VPN პროტოკოლი?</value>
+  <data name="Dialogs_P2PDetection_WindowTitle">
+    <value>აღმოაჩინეთ VPN Plus</value>
   </data>
   <data name="Dialogs_ReportIssue_ContactForm_Email">
     <value>ელფოსტა</value>
@@ -1910,7 +1771,7 @@ Error code: {0}</value>
     <value>რა პრობლემა გაქვთ?</value>
   </data>
   <data name="Dialogs_ReportIssue_NoLogsWarning">
-    <value>Error logs help us to get to the bottom of your issue. If you don't include them, we may not be able to investigate fully.</value>
+    <value>შეცდომების ჟურნალი გვეხმარება თქვენი პრობლემის ფსკერში ჩავიხედოთ. თუ მათ არ გამოგვიგზავნით, დახმარებას ადვილად ვერ შევძლებთ.</value>
   </data>
   <data name="Dialogs_ReportIssue_QuickFixes">
     <value>სწრაფი ჩასწორებები</value>
@@ -1946,55 +1807,23 @@ Error code: {0}</value>
   <data name="Dialogs_ReportIssue_Title">
     <value>პრობლემის ანგარიშის გადაგზავნა</value>
   </data>
-  <data name="Dialogs_ServerLoad_Description">
-    <value>სერვერის დატვირთვა გაჩვენებთ, რამდენად ახლოსაა სერვერი მის მაქსიმალურ ტევადობასთან.
-
-სერვერის მაღალ დატვირთვას თქვენი მიერთების შენელება შეუძლია.</value>
+  <data name="Dialogs_StreamingDetection_WindowTitle">
+    <value>აღმოაჩინეთ VPN Plus</value>
   </data>
-  <data name="Dialogs_ServerLoad_HighRange_Description">
-    <value>VPN-მა, შეიძლება, ნორმალურზე ნელა იმუშაოს</value>
+  <data name="Dialogs_StreamingWarning_Description">
+    <value>VPN Plus სერვერები საშუალებას გაძლევთ, ისიამოვნოთ თქვენი საყვარელი ფილმებითა და სერიალებით მთელი მსოფლიოდან.</value>
   </data>
-  <data name="Dialogs_ServerLoad_HighRange_Title">
-    <value>მაღალი (91–100%)</value>
-  </data>
-  <data name="Dialogs_ServerLoad_LowRange_Description">
-    <value>სინათლის სიჩქარე</value>
-  </data>
-  <data name="Dialogs_ServerLoad_LowRange_Title">
-    <value>დაბალი (1–75%)</value>
-  </data>
-  <data name="Dialogs_ServerLoad_MediumRange_Description">
-    <value>VPN-ის სიჩქარეზე გავლენა, ალბათ, არ ექნება</value>
-  </data>
-  <data name="Dialogs_ServerLoad_MediumRange_Title">
-    <value>საშუალო (76–90%)</value>
-  </data>
-  <data name="Dialogs_ServerLoad_Title">
-    <value>რა არის სერვერის დატვირთვა?</value>
-  </data>
-  <data name="Dialogs_SmartRouting_Title">
-    <value>Smart Routing</value>
+  <data name="Dialogs_StreamingWarning_Title">
+    <value>VPN-ის დაბლოკვების გვერდის ასავლელად ასწიეთ სატარიფო გეგმა</value>
   </data>
   <data name="Dialogs_SubscriptionExpired_MaybeLater">
     <value>შესაძლოა მოგვიანებით</value>
   </data>
   <data name="Dialogs_SystemProxy_Description">
-    <value>It looks like your device is using a proxy server. This may interfere with your VPN protection.</value>
-  </data>
-  <data name="Dialogs_SystemProxy_Disable">
-    <value>პროქსის გამორთვა</value>
+    <value>როგორც ჩანს, თქვენი მოწყობილობა იყენებს პროქსი სერვერს. ამან შეიძლება ხელი შეუშალოს თქვენს VPN დაცვას.</value>
   </data>
   <data name="Dialogs_SystemProxy_Title">
     <value>აღმოჩენილია პროქსი სერვერი</value>
-  </data>
-  <data name="Dialogs_Tor_Description">
-    <value>მიუერთდით Tor სერვერს, რომ იქონიოთ წვდომა დამალულ სერვისებთან და .onlion ვებგვერდებთან ნებისმიერი ბრაუზერით.</value>
-  </data>
-  <data name="Dialogs_Tor_LearnMore">
-    <value>როგორ შევიდე Tor-ის ქსელში</value>
-  </data>
-  <data name="Dialogs_Tor_Title">
-    <value>Tor</value>
   </data>
   <data name="Dialogs_Troubleshooting_Antivirus">
     <value>გამორთეთ ანტივირუსი ან ბრანდმაუერის პროგრამა</value>
@@ -2027,10 +1856,10 @@ Error code: {0}</value>
     <value>მიერთების დახმარება</value>
   </data>
   <data name="Dialogs_UpdateConfirmation_Message_KillSwitchOff">
-    <value>This will disconnect you from VPN. Any active internet connections will be temporarily unprotected.</value>
+    <value>ეს გათიშავს VPN-ს. ნებისმიერი აქტიური ინტერნეტკავშირი დროებით დაუცველი იქნება.</value>
   </data>
   <data name="Dialogs_UpdateConfirmation_Message_KillSwitchOn">
-    <value>This will disconnect you from VPN and temporarily disable kill switch. Any active internet connections will be temporarily unprotected.</value>
+    <value>ეს გათიშავს VPN-ს და დროებით გამორთავს Kill Switch-ს. ნებისმიერი აქტიური ინტერნეტ კავშირი დროებით დაუცველი დარჩება.</value>
   </data>
   <data name="Dialogs_UpdateConfirmation_Title_Install">
     <value>დავაყენო განახლება?</value>
@@ -2086,68 +1915,60 @@ Error code: {0}</value>
   <data name="Dialogs_WelcomeToVpnPlus_Title">
     <value>მოგესალმებათ VPN Plus</value>
   </data>
-  <data name="Dialogs_WelcomeUnlimited_Description1">
-    <value>გილოცავთ! თქვენ განბლოკეთ ფასიანი უსაფრთხოების და წარმადობის ფუნქციები ყველა Proton-ის სერვისისთვის.</value>
-  </data>
-  <data name="Dialogs_WelcomeUnlimited_Description2">
-    <value>გაერთეთ Proton-ის კონფიდენციალობით.</value>
+  <data name="Dialogs_WelcomeUnlimited_Description">
+    <value>თქვენ განბლოკეთ Proton VPN, Mail, Calendar, Drive და Pass-ის ყველა ფასიანი ფუნქცია.</value>
   </data>
   <data name="Dialogs_WelcomeUnlimited_Title">
-    <value>მოგესალმებათ Proton Unlimited</value>
-  </data>
-  <data name="Dialogs_Welcome_Message">
-    <value>მიმდინარეობს თქვენი VPN მიერთების მორგება. ამას რამდენიმე წუთი შეიძლება, დასჭირდეს.</value>
-  </data>
-  <data name="Dialogs_Welcome_Title">
-    <value>მოგესალმებით Proton VPN-ში</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Gateways_Description">
-    <value>You can now access your organization's dedicated servers from the main sidebar.</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Gateways_Title">
-    <value>Gateways have moved</value>
+    <value>მოგესალმებათ {0}</value>
+    <comment>Title to welcome the user after an account upgrade. {0} is a placeholder for the name of the new plan (eg. Proton Unlimited, Proton Duo, Proton Family).</comment>
   </data>
   <data name="Dialogs_WhatsNew_LanConnections_Description">
-    <value>You can now connect to printers, speakers, and other devices on your local network (LAN), bypassing the VPN tunnel.</value>
+    <value>ახლა შეგიძლიათ დაუკავშირდეთ პრინტერებს, დინამიკებს და სხვა მოწყობილობებს თქვენს ლოკალურ ქსელში (LAN), VPN გვირაბის გვერდის ავლით.</value>
   </data>
   <data name="Dialogs_WhatsNew_LanConnections_Title">
-    <value>LAN connections</value>
-  </data>
-  <data name="Dialogs_WhatsNew_NewLook_Description">
-    <value>We refreshed our designs and moved some things around to make the app easier to use.</value>
-  </data>
-  <data name="Dialogs_WhatsNew_NewLook_Title">
-    <value>New look, same protection</value>
+    <value>LAN კავშირები</value>
   </data>
   <data name="Dialogs_WhatsNew_PortNumber_Description">
-    <value>When port forwarding is enabled, you'll now see your active port number on the home screen.</value>
+    <value>როდესაც პორტის გადამისამართება ჩართულია, თქვენ ახლა იხილავთ თქვენი აქტიური პორტის ნომერს მთავარ ეკრანზე.</value>
   </data>
   <data name="Dialogs_WhatsNew_PortNumber_Title">
-    <value>Active port number</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Profiles_Description">
-    <value>Add advanced profile settings like NetShield and port forwarding, or set up Connect and Go to launch a website of your choice when you connect.</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Profiles_Title">
-    <value>Even more powerful profiles</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Recents_Description">
-    <value>It's now even easier to reconnect to your favorite servers. View your most recent connections on the home screen, or pin them for quick access.</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Recents_Title">
-    <value>Introducing Recents</value>
+    <value>აქტიური პორტის ნომერი</value>
   </data>
   <data name="Dialogs_WhatsNew_TakeALook">
-    <value>Take a look</value>
+    <value>შეხედვა</value>
   </data>
   <data name="Dialogs_WhatsNew_Title">
-    <value>What's new</value>
+    <value>სიახლეები</value>
   </data>
   <data name="Dialogs_WhatsNew_TrayApp_Description">
-    <value>You can now connect, disconnect, and change your default connection from the system tray.</value>
+    <value>ახლა შეგიძლიათ დაუკავშირდეთ, გათიშოთ და შეცვალოთ ნაგულისხმევი კავშირი სისტემურ საათთან არსებული ხატულათი.</value>
   </data>
   <data name="Dialogs_WhatsNew_TrayApp_Title">
-    <value>New system tray app</value>
+    <value>ახალი აპი სისტემურ საათთან</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_ExcludeLocations">
+    <value>მდებარეობების გამორიცხვა</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Message">
+    <value>თუ არსებობს მდებარეობები, რომელთაგანაც არ გსურთ ავტომატურად დაკავშირება, შეგიძლიათ გამორიცხოთ ისინი ყველაზე სწრაფი, ან შემთხვევითი ქვეყნიდან.</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Skip">
+    <value>გამოტოვება</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Title">
+    <value>ის ქვეყანა არაა, რომელიც გნებავდათ?</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_ActionButton">
+    <value>მდებარეობების გამორიცხვა</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_CloseButton">
+    <value>შესაძლოა, მოგვიანებით</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_Subtitle">
+    <value>ახლა შეგიძლიათ ქვეყნების, ან ქალაქების გამორიცხვა ყველაზე სწრაფი, შემთხვევითი კავშირებიდან.</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_Title">
+    <value>არასასურველი მდებარეობების აცილება</value>
   </data>
   <data name="Exit_Confirmation_Title">
     <value>გავიდე Proton VPN-დან?</value>
@@ -2162,10 +1983,10 @@ Error code: {0}</value>
     <value>VPN-ის გარეშე ინტერნეტში მუშაობით მოწყვლადად გტოვებთ მდებარეობაზე დამოკიდებულ ინტერნეტის შეზღუდვებზე.</value>
   </data>
   <data name="Flyouts_Country_Description2">
-    <value>Websites can use geoblocks to restrict content to certain locations. Governments can also instruct ISPs (Internet Service Providers) to block certain websites in their country.</value>
+    <value>ვებსაიტებს შეუძლიათ, გამოიყენონ გეობლოკირება შინაარსის გარკვეულ ადგილებზე შესაზღუდად. მთავრობებს ასევე შეუძლიათ დაავალონ ISP-ებს, (ინტერნეტპროვაიდერებს) დაბლოკონ გარკვეული ვებსაიტები მათ ქვეყანაში.</value>
   </data>
   <data name="Flyouts_Country_Description3">
-    <value>A VPN makes it looks like you're browsing from somewhere else, protecting you from surveillance and censorship.</value>
+    <value>VPN-ს შეუძლია, თქვენი მდებარეობა დამალოს და ამით დაგიცვათ ჯაშუშობისა და ცენზურისგან.</value>
   </data>
   <data name="Flyouts_Country_Title">
     <value>ქვეყანა</value>
@@ -2174,10 +1995,10 @@ Error code: {0}</value>
     <value>მიუერთედით VPN-ს თქვენი ვირტუალური მდებარეობის შესაცვლელად</value>
   </data>
   <data name="Flyouts_IpAddress_Description_Connected">
-    <value>Your VPN IP masks your real IP address. This makes it look like you're browsing from your VPN location, so your online activity can't be linked to your device.</value>
+    <value>თქვენი VPN IP თქვენს ნამდვილ IP მისამართს ნიღბავს. ეს ქმნის შთაბეჭდილებას, თითქოს ინტერნეტსი თქვენი VPN-ის მდებარეობიდან მუშაობდეთ. ამიტომ თქვენი ინტერნეტ-აქტივობა არ შეიძლება იყოს დაკავშირებული თქვენს მოწყობილობასთან.</value>
   </data>
   <data name="Flyouts_IpAddress_Description_Disconnected1">
-    <value>This unique code can be used by websites and ISPs (Internet Service Providers) to link your location and browsing history to your device.</value>
+    <value>ამ უნიკალურ კოდს ვებსაიტები და ISP (ინტერნეტპროვაიდერები) იყენებენ თქვენი მდებარეობისა და დათვალიერების ისტორიის თქვენს მოწყობილობასთან დასაკავშირებლად.</value>
   </data>
   <data name="Flyouts_IpAddress_Description_Disconnected2">
     <value>VPN ნიღბავს თქვენს IP მისამართს და უფრო აძნელებს, თქვენი ინტერნეტ-აქტივეობების უკუტრეისი მოხდეს.</value>
@@ -2207,7 +2028,7 @@ Error code: {0}</value>
     <value>თქვენი ISP (ინტერნეტ-პროვაიდერ) კომპანიაა, რომითაც ინტერნეტს უკავშირდებით.</value>
   </data>
   <data name="Flyouts_Isp_Description2">
-    <value>They can log your online activity. In some countries, they can sell your data to advertisers. In others, they can be required to hand it over to the government.</value>
+    <value>მათ შეუძლიათ თქვენი ონლაინ აქტივობის ჩაწერა. ზოგიერთ ქვეყანაში მათ შეუძლიათ, თქვენი მონაცემები რეკლამის განმთავსებლებზე გაყიდონ. სხვებში კი ვალდებულები იქნებიან ეს მთავრობას გადასცენ.</value>
   </data>
   <data name="Flyouts_Isp_Description3">
     <value>VPN მალავს თქვენს IP მისამართს, რითიც ხელს უშლის ISP-ს, თქვენს საქმეში ცხვირი ჩაჰყოს.</value>
@@ -2228,10 +2049,10 @@ Error code: {0}</value>
     <value>თქვენი IP მისამართი, შეიძლება, გამჟღავნდეს, თუ VPN გაითიშება</value>
   </data>
   <data name="Flyouts_KillSwitch_Info_Disconnected">
-    <value>Advanced kill switch disables your internet to protect your IP address while you're not connected to Proton VPN.</value>
+    <value>Kill Switch გამორთავს თქვენს ინტერნეტს, რომ დაიცვას თქვენი IP მისამართი, სანამ Proton VPN-სთან დაკავშირებული არ ბრძანდებით.</value>
   </data>
   <data name="Flyouts_KillSwitch_Standard_Success">
-    <value>If your VPN connection drops, you'll be disconnected from the internet until VPN is restored</value>
+    <value>თუ თქევენი VPN კავშირი ჩავარდება, ინტერნეტი გაითიშება მანამდე, სანამ VPN არ აღდგება</value>
   </data>
   <data name="Flyouts_KillSwitch_Warning_Connected">
     <value>Kill switch მუშაობს მაშინაც კი, როცა VPN-ს შემთხვევით გათიშავთ</value>
@@ -2239,17 +2060,20 @@ Error code: {0}</value>
   <data name="Flyouts_KillSwitch_Warning_Disconnected">
     <value>იმისათვის, რომ ინტერნეტი ჩართოთ, დაუკავშირდით VPN-ს, ან გათიშეთ Kill Switch</value>
   </data>
+  <data name="Flyouts_NetShield_AdsMalwareTrackersAdultContent_Success">
+    <value>დაცული ბრძანდებით რეკლამებისგან, ტრეკერებისგან, მავნე პროგრამებისგან და ზრდასრულთა შემცველობისგან.</value>
+  </data>
   <data name="Flyouts_NetShield_AdsMalwareTrackers_Success">
-    <value>თქვენ დაცული ბრძანდებით რეკლამებისგან, ტრეკერებისგან და მავნე პროგრამებისგან</value>
+    <value>თქვენ დაცული ბრძანდებით რეკლამებისგან, ტრეკერებისგან და მავნე პროგრამებისგან.</value>
   </data>
   <data name="Flyouts_NetShield_Info">
-    <value>დაიცავით თავი რეკლამებისგან, ტრეკერებისგან და მავნე პროგრამებისგან აპებში და ვებგვერდებზე</value>
+    <value>დაიცავით თქვენი ბრაუზინგი ვებსაიტებსა და აპებში.</value>
   </data>
   <data name="Flyouts_NetShield_MalwareOnly_Success">
-    <value>დაცული, მხოლოდ, მავნე პროგრამებისგან ბრძანებით</value>
+    <value>დაცული, მხოლოდ, მავნე პროგრამებისგან ბრძანებით.</value>
   </data>
   <data name="Flyouts_NetShield_Upsell_Description">
-    <value>დაბლოკეთ რეკლამა, ტრეკერები და არასასურველი პროგრამები VPN Plus-თან ერთად.</value>
+    <value>დაბლოკეთ რეკლამები, ტრეკერები, მავნე პროგრამები და ზრდასრულთა შემცველობა VPN Plus-ით.</value>
   </data>
   <data name="Flyouts_NetShield_Upsell_Title">
     <value>ისიამოვნეთ ურელამო ინტერნეტით</value>
@@ -2257,8 +2081,11 @@ Error code: {0}</value>
   <data name="Flyouts_PortForwarding_ActivePort">
     <value>აქტიური პორტის ნომერი</value>
   </data>
+  <data name="Flyouts_PortForwarding_ActivePort_Error">
+    <value>აქტიური პორტის ნომრის მიღება შეუძლებელია. გადატვირთეთ კავშირი და კიდევ სცადეთ.</value>
+  </data>
   <data name="Flyouts_PortForwarding_ActivePort_Info">
-    <value>შეიყვანეთ აქტიური პორტის ნომერი თქვენი BitTorrent-ის აპში P2P-ის სიჩქარის გასაზრდელად</value>
+    <value>შეიყვანეთ აქტიური პორტის ნომერი თქვენს torrent კლიენტში ან P2P აპლიკაციაში გაუმჯობესებული წარმადობისთვის.</value>
   </data>
   <data name="Flyouts_PortForwarding_Info">
     <value>აუმჯობესებს თქვენი P2P გადმოწერის სიჩქარეს</value>
@@ -2270,7 +2097,7 @@ Error code: {0}</value>
     <value>P2P სიჩქარის გაზრდა</value>
   </data>
   <data name="Flyouts_PortForwarding_Warning">
-    <value>Connect to a P2P server to improve torrenting speeds</value>
+    <value>დაუკავშირდით P2P სერვერს ტორენტთან სიჩქარის გასაზრდელად</value>
   </data>
   <data name="Flyouts_Protocol_Description">
     <value>VPN პროტოკოლი განაზღვრავს, როგორ დაიშიფრება და გადაიცემა ტრაფიკი VPN-ით.</value>
@@ -2308,24 +2135,21 @@ Error code: {0}</value>
   <data name="Flyouts_ServerLoad_Title">
     <value>სერვერის დატვირთვა</value>
   </data>
-  <data name="Flyouts_Speed_BoostedByVpnAccelerator">
-    <value>აჩქარებულია VPN Accelerator-ით</value>
-  </data>
   <data name="Flyouts_Speed_Description1">
-    <value>Shows how much data goes through the VPN tunnel in real time.</value>
+    <value>რეალურ დროში აჩვენებს, რამდენი მონაცემი გადის VPN გვირაბში.</value>
   </data>
   <data name="Flyouts_Speed_Description2">
-    <value>This is based on your device's current activity. In most cases, it doesn't represent the VPN's maximum speed.</value>
+    <value>ეს დაფუძნებულია თქვენი მოწყობილობის მიმდინარე აქტივობაზე. უმეტეს შემთხვევაში, ეს არ წარმოადგენს VPN-ის მაქსიმალურ სიჩქარეს.</value>
   </data>
   <data name="Flyouts_Speed_Download">
     <value>გადმოწერა</value>
     <comment>Refers to the download speed (e.g., Download [new line] 10 MB/s).</comment>
   </data>
   <data name="Flyouts_Speed_KnowledgeBaseLinkTitle">
-    <value>VPN speed and traffic explained</value>
+    <value>VPN-ის სიჩქარის და ტრაფიკის ახსნა</value>
   </data>
   <data name="Flyouts_Speed_Title">
-    <value>Current traffic</value>
+    <value>მიმდინარე ტრაფიკი</value>
   </data>
   <data name="Flyouts_Speed_Upload">
     <value>ატვირთვა</value>
@@ -2338,7 +2162,7 @@ Error code: {0}</value>
     <value>გამორიცხული აპები ({0})</value>
   </data>
   <data name="Flyouts_SplitTunneling_Excluded_Ips_One">
-    <value>Excluded IP address ({0})</value>
+    <value>ამოღებული IP მისამართი ({0})</value>
   </data>
   <data name="Flyouts_SplitTunneling_Excluded_Ips_Other">
     <value>გამორიცხული IP მისამართები ({0})</value>
@@ -2371,22 +2195,18 @@ Error code: {0}</value>
     <value>მიიღეთ საუკეთესო ორივე სამყაროდან</value>
   </data>
   <data name="Flyouts_Volume_Description">
-    <value>Shows the total amount of data passed through the VPN tunnel since you connected.</value>
+    <value>აჩვენებს VPN გვირაბით გავლილი მონაცემების საერთო რაოდენობას თქვენი დაკავშირების შემდეგ.</value>
   </data>
   <data name="Flyouts_Volume_Download">
     <value>გადმოწერა</value>
     <comment>Refers to the downloaded volume (e.g., Download [new line] 250 MB).</comment>
   </data>
   <data name="Flyouts_Volume_Title">
-    <value>Total traffic</value>
+    <value>მთლიანი ტრაფიკი</value>
   </data>
   <data name="Flyouts_Volume_Upload">
     <value>ატვირთვა</value>
     <comment>Refers to the uploaded volume (e.g., Upload [new line] 250 MB).</comment>
-  </data>
-  <data name="Format_Milliseconds">
-    <value>{0}მწმ</value>
-    <comment>Format a number as a time in milliseconds. {0} is a place holder for the number of milliseconds (eg. 46ms)</comment>
   </data>
   <data name="Format_Size_Bytes">
     <value>{0} ბ</value>
@@ -2417,7 +2237,7 @@ Error code: {0}</value>
     <comment>Format a size in Terabytes. {0} is a place holder for the number of Terabytes (eg. 30 TB)</comment>
   </data>
   <data name="Format_SpeedUnit">
-    <value>Current traffic ({0})</value>
+    <value>მიმდინარე ტრაფიკი ({0})</value>
     <comment>This string is used to format speed measurements in various units. The placeholder {0} will be replaced by the appropriate unit of measurement, such as B/s (Bytes per second), kB/s (Kilobytes per second), MB/s (Megabytes per second), and so on.</comment>
   </data>
   <data name="Format_Speed_BytesPerSecond">
@@ -2473,10 +2293,10 @@ Error code: {0}</value>
     <comment>Format a time as a number of hours, minutes and seconds in a short format. 'hh' is a placeholder for the number of hours, 'mm' is a placeholder for the number of minutes and 'ss' for the number of seconds. The separator (if any) needs to be escaped using '' character (eg. hh\:mm\:ss gives 01:05:36).</comment>
   </data>
   <data name="Format_Time_Hours_Ago_One">
-    <value>{0} hour ago</value>
+    <value>{0} საათის წინ</value>
   </data>
   <data name="Format_Time_Hours_Ago_Other">
-    <value>{0} hours ago</value>
+    <value>{0} საათის წინ</value>
   </data>
   <data name="Format_Time_Minutes">
     <value>{0} წთ</value>
@@ -2491,20 +2311,20 @@ Error code: {0}</value>
     <comment>Format a time as a number of minutes and seconds in a short format. 'mm' is a placeholder for the number of minutes and 'ss' for the number of seconds. The separator (if any) needs to be escaped using '' character (eg. mm\:ss gives 05:36).</comment>
   </data>
   <data name="Format_Time_Minutes_Ago_One">
-    <value>{0} minute ago</value>
+    <value>{0} წუთის წინ</value>
   </data>
   <data name="Format_Time_Minutes_Ago_Other">
-    <value>{0} minutes ago</value>
+    <value>{0} წუთის წინ</value>
   </data>
   <data name="Format_Time_Seconds">
     <value>{0} წმ</value>
     <comment>Format a time as a number of seconds. {0} is a placeholder for the number of second (eg. 1 sec or 20 sec). Use abbreviations for seconds, no pluralization.</comment>
   </data>
   <data name="Format_Time_Seconds_Ago_One">
-    <value>{0} second ago</value>
+    <value>{0} წამის წინ</value>
   </data>
   <data name="Format_Time_Seconds_Ago_Other">
-    <value>{0} seconds ago</value>
+    <value>{0} წამის წინ</value>
   </data>
   <data name="FreeConnections_P2PUpsell">
     <value>გადმოწერეთ ფაილები BitTorrent-ით და სხვა ფაილების გაზიარების პროტოკოლებით</value>
@@ -2530,9 +2350,6 @@ Error code: {0}</value>
   <data name="Gateways_Page_Title">
     <value>რაუტერები</value>
   </data>
-  <data name="Gateways_Server">
-    <value>გამოყოფილი სერვერი</value>
-  </data>
   <data name="Home_Account_SignOut">
     <value>გასვლა</value>
   </data>
@@ -2540,46 +2357,17 @@ Error code: {0}</value>
     <value>გავიდე {0}-დან?</value>
     <comment>{0} is a placeholder for the username</comment>
   </data>
-  <data name="Home_Account_Title">
-    <value>ჩემი ანგარიში</value>
-  </data>
   <data name="Home_ConnectionCard_ChangeDefaultConnection">
     <value>ნაგულისხმევი მიერთების შეცვლა</value>
   </data>
   <data name="Home_ConnectionCard_ChangeServer">
     <value>სერვერის შეცვლა</value>
   </data>
-  <data name="Home_ConnectionCard_Header_BrowseSafely">
-    <value>მუშაობთ ინტერნეტში უსაფრთხოდ ქვეყნიდან</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_ConnectingTo">
-    <value>დაკავშირება...</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_DefaultConnection">
-    <value>ნაგულისხმევი მიერთება</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_FreeConnection">
-    <value>უფასო მიერთება</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_LastConnectedTo">
-    <value>ბოლოს მიუერთდით</value>
-  </data>
-  <data name="Home_ConnectionCard_Landmark">
-    <value>მიერთების ბარათი</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
   <data name="Home_ConnectionDetails_AdvancedKillSwitchActivated">
-    <value>Advanced kill switch activated</value>
-  </data>
-  <data name="Home_ConnectionDetails_City">
-    <value>ქალაქი</value>
+    <value>დამატებითი Kill Switch გააქტიურდა</value>
   </data>
   <data name="Home_ConnectionDetails_ConnectToRestoreConnection">
-    <value>Connect to VPN to restore your internet connection.</value>
-  </data>
-  <data name="Home_ConnectionDetails_ConnectedFor">
-    <value>დაკავშირებულია</value>
-    <comment>Label for the time the session has been active. (eg. Connected for     1 h 25 min 2s)</comment>
+    <value>ინტერნეტკავშირის აღსადგენად დაუკავშირდით VPN-ს.</value>
   </data>
   <data name="Home_ConnectionDetails_Connecting">
     <value>მიერთება</value>
@@ -2590,28 +2378,8 @@ Error code: {0}</value>
   <data name="Home_ConnectionDetails_Country">
     <value>ქვეყანა</value>
   </data>
-  <data name="Home_ConnectionDetails_Gateway">
-    <value>რაუტერი</value>
-  </data>
-  <data name="Home_ConnectionDetails_Hide">
-    <value>მიერთების დეტალების დამალვა</value>
-  </data>
-  <data name="Home_ConnectionDetails_HideIP">
-    <value>დამალვა</value>
-    <comment>Tooltip displayed when the user hover the button to hide the User IP Address</comment>
-  </data>
-  <data name="Home_ConnectionDetails_HideIP_Description">
-    <value>მომხმარებლის IP მისამართის დამალვა</value>
-  </data>
   <data name="Home_ConnectionDetails_Isp">
     <value>პროვაიდერი</value>
-  </data>
-  <data name="Home_ConnectionDetails_Landmark">
-    <value>მიერთების დეტალები</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_ConnectionDetails_MyIp">
-    <value>ჩემი IP</value>
   </data>
   <data name="Home_ConnectionDetails_Protected">
     <value>დაცულია</value>
@@ -2619,33 +2387,14 @@ Error code: {0}</value>
   <data name="Home_ConnectionDetails_Protocol">
     <value>პროტოკოლი</value>
   </data>
-  <data name="Home_ConnectionDetails_Server">
-    <value>სერვერი</value>
-  </data>
   <data name="Home_ConnectionDetails_ServerLoad">
     <value>სერვერის დატვირთვა</value>
   </data>
-  <data name="Home_ConnectionDetails_Show">
-    <value>მიერთების დეტალების ჩვენება</value>
-  </data>
-  <data name="Home_ConnectionDetails_ShowIP">
-    <value>ჩვენება</value>
-    <comment>Tooltip displayed when the user hover the button to show the User IP Address</comment>
-  </data>
-  <data name="Home_ConnectionDetails_ShowIP_Description">
-    <value>მომხმარებლის IP მისამართის ჩვენება</value>
-  </data>
-  <data name="Home_ConnectionDetails_State">
-    <value>შტატი</value>
-  </data>
-  <data name="Home_ConnectionDetails_Title">
-    <value>მიერთების დეტალები</value>
-  </data>
   <data name="Home_ConnectionDetails_TwoFactorRequired_Description">
-    <value>Re-authenticate in your organization's 2FA portal to continue.</value>
+    <value>გასაგრძელებლად გაიარეთ ავთენტიკაცია თავიდან თქვენი ორგანიზაციის 2FA პორტალზე.</value>
   </data>
   <data name="Home_ConnectionDetails_TwoFactorRequired_Title">
-    <value>2FA expired</value>
+    <value>2FA-ის ვადა ამოწურულია</value>
   </data>
   <data name="Home_ConnectionDetails_Unprotected">
     <value>დაუცველი</value>
@@ -2654,16 +2403,7 @@ Error code: {0}</value>
     <value>დაშიფრეთ თქვენი აქტივობა ინტერნეტში VPN-თან მიერთებით</value>
   </data>
   <data name="Home_ConnectionDetails_Volume">
-    <value>Total traffic</value>
-  </data>
-  <data name="Home_ConnectionDetails_Volume_Download">
-    <value>გადმოწერილი მოცულობა</value>
-  </data>
-  <data name="Home_ConnectionDetails_Volume_Total">
-    <value>საერთო მოცულობა</value>
-  </data>
-  <data name="Home_ConnectionDetails_Volume_Upload">
-    <value>ატვირთული მოცულობა</value>
+    <value>მთლიანი ტრაფიკი</value>
   </data>
   <data name="Home_ConnectionDetails_VpnIp">
     <value>VPN IP</value>
@@ -2673,13 +2413,6 @@ Error code: {0}</value>
   </data>
   <data name="Home_FreeConnections_About">
     <value>მეტი ინფორმაცია უფასო მიერთებების შესახებ</value>
-  </data>
-  <data name="Home_Help_Title">
-    <value>დახმარება</value>
-  </data>
-  <data name="Home_Map_Landmark">
-    <value>რუკა</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
   </data>
   <data name="Home_NetShield_AdsBlocked_One">
     <value>რეკლამა ბლოკირებულია</value>
@@ -2696,13 +2429,6 @@ Error code: {0}</value>
   <data name="Home_NetShield_DataSaved_Description">
     <value>მონაცემების დაახლოებითი რაოდენობა, რომელიც დაიზოგა რეკლამების, ტრეკერების და მავნე პროგრამების დაბლოკვით.</value>
   </data>
-  <data name="Home_NetShield_Landmark">
-    <value>NetShield-ის სტატისტიკა</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_NetShield_Title">
-    <value>NetShield-ის სტატისტიკა</value>
-  </data>
   <data name="Home_NetShield_TrackersStopped_One">
     <value>შეჩერებული ტრეკერი</value>
   </data>
@@ -2712,21 +2438,11 @@ Error code: {0}</value>
   <data name="Home_NetShield_TrackersStopped_Description">
     <value>ტრეკერები მესამე პირების ვებგვერდები და ქუქიებია, რომლებიც აგროვებენ და ყიდიან ინფორმაციას თქვენი ვებ-აქტივობების შესახებ.</value>
   </data>
-  <data name="Home_Page_Title">
-    <value>მთავარი</value>
-  </data>
-  <data name="Home_Recents_Landmark">
-    <value>უახლესი მიერთებები</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
   <data name="Home_Recents_Pin">
     <value>მიმაგრება</value>
   </data>
   <data name="Home_Recents_Restricted">
     <value>სერვერი ხელმისაწვდომია VPN Plus-ით</value>
-  </data>
-  <data name="Home_Recents_SecondaryActions_ToolTip">
-    <value>ქმედებები</value>
   </data>
   <data name="Home_Recents_ServerUnderMaintenance">
     <value>სერვერი ტექმომსახურებაშია</value>
@@ -2761,33 +2477,23 @@ Error code: {0}</value>
   <data name="Home_TitleBar_Menu_UpdateNow">
     <value>ახლა განახლება</value>
   </data>
-  <data name="Home_Update_UpdateAvailable">
-    <value>განახლება ხელმისაწვდომია</value>
-  </data>
-  <data name="Home_Update_UpdateReady">
-    <value>განახლება მზადაა</value>
-  </data>
-  <data name="Home_VpnStatus_Landmark">
-    <value>VPN-ის სტატუსი</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_VpnStatus_Subtitle_Connecting">
-    <value>ვიცავთ თქვენს ციფრულ მონაცემებს...</value>
-  </data>
-  <data name="Home_VpnStatus_Subtitle_Disconnected">
-    <value>დაცული არ ბრძანდებით</value>
-  </data>
-  <data name="Home_VpnStatus_Title_Connected">
-    <value>დაცულია</value>
-  </data>
   <data name="LoadingPage_Tip">
     <value>უკეთესი სამყარო კონფიდენციალობით და ციფრული თავისუფლებით იწყება.</value>
   </data>
   <data name="Login_Error_GetSessionDetailsFailed">
     <value>შეცდომა სესიის დეტალების მიღებისას. კიდევ სცადეთ.</value>
   </data>
+  <data name="Login_Error_GuestHoleFailedDueToMobileHotspot">
+    <value>თქვენს მოწყობილობაზე ქსელის პარამეტრების გამო შესვლა შეუძლებელია. ამისი მიზეზი, შეიძლება, იყოს მობილური ცხელი წერტილი, სხვა VPN აპლიკაცია ან ვირტუალური მანქანის პროგრამული უზრუნველყოფა. გადახედეთ თქვენს ქსელის კონფიგურაციას ან დაუკავშირდეთ მხარდაჭერის გუნდს.</value>
+  </data>
   <data name="Login_Error_IncorrectTwoFactorCode">
     <value>კოდი არასწორია. თავიდან სცადეთ.</value>
+  </data>
+  <data name="Login_Error_MissingSrpDll_Message">
+    <value>პროგრამის თქვენს ვერსიას შესვლისთვის აუცილებელი ფაილი აკლია. პრობლემის მოსაგვარებლად დააყენეთ Proton VPN თავიდან.</value>
+  </data>
+  <data name="Login_Error_MissingSrpDll_Title">
+    <value>შესვლა შეუძლებელია</value>
   </data>
   <data name="Login_Error_SessionExpired">
     <value>თქვენს სესიას ვადა გაუვიდა. თავიდან შედით.</value>
@@ -2796,27 +2502,24 @@ Error code: {0}</value>
   <data name="Login_Error_SsoAuthFailed">
     <value>SSO ავთენტიკაცია ჩავარდა. თავიდან სცადეთ.</value>
   </data>
-  <data name="Login_Error_TwoFactorAuthFailed">
-    <value>არასწორი მომხმარებლის სახელი ან პაროლი. თავიდან სცადეთ.</value>
-  </data>
   <data name="Login_Error_TwoFactorFailed">
     <value>2FA ჩავარდა. თავიდან შედით.</value>
   </data>
   <data name="Login_Error_WebAuthnNotSupported">
-    <value>Security key authentication is not available for your device or remote desktop connection.</value>
+    <value>თქვენი მოწყობილობისთვის, ან დაშორებული სამუშაო მაგიდის კავშირისთვის უსაფრთხოების გასაღებით ავთენტიკაცია ხელმისაწვდომი არაა.</value>
   </data>
   <data name="Login_TwoFactorForm_Authenticate">
     <value>ავთენტიკაცია</value>
     <comment>Authenticate button inside two factor form during login</comment>
   </data>
   <data name="Login_TwoFactorForm_Subtitle">
-    <value>6-digit authentication code</value>
+    <value>6-ნიშნა ავთენტიკაციის კოდი</value>
   </data>
   <data name="Login_TwoFactorForm_Title">
     <value>2FA</value>
   </data>
   <data name="Login_TwoFactor_Authenticator">
-    <value>Authenticator app</value>
+    <value>ავთენტიკატორი აპი</value>
   </data>
   <data name="Login_TwoFactor_Digit1">
     <value>პირველი ციფრი</value>
@@ -2840,16 +2543,16 @@ Error code: {0}</value>
     <value>შეიყვანეთ თქვენი კოდი</value>
   </data>
   <data name="Login_TwoFactor_NoMethodAvailable">
-    <value>No known two-factor authentication methods found.</value>
+    <value>ცნობილი ორფაქტორიანი ავთენტიკაციის მეთოდები აღმოჩენილი არაა.</value>
   </data>
   <data name="Login_TwoFactor_SecurityKey">
-    <value>Security key</value>
+    <value>უსაფრთხოების გასაღები</value>
   </data>
   <data name="Login_TwoFactor_SecurityKey_Description">
-    <value>Insert the U2F or FIDO key linked to your Proton Account.</value>
+    <value>შეაერთეთ თქვენი Proton-ის ანგარიშზე მიბმული U2F ან FIDO გასაღები.</value>
   </data>
   <data name="Main_Loading">
-    <value>Loading, please wait...</value>
+    <value>მიმდინარეობს ჩატვირთვა. მოითმინეთ...</value>
     <comment>Message in the loading screen when starting the app</comment>
   </data>
   <data name="Main_Loading_SigningIn">
@@ -2857,7 +2560,7 @@ Error code: {0}</value>
     <comment>Message in the loading screen when signing in</comment>
   </data>
   <data name="Main_Loading_SigningIn_Longer">
-    <value>This is taking longer than usual, but we're working on it.</value>
+    <value>ეს ჩვეულებელზე მეტხანს გრძელდება, მაგრამ ჩვენ ამაზე ვმუშაობთ.</value>
     <comment>Message in the loading screen when sign in action takes longer than expected</comment>
   </data>
   <data name="Main_Loading_SigningOut">
@@ -2869,22 +2572,25 @@ Error code: {0}</value>
     <comment>A label inside a map pin tooltip. {0} is a placeholder for country, state or city. (eg. "Connect - United States", "Connect - New York")</comment>
   </data>
   <data name="NoServers_ContactUs">
-    <value>Contact us</value>
+    <value>დაგვიკავშირდით</value>
   </data>
   <data name="NoServers_FailedToLoad">
-    <value>We couldn't load the server list.</value>
+    <value>სერვერების სიის ჩატვირთვა შეუძლებელია.</value>
   </data>
   <data name="NoServers_NeedHelp">
-    <value>Need help?</value>
+    <value>დახმარება გჭირდებათ?</value>
   </data>
   <data name="NoServers_SignOut">
-    <value>Sign out</value>
+    <value>გასვლა</value>
   </data>
   <data name="NoServers_Tip">
-    <value>Ask your administrator to enable VPN access for your account.</value>
+    <value>სთხოვეთ თქვენს ადმინისტრატორს, თქვენს ანგარიშზე VPN-თან წვდომა ჩართოს.</value>
   </data>
   <data name="NoServers_Title">
-    <value>No VPN connections available</value>
+    <value>VPN კავშირები ხელმისაწვდომი არაა</value>
+  </data>
+  <data name="NoServers_UnderMaintenance_Tip">
+    <value>სერვერების ჩატვირთვა ვერ მოხერხდა. სერვერების სიის განახლებისთვის დააჭირეთ განახლებას.</value>
   </data>
   <data name="Notifications_KillSwitch_Description">
     <value>თქენი IP მისამართის დასაცავდა Kill switch ბლოკავს თქვენს მიერთებას ინტერნეტთან.</value>
@@ -2893,35 +2599,35 @@ Error code: {0}</value>
     <value>პორტის ნომრის კოპირება</value>
   </data>
   <data name="Notifications_PortForwarding_Description">
-    <value>დააყენეთ ეს რიცხვი BitTorrent-ის თქვენ აპლიკაციაში უფრო მეტი სიჩქარის მისაღებად.</value>
+    <value>გადადით თქვენს torrent კლიენტში ან P2P აპლიკაციაში და შეიყვანეთ ეს ნომერი.</value>
   </data>
   <data name="Notifications_SessionLimit_Description">
-    <value>You've reached your maximum device limit. To reconnect to VPN, please disconnect from another device.</value>
+    <value>თქვენ მიაღწიეთ მოწყობილობების ლიმიტს. VPN-ზე ხელახლა დასაკავშირებლად გათიშეთ სხვა მოწყობილობა.</value>
   </data>
   <data name="Notifications_SubscriptionExpired_Description_Connected">
     <value>თქვენი სატარიფო გეგმა ჩამოწეულია Proton Free-ზე და ჩვენ თავიდან დაგაკავშირებთ უსწრაფეს უფასო სერვერთან.</value>
   </data>
   <data name="Notifications_UnsecureWifi_Description">
-    <value>Public Wi-Fi networks are more vulnerable to security threats. Connect to VPN to browse safely.</value>
+    <value>საჯარო Wi-FI ქსელები უფრო მოწყვლადია უსაფრთხოების მხრივ. დაუკავშირდით VPN-ს ინტერნეტში უსაფრთხოდ სამუშაოდ.</value>
   </data>
   <data name="Notifications_UnsecureWifi_Title">
     <value>აღმოჩენილია დაუცველი უსადენო კავშირი</value>
   </data>
   <data name="NpsSurvey_Title">
-    <value>Proton VPN - Survey</value>
+    <value>Proton VPN - გამოკითხვა</value>
     <comment>The window title displayed at the top of the NPS (Net Promoter Score) survey</comment>
   </data>
   <data name="Overlay_Ipv6Disabled_Description">
-    <value>To include this address, you need to allow IPv6 connections through the VPN tunnel.</value>
+    <value>იმისათვის, რომ IPv6 მისამართების ჩასვათ, საჭიროა, VPN გვირაბში IPv6 კავშირები დაუშვათ.</value>
   </data>
   <data name="Overlay_Ipv6Disabled_PrimaryButton">
-    <value>Enable IPv6</value>
+    <value>IPv6-ის ჩართვა</value>
   </data>
   <data name="Overlay_Ipv6Disabled_SecondaryButton">
-    <value>Not now</value>
+    <value>არა ახლა</value>
   </data>
   <data name="Overlay_Ipv6Disabled_Title">
-    <value>IPv6 is disabled</value>
+    <value>IPv6 გამორთულია</value>
   </data>
   <data name="Overlay_OutdatedClient_Action">
     <value>ახლა განახლება</value>
@@ -2959,10 +2665,10 @@ Error code: {0}</value>
     <value>P2P</value>
   </data>
   <data name="Overlay_Profile_Description1">
-    <value>Profiles are custom VPN connections that you can tailor to your needs and save for quick access.</value>
+    <value>პროფილები მორგებული VPN კავშირებია, რომელთა მორგება შეგიძლიათ თქვენი საჭიროებებისამებრ და შენახვა სწრაფი წვდომისთვის.</value>
   </data>
   <data name="Overlay_Profile_Description2">
-    <value>Set your preferred location and optimize your settings for security, performance, gaming, or any other scenario.</value>
+    <value>დააყენეთ სასურველი მდებარეობა და ოპტიმიზაცია გაუწიეთ თქვენს პარამეტრებს უსაფრთხოების, მუშაობის, თამაშების ან ნებისმიერი სხვა სცენარისთვის.</value>
   </data>
   <data name="Overlay_Profile_LearnMore">
     <value>რა არის VPN პროფილი?</value>
@@ -2971,7 +2677,7 @@ Error code: {0}</value>
     <value>პროფილები</value>
   </data>
   <data name="Overlay_SecureCore_Description1">
-    <value>Secure Core connects you to your destination server via a second, maximum security VPN server.</value>
+    <value>Secure Core თქვენსა სასურველ სერვერთან მეორე, მაქსიმალური უსაფრთხოების მქონე VPN სერვერით მიგიშვებთ.</value>
   </data>
   <data name="Overlay_SecureCore_Description2">
     <value>დაცვის ამ უფრო მაღალმა დონემ, შეიძლება, დაყოვნება გაზარდოს და სიჩქარე შეამციროს.</value>
@@ -3032,19 +2738,17 @@ VPN მიერთება</value>
     <value>სერვერის დატვირთვა</value>
   </data>
   <data name="Overlay_SmartRouting_Description1">
-    <value>Smart Routing იყენებს ვირტუალურ სერვერებს, რომ მიაწოდოს VPN დაფარვა ძნელად მისაწვდომი ქვეყნებისთვის.</value>
+    <value>Smart Routing გვაძლევს საშუალებას, VPN დაფარვა გვქონდეს ძნელად მისაწვდომ ქვეყნებში.</value>
   </data>
   <data name="Overlay_SmartRouting_Description2">
-    <value>When you connect to a Smart Routing server, you'll appear to be browsing in your destination country, even though the physical server is located elsewhere.</value>
+    <value>როდესაც Smart Routing სერვერს დაუკავშირდებით, გამოჩნდება, თითქოს თქვენს დანიშნულების ქვეყნიდან ათვალიერებთ მიუხედავად იმისა, რომ ფიზიკური სერვერი სხვაგან მდებარეობს.</value>
   </data>
   <data name="Overlay_SmartRouting_Description3">
-    <value>Smart Routing is typically used to get around anti-privacy laws and other forms of censorship.</value>
+    <value>Smart Routing, ჩვეულებრივ, ანტიკონფიდენცუალური კანონებისა და ცენზურის სხვა ფორმების გვერდის ასავლელად გამოიყენება.</value>
   </data>
   <data name="Overlay_SmartRouting_Header">
-    <value>სერვერები ფიზიკურად განთავსებულია ქვეყანაში {0}, მაგრამ თქვენ გამოჩნდება, რომ {1}-დან მუშაობთ</value>
-    <comment>{0} is a placeholder for the physical server location country. {1} is a placeholder for the destination country
-    Warning: country names are inserted in the nominative case. For INFLECTED languages, use alternative wording as follows:
-    Connects you to your destination country ({1}) through servers that are physically located somewhere else ({0})</comment>
+    <value>მიგაერთებთ თქვენს სამიზნე ქვეყანასთან სერვერების გავლით, რომლებიც ფიზიკურად სადღაც სხვაგანაა განთავსებული: {0}.</value>
+    <comment>{0} is a placeholder for the countries where the physical servers are. Can be either one country or multiple countries separated with comma.</comment>
   </data>
   <data name="Overlay_SmartRouting_LearnMore">
     <value>რა არის Smart Routing?</value>
@@ -3080,25 +2784,22 @@ VPN მიერთება</value>
     <value>ეს გათიშავს მორგებულ DNS-ს ამ პროფილისთვის.</value>
   </data>
   <data name="Profile_Options_Application">
-    <value>App</value>
+    <value>აპი</value>
   </data>
   <data name="Profile_Options_Application_Select">
-    <value>Select an app</value>
+    <value>აირჩიეთ აპლიკაცია</value>
   </data>
   <data name="Profile_Options_ConnectAndGo_Application">
-    <value>Open an app</value>
-  </data>
-  <data name="Profile_Options_ConnectAndGo_DefaultBrowser">
-    <value>Default browser</value>
+    <value>აპის გახსნა</value>
   </data>
   <data name="Profile_Options_ConnectAndGo_PrivateBrowsingMode">
-    <value>Use private browsing mode</value>
+    <value>ინკოგნიტო რეჟიმის გამოყენება</value>
   </data>
   <data name="Profile_Options_ConnectAndGo_Website">
-    <value>Open a website</value>
+    <value>ვებსაიტის გახსნა</value>
   </data>
   <data name="Profile_Options_Description">
-    <value>Automatically open a website or an app of your choice when you connect to this profile.</value>
+    <value>ავტომატურად გაიხსნება ვებგვერდი, ან აპი, რომელსაც აირჩევთ, როცა ამ პროფილს მიუერთედებით.</value>
   </data>
   <data name="Profile_Options_Header">
     <value>მიერთება და გადასვლა</value>
@@ -3118,9 +2819,6 @@ VPN მიერთება</value>
   <data name="Profiles_Default_MaxSecurity">
     <value>მაქს უსაფრთხოება</value>
   </data>
-  <data name="Profiles_Default_Office">
-    <value>ოფისი</value>
-  </data>
   <data name="Profiles_Default_P2P">
     <value>P2P</value>
   </data>
@@ -3134,7 +2832,7 @@ VPN მიერთება</value>
     <value>სამსახური/სკოლა</value>
   </data>
   <data name="Profiles_Page_Description">
-    <value>Configure your own VPN settings and connect in one click</value>
+    <value>მოირგეთ საკუთარი VPN პარამეტრები და დაუკავშირდით ერთი წკაპით</value>
   </data>
   <data name="Profiles_Page_Title">
     <value>პროფილები</value>
@@ -3167,7 +2865,7 @@ VPN მიერთება</value>
     <value>სერვერი</value>
   </data>
   <data name="Server_Fastest">
-    <value>Fastest server</value>
+    <value>უსწრაფესი სერვერი</value>
   </data>
   <data name="Server_Fastest_Free">
     <value>ყველაზე სწრაფი უფასო სერვერი</value>
@@ -3200,13 +2898,10 @@ VPN მიერთება</value>
     <value>უფასო სერვერი</value>
   </data>
   <data name="Server_Random">
-    <value>Random server</value>
+    <value>შემთხვევითი სერვერი</value>
   </data>
   <data name="Servers">
     <value>სერვერები</value>
-  </data>
-  <data name="Settings_About">
-    <value>შესახებ</value>
   </data>
   <data name="Settings_About_Changelog">
     <value>ცვლილებების სია</value>
@@ -3261,17 +2956,14 @@ VPN მიერთება</value>
     <comment>Apply action. Used to apply changes made on a settings page</comment>
   </data>
   <data name="Settings_Common_IpAddresses_AlreadyExists">
-    <value>Address already added</value>
+    <value>მისამართი უკვე დამატებულია</value>
   </data>
   <data name="Settings_Common_IpAddresses_Invalid">
-    <value>Enter a valid IPv4 or IPv6 address</value>
+    <value>შეიყვანეთ სწორი IPv4 ან IPv6 მისამართი</value>
   </data>
   <data name="Settings_Common_IpAddresses_Watermark">
     <value>192.0.2.0</value>
     <comment>Watermark for the IP Address field in the Custom DNS servers settings page</comment>
-  </data>
-  <data name="Settings_Common_Ipv6WarningButton">
-    <value>Warning - learn more</value>
   </data>
   <data name="Settings_Connection">
     <value>კავშირი</value>
@@ -3289,7 +2981,7 @@ VPN მიერთება</value>
     <value>DNS სერვერების ხელით მითითება</value>
   </data>
   <data name="Settings_Connection_Advanced_CustomDnsServers_AddNew">
-    <value>Add new DNS server</value>
+    <value>ახალი DNS სერვერის დამატება</value>
     <comment>Label above an input field where users can enter a new DNS server IP address.</comment>
   </data>
   <data name="Settings_Connection_Advanced_CustomDnsServers_Conflict_Description">
@@ -3299,41 +2991,44 @@ VPN მიერთება</value>
     <value>ჩავრთო მომხმარებლის DNS სერვერები?</value>
   </data>
   <data name="Settings_Connection_Advanced_CustomDnsServers_Description">
-    <value>Connect to Proton VPN using your own Domain Name System (DNS). Only use DNS servers that you trust.</value>
+    <value>მიუერთდით Proton VPN-ს თქვენი საკუთარი DNS-ით. გამოიყენეთ, მხოლოდ, DNS სერვერები, რომლებსაც ენდობით.</value>
   </data>
   <data name="Settings_Connection_Advanced_CustomDnsServers_Footer">
-    <value>We'll try to connect to these servers in order. If none of them work, the default Proton VPN DNS will be used.</value>
+    <value>ჩვენ ვცდით, ამ სერვერებს მიმდევრობით დავუკავშირდეთ. თუ არცერთი მათგანი იმუშავებს, გამოყენებული იქნება ნაგულისხმევი Proton VPN DNS.</value>
   </data>
-  <data name="Settings_Connection_Advanced_CustomDnsServers_Header">
+  <data name="Settings_Connection_Advanced_CustomDnsServers_FormattedHeader">
     <value>DNS სერვერები ({0})</value>
     <comment>Header for the list of Custom DNS servers defined. {0} is a placeholder for the number of DNS servers in the list. (eg. "DNS servers (4)")</comment>
   </data>
-  <data name="Settings_Connection_Advanced_CustomDnsServers_IpAddress_Description">
-    <value>Enter the server's IPv4 or IPv6 address</value>
+  <data name="Settings_Connection_Advanced_CustomDnsServers_Header">
+    <value>DNS სერვერები</value>
+  </data>
+  <data name="Settings_Connection_Advanced_CustomDnsServers_Select">
+    <value>აირჩიეთ DNS სერვერები</value>
   </data>
   <data name="Settings_Connection_Advanced_Ipv6">
-    <value>IPv6 support</value>
+    <value>IPv6-ის მხარდაჭერა</value>
   </data>
   <data name="Settings_Connection_Advanced_Ipv6LeakProtection">
-    <value>IPv6 leak protection</value>
+    <value>IPv6 გაჟონვისგან დაცვა</value>
   </data>
   <data name="Settings_Connection_Advanced_Ipv6LeakProtection_Description">
-    <value>Prevents data leaks by blocking IPv6 traffic that doesn't pass through the VPN tunnel.</value>
+    <value>ხელს უშლის მონაცემების გაჟონვას VPN გვირაბში არ გამავალი IPv6 ტრაფიკის დაბლოკვით.</value>
   </data>
   <data name="Settings_Connection_Advanced_Ipv6_Description">
-    <value>Allows IPv6 traffic to pass through the VPN tunnel. This improves compatibility with IPv6 websites and services.</value>
+    <value>უშვებს IPv6 ტრაფიკის გავლას VPN გვირაბში. ეს აუმჯობესებს თავსებადობას IPv6 ვებსაიტებთან და სერვისებთან.</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections">
-    <value>Allow LAN connections</value>
+    <value>LAN შეერთებების დაშვება</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections_Description">
-    <value>Allows connections to printers, speakers, and other devices in your local network.</value>
+    <value>საშუალებას გაძლევთ, დაუკავშირდეთ პრინტერებს, დინამიკებს და სხვა მოწყობილობებს ლოკალურ ქსელში.</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections_LocalDns_Description">
-    <value>Connect to devices using names like 'My-Printer' or 'router.local' instead of IP addresses. Uses local DNS resolution. Disabled by default to maintain faster VPN speeds.</value>
+    <value>იყენებს mDNS-ს მოწყობილობებთან დასაკავშირებლად სახელებით, როგორიცაა 'My-Printer' ან 'router.local' IP მისამართების ნაცვლად. სტანდარტული DNS კვლავ იგზავნება VPN გვირაბის გავლით. ნაგულისხმევად გამორთულია უფრო სწრაფი VPN-ისთვის.</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections_LocalDns_Title">
-    <value>Access devices by name</value>
+    <value>მოწყობილობებზე წვდომა სახელის მიხედვით</value>
   </data>
   <data name="Settings_Connection_Advanced_NatType">
     <value>NAT-ის ტიპი</value>
@@ -3360,16 +3055,22 @@ VPN მიერთება</value>
     <value>ზღუდავს თქვენს ქსელში შემომავალ ინფორმაციას. ეს პარამეტრი ფრო დაცულია, მაგრამ გამჭოლი მიერთების გამომყენებელი თამაშების მუშაობა უფრო ძნელი იქნება.</value>
   </data>
   <data name="Settings_Connection_Advanced_OpenVpnDriver_Tap">
-    <value>ტრაფიკის რაუტინგი სხვადასხვა ქსელებს შორის.</value>
+    <value>არის ხიდი ქსელის ტრაფიკისთვის. უფრო ნელია, ვიდრე TUN, მაგრამ საჭიროა ზოგიერთი მოძველებული, ან სპეციალური ქსელებისთვის.</value>
   </data>
   <data name="Settings_Connection_Advanced_OpenVpnDriver_Tun_Description">
-    <value>იყენებს ხიდის ინტერფეისს ქსელებთან მისაერთებლად. TUN-ს უფრო მაღალი სიჩქარე აქვს, ვიდრე TAP-ს, მაგრამ, შეიძლება, ნაკლებად სტაბილური იყოს.</value>
+    <value>ახდენს ტრაფიკის მარშრუტიზაციას სხვადასხვა ქსელებს შორის. TUN, შეიძლება, TAP-ზე უფრო სწრაფი და სტაბილური იყოს.</value>
+  </data>
+  <data name="Settings_Connection_ConnectionPreferences">
+    <value>კავშირის პარამეტრები</value>
+  </data>
+  <data name="Settings_Connection_ConnectionPreferences_Description">
+    <value>ნაგულისხმევი კავშირი და ამოღებული მდებარეობები</value>
   </data>
   <data name="Settings_Connection_CustomDns_Conflict_Information_WhenDisabled">
-    <value>Custom DNS can't be turned on because you're connected to a profile with NetShield enabled.</value>
+    <value>მორგებყლი DNS-ის ჩართვა შეუძლებელია, რადგან დაკავშირებული ხართ პროფილთან, რომელსაც NetShield აქვს ჩართული.</value>
   </data>
   <data name="Settings_Connection_CustomDns_Conflict_Information_WhenEnabled">
-    <value>Custom DNS is disabled because you're currently connected to a profile with NetShield enabled.</value>
+    <value>მორგებული DNS გამორთულია, რადგან ამჟამად დაკავშირებული ბრძანდებით პროფილთან, რომელსაც NetShield ჩართული აქვს.</value>
   </data>
   <data name="Settings_Connection_Default">
     <value>ნაგულისხმევი მიერთება</value>
@@ -3387,13 +3088,34 @@ VPN მიერთება</value>
     <value>ბოლოს გამოყენებული მიერთება</value>
   </data>
   <data name="Settings_Connection_Default_Random">
-    <value>Random country</value>
+    <value>შემთხვევითი ქვეყანა</value>
   </data>
   <data name="Settings_Connection_Default_Random_Description">
-    <value>Different server every time you connect</value>
+    <value>განსხვავებულ სერვერი ყოველ ჯერზე, როცა გვიკავშირდებით</value>
   </data>
   <data name="Settings_Connection_Default_Recents">
     <value>ახლახან გამოყენებულები</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations">
+    <value>გამორიცხული მდებარეობები</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Cities">
+    <value>ქალაქები</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Countries">
+    <value>ქვეყნები</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Description">
+    <value>არჩეული მდებარეობები არასოდეს იქნება გამოყენებული, როდესაც დაუკავშირდებით ყველაზე სწრაფს, ან შემთხვევითად არჩეულს</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_NoLocations">
+    <value>მდებარეობები ხელმისაწვდომი არაა</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Search">
+    <value>აირჩიეთ...</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_States">
+    <value>შტატები</value>
   </data>
   <data name="Settings_Connection_KillSwitch">
     <value>Kill switch</value>
@@ -3404,17 +3126,8 @@ VPN მიერთება</value>
   <data name="Settings_Connection_KillSwitch_Advanced_Description">
     <value>ინტერნეტთან წვდომის, მხოლოდ, Proton VPN-თან ერთად დაშვება. Kill Switch აქტიური დარჩება მაშინაც კი, როცა თქვენს მოწყობილობას გადატვირთავთ.</value>
   </data>
-  <data name="Settings_Connection_KillSwitch_Conflict_Description">
-    <value>ეს Splt Tunneling-ს გათიშავს.</value>
-  </data>
-  <data name="Settings_Connection_KillSwitch_Conflict_Title">
-    <value>ჩავრთო Kill Switch?</value>
-  </data>
   <data name="Settings_Connection_KillSwitch_Description">
     <value>იცავს თქვენს IP მისამართს VPN კავშირის გაწყვეტის შემთხვევაში ინტერნეტის გათიშვის საშუალებით.</value>
-  </data>
-  <data name="Settings_Connection_KillSwitch_Footer">
-    <value>როცა KIll Switch ჩართულია, ვებსაიტებზე და აპებზე, რომლებიც თქვენი VPN მიერთებიდან Split Tunneling-ითაა ამოღებული, წვდომა არ გექნებათ.</value>
   </data>
   <data name="Settings_Connection_KillSwitch_Standard">
     <value>სტანდარტული</value>
@@ -3426,7 +3139,10 @@ VPN მიერთება</value>
     <value>NetShield</value>
   </data>
   <data name="Settings_Connection_NetShield_BlockAdsMalwareTrackers">
-    <value>დაბლოკეთ რეკლამა, მავნე პროგრამები და ტრეკერები</value>
+    <value>რეკლამის, ტრეკერებისა და მავნე პროგრამების დაბლოკვა</value>
+  </data>
+  <data name="Settings_Connection_NetShield_BlockAdsMalwareTrackersAdultContent">
+    <value>დაბლოკეთ რეკლამა, ტრეკერები, მავნე პროგრამები და შემცველობა უფროსებისთვის</value>
   </data>
   <data name="Settings_Connection_NetShield_BlockMalwareOnly">
     <value>მხოლოდ, მავნე პროგრამების დაბლოკვა</value>
@@ -3441,7 +3157,7 @@ VPN მიერთება</value>
     <value>ჩავრთო NetShield?</value>
   </data>
   <data name="Settings_Connection_NetShield_Description">
-    <value>დაიცავით თავი რეკლამებისგან, მავნე პროგრამებისგან და ტრეკერებისგან აპებში და ვებგვერდებზე.</value>
+    <value>დაიცავით თქვენი ბრაუზინგი ვებსაიტებსა და აპებში.</value>
   </data>
   <data name="Settings_Connection_NetShield_Footer">
     <value>ზოგიერთი ვებგვერდი, შეიძლება, სწორად არ ჩაიტვირთოს, თუ რეკლამას და ტრეკერებს დაბლოკავთ.</value>
@@ -3453,7 +3169,7 @@ VPN მიერთება</value>
     <value>პორტის გადამისამართება</value>
   </data>
   <data name="Settings_Connection_PortForwarding_ActivePort">
-    <value>აქტიური პორტი:</value>
+    <value>აქტიური პორტის ნომერი:</value>
   </data>
   <data name="Settings_Connection_PortForwarding_ActivePort_Copy">
     <value>პორტის ნომრის კოპირება</value>
@@ -3465,13 +3181,13 @@ VPN მიერთება</value>
     <value>ჩავრთო პორტის გადამისამართება?</value>
   </data>
   <data name="Settings_Connection_PortForwarding_Description">
-    <value>Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.</value>
+    <value>აუმჯობესებს ტორენტისა და თამაშების სიჩქარეს, რაც იძლევა P2P პირდაპირი კავშირების საშუალებას მითითებული პორტის გავლით.</value>
   </data>
   <data name="Settings_Connection_PortForwarding_Footer">
     <value>იმისათვის, რომ გამოიყენოთ პორტის გადამისამართება, დაუკავშირდით სერვერს, რომელსაც P2P-ის მხარდაჭერა გააჩნია</value>
   </data>
   <data name="Settings_Connection_PortForwarding_LastChanged">
-    <value>Last changed: {0}</value>
+    <value>ბოლო ცვლილება: {0}</value>
     <comment>Indicates when the active port was changed for the last time. {0} is a placeholder for the time. (eg. "Last changed: 5 minutes ago" or "Last changed: May 20, at 14:32")</comment>
   </data>
   <data name="Settings_Connection_PortForwarding_Loading">
@@ -3481,75 +3197,91 @@ VPN მიერთება</value>
     <value>გაფრთხილებები</value>
   </data>
   <data name="Settings_Connection_PortForwarding_Notifications_Description">
-    <value>Get notified when your active port number changes.</value>
+    <value>მიიღეთ შეტყობინება, როდესაც თქვენი აქტიური პორტის ნომერი შეიცვლება.</value>
+  </data>
+  <data name="Settings_Connection_PortForwarding_Unavailable">
+    <value>ხელმიუწვდომელია</value>
   </data>
   <data name="Settings_Connection_Protocol">
     <value>პროტოკოლი</value>
   </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Action">
-    <value>პროფილებზე გადასვლა</value>
-  </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Message">
-    <value>You're currently connected to a VPN profile.
-
-• To change the protocol for this connection, disconnect then edit your profile.
-
-• To change your protocol for other VPN connections, you'll need to disconnect from your profile first.</value>
-  </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Title">
-    <value>პროტოკოლი შეცვლა პროფილებში</value>
-  </data>
   <data name="Settings_Connection_SplitTunneling">
     <value>Split Tunneling</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_Description">
+    <value>აირჩიეთ აპლიკაციები, რომლებიც ამოღებული იქნება VPN კავშირში</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_FormattedHeader">
+    <value>გამორიცხული აპები ({0})</value>
+    <comment>Header for the list of apps to exclude for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Excluded apps (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_Header">
+    <value>გამორიცხული აპები</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Apps_FilesFilterName">
     <value>აპის ფაილები</value>
     <comment>Describe the name of the filter used to select executable files in the Open file dialog</comment>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Apps_Header">
-    <value>არჩეულია აპები ({0})</value>
-    <comment>Header for the list of Apps defined for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Selected apps (2)")</comment>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_Description">
+    <value>აირჩიეთ აპლიკაციები, რომლებიც ჩასმული იქნება VPN კავშირში</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Apps_Remove">
-    <value>აპის წაშლა</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_FormattedHeader">
+    <value>ჩასმული აპები ({0})</value>
+    <comment>Header for the list of apps to include for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Included apps (2)")</comment>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Conflict_Description">
-    <value>ეს გათიშავს Kill Switch-ს.</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_Header">
+    <value>ჩასმული აპები</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Conflict_Title">
-    <value>ჩავრთო Split Tunneling?</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Select">
+    <value>აირჩიეთ აპლიკაციები</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Description">
     <value>მოირგეთ თქვენი მიერთება, გადაწყვიტეთ, რომელი აპები და IP მისამართები იქნებიან VPN-ით დაცული.</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Inverse">
-    <value>Include mode</value>
+    <value>ჩასმის რეჟიმი</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Inverse_Description">
-    <value>Only selected apps and IP addresses connect through VPN, all other traffic is unprotected.</value>
+    <value>მხოლოდ, არჩეული აპები და IP მისამართები გავლენ VPN-ის გავლით. დანარჩენი ყველაფერი დაუცველი იქნება.</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Inverse_Short">
-    <value>Include</value>
+    <value>ჩასმა</value>
     <comment>Shorter version (if possible) of "Include mode". To be used when available space is limited.</comment>
   </data>
   <data name="Settings_Connection_SplitTunneling_IpAddresses_AddNew">
-    <value>Add new IPv4 or IPv6 address</value>
+    <value>ახალი IPv4 ან IPv6 მისამართის დამატება</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_IpAddresses_Header">
-    <value>არჩეულია IP მისამართები ({0})</value>
-    <comment>Header for the list of IP addresses defined for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Selected IP addresses (2)")</comment>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_Description">
+    <value>აირჩიეთ IP მისამართები, რომლებიც არ იქნება ჩართული VPN კავშირში</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_IpAddresses_Remove">
-    <value>IP-ის წაშლა</value>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_FormattedHeader">
+    <value>ამოღებული IP მისამართები ({0})</value>
+    <comment>Header for the list of IP addresses to exclude for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Excluded IP addresses (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_Header">
+    <value>გამორიცხული IP მისამართები</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_Description">
+    <value>აირჩიეთ IP მისამართები, რომლებიც ჩასმული იქნება VPN კავშირში</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_FormattedHeader">
+    <value>ჩართული IP მისამართები ({0})</value>
+    <comment>Header for the list of IP addresses to include for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Included IP addresses (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_Header">
+    <value>ჩასმული IP მისამართები</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Select">
+    <value>აირჩიეთ IP მისამართები</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Standard">
-    <value>Exclude mode</value>
+    <value>გამორიცხვის რეჟიმი</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Standard_Description">
-    <value>Selected apps and IP addresses are excluded from your VPN connection.</value>
+    <value>მონიშნული აპები და IP მისამართები ამოღებულია თქვენი VPN მიერთებიდან.</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Standard_Short">
-    <value>Exclude</value>
+    <value>გამორიცხვა</value>
     <comment>Shorter version (if possible) of "Exclude mode". To be used when available space is limited.</comment>
   </data>
   <data name="Settings_Connection_VpnAccelerator">
@@ -3564,9 +3296,6 @@ VPN მიერთება</value>
   <data name="Settings_DiscardChanges_Confirmation_Title">
     <value>მოვაშორო შეუნახავი ცვლილებები?</value>
   </data>
-  <data name="Settings_Features">
-    <value>VPN-ის ფუნქციები</value>
-  </data>
   <data name="Settings_General">
     <value>ზოგადი</value>
   </data>
@@ -3574,19 +3303,13 @@ VPN მიერთება</value>
     <value>ავტოგაშვება</value>
   </data>
   <data name="Settings_General_AutoStartup_AutoConnect">
-    <value>Auto-connect</value>
+    <value>ავტომატური დაკავშირება</value>
   </data>
   <data name="Settings_General_AutoStartup_AutoConnect_Description">
     <value>ავტომატურად მიუერთდება თქვენს ნაგულისხმევ მიერთებას Proton VPN-ის გახსნისას.</value>
   </data>
-  <data name="Settings_General_AutoStartup_AutoConnect_Fastest">
-    <value>უსწრაფესი შეერთება</value>
-  </data>
-  <data name="Settings_General_AutoStartup_AutoConnect_Latest">
-    <value>ბოლოს მიუერთდით</value>
-  </data>
   <data name="Settings_General_AutoStartup_AutoLaunch">
-    <value>Auto-launch</value>
+    <value>ავტოგაშვება</value>
   </data>
   <data name="Settings_General_AutoStartup_AutoLaunch_Description">
     <value>Proton VPN ავტომატურად გაიხსნება, როცა თქვენს მოწყობილობაზე შეხვალთ</value>
@@ -3601,19 +3324,19 @@ VPN მიერთება</value>
     <value>ჩაკეცვა ამოცანების პანელზე</value>
   </data>
   <data name="Settings_General_AutoStartup_Description">
-    <value>Set the app to launch or connect automatically.</value>
+    <value>დააყენეთ, რომ ეს აპი ავტომატურად გაეშვას ან დაუკავშირდეს.</value>
   </data>
   <data name="Settings_General_AutomaticUpdates">
     <value>ავტომატური განახლებები</value>
   </data>
   <data name="Settings_General_AutomaticUpdates_Description">
-    <value>Automatically check and install Proton VPN updates.</value>
+    <value>Proton VPN-ის განახლებების ავტომატური შემოწმება და დაყენება.</value>
   </data>
   <data name="Settings_General_BetaAccess">
     <value>წვდომა ბეტა ვერსიებზე</value>
   </data>
   <data name="Settings_General_BetaAccess_Description">
-    <value>Get early access and help us test new versions of Proton VPN.</value>
+    <value>მიიღეთ ადრეული წვდომა და დაგვეხმარეთ, Proton VPN-ის ახალი ვერსიები დავტესტოთ.</value>
   </data>
   <data name="Settings_General_Language">
     <value>ენა</value>
@@ -3622,25 +3345,13 @@ VPN მიერთება</value>
     <value>გაფრთხილებები</value>
   </data>
   <data name="Settings_General_Notifications_Description">
-    <value>Get notified about changes to your connection status.</value>
+    <value>მიიღეთ შეტყობინებები თქვენი კავშირის სტატუსის ცვლილებების შესახებ.</value>
   </data>
   <data name="Settings_General_OpenVpnNetworkDriver">
     <value>OpenVPN-ის ქსელის დრაივერი</value>
   </data>
-  <data name="Settings_General_OpenVpnNetworkDriver_Description">
-    <value>ქსელის დრაივერებს თქვენს შეერთებაზე და მის სიჩქარეზე დიდი ეფექტის მოხდენა შეუძლიათ. ახალი TUN ტიპის ადაპტერს უფრო დიდი წარმადობა გააჩნია. თუ რაიმე პრობლემას შეამჩნევთ, ძველ, TAP ადაპტერზე გადაერთეთ.</value>
-  </data>
   <data name="Settings_General_Theme">
     <value>თემა</value>
-  </data>
-  <data name="Settings_General_Theme_Dark">
-    <value>ბნელი</value>
-  </data>
-  <data name="Settings_General_Theme_Default">
-    <value>ნაგულისხმევი</value>
-  </data>
-  <data name="Settings_General_Theme_Light">
-    <value>ღია</value>
   </data>
   <data name="Settings_Improve">
     <value>გააუმჯობესეთ Proton</value>
@@ -3682,6 +3393,30 @@ VPN მიერთება</value>
   </data>
   <data name="Settings_Protocols_OpenVpnUdp_Title">
     <value>OpenVPN</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTcp_Description">
+    <value>ჩვენი ახალი WireGuard-ზე დაფუძნებული ბიბლიოთეკა უკეთესი სტაბილურობის, ფუნქციონალის და ცენზურისადმი მედეგობისთვის.</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTcp_Title">
+    <value>Proton WireGuard</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTls_Description">
+    <value>ჩვენი ახალი WireGuard-ზე დაფუძნებული ბიბლიოთეკა უკეთესი სტაბილურობის, ფუნქციონალის და ცენზურისადმი მედეგობისთვის.</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTls_Title">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="Settings_Protocols_ProTunUdp_Description">
+    <value>ჩვენი ახალი WireGuard-ზე დაფუძნებული ბიბლიოთეკა უკეთესი სტაბილურობის, ფუნქციონალის და ცენზურისადმი მედეგობისთვის.</value>
+  </data>
+  <data name="Settings_Protocols_ProTunUdp_Title">
+    <value>Proton WireGuard</value>
+  </data>
+  <data name="Settings_Protocols_ProtonProtocols_Description">
+    <value>გამოიყენეთ Proton VPN-ის WireGuard-ის საკუთარი ვარიანტი. ეს ექსპერიმენტული ფუნქციაა, ასე რომ, შეიძლება, არასტაბილურობას გადააწყდეთ.</value>
+  </data>
+  <data name="Settings_Protocols_ProtonProtocols_Title">
+    <value>Proton-ის პროტოკოლები</value>
   </data>
   <data name="Settings_Protocols_Smart_Description">
     <value>ავტომატურად აირჩევს საუკეთესო პროტოკოლს თქვენი მიერთებისთვის.</value>
@@ -3737,6 +3472,15 @@ VPN მიერთება</value>
   <data name="Settings_SelectedProtocol_OpenVpnUdp">
     <value>OpenVPN (UDP)</value>
   </data>
+  <data name="Settings_SelectedProtocol_ProTunTcp">
+    <value>Proton WireGuard (TCP)</value>
+  </data>
+  <data name="Settings_SelectedProtocol_ProTunTls">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="Settings_SelectedProtocol_ProTunUdp">
+    <value>Proton WireGuard (UDP)</value>
+  </data>
   <data name="Settings_SelectedProtocol_Smart">
     <value>Smart</value>
   </data>
@@ -3781,9 +3525,6 @@ VPN მიერთება</value>
   </data>
   <data name="Settings_VpnAccelerator_Description">
     <value>გაზარდეთ თქვენი მიერთების სიჩქარე 400%-ით წარმადობის გაუმჯობესების ტექნოლოგიების საშუალებით.</value>
-  </data>
-  <data name="SignIn_Form">
-    <value>შესვლის ფორმა</value>
   </data>
   <data name="SignIn_Form_AdvancedKillSwitchDescription">
     <value>დამატებით Kill Switch ბლოკავს თქვენს კავშირს ინტერნეტთან.</value>
@@ -3861,11 +3602,11 @@ VPN მიერთება</value>
     <value>Kill Switch გათიშულია</value>
   </data>
   <data name="State_Fastest">
-    <value>Fastest state</value>
+    <value>უსწრაფესი შტატი</value>
     <comment>State describes a country state such as California or Arizona in the US</comment>
   </data>
   <data name="State_Random">
-    <value>Random state</value>
+    <value>შემთხვევითი შტატი</value>
     <comment>State describes a country state such as California or Arizona in the US</comment>
   </data>
   <data name="SystemNotification_Connected">
@@ -3878,15 +3619,40 @@ VPN მიერთება</value>
   <data name="SystemNotification_Disconnected">
     <value>გათიშულია</value>
   </data>
+  <data name="SystemNotification_P2PWarning_Description">
+    <value>განბლოკეთ torrent და ონლაინ-თამაშები P2P(გამჭოლი) პროტოკოლებით, როცა ფასიან VPN სერვერებს იყენებთ.</value>
+  </data>
+  <data name="SystemNotification_P2PWarning_Title">
+    <value>VPN Free-ზე P2P ხელმისაწვდომი არაა</value>
+  </data>
+  <data name="SystemNotification_StreamingWarning_Description">
+    <value>ზოგიერთი ვებსაიტი და სტრიმინგ სერვისი ბლოკავს უფასო VPN მომხმარებლებს. განახლდით Proton VPN Plus-ზე ამ ბლოკების გვერდის ასავლელად.</value>
+  </data>
+  <data name="SystemNotification_StreamingWarning_Title">
+    <value>დაბლოკილია ვებსაიტი?</value>
+  </data>
+  <data name="System_Tray_Actions_Connect">
+    <value>დაკავშირება</value>
+  </data>
+  <data name="System_Tray_Actions_Disconnect">
+    <value>გათიშვა</value>
+  </data>
+  <data name="System_Tray_Actions_ExitApplication">
+    <value>გასვლა</value>
+  </data>
+  <data name="System_Tray_Actions_OpenApplication">
+    <value>{0}-ის გახსნა</value>
+    <comment>Button displayed in the tray icon to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
+  </data>
   <data name="Tray_Actions_ExitApplication">
     <value>გასვლა</value>
   </data>
   <data name="Tray_Actions_OpenApplication">
     <value>{0}-ის გახსნა</value>
-    <comment>Button displayed in the tray icon to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
+    <comment>Button displayed in the tray window to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
   </data>
   <data name="Tray_Actions_OpenApplicationToSignIn">
-    <value>Open app to sign in</value>
+    <value>გახსენით აპლიკაცია შესასვლელად</value>
   </data>
   <data name="Unit_BytesPerSecond">
     <value>ბ/წმ</value>
@@ -3916,11 +3682,11 @@ VPN მიერთება</value>
     <value>ტბ/წმ</value>
     <comment>Unit for Terabytes per second</comment>
   </data>
-  <data name="UpsellBanner_NetShield_Description">
-    <value>დაბლოკეთ რეკლამები, ტრეკერები და საზიანო პროგრამები ვებგვერდებზე და აპებში</value>
+  <data name="UpsellBanner_P2P_Description">
+    <value>გადმოწერეთ ფაილები BitTorrent-ით და სხვა ფაილების გაზიარების პროტოკოლებით.</value>
   </data>
-  <data name="UpsellBanner_NetShield_Title">
-    <value>NetShield</value>
+  <data name="UpsellBanner_P2P_Title">
+    <value>P2P-ის მხარდაჭერა</value>
   </data>
   <data name="UpsellBanner_WrongCountry_Description">
     <value>ასწიეთ ტრაფიკი ნებისმიერი სერვერის ასარჩევად.</value>
@@ -3932,7 +3698,7 @@ VPN მიერთება</value>
     <value>განბლოკეთ VPN-ის დამატებითი პარამეტრები</value>
   </data>
   <data name="Upsell_Carousel_AdvancedSettings_DNS">
-    <value>Connect to VPN with your custom Domain Name System (DNS)</value>
+    <value>მიუერთდით VPN სერვერს თქვენი საკუთარი დომენის სახელით სისტემით (DNS)</value>
   </data>
   <data name="Upsell_Carousel_AdvancedSettings_LAN">
     <value>იქონით წვდომა თქვენს ლოკალურ ქსელში (LAN) არსებულ მოწყობილობებზე, როცა მიერთებული ბრძანდებით</value>
@@ -4017,16 +3783,16 @@ VPN მიერთება</value>
     <value>დააროუტეთ თქვენი ტრაფიკი ჩვენს ზედაცულ სერვერებზე, რომლებიც შვეიცარიაში, შვედეთში და ისლანდიაში მდებარეობს</value>
   </data>
   <data name="Upsell_Carousel_Speed">
-    <value>Browse at even higher speeds</value>
+    <value>იმუშავეთ ინტერნეტში უფრო სწრაფადაც კი</value>
   </data>
   <data name="Upsell_Carousel_Speed_Acceleration">
-    <value>Browse up to 400% faster with VPN Accelerator</value>
+    <value>იმუშავეთ ინტერნეტში VPN Accelerator-ით 400%-მდე უფრო სწრაფად</value>
   </data>
   <data name="Upsell_Carousel_Speed_Access">
     <value>იქონიეთ წვდომა უფრო სწრაფ, ნაკლებად დატვირთულ სერვერებთან</value>
   </data>
   <data name="Upsell_Carousel_Speed_Traffic">
-    <value>Get connection speeds of up to 10 Gbps</value>
+    <value>მიიღეთ კავშირის სიჩქარე 10 გბიტ/წმ-მდე</value>
   </data>
   <data name="Upsell_Carousel_SplitTunneling">
     <value>მიიღეთ საუკეთესო ორივე სამყაროდან</value>
@@ -4051,9 +3817,6 @@ VPN მიერთება</value>
   </data>
   <data name="Upsell_Carousel_Streaming_Platforms_HBO">
     <value>HBO Max</value>
-  </data>
-  <data name="Upsell_Carousel_Streaming_Platforms_Hulu">
-    <value>Hulu</value>
   </data>
   <data name="Upsell_Carousel_Streaming_Platforms_Netflix">
     <value>Netflix</value>
@@ -4084,7 +3847,7 @@ VPN მიერთება</value>
     <comment>Title for the worldwide coverage upsell feature page. {0} is a placeholder for the number of servers (eg. 100 secure servers) and {1} for the number of countries available (eg. 60 countries).</comment>
   </data>
   <data name="Upsell_Carousel_WorldwideCoverage_Censorship">
-    <value>Bypass censorship with advanced security features</value>
+    <value>დააღწიეთ თავი ცენზურას მოწინავე უსაფრთხოების ფუნქციებით</value>
   </data>
   <data name="Upsell_Carousel_WorldwideCoverage_Countries_One">
     <value>{0} ქვეყანა</value>
@@ -4093,10 +3856,10 @@ VPN მიერთება</value>
     <value>{0} ქვეყანა</value>
   </data>
   <data name="Upsell_Carousel_WorldwideCoverage_Features">
-    <value>Secure streaming, torrenting, and more</value>
+    <value>უსაფრთხო სტრიმინგი, ტორენტი და სხვა</value>
   </data>
   <data name="Upsell_Carousel_WorldwideCoverage_Selection">
-    <value>Select any country from our worldwide network</value>
+    <value>აირჩიეთ ნებისმიერი ქვეყანა ჩვენი გლობალური ქსელიდან</value>
   </data>
   <data name="Upsell_Carousel_WorldwideCoverage_Servers_One">
     <value>{0} დაცული სერვერი</value>
@@ -4115,6 +3878,24 @@ VPN მიერთება</value>
   </data>
   <data name="VpnProtocol_OpenVPN_Udp_Description">
     <value>აღიარებული, შემოწმებული, დაცული</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tcp">
+    <value>Proton WireGuard (TCP)</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tcp_Description">
+    <value>ხელოვნების ნიმუში პროტოკოლი უსაფრთხოებისა და წარმადობისთვის</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tls">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tls_Description">
+    <value>გადაფარეთ VPN-ის დაბლოკვა თქვენი მიერთებების ცენზორებისგან დამალვით</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Udp">
+    <value>Proton WireGuard (UDP)</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Udp_Description">
+    <value>ხელოვნების ნიმუში პროტოკოლი უსაფრთხოებისა და წარმადობისთვის</value>
   </data>
   <data name="VpnProtocol_Smart">
     <value>Smart</value>

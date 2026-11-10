@@ -19,10 +19,11 @@
 
 using System;
 using System.Threading.Tasks;
-using ProtonVPN.Common.Legacy.OS.Net;
+using ProtonVPN.Common.Core.Networking;
 using ProtonVPN.Configurations.Contracts;
 using ProtonVPN.Logging.Contracts;
 using ProtonVPN.Logging.Contracts.Events.NetworkLogs;
+using ProtonVPN.OperatingSystems.Network.Contracts;
 using ProtonVPN.Service.Settings;
 
 namespace ProtonVPN.Service.Firewall;
@@ -34,58 +35,67 @@ internal class Ipv6 : IIpv6
     private readonly ILogger _logger;
     private readonly IStaticConfiguration _staticConfig;
     private readonly IServiceSettings _serviceSettings;
+    private readonly INetworkUtilities _networkUtilities;
 
-    public Ipv6(ILogger logger, IStaticConfiguration staticConfig, IServiceSettings serviceSettings)
+    public Ipv6(
+        ILogger logger,
+        IStaticConfiguration staticConfig,
+        IServiceSettings serviceSettings,
+        INetworkUtilities networkUtilities)
     {
         _logger = logger;
         _staticConfig = staticConfig;
         _serviceSettings = serviceSettings;
+        _networkUtilities = networkUtilities;
     }
 
+    public VpnProtocol VpnProtocol { get; private set; } = VpnProtocol.Smart;
     public bool IsEnabled { get; private set; } = true;
 
-    public Task DisableAsync()
+    public Task DisableAsync(VpnProtocol vpnProtocol)
     {
-        return Task.Run(Disable);
+        return Task.Run(() => Disable(vpnProtocol));
     }
 
-    public Task EnableAsync()
+    public Task EnableAsync(VpnProtocol vpnProtocol)
     {
-        return Task.Run(Enable);
+        return Task.Run(() => Enable(vpnProtocol));
     }
 
-    public Task EnableOnVPNInterfaceAsync()
+    public Task EnableOnVPNInterfaceAsync(VpnProtocol vpnProtocol)
     {
-        return Task.Run(EnableOnVPNInterface);
+        return Task.Run(() => EnableOnVPNInterface(vpnProtocol));
     }
 
-    public void Enable()
+    public void Enable(VpnProtocol vpnProtocol)
     {
-        if (LoggingAction(NetworkUtil.EnableIPv6OnAllAdapters, "Enabling"))
+        if (LoggingAction(_networkUtilities.EnableIPv6OnAllAdapters, vpnProtocol, "Enabling"))
         {
+            VpnProtocol = vpnProtocol;
             IsEnabled = true;
         }
     }
 
-    private void Disable()
+    private void Disable(VpnProtocol vpnProtocol)
     {
-        if (LoggingAction(NetworkUtil.DisableIPv6OnAllAdapters, "Disabling"))
+        if (LoggingAction(_networkUtilities.DisableIPv6OnAllAdapters, vpnProtocol, "Disabling"))
         {
+            VpnProtocol = vpnProtocol;
             IsEnabled = false;
         }
     }
 
-    private void EnableOnVPNInterface()
+    private void EnableOnVPNInterface(VpnProtocol vpnProtocol)
     {
-        LoggingAction(NetworkUtil.EnableIPv6, "Enabling on VPN interface");
+        LoggingAction(_networkUtilities.EnableIPv6, vpnProtocol, "Enabling on VPN interface");
     }
 
-    private bool LoggingAction(Action<string, string> action, string actionMessage)
+    private bool LoggingAction(Action<string, string> action, VpnProtocol vpnProtocol, string actionMessage)
     {
         try
         {
             _logger.Info<NetworkLog>($"IPv6: {actionMessage}");
-            action(APP_NAME, _staticConfig.GetHardwareId(_serviceSettings.OpenVpnAdapter));
+            action(APP_NAME, _staticConfig.GetHardwareId(vpnProtocol, _serviceSettings.OpenVpnAdapter));
             _logger.Info<NetworkLog>($"IPv6: {actionMessage} succeeded");
 
             return true;

@@ -21,7 +21,6 @@ using ProtonVPN.Client.Logic.Auth.Contracts.Models;
 using ProtonVPN.Client.Logic.Users.Contracts.Messages;
 using ProtonVPN.Client.Settings.Contracts.Enums;
 using ProtonVPN.Client.Settings.Contracts.Models;
-using ProtonVPN.Common.Core.Dns;
 using ProtonVPN.Common.Core.Networking;
 
 namespace ProtonVPN.Client.Settings.Contracts;
@@ -30,17 +29,14 @@ public interface IUserSettings
 {
     string? Username { get; set; }
     string? UserDisplayName { get; set; }
+    string? UserEmail { get; set; }
     DateTimeOffset? UserCreationDateUtc { get; set; }
     string Theme { get; set; }
-    int WindowWidth { get; set; }
-    int WindowHeight { get; set; }
-    int? WindowXPosition { get; set; }
-    int? WindowYPosition { get; set; }
-    bool IsWindowMaximized { get; set; }
     bool IsNavigationPaneOpened { get; set; }
     int SidebarWidth { get; set; }
     bool IsRecentsPaneOpened { get; set; }
     bool IsConnectionDetailsPaneOpened { get; set; }
+    bool AreProtonProtocolsEnabled { get; set; }
     VpnProtocol VpnProtocol { get; set; }
     OpenVpnAdapter OpenVpnAdapter { get; set; }
     VpnPlan VpnPlan { get; set; }
@@ -71,6 +67,7 @@ public interface IUserSettings
     List<SplitTunnelingIpAddress> SplitTunnelingStandardIpAddressesList { get; set; }
     List<SplitTunnelingIpAddress> SplitTunnelingInverseIpAddressesList { get; set; }
     List<string> Ipv6Fragments { get; set; }
+    string? LastLogicalsStatusId { get; set; }
     ChangeServerAttempts ChangeServerAttempts { get; set; }
     DefaultConnection DefaultConnection { get; set; }
     bool WasWelcomeOverlayDisplayed { get; set; }
@@ -83,7 +80,10 @@ public interface IUserSettings
     bool IsTorInfoBannerDismissed { get; set; }
     bool IsGatewayInfoBannerDismissed { get; set; }
     int LastSeenWhatsNewOverlayVersion { get; set; }
-
-    [Obsolete("Use IsLocalDnsEnabled instead. DnsBlockMode is maintained in order to migrate the value for existing users.")]
-    DnsBlockMode DnsBlockMode { get; set; }
+    DateTimeOffset? LastSettingsHeartbeatTimeUtc { get; set; }
+    DateTimeOffset LastP2PWarningNotificationUtcDate { get; set; }
+    DateTimeOffset LastStreamingWarningNotificationUtcDate { get; set; }
+    List<ExcludedLocation> ExcludedLocationsList { get; set; }
+    bool WasExcludedLocationsSmartDiscoveryPromptDisplayed { get; set; }
+    bool WasExcludedLocationsTeachingTipDisplayed { get; set; }
 }

@@ -19,15 +19,15 @@
 
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProtonVPN.Common.Legacy.Extensions;
-using static ProtonVPN.Common.Legacy.Extensions.ExponentialExtensions;
+using ProtonVPN.Common.Core.Extensions;
+using static ProtonVPN.Common.Core.Extensions.ExponentialExtensions;
 
 namespace ProtonVPN.Common.Tests.Extensions
 {
     [TestClass]
     public class ExponentialExtensionsTest
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(0, "B", UnitSpacing.WithSpace, "0 B")]
         [DataRow(1, "B", UnitSpacing.WithSpace, "1 B")]
         [DataRow(21, "B", UnitSpacing.WithSpace, "21 B")]

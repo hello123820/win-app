@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -19,10 +19,9 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using ProtonVPN.Client.Common.Enums;
-using ProtonVPN.Client.Contracts.Services.Activation;
+using ProtonVPN.Client.Common.Models;
 using ProtonVPN.Client.Contracts.Services.Browsing;
 using ProtonVPN.Client.Core.Bases;
 using ProtonVPN.Client.Core.Bases.ViewModels;
@@ -49,6 +48,7 @@ public partial class LoginPageViewModel : PageViewModelBase<IMainWindowViewNavig
 {
     private readonly IUrlsBrowser _urlsBrowser;
     private readonly IMainWindowActivator _mainWindowActivator;
+    private readonly IMainWindowOverlayActivator _mainWindowOverlayActivator;
     private readonly IReportIssueWindowActivator _reportIssueWindowActivator;
     private readonly ITroubleshootingWindowActivator _troubleshootingWindowActivator;
     private readonly ISettings _settings;
@@ -67,23 +67,28 @@ public partial class LoginPageViewModel : PageViewModelBase<IMainWindowViewNavig
     [ObservableProperty]
     private bool _isHelpVisible;
 
+    [ObservableProperty]
+    private string _actionButtonTitle = string.Empty;
+
     public bool IsDebugModeEnabled => _settings.IsDebugModeEnabled;
 
     public LoginPageViewModel(
-        IMainWindowViewNavigator parentViewNavigator,
-        ILoginViewNavigator childViewNavigator,
         IUrlsBrowser urlsBrowser,
         IMainWindowActivator mainWindowActivator,
+        IMainWindowOverlayActivator mainWindowOverlayActivator,
         IReportIssueWindowActivator reportIssueWindowActivator,
         ITroubleshootingWindowActivator troubleshootingWindowActivator,
         ISettings settings,
         IDebugToolsWindowActivator debugToolsWindowActivator,
         IApplicationIconSelector applicationIconSelector,
+        IMainWindowViewNavigator parentViewNavigator,
+        ILoginViewNavigator childViewNavigator,
         IViewModelHelper viewModelHelper)
-        : base( parentViewNavigator, childViewNavigator, viewModelHelper)
+        : base(parentViewNavigator, childViewNavigator, viewModelHelper)
     {
         _urlsBrowser = urlsBrowser;
         _mainWindowActivator = mainWindowActivator;
+        _mainWindowOverlayActivator = mainWindowOverlayActivator;
         _reportIssueWindowActivator = reportIssueWindowActivator;
         _troubleshootingWindowActivator = troubleshootingWindowActivator;
         _settings = settings;
@@ -97,6 +102,8 @@ public partial class LoginPageViewModel : PageViewModelBase<IMainWindowViewNavig
     {
         ExecuteOnUIThread(async () =>
         {
+            ActionButtonTitle = string.Empty;
+
             switch (message.Value)
             {
                 case LoginState.Authenticating:
@@ -130,6 +137,10 @@ public partial class LoginPageViewModel : PageViewModelBase<IMainWindowViewNavig
                             await ChildViewNavigator.NavigateToSignInViewAsync();
                             break;
 
+                        case AuthError.NoVpnAccess:
+                            await ParentViewNavigator.NavigateToNoServersViewAsync();
+                            break;
+
                         case AuthError.Unknown:
                             SetErrorMessage(message.ErrorMessage);
                             break;
@@ -142,7 +153,7 @@ public partial class LoginPageViewModel : PageViewModelBase<IMainWindowViewNavig
 
                 case LoginState.Error:
                     await ChildViewNavigator.NavigateToSignInViewAsync();
-                    HandleAuthError(message);
+                    await HandleAuthErrorAsync(message);
                     break;
             }
         });
@@ -155,7 +166,6 @@ public partial class LoginPageViewModel : PageViewModelBase<IMainWindowViewNavig
             switch (message.Reason)
             {
                 case LogoutReason.UserAction:
-                case LogoutReason.NoVpnConnectionsAssigned:
                     break;
                 case LogoutReason.SessionExpired:
                     SetErrorMessage(Localizer.Get("Login_Error_SessionExpired"));
@@ -178,8 +188,10 @@ public partial class LoginPageViewModel : PageViewModelBase<IMainWindowViewNavig
         });
     }
 
-    private void HandleAuthError(LoginStateChangedMessage message)
+    private async Task HandleAuthErrorAsync(LoginStateChangedMessage message)
     {
+        ActionButtonTitle = string.Empty;
+
         if (message.AuthError == AuthError.None)
         {
             return;
@@ -187,15 +199,27 @@ public partial class LoginPageViewModel : PageViewModelBase<IMainWindowViewNavig
 
         switch (message.AuthError)
         {
-            case AuthError.MissingGoSrpDll:
-                Logger.Fatal<AppCrashLog>("The app is missing GoSrp.dll");
-                // VPNWIN-2109 - Add modal about missing file
+            case AuthError.MissingSrpDll:
+                Logger.Fatal<AppCrashLog>("The app is missing proton_srp_cffi.dll");
+                await _mainWindowOverlayActivator.ShowMessageAsync(new MessageDialogParameters
+                {
+                    Title = Localizer.Get("Login_Error_MissingSrpDll_Title"),
+                    Message = Localizer.Get("Login_Error_MissingSrpDll_Message"),
+                    PrimaryButtonText = Localizer.Get("Common_Actions_GotIt"),
+                    UseVerticalLayoutForButtons = true,
+                });
                 _mainWindowActivator.Exit();
                 break;
 
             case AuthError.GuestHoleFailed:
                 Logger.Error<GuestHoleLog>("Failed to authenticate using guest hole.");
                 _troubleshootingWindowActivator.Activate();
+                break;
+
+            case AuthError.GuestHoleFailedDueToMobileHotspot:
+                Logger.Error<GuestHoleLog>("Failed to authenticate using guest hole due to mobile hotspot.");
+                SetErrorMessage(Localizer.Get("Login_Error_GuestHoleFailedDueToMobileHotspot"));
+                ActionButtonTitle = Localizer.Get("Connection_Error_ReportAnIssue");
                 break;
 
             case AuthError.SsoAuthFailed:
@@ -279,6 +303,21 @@ public partial class LoginPageViewModel : PageViewModelBase<IMainWindowViewNavig
         IsMessageVisible = false;
     }
 
+    protected override void OnActivated()
+    {
+        base.OnActivated();
+
+        if (_mainWindowActivator.Window is MainWindow mainWindow)
+        {
+            mainWindow.InvalidateWindowResizeCapabilities(canResize: false);
+        }
+    }
+
+    protected override void OnDeactivated()
+    {
+        base.OnDeactivated();
+    }
+
     partial void OnIsMessageVisibleChanged(bool value)
     {
         if (IsMessageVisible && MessageSeverity is Severity.Error or Severity.Warning)
@@ -289,5 +328,11 @@ public partial class LoginPageViewModel : PageViewModelBase<IMainWindowViewNavig
         {
             _applicationIconSelector.OnAuthenticationErrorDismissed();
         }
+    }
+
+    [RelayCommand]
+    private Task TriggerActionButtonAsync()
+    {
+        return _reportIssueWindowActivator.ActivateAsync();
     }
 }

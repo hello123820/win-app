@@ -31,7 +31,7 @@ along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
              x:DefaultBindMode="OneWay"
              mc:Ignorable="d">
 
-    <Grid Margin="64,64,64,32"
+    <Grid Margin="64,48,64,32"
           RowSpacing="24">
 
         <Grid.RowDefinitions>
@@ -45,23 +45,24 @@ along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
                       Visibility="{x:Bind ViewModel.HasSubmissionResult, Converter={StaticResource NotBooleanToVisibilityConverter}}">
 
             <StackPanel Spacing="24">
-                <Image Height="90"
-                       HorizontalAlignment="Stretch"
-                       Source="{ThemeResource ReportIllustrationSource}" />
+                <StackPanel Orientation="Vertical"
+                            Spacing="16">
+                    <Image Height="90"
+                           HorizontalAlignment="Stretch"
+                           Source="{ThemeResource ReportIllustrationSource}"/>
 
-                <TextBlock Style="{ThemeResource BodyLargeStrongTextBlockStyle}"
-                           Text="{x:Bind ViewModel.Localizer.Get('Dialogs_NpsSurvey_Title')}"
-                           TextAlignment="Center" />
-
+                    <TextBlock Style="{ThemeResource BodyLargeStrongTextBlockStyle}"
+                               Text="{x:Bind ViewModel.Localizer.Get('Dialogs_NpsSurvey_Title')}"
+                               TextAlignment="Center" />
+                </StackPanel>
 
                 <Grid HorizontalAlignment="Center"
                       ColumnSpacing="8"
                       RowSpacing="8">
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
@@ -71,20 +72,23 @@ along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
                     <custom:RatingSelector Grid.Row="0"
                                            Grid.Column="0"
-                                           Grid.ColumnSpan="3"
+                                           Grid.ColumnSpan="2"
                                            Maximum="10"
                                            Minimum="0"
                                            Score="{x:Bind ViewModel.Score, Mode=TwoWay}" />
 
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
+                               HorizontalAlignment="Left"
+                               TextAlignment="Left"
                                Foreground="{ThemeResource TextWeakColorBrush}"
                                Style="{ThemeResource CaptionTextBlockStyle}"
                                Text="{x:Bind ViewModel.Localizer.Get('Dialogs_NpsSurvey_LowRateDescription')}" />
 
                     <TextBlock Grid.Row="1"
-                               Grid.Column="2"
+                               Grid.Column="1"
                                HorizontalAlignment="Right"
+                               TextAlignment="Right"
                                Foreground="{ThemeResource TextWeakColorBrush}"
                                Style="{ThemeResource CaptionTextBlockStyle}"
                                Text="{x:Bind ViewModel.Localizer.Get('Dialogs_NpsSurvey_HighRateDescription')}" />
@@ -103,7 +107,7 @@ along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
                              VerticalAlignment="Top"
                              Header="{x:Bind ViewModel.Localizer.Get('Dialogs_NpsSurvey_CommentLabel')}"
                              MaxLength="250"
-                             Style="{ThemeResource ValidationTextBoxStyle}"
+                             Style="{ThemeResource ValidationMultiLineTextBoxStyle}"
                              Text="{x:Bind ViewModel.Comment, Mode=TwoWay}"
                              TextAlignment="Start"
                              TextWrapping="Wrap" />

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -22,11 +22,14 @@ using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using ProtonVPN.UI.Tests.Annotations;
-using ProtonVPN.UI.Tests.ApiClient.Prod;
+using ProtonVPN.UI.Tests.Enums;
 using ProtonVPN.UI.Tests.Robots;
 using ProtonVPN.UI.Tests.TestBase;
 using ProtonVPN.UI.Tests.TestsHelper;
+using ProtonVPN.UI.Tests.Annotations;
+using ProtonVPN.UI.Tests.ApiClient.Prod;
+using ProtonVPN.UI.Tests.Enums.Locations;
+using ProtonVPN.UI.Tests.TestsHelper.UiFlows;
 
 namespace ProtonVPN.UI.Tests.Tests.SliTests;
 
@@ -35,43 +38,25 @@ namespace ProtonVPN.UI.Tests.Tests.SliTests;
 [Workflow("main_measurements")]
 public class ConnectionSLIs : SliSetUp
 {
+    private const Country SECURE_CORE_COUNTRY = Country.Australia;
+    private const Country P2P_COUNTRY = Country.Algeria;
+    private const Country TOR_COUNTRY = Country.France;
+
     private ProdTestApiClient _prodTestApiClient = new();
 
     [SetUp]
     public void TestInitialize()
     {
-        LaunchApp();
-        CommonUiFlows.FullLogin(TestUserData.PlusUser);
-    }
+        LaunchClient();
+        CommonUiFlows.FullLogin(TestUserData.PlusUser, TestConstants.IsProTunVersion);
 
-    [Test]
-    [Duration, TestStatus]
-    [Sli("specific_server_connect")]
-    public async Task ConnectionToSpecificServer()
-    { 
-        SecureString password = new NetworkCredential("", TestUserData.PlusUser.Password).SecurePassword;
-        string serverName = await _prodTestApiClient.GetRandomSpecificPaidServerAsync(TestUserData.PlusUser.Username, password);
-
-        SidebarRobot
-            .SearchFor(serverName)
-            .ConnectToFirstSpecificServer();
-
-        HomeRobot.Verify.IsConnected();
-        HomeRobot.Disconnect();
-
-        // Simulate users delay
-        Thread.Sleep(TestConstants.TenSecondsTimeout);
-
-        SidebarRobot
-            .SearchFor(serverName)
-            .ConnectToFirstSpecificServer();
-
-        SliHelper.MeasureTime(() =>
+        try
         {
-            HomeRobot.Verify.IsConnected();
-        });
-
-        HomeRobot.Disconnect();
+            HomeRobot
+                .Verify.IsUpsellModalDisplayed()
+                .DismissUpsellModal();
+        }
+        catch { }
     }
 
     [Test]
@@ -82,9 +67,14 @@ public class ConnectionSLIs : SliSetUp
         // First connection is made to make sure that everything is setup
         HomeRobot
             .ConnectViaConnectionCard()
-            .Verify.IsConnected();
+            .Verify.IsConnected()
+            .Disconnect();
 
-        HomeRobot.Disconnect();
+        if (!TestConstants.IsProTunVersion)
+        {
+            ConfirmationRobot
+                .CancelAction();
+        }
 
         // Simulate users delay
         Thread.Sleep(TestConstants.TenSecondsTimeout);
@@ -97,5 +87,98 @@ public class ConnectionSLIs : SliSetUp
         });
 
         HomeRobot.Disconnect();
+    }
+
+    [Test]
+    [Duration, TestStatus]
+    [Sli("specific_server_connect")]
+    public async Task ConnectToSpecificServerPerformanceAsync()
+    {
+        SecureString password = new NetworkCredential("", TestUserData.PlusUser.Password).SecurePassword;
+        string serverName = await _prodTestApiClient.GetRandomSpecificPaidServerAsync(TestUserData.PlusUser.Username, password);
+
+        ConnectAndDisconnectServer(CountryTab.All, serverName);
+    }
+
+    [Test]
+    [Duration, TestStatus]
+    [Sli("secure_core_connect")]
+    public void ConnectToSecureCorePerformance()
+    {
+        ConnectAndDisconnect(CountryTab.SecureCore, SECURE_CORE_COUNTRY);
+    }
+
+    [Test]
+    [Duration, TestStatus]
+    [Sli("p2p_connect")]
+    public void ConnectToP2PPerformance()
+    {
+        ConnectAndDisconnect(CountryTab.P2P, P2P_COUNTRY);
+    }
+
+    [Test]
+    [Duration, TestStatus]
+    [Sli("tor_connect")]
+    public void ConnectToTorPerformance()
+    {
+        ConnectAndDisconnect(CountryTab.Tor, TOR_COUNTRY);
+    }
+
+    private void ConnectAndDisconnect(CountryTab tab, Country countryName)
+    {
+        // First connection is made to make sure that everything is setup
+        SidebarRobot
+            .SearchFor(countryName.GetName())
+            .NavigateToCountriesTabAfterSearch(tab)
+            .ConnectToCountry(countryName);
+        
+        HomeRobot
+            .Verify.IsConnected()
+            .Disconnect();
+
+        // Simulate users delay
+        Thread.Sleep(TestConstants.TenSecondsTimeout);
+
+        SidebarRobot
+            .SearchFor(countryName.GetName())
+            .NavigateToCountriesTabAfterSearch(tab)
+            .ConnectToCountry(countryName);
+
+        SliHelper.MeasureTime(() =>
+        {
+            HomeRobot.Verify.IsConnected();
+        });
+
+        HomeRobot
+            .Disconnect()
+            .Verify.IsDisconnected();
+    }
+
+    private void ConnectAndDisconnectServer(CountryTab tab, string serverName)
+    {
+        SidebarRobot
+            .SearchFor(serverName)
+            .NavigateToCountriesTabAfterSearch(tab)
+            .ConnectToServer();
+
+        HomeRobot
+            .Verify.IsConnected()
+            .Disconnect();
+
+        Thread.Sleep(TestConstants.TenSecondsTimeout);
+
+        SidebarRobot
+            .SearchFor(serverName)
+            .NavigateToCountriesTabAfterSearch(tab)
+            .ConnectToServer();
+
+        SliHelper.MeasureTime(() =>
+        {
+            HomeRobot.Verify.IsConnected();
+        });
+
+        HomeRobot
+            .Disconnect()
+            .Verify.IsDisconnected();
     }
 }

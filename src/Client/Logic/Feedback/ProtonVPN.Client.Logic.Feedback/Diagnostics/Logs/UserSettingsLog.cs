@@ -22,6 +22,7 @@ using System.Text;
 using Newtonsoft.Json;
 using ProtonVPN.Client.Logic.Auth.Contracts;
 using ProtonVPN.Client.Logic.Auth.Contracts.Models;
+using ProtonVPN.Client.Logic.Servers.Contracts;
 using ProtonVPN.Client.Logic.Users.Contracts.Messages;
 using ProtonVPN.Client.Settings.Contracts;
 using ProtonVPN.Client.Settings.Contracts.Models;
@@ -34,12 +35,14 @@ public class UserSettingsLog : LogBase
 {
     private readonly ISettings _settings;
     private readonly IUserAuthenticator _userAuthenticator;
+    private readonly IServersLoader _serversLoader;
 
-    public UserSettingsLog(IStaticConfiguration config, ISettings settings, IUserAuthenticator userAuthenticator)
+    public UserSettingsLog(IStaticConfiguration config, ISettings settings, IUserAuthenticator userAuthenticator, IServersLoader serversLoader)
         : base(config.DiagnosticLogsFolder, "Settings.txt")
     {
         _settings = settings;
         _userAuthenticator = userAuthenticator;
+        _serversLoader = serversLoader;
     }
 
     public override void Write()
@@ -77,6 +80,16 @@ public class UserSettingsLog : LogBase
             stringBuilder.AppendLine("The user is not logged in.");
         }
 
+        stringBuilder
+            .AppendLine()
+            .AppendLine("Servers")
+            .AppendLine();
+
+        foreach (KeyValuePair<string, dynamic?> property in GetServers())
+        {
+            stringBuilder.AppendLine($"{property.Key}: {Serialize(property.Value)}");
+        }
+
         return stringBuilder.ToString();
     }
 
@@ -108,6 +121,7 @@ public class UserSettingsLog : LogBase
     {
         yield return new(nameof(IUserSettings.Theme), _settings.Theme);
         yield return new(nameof(IUserSettings.VpnProtocol), _settings.VpnProtocol);
+        yield return new(nameof(IUserSettings.AreProtonProtocolsEnabled), _settings.AreProtonProtocolsEnabled);
         yield return new(nameof(IUserSettings.Username), _settings.Username);
         yield return new($"{nameof(IUserSettings.VpnPlan)}.{nameof(VpnPlan.IsPaid)}", _settings.VpnPlan.IsPaid);
         yield return new($"{nameof(IUserSettings.VpnPlan)}.{nameof(VpnPlan.Title)}", _settings.VpnPlan.Title);
@@ -153,21 +167,26 @@ public class UserSettingsLog : LogBase
         yield return new(nameof(IUserSettings.SplitTunnelingInverseAppsList), _settings.SplitTunnelingInverseAppsList);
         yield return new(nameof(IUserSettings.SplitTunnelingInverseIpAddressesList), _settings.SplitTunnelingInverseIpAddressesList);
 
+        yield return new(nameof(IUserSettings.DefaultConnection), _settings.DefaultConnection);
+        yield return new(nameof(IUserSettings.ExcludedLocationsList), _settings.ExcludedLocationsList);
+
         yield return new(nameof(IUserSettings.SidebarWidth), _settings.SidebarWidth);
         yield return new(nameof(IUserSettings.IsRecentsPaneOpened), _settings.IsRecentsPaneOpened);
         yield return new(nameof(IUserSettings.IsNavigationPaneOpened), _settings.IsNavigationPaneOpened);
         yield return new(nameof(IUserSettings.IsConnectionDetailsPaneOpened), _settings.IsConnectionDetailsPaneOpened);
 
-        yield return new(nameof(IUserSettings.WindowWidth), _settings.WindowWidth);
-        yield return new(nameof(IUserSettings.WindowHeight), _settings.WindowHeight);
-        yield return new(nameof(IUserSettings.WindowXPosition), _settings.WindowXPosition);
-        yield return new(nameof(IUserSettings.WindowYPosition), _settings.WindowYPosition);
-        yield return new(nameof(IUserSettings.IsWindowMaximized), _settings.IsWindowMaximized);
+        yield return new($"{nameof(IGlobalSettings.WindowLocation)}.{nameof(WindowLocation.Width)}", _settings.WindowLocation.Width);
+        yield return new($"{nameof(IGlobalSettings.WindowLocation)}.{nameof(WindowLocation.Height)}", _settings.WindowLocation.Height);
+        yield return new($"{nameof(IGlobalSettings.WindowLocation)}.{nameof(WindowLocation.XPosition)}", _settings.WindowLocation.XPosition);
+        yield return new($"{nameof(IGlobalSettings.WindowLocation)}.{nameof(WindowLocation.YPosition)}", _settings.WindowLocation.YPosition);
+        yield return new($"{nameof(IGlobalSettings.WindowLocation)}.{nameof(WindowLocation.IsMaximized)}", _settings.WindowLocation.IsMaximized);
 
         yield return new(nameof(IUserSettings.WasWelcomeOverlayDisplayed), _settings.WasWelcomeOverlayDisplayed);
         yield return new(nameof(IUserSettings.WasWelcomePlusOverlayDisplayed), _settings.WasWelcomePlusOverlayDisplayed);
         yield return new(nameof(IUserSettings.WasWelcomeUnlimitedOverlayDisplayed), _settings.WasWelcomeUnlimitedOverlayDisplayed);
         yield return new(nameof(IUserSettings.WasWelcomeB2BOverlayDisplayed), _settings.WasWelcomeB2BOverlayDisplayed);
+        yield return new(nameof(IUserSettings.WasExcludedLocationsSmartDiscoveryPromptDisplayed), _settings.WasExcludedLocationsSmartDiscoveryPromptDisplayed);
+        yield return new(nameof(IUserSettings.WasExcludedLocationsTeachingTipDisplayed), _settings.WasExcludedLocationsTeachingTipDisplayed);
 
         yield return new(nameof(IUserSettings.IsP2PInfoBannerDismissed), _settings.IsP2PInfoBannerDismissed);
         yield return new(nameof(IUserSettings.IsSecureCoreInfoBannerDismissed), _settings.IsSecureCoreInfoBannerDismissed);
@@ -175,6 +194,11 @@ public class UserSettingsLog : LogBase
         yield return new(nameof(IUserSettings.IsGatewayInfoBannerDismissed), _settings.IsGatewayInfoBannerDismissed);
 
         yield return new(nameof(IUserSettings.LastSeenWhatsNewOverlayVersion), _settings.LastSeenWhatsNewOverlayVersion);
+    }
+
+    private IEnumerable<KeyValuePair<string, dynamic?>> GetServers()
+    {
+        return _serversLoader.GetStats();
     }
 
     private string Serialize(dynamic? value)

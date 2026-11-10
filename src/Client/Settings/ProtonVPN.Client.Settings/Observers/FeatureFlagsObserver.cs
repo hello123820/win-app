@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -36,20 +36,21 @@ using ProtonVPN.Logging.Contracts.Events.SettingsLogs;
 
 namespace ProtonVPN.Client.Settings.Observers;
 
-public class FeatureFlagsObserver : 
-    PollingObserverBase, 
-    IFeatureFlagsObserver
+public class FeatureFlagsObserver : PollingObserverBase, IFeatureFlagsObserver
 {
     private readonly ISettings _settings;
     private readonly IApiClient _apiClient;
     private readonly IConfiguration _config;
     private readonly IEventMessageSender _eventMessageSender;
 
-    [FeatureFlag("IPv6Support")]
-    public bool IsIpv6SupportEnabled => IsEnabled();
+    [FeatureFlag("U2FGatewayPortalUrl")]
+    public string U2FGatewayPortalUrl => GetPayload();
 
-    [FeatureFlag("IsLocalAreaNetworkAllowedForPaidUsersOnly")]
-    public bool IsLocalAreaNetworkAllowedForPaidUsersOnly => IsEnabled();
+    [FeatureFlag("ProTunV1")]
+    public bool IsProTunEnabled => IsEnabled();
+
+    [FeatureFlag("IsConnectionFeedbackEnabled")]
+    public FeatureFlag ConnectionFeedback => GetFeatureFlag();
 
     protected override TimeSpan PollingInterval => _config.FeatureFlagsUpdateInterval;
 
@@ -73,7 +74,7 @@ public class FeatureFlagsObserver :
 
         if (HasFeatureFlags)
         {
-            StartTimerAndTriggerOnStart();
+            TriggerAndStartTimer();
         }
     }
 
@@ -82,7 +83,7 @@ public class FeatureFlagsObserver :
         return UpdateFeatureFlagsAsync(cancellationToken);
     }
 
-    private bool IsEnabled([CallerMemberName] string propertyName = "")
+    private FeatureFlag GetFeatureFlag([CallerMemberName] string propertyName = "")
     {
         PropertyInfo? property = GetType().GetProperty(propertyName)
             ?? throw new InvalidOperationException($"Property '{propertyName}' not found on {GetType().Name}");
@@ -91,8 +92,21 @@ public class FeatureFlagsObserver :
             ?? throw new InvalidOperationException($"Property '{propertyName}' is missing [FeatureFlag]");
 
         return _settings.FeatureFlags
-            .FirstOrDefault(f => f.Name.EqualsIgnoringCase(featureFlagAttribute.Name), FeatureFlag.Default)
-            .IsEnabled;
+            .FirstOrDefault(f => f.Name.EqualsIgnoringCase(featureFlagAttribute.Name), FeatureFlag.Default);
+    }
+
+    private bool IsEnabled([CallerMemberName] string propertyName = "")
+    {
+        return GetFeatureFlag(propertyName).IsEnabled;
+    }
+
+    private string GetPayload([CallerMemberName] string propertyName = "")
+    {
+        FeatureFlag featureFlag = GetFeatureFlag(propertyName);
+
+        return featureFlag.IsEnabled 
+            ? featureFlag.Payload
+            : string.Empty;
     }
 
     protected override Task OnTriggerAsync()
@@ -142,19 +156,23 @@ public class FeatureFlagsObserver :
                 continue;
             }
 
-            bool? oldValue = GetFeatureFlag(_settings.FeatureFlags, featureFlagName)?.IsEnabled;
-            bool? newValue = GetFeatureFlag(updatedFeatureFlags, featureFlagName)?.IsEnabled;
+            FeatureFlag? oldFlag = GetFeatureFlag(_settings.FeatureFlags, featureFlagName);
+            FeatureFlag? newFlag = GetFeatureFlag(updatedFeatureFlags, featureFlagName);
 
-            if (oldValue != newValue)
+            FeatureFlagChange featureFlagChange = new()
+            {                    
+                // Use property name instead of attribute name so that later we can compare
+                // using nameof(IFeatureFlagsObserver.FeatureFlag)
+                Name = featureFlagPropertyInfo.Name,
+                OldValue = oldFlag?.IsEnabled,
+                NewValue = newFlag?.IsEnabled,
+                OldPayload = oldFlag?.Payload,
+                NewPayload = newFlag?.Payload
+            };
+
+            if (featureFlagChange.HasChanged)
             {
-                changes.Add(new()
-                {
-                    // Use property name instead of attribute name so that later we can compare
-                    // using nameof(IFeatureFlagsObserver.FeatureFlag)
-                    Name = featureFlagPropertyInfo.Name,
-                    OldValue = oldValue,
-                    NewValue = newValue,
-                });
+                changes.Add(featureFlagChange);
             }
         }
 
@@ -172,7 +190,8 @@ public class FeatureFlagsObserver :
             new FeatureFlag
             {
                 Name = f.Name,
-                IsEnabled = f.IsEnabled
+                IsEnabled = f.IsEnabled,
+                Payload = f.Variant?.Payload?.Value ?? string.Empty
             }).ToList() ?? [];
     }
 }

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -20,84 +20,26 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
-using ProtonVPN.Common.Core.Extensions;
-using ProtonVPN.Vpn.OpenVpn;
 
 namespace ProtonVPN.Vpn.PortScanning;
 
-public class TcpPortScanner
+public class TcpPortScanner : ITcpPortScanner
 {
-    private byte[] _staticKey;
-
-    public void Config(byte[] staticKey)
+    public async Task<bool> IsAliveAsync(string ip, int port, CancellationToken cancellationToken)
     {
-        _staticKey = staticKey;
-    }
-
-    public async Task<bool> IsAliveAsync(string ip, int port, Task timeoutTask)
-    {
-        OpenVpnHandshake packet = new(_staticKey);
-        IPEndPoint endpoint = new(IPAddress.Parse(ip), port);
-        using Socket socket = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
         try
         {
-            await SafeSocketAction(socket.ConnectAsync(endpoint)).WithTimeout(timeoutTask);
+            IPEndPoint endpoint = new(IPAddress.Parse(ip), port);
+            using Socket socket = new(endpoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
-            byte[] bytes = packet.Bytes(true);
-            await SafeSocketAction(socket.SendAsync(new ArraySegment<byte>(bytes), SocketFlags.None)).WithTimeout(timeoutTask);
-
-            byte[] answer = new byte[1024];
-            int received = await SafeSocketFunc(socket.ReceiveAsync(new ArraySegment<byte>(answer), SocketFlags.None)).WithTimeout(timeoutTask);
-
-            return received > 0;
+            await socket.ConnectAsync(endpoint, cancellationToken).ConfigureAwait(false);
+            return socket.Connected;
         }
         catch (Exception)
         {
             return false;
         }
-        finally
-        {
-            socket.Close();
-        }
-    }
-
-    private static Task SafeSocketAction(Task task)
-    {
-        task.ContinueWith(t =>
-            {
-                switch (t.Exception?.InnerException)
-                {
-                    case null:
-                    case SocketException _:
-                    case ObjectDisposedException _:
-                        return;
-                    default:
-                        throw t.Exception;
-                }
-            },
-            TaskContinuationOptions.OnlyOnFaulted);
-
-        return task;
-    }
-
-    private static Task<TResult> SafeSocketFunc<TResult>(Task<TResult> task)
-    {
-        task.ContinueWith(t =>
-            {
-                switch (t.Exception?.InnerException)
-                {
-                    case null:
-                    case SocketException _:
-                    case ObjectDisposedException _:
-                        return;
-                    default:
-                        throw t.Exception;
-                }
-            },
-            TaskContinuationOptions.OnlyOnFaulted);
-
-        return task;
     }
 }

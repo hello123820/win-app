@@ -1,0 +1,39 @@
+﻿/*
+ * Copyright (c) 2026 Proton AG
+ *
+ * This file is part of ProtonVPN.
+ *
+ * ProtonVPN is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonVPN is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+namespace ProtonVPN.UI.Tests.TestsHelper.TestData;
+
+public static class InputTestData
+{
+    public static readonly string[] SpecialInputs =
+    [
+        "⚡👾🌐🔒😀🚀💯👨‍👩‍👧‍👦",
+        "чќњљкшЃЌЅЏ",
+        "مرحبًا بالعالم",
+        "你好世界",
+        "éèêëáàäåçñüßøÆœ",
+        "-&%($_@#!*+=[]{}|\\:;\"'<>,.?/~^`",
+        @"C:\Temp\..\test<>|:*?"
+    ];
+
+    public static readonly string LongInput = new('A', 20_000);
+
+    // Must be longer than the minimum length (100 characters) some report an issue fields require
+    public const string BugReportFieldInput = "This is an automated UI test report. Please ignore it, no action is needed from customer support. Testing only.";
+}

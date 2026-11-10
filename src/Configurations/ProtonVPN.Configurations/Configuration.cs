@@ -55,9 +55,10 @@ public partial class Configuration : StaticConfiguration, IConfiguration
     public TimeSpan ClientConfigUpdateInterval => GetWithRandomizedDeviation();
     public TimeSpan FeatureFlagsUpdateInterval => GetWithRandomizedDeviation();
     public TimeSpan ConnectionCertificateUpdateInterval => GetWithRandomizedDeviation();
-    public TimeSpan ServerUpdateInterval => GetWithRandomizedDeviation();
-    public TimeSpan ServerLoadUpdateInterval => GetWithRandomizedDeviation();
-    public TimeSpan MinimumServerLoadUpdateInterval => GetWithRandomizedDeviation();
+    public TimeSpan ServerUpdateInterval => GetWithStableDeviation();
+    public TimeSpan ServerLoadUpdateInterval => GetWithStableDeviation();
+    public TimeSpan OverdueServerLoadUpdateTimeout => Get();
+    public TimeSpan ResumeRefreshTimeout => Get();
     public TimeSpan AnnouncementsUpdateInterval => GetWithRandomizedDeviation();
     public TimeSpan AlternativeRoutingCheckInterval => Get();
     public TimeSpan UpdateCheckInterval => GetWithRandomizedDeviation();
@@ -76,6 +77,8 @@ public partial class Configuration : StaticConfiguration, IConfiguration
     public TimeSpan P2PTrafficDetectionInterval => GetWithRandomizedDeviation();
     public TimeSpan StatisticalEventSendTriggerInterval => GetWithRandomizedDeviation();
     public TimeSpan StatisticalEventMinimumWaitInterval => GetWithRandomizedDeviation();
+    public TimeSpan ServerSearchDelay => Get();
+    public TimeSpan ConflictingAdapterCheckerDelay => Get();
 
     public IList<string> DohProviders => Get();
     public IUrlsConfiguration Urls => Get();

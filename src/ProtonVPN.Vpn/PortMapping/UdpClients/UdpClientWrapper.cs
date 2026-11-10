@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -17,55 +17,71 @@
  * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace ProtonVPN.Vpn.PortMapping.UdpClients
+namespace ProtonVPN.Vpn.PortMapping.UdpClients;
+
+public class UdpClientWrapper : IUdpClientWrapper
 {
-    public class UdpClientWrapper : IUdpClientWrapper
+    private UdpClient? _udpClient;
+    private IPEndPoint? _endpoint;
+
+    public void Start(IPEndPoint endpoint)
     {
-        private UdpClient _udpClient;
-        private IPEndPoint _endpoint;
+        _udpClient = new();
+        _endpoint = endpoint;
+    }
 
-        public void Start(IPEndPoint endpoint)
+    public void Send(byte[] data)
+    {
+        _udpClient?.Send(data, data.Length, _endpoint);
+    }
+
+    public async Task<byte[]> ReceiveAsync(CancellationToken cancellationToken)
+    {
+        UdpClient? udpClient = _udpClient;
+        if (udpClient is null)
         {
-            _udpClient = new();
-            _endpoint = endpoint;
+            return [];
         }
 
-        public void Send(byte[] data)
+        try
         {
-            _udpClient.Send(data, data.Length, _endpoint);
+            UdpReceiveResult result = await udpClient.ReceiveAsync(cancellationToken);
+            return result.Buffer;
         }
+        catch (ObjectDisposedException) when (cancellationToken.IsCancellationRequested)
+        {
+            // Socket disposed while the receive was ongoing, but a cancel had already been requested
+            throw new OperationCanceledException(cancellationToken);
+        }
+    }
 
-        public byte[] Receive()
+    public void Stop()
+    {
+        try
         {
-            IPEndPoint remoteEndpoint = _endpoint;
-            return _udpClient.Receive(ref remoteEndpoint);
+            _udpClient?.Close();
         }
+        finally
+        {
+            _udpClient?.Dispose();
+            _udpClient = null;
+        }
+    }
 
-        public void Stop()
-        {
-            try
-            {
-                _udpClient?.Close();
-            }
-            finally
-            {
-                _udpClient?.Dispose();
-                _udpClient = null;
-            }
-        }
+    public void Reset()
+    {
+        Stop();
+        _udpClient = new();
+    }
 
-        public void Reset()
-        {
-            Stop();
-            _udpClient = new();
-        }
-
-        public void Dispose()
-        {
-            Stop();
-        }
+    public void Dispose()
+    {
+        Stop();
     }
 }

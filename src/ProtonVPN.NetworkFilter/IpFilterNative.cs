@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Polly;
 using Polly.Retry;
@@ -32,6 +33,8 @@ internal class IpFilterNative
     private const uint ERROR_CALLOUT_NOT_FOUND = 0x80320001;
     private const uint ERROR_ADAPTER_NOT_FOUND = 0x80040200;
     private const uint ERROR_TIMEOUT = 0x80320012;
+    private const uint ERROR_INVALID_ARGUMENT = 0x80070057;
+    private const uint ERROR_BAD_PATHNAME = 0x800700A1;
     private const int RETRY_COUNT = 3;
 
     private static readonly RetryPolicy _retryPolicy = Policy
@@ -296,19 +299,45 @@ internal class IpFilterNative
             name));
     }
 
-    public static uint GetSublayerFilterCount(IntPtr sessionHandle,
+    public static List<Guid> GetSublayerFilters(IntPtr sessionHandle,
         Guid providerId,
         Guid sublayerId)
     {
         uint total = 0;
+        IntPtr filtersPtr = IntPtr.Zero;
 
-        AssertSuccess(() => PInvoke.GetSublayerFilterCount(
+        AssertSuccess(() => PInvoke.GetSublayerFilters(
             sessionHandle,
             ref providerId,
             ref sublayerId,
+            out filtersPtr,
             ref total));
 
-        return total;
+        try
+        {
+            if (total == 0 || filtersPtr == IntPtr.Zero)
+            {
+                return [];
+            }
+
+            int filterCount = checked((int) total);
+            List<Guid> filters = [];
+            int guidSize = Marshal.SizeOf<Guid>();
+
+            for (int i = 0; i < filterCount; i++)
+            {
+                filters.Add(Marshal.PtrToStructure<Guid>(IntPtr.Add(filtersPtr, i * guidSize)));
+            }
+
+            return filters;
+        }
+        finally
+        {
+            if (filtersPtr != IntPtr.Zero)
+            {
+                PInvoke.FreeMemory(filtersPtr);
+            }
+        }
     }
 
     public static void DestroyCallouts(IntPtr sessionHandle, Guid providerId)
@@ -391,7 +420,8 @@ internal class IpFilterNative
         uint weight,
         Guid calloutId,
         Guid providerContextId,
-        string appPath,
+        string appIdentifier,
+        bool isDnsPortExcluded,
         bool persistent = false,
         Guid id = new())
     {
@@ -405,7 +435,8 @@ internal class IpFilterNative
             weight,
             ref calloutId,
             ref providerContextId,
-            appPath,
+            appIdentifier,
+            (uint)(isDnsPortExcluded ? 1 : 0),
             (uint)(persistent ? 1 : 0),
             ref id));
 
@@ -836,6 +867,10 @@ internal class IpFilterNative
                 throw new CalloutNotFoundException(status);
             case ERROR_ADAPTER_NOT_FOUND:
                 throw new AdapterNotFoundException(status);
+            case ERROR_INVALID_ARGUMENT:
+                throw new InvalidArgumentException(status);
+            case ERROR_BAD_PATHNAME:
+                throw new NonLocalAppPathException(status);
             default:
                 throw new NetworkFilterException(status);
         }

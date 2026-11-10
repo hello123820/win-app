@@ -18,6 +18,7 @@
 #define NetworkDriverFileName "Resources\ProtonVPN.CalloutDriver.sys"
 
 #define RestoreInternetExeName "ProtonVPN.RestoreInternet.exe"
+#define NrptWatchdogTaskName "Proton VPN NRPT watchdog"
 
 #define ProtonInstallerName "ProtonInstaller.exe"
 #define Webview2InstallerName "MicrosoftEdgeWebview2Setup.exe"
@@ -32,6 +33,8 @@
 #define VersionFolder "v" + MyAppVersion
 #define DisableAutoUpdateInstallerArg "/DISABLEAUTOUPDATE"
 #define DisableAutoUpdateClientArg "-DisableAutoUpdate"
+#define OpenOnDesktopInstallerArg "/OPENONDESKTOP"
+#define OpenOnDesktopClientArg "-OpenOnDesktop"
 #define AppFolder "Proton\VPN"
 #define RegistryRunPath "Software\Microsoft\Windows\CurrentVersion\Run"
 #define LegacyClientName "ProtonVPN"
@@ -61,7 +64,7 @@ DisableReadyPage=yes
 DirExistsWarning=no
 VersionInfoProductTextVersion={#MyAppVersion}-{#hash}
 VersionInfoVersion={#MyAppVersion}
-AppCopyright=© 2022 {#MyPublisher}
+AppCopyright=Â© 2022 {#MyPublisher}
 
 SignTool=signtool sign /a /tr http://timestamp.sectigo.com /td SHA256 /fd SHA256 $f
 
@@ -69,9 +72,14 @@ SignTool=signtool sign /a /tr http://timestamp.sectigo.com /td SHA256 /fd SHA256
 SetupWindowTitle={#MyAppName}
 
 [Registry]
-Root: HKLM; Subkey: Software\Proton AG\Proton VPN; Flags: uninsdeletekey dontcreatekey;
+Root: HKLM; Subkey: "Software\Proton AG\Proton VPN"; Flags: uninsdeletekey dontcreatekey;
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Services\EventLog\Application\ProtonVPNService"; Flags: uninsdeletekey dontcreatekey;
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Services\EventLog\Application\ProtonVPN"; Flags: uninsdeletekey;
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Services\EventLog\Application\ProtonVPN"; ValueType: expandsz; ValueName: "EventMessageFile"; ValueData: "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\EventLogMessages.dll"; Flags: deletekey uninsdeletekey;
 
 [Files]
+Source: "Images\Proton*.bmp"; Flags: dontcopy nocompression;
+
 Source: "..\{#SourcePath}\ProtonVPN.Launcher.exe"; DestDir: "{app}"; Flags: signonce;
 
 Source: "..\{#SourcePath}\ProtonVPNService.exe"; DestDir: "{app}\{#VersionFolder}"; Flags: signonce;
@@ -119,11 +127,10 @@ Source: "..\{#SourcePath}\nb-NO\Microsoft.ui.xaml.dll.mui"; DestDir: "{app}\{#Ve
 Source: "..\{#SourcePath}\sl-SI\Microsoft.ui.xaml.dll.mui"; DestDir: "{app}\{#VersionFolder}\sl-SI"; Flags: signonce;
 Source: "..\{#SourcePath}\zh-CN\Microsoft.ui.xaml.dll.mui"; DestDir: "{app}\{#VersionFolder}\zh-CN"; Flags: signonce;
 
-Source: "..\{#SourcePath}\Resources\ProtonVPN.InstallActions.x86.dll"; DestDir: "{app}\{#VersionFolder}\Resources"; Flags: signonce;
+Source: "..\{#SourcePath}\Resources\ProtonVPN.InstallActions.x86.dll"; DestDir: "{app}\{#VersionFolder}\Resources"; Flags: signonce nocompression;
 Source: "..\{#SourcePath}\Resources\LocalAgent.dll"; DestDir: "{app}\{#VersionFolder}\Resources"; Flags: signonce;
 Source: "..\{#SourcePath}\Resources\ProtonVPN.IPFilter.dll"; DestDir: "{app}\{#VersionFolder}\Resources"; Flags: signonce;
 Source: "..\{#SourcePath}\Resources\ProtonVPN.NetworkUtil.dll"; DestDir: "{app}\{#VersionFolder}\Resources"; Flags: signonce;
-Source: "..\{#SourcePath}\Resources\GoSrp.dll"; DestDir: "{app}\{#VersionFolder}\Resources"; Flags: signonce;
 
 Source: "GuestHoleServers.json"; DestDir: "{app}\{#VersionFolder}\Resources";
 Source: "Dependencies\{#Webview2InstallerName}"; Flags: dontcopy;
@@ -148,11 +155,11 @@ Source: "..\{#SourcePath}\Assets\Flags\*"; DestDir: "{app}\{#VersionFolder}\Prot
 
 Source: "..\{#SourcePath}\Assets\Map\Data\*"; DestDir: "{app}\{#VersionFolder}\ProtonVPN.Client.Common.UI\Assets\Map\Data";
 
+Source: "..\{#SourcePath}\Assets\Fonts\*"; DestDir: "{app}\{#VersionFolder}\ProtonVPN.Client.Common.UI\Assets\Fonts";
+
 ; Comes from iplist-builder repo artifacts
 Source: "..\data\ipv6_chaos_prefixtree.bin"; DestDir: "{app}\{#VersionFolder}\ServiceData\IPv6"; DestName: "PrefixTree.bin";
 Source: "..\{#SourcePath}\proton_vpn_ipv6chaos.dll"; DestDir: "{app}\{#VersionFolder}";
-
-Source: "Images\Proton*.bmp"; Flags: dontcopy;
 
 [Icons]
 Name: "{group}\Proton VPN"; Filename: "{app}\{#LauncherExeName}"
@@ -169,18 +176,33 @@ Name: "nl_NL"; MessagesFile: "compiler:Languages\Dutch.isl,Strings\Dutch.isl"
 Name: "es_ES"; MessagesFile: "compiler:Languages\Spanish.isl,Strings\Spanish.isl"
 Name: "it_IT"; MessagesFile: "compiler:Languages\Italian.isl,Strings\Italian.isl"
 Name: "pl_PL"; MessagesFile: "compiler:Languages\Polish.isl,Strings\Polish.isl"
-Name: "pt_BR"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl,Strings\BrazilianPortuguese.isl"
+Name: "pt_BR"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl,Strings\PortugueseBrazil.isl"
 Name: "ru_RU"; MessagesFile: "compiler:Languages\Russian.isl,Strings\Russian.isl"
 Name: "tr_TR"; MessagesFile: "compiler:Languages\Turkish.isl,Strings\Turkish.isl"
 Name: "ca_ES"; MessagesFile: "compiler:Languages\Catalan.isl,Strings\Catalan.isl"
 Name: "cs_CZ"; MessagesFile: "compiler:Languages\Czech.isl,Strings\Czech.isl"
+Name: "da_DK"; MessagesFile: "compiler:Languages\Danish.isl,Strings\Danish.isl"
 Name: "fi_FI"; MessagesFile: "compiler:Languages\Finnish.isl,Strings\Finnish.isl"
 Name: "hu_HU"; MessagesFile: "compiler:Languages\Hungarian.isl,Strings\Hungarian.isl"
+Name: "id_ID"; MessagesFile: "Languages\Indonesian.isl,Strings\Indonesian.isl"
 Name: "nb_NO"; MessagesFile: "compiler:Languages\Norwegian.isl,Strings\Norwegian.isl"
 Name: "pt_PT"; MessagesFile: "compiler:Languages\Portuguese.isl,Strings\Portuguese.isl"
+Name: "ro_RO"; MessagesFile: "Languages\Romanian.isl,Strings\Romanian.isl"
+Name: "sk_SK"; MessagesFile: "compiler:Languages\Slovak.isl,Strings\Slovak.isl"
 Name: "sl_SI"; MessagesFile: "compiler:Languages\Slovenian.isl,Strings\Slovenian.isl"
+Name: "sv_SE"; MessagesFile: "compiler:Languages\Swedish.isl,Strings\Swedish.isl"
+Name: "el_GR"; MessagesFile: "Languages\Greek.isl,Strings\Greek.isl"
+Name: "be_BY"; MessagesFile: "Languages\Belarusian.isl,Strings\Belarusian.isl"
 Name: "uk_UA"; MessagesFile: "compiler:Languages\Ukrainian.isl,Strings\Ukrainian.isl"
+Name: "ka_GE"; MessagesFile: "Languages\Georgian.isl,Strings\Georgian.isl"
+Name: "ko_KR"; MessagesFile: "compiler:Languages\Korean.isl,Strings\Korean.isl"
 Name: "ja_JP"; MessagesFile: "compiler:Languages\Japanese.isl,Strings\Japanese.isl"
+Name: "zh_CN"; MessagesFile: "Languages\ChineseSimplified.isl,Strings\ChineseSimplified.isl"
+Name: "zh_TW"; MessagesFile: "Languages\ChineseTraditional.isl,Strings\ChineseTraditional.isl"
+Name: "vi_VN"; MessagesFile: "Languages\Vietnamese.isl,Strings\Vietnamese.isl"
+Name: "ar_SA"; MessagesFile: "compiler:Languages\Arabic.isl,Strings\Arabic.isl"
+Name: "fa_IR"; MessagesFile: "Languages\Farsi.isl,Strings\Persian.isl"
+Name: "th_TH"; MessagesFile: "Languages\Thai.isl,Strings\Thai.isl"
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{app}\{#VersionFolder}\ServiceData"
@@ -240,7 +262,7 @@ type
   TInt64Array = array of Int64;
 
 var
-  IsToReboot, IsSilent, IsVerySilent, IsNotSilent, IsToDisableAutoUpdate: Boolean;
+  IsToReboot, IsSilent, IsVerySilent, IsNotSilent, IsToDisableAutoUpdate, IsToOpenOnDesktop: Boolean;
   InstallationProgressLabel: TNewStaticText;
   ProductDriveCheckBox, ProductMailCheckBox, ProductPassCheckBox: TNewCheckBox;
 
@@ -265,6 +287,23 @@ end;
 procedure OnProductPassClick(Sender: TObject);
 begin
   ProductPassCheckBox.Checked := not ProductPassCheckBox.Checked;
+end;
+
+function IsAppxPackageInstalled(packageName: String): Boolean;
+var
+  Names: TArrayOfString;
+  i: Integer;
+begin
+  Result := False;
+  if RegGetSubkeyNames(HKEY_CURRENT_USER,
+      'Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppModel\Repository\Packages',
+      Names) then
+    for i := 0 to GetArrayLength(Names) - 1 do
+      if Pos(Lowercase(packageName + '_'), Lowercase(Names[i])) = 1 then
+      begin
+        Result := True;
+        Exit;
+      end;
 end;
 
 procedure InitializeWizard;
@@ -296,7 +335,7 @@ begin
 
   IsProductMailInstalled := RegValueExists(HKEY_CURRENT_USER, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\proton_mail', 'DisplayVersion');
   IsProductDriveInstalled := IsProductInstalled('{#ProtonDriveUpgradeCode}') <> 0;
-  IsProductPassInstalled := RegValueExists(HKEY_CURRENT_USER, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\ProtonPass', 'DisplayVersion');
+  IsProductPassInstalled := IsAppxPackageInstalled('ProtonPass');
 
   SubHeaderLabel := TLabel.Create(WizardForm.SelectTasksPage);
   SubHeaderLabel.Parent := WizardForm.SelectTasksPage;
@@ -604,7 +643,15 @@ begin
   if IsToDisableAutoUpdate = true then begin
     Log('The app will be launched with auto updates disabled.');
   end;
-end; 
+end;
+
+procedure SetIsToOpenOnDesktop();
+begin
+  IsToOpenOnDesktop := Pos('{#OpenOnDesktopInstallerArg}', GetCmdTail()) > 0;
+  if IsToOpenOnDesktop = true then begin
+    Log('The app will be launched on desktop.');
+  end;
+end;
 
 // Returns 0 (zero) if versions are equal, -1 (negative one) if version1 is older and 1 (positive one) if version1 is more recent
 function CompareVersions(version1, version2: String): Integer;
@@ -623,6 +670,7 @@ var
 begin
   SetSilentModes();
   SetIsToDisableAutoUpdate();
+  SetIsToOpenOnDesktop();
   if IsWindowsVersionEqualOrHigher(10, 0, 19041) = False then begin
     if WizardSilent() = false then begin
       MsgBox('This application does not support your Windows version. You will be redirected to a download page with an application suitable for your Windows version. ', mbInformation, MB_OK);
@@ -716,8 +764,8 @@ begin
     if RegQueryStringValue(HKEY_LOCAL_MACHINE, RegistryPath, 'Version', Version) then begin
       if (Length(Version) > 0) and (Version[1] = 'v') then
         Delete(Version, 1, 1);
-      if CompareVersions(Version, '14.42.34438.0') >= 0 then begin
-        Log('The latest visual c++ redistributable package is already installed, skipping.');
+      if CompareVersions(Version, '14.51.36247.0') > 0 then begin
+        Log('A more recent visual c++ redistributable package is already installed, skipping.');
         Exit;
       end;
     end;
@@ -782,6 +830,9 @@ begin
       if IsToDisableAutoUpdate = true then begin
         launcherArgs := launcherArgs + ' {#DisableAutoUpdateClientArg}';
       end;
+      if IsToOpenOnDesktop = true then begin
+        launcherArgs := launcherArgs + ' {#OpenOnDesktopClientArg}';
+      end;
 
       if IsNotSilent then
         launcherArgs := launcherArgs + ' -CleanInstall';
@@ -834,7 +885,17 @@ begin
 
     Exec(ExpandConstant('{app}\{#VersionFolder}\{#RestoreInternetExeName}'), '', '', SW_HIDE, ewWaitUntilTerminated, res);
     Log(ExpandConstant('{#RestoreInternetExeName} returned: ') + IntToStr(res));
-
+    
+    if Exec('schtasks.exe', ExpandConstant('/Delete /TN "{#NrptWatchdogTaskName}" /F'), '', SW_HIDE, ewWaitUntilTerminated, res) then begin
+      if res = 0 then begin
+        Log('NRPT watchdog scheduled task deleted successfully.');
+      end else begin
+        Log('NRPT watchdog scheduled task not found or could not be deleted. Exit code: ' + IntToStr(res));
+      end;
+    end else begin
+      Log('Failed to execute schtasks.exe (to delete NRPT watchdog scheduled task). Error: ' + IntToStr(res));
+    end;
+    
     Log('Trying to delete client startup record if exists');
     DeleteStartupApp(ExpandConstant('{#ClientName}'));
 

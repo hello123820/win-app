@@ -123,14 +123,11 @@
   <data name="Automation_Properties_ConnectionDetails_Page">
     <value>接続詳細ページ</value>
   </data>
+  <data name="Automation_Properties_ConnectionPreferences_Page">
+    <value>Connection preferences page</value>
+  </data>
   <data name="Automation_Properties_Connection_Card_Component">
     <value>接続カード</value>
-  </data>
-  <data name="Automation_Properties_Features_Bar">
-    <value>機能バー</value>
-  </data>
-  <data name="Automation_Properties_Home_Page">
-    <value>ホームページ</value>
   </data>
   <data name="Automation_Properties_KillSwitch_Page">
     <value>キルスイッチページ</value>
@@ -189,18 +186,11 @@
   <data name="Automation_Properties_SplitTunneling_Page">
     <value>スプリットトンネルページ</value>
   </data>
-  <data name="Cities">
-    <value>都市</value>
-  </data>
   <data name="City_Fastest">
     <value>最速の都市</value>
   </data>
   <data name="City_Random">
-    <value>ランダムな都市</value>
-  </data>
-  <data name="Common_Actions_ActionsFor">
-    <value>{0}のアクション</value>
-    <comment>Used for accessibility purposes (Narrator) in the recents list to open the alternate actions menu (pin, unpin...). {0} is a place holder which can be a country, a city, a server...</comment>
+    <value>適当な都市</value>
   </data>
   <data name="Common_Actions_Add">
     <value>追加</value>
@@ -220,25 +210,14 @@
   <data name="Common_Actions_Connect">
     <value>接続</value>
   </data>
-  <data name="Common_Actions_ConnectTo">
-    <value>{0} に接続します</value>
-    <comment>Used for accessibility purposes (Narrator) to describe the action to Connect to something. {0} is a place holder which can be a country, a city, a server...</comment>
-  </data>
   <data name="Common_Actions_ContactUs">
     <value>お問い合わせ先</value>
-  </data>
-  <data name="Common_Actions_Customize">
-    <value>カスタマイズ</value>
   </data>
   <data name="Common_Actions_Delete">
     <value>削除</value>
   </data>
   <data name="Common_Actions_Disconnect">
     <value>接続解除</value>
-  </data>
-  <data name="Common_Actions_DisconnectFrom">
-    <value>{0} から切断する</value>
-    <comment>Used for accessibility purposes (Narrator) to describe the action to disconnect from something. {0} is a place holder which can be a country, a city, a server...</comment>
   </data>
   <data name="Common_Actions_Duplicate">
     <value>複製</value>
@@ -300,17 +279,14 @@
   <data name="Common_Links_LearnMore">
     <value>より詳しく</value>
   </data>
-  <data name="Common_Message_Loading">
-    <value>読み込み中...</value>
+  <data name="Common_Message_AppNotFound">
+    <value>アプリが見つかりません</value>
   </data>
   <data name="Common_States_Off">
     <value>オフ</value>
   </data>
   <data name="Common_States_On">
     <value>オン</value>
-  </data>
-  <data name="Common_States_Updating">
-    <value>更新中...</value>
   </data>
   <data name="Common_Tags_Beta">
     <value>ベータ</value>
@@ -336,11 +312,26 @@
   <data name="Components_Update_UpdateProtonVpn">
     <value>Proton VPN をアップデート</value>
   </data>
+  <data name="Connection_Error_AllServersExcluded">
+    <value>Your preferences exclude all available servers. Adjust exclusions to connect.</value>
+  </data>
+  <data name="Connection_Error_AllServersExcluded_Action">
+    <value>Excluded locations</value>
+  </data>
+  <data name="Connection_Error_ConflictingAdapter_Description">
+    <value>To fix it, close or uninstall the app associated with:</value>
+  </data>
+  <data name="Connection_Error_ConflictingAdapter_Title">
+    <value>Another app might be preventing Proton VPN from connecting</value>
+  </data>
   <data name="Connection_Error_EditProfile">
     <value>プロファイルを編集</value>
   </data>
   <data name="Connection_Error_MissingConnectionCertificate">
     <value>Proton VPN はネットワークの問題によりクライアント証明書の取得に失敗しました。</value>
+  </data>
+  <data name="Connection_Error_MobileHotspotEnabled">
+    <value>お客様のデバイスのネットワーク設定により接続がブロックされました。これは、モバイルホットスポット、別のVPNアプリ、または仮想マシンソフトウェアが原因である可能性があります。ネットワーク構成を確認するか、サポートにお問い合わせください。</value>
   </data>
   <data name="Connection_Error_NoServers">
     <value>選択したサーバーがすべて利用できません。選択範囲を拡大するか、後でもう一度お試しください。</value>
@@ -357,6 +348,9 @@
   </data>
   <data name="Connection_Error_RpcServerUnavailable">
     <value>システムで RPC サーバーが利用できないため、Proton VPN は接続できません。</value>
+  </data>
+  <data name="Connection_Error_ServerValidation">
+    <value>The server details couldn't be verified. Try another server, or report the issue to our Customer Support team.</value>
   </data>
   <data name="Connection_Error_SessionLimitReachedFreeUser">
     <value>デバイスの最大制限に達しました。 別のデバイスを切断してこのデバイスに接続するか、PLUS にアップグレードして最大 10 台のデバイスを同時に接続してください。</value>
@@ -377,10 +371,10 @@
     <value>VPN サーバー証明書の検証中に問題が発生しました。これは、ネットワーク接続が改ざんされているか、接続しようとしているサーバーに構成の問題があることを示している可能性があります。 問題レポートを送信して、カスタマー サポートからサポートを受けてください。</value>
   </data>
   <data name="Connection_Error_TwoFactorRequired_Description">
-    <value>To connect to VPN, go to your organization's 2FA portal and tap your security key.</value>
+    <value>VPNに接続するには、お客様の組織の2要素認証ポータルにアクセスし、セキュリティキーをタップしてください。</value>
   </data>
   <data name="Connection_Error_TwoFactorRequired_Title">
-    <value>Two-factor authentication (2FA) required</value>
+    <value>2要素認証(2FA)が必要です</value>
   </data>
   <data name="Connection_Error_Unknown">
     <value>インターネット接続をご確認の上、もう一度お試しください。それでも問題が解決しない場合は、カスタマーサポートチームまでご連絡ください。
@@ -393,17 +387,12 @@
   <data name="Connection_Error_WireGuardAdapterInUse">
     <value>デバイスのWireGuardアダプタが使用中です。今実行中の他のVPN接続を切断して、もう一度お試しください。</value>
   </data>
+  <data name="Connection_Feedback_Question">
+    <value>How is your connection?</value>
+  </data>
   <data name="Connection_Intent_AutoSelected">
     <value>から自動選択</value>
     <comment>Appears in the connection card for free users. A set of flags is displayed after the text (eg. Auto-selected from [us-flag] [jp-flag]...)</comment>
-  </data>
-  <data name="Connection_Intent_City_Server">
-    <value>{0} #{1}</value>
-    <comment>Name of the server including city name. {0} is a placeholder for the city name. {1} is a placeholder for the number associated to the server (eg. Zurich #20)</comment>
-  </data>
-  <data name="Connection_Intent_Country_Server">
-    <value>{0} #{1}</value>
-    <comment>Name of the server including country name. {0} is a placeholder for the country name. {1} is a placeholder for the number associated to the server (eg. Switzerland #20)</comment>
   </data>
   <data name="Connection_Via_SecureCore">
     <value>{0} 経由</value>
@@ -486,7 +475,7 @@
     <value>プロファイルを削除</value>
   </data>
   <data name="Connections_Profiles_Delete_Message">
-    <value>「{0}」は完全に削除されました。</value>
+    <value>「{0}」が完全に削除されます。</value>
     <comment>{0} is a placeholder for the name of the profile.</comment>
   </data>
   <data name="Connections_Profiles_Delete_Title">
@@ -520,15 +509,6 @@
     <value>プロファイルはVPN Plusで利用可能です</value>
     <comment>The text in the tooltip when hovering a profile and the user has a free plan</comment>
   </data>
-  <data name="Connections_Profiles_Settings_Description">
-    <value>接続時にプロファイル設定がVPN設定を上書きします。</value>
-  </data>
-  <data name="Connections_Profiles_Settings_Header">
-    <value>カスタム設定を追加</value>
-  </data>
-  <data name="Connections_Random">
-    <value>ランダム</value>
-  </data>
   <data name="Connections_Recents_Other">
     <value>最近({0})</value>
   </data>
@@ -546,18 +526,6 @@
   </data>
   <data name="Connections_SecureCore_Servers_Other">
     <value>Secure Coreサーバー</value>
-  </data>
-  <data name="Connections_SeeCities_Other">
-    <value>都市を表示 ({0})</value>
-  </data>
-  <data name="Connections_SeeServers_Other">
-    <value>サーバーを表示 ({0})</value>
-  </data>
-  <data name="Connections_SeeStates_Other">
-    <value>州を表示({0})</value>
-  </data>
-  <data name="Connections_Server">
-    <value>サーバー</value>
   </data>
   <data name="Connections_Server_Restricted">
     <value>VPN Plusでサーバーが利用可能</value>
@@ -594,41 +562,11 @@
   <data name="Countries_All">
     <value>すべて</value>
   </data>
-  <data name="Countries_City_Other">
-    <value>{0} つの都市</value>
-  </data>
-  <data name="Countries_Connect">
-    <value>接続</value>
-    <comment>Connect button label on a country row in the countries tab</comment>
-  </data>
-  <data name="Countries_Fastest">
-    <value>最速の国</value>
-  </data>
-  <data name="Countries_NoSearchResults">
-    <value>該当する項目がありません</value>
-  </data>
-  <data name="Countries_NumberOfServers">
-    <value>サーバー ({0})</value>
-    <comment>{0} represents a number of servers</comment>
-  </data>
   <data name="Countries_P2P">
     <value>P2P</value>
   </data>
-  <data name="Countries_P2P_Cities">
-    <value>P2P 都市 ({0})</value>
-    <comment>{0} represents a number of P2P cities in the country</comment>
-  </data>
   <data name="Countries_P2P_Description">
     <value>P2P(ピアツーピア)ネットワーク経由でファイルをダウンロードし、オンライン ゲームやビデオ通話のエクスペリエンスを強化します。</value>
-  </data>
-  <data name="Countries_Page_FreeUser_Description">
-    <value>VPN Plusで国選択のロックを解除</value>
-  </data>
-  <data name="Countries_SearchPlaceholder">
-    <value>からブラウジングしたい</value>
-  </data>
-  <data name="Countries_Section_Header">
-    <value>VPN 接続</value>
   </data>
   <data name="Countries_SecureCore">
     <value>Secure Core</value>
@@ -642,18 +580,15 @@
   <data name="Countries_SmartRouting">
     <value>スマートルーティング</value>
   </data>
+  <data name="Countries_SmartRouting_RoutedThrough">
+    <value>Smart routed through {0}</value>
+    <comment>Label used when server is virtual. {0} is a place holder for the name of the country the server is routed through.</comment>
+  </data>
   <data name="Countries_Tor">
     <value>Tor</value>
   </data>
-  <data name="Countries_TorServers">
-    <value>Torサーバー ({0})</value>
-    <comment>{0} represents a number of tor servers in the country</comment>
-  </data>
   <data name="Countries_Tor_Description">
     <value>VPN接続にTorネットワークを使用することで、プライバシーをさらに守ることができます.</value>
-  </data>
-  <data name="Countries_TryDifferentKeyword">
-    <value>別のキーワードをお試しください</value>
   </data>
   <data name="Country_Fastest">
     <value>最速の国</value>
@@ -1647,6 +1582,10 @@
     <value>サモア</value>
     <comment>The name of WS country</comment>
   </data>
+  <data name="Country_val_XK">
+    <value>コソボ</value>
+    <comment>The name of XK country</comment>
+  </data>
   <data name="Country_val_YE">
     <value>イエメン</value>
     <comment>The name of YE country</comment>
@@ -1710,46 +1649,20 @@
   <data name="Dialogs_FreeConnections_Title">
     <value>無料接続</value>
   </data>
-  <data name="Dialogs_Latency_Description">
-    <value>遅延は、サーバーがリクエストに応答するまでにかかる時間を示します。
-
-遅延が大きいと、接続が遅くなる可能性があります。</value>
-  </data>
-  <data name="Dialogs_Latency_HighRange_Description">
-    <value>VPN の実行が通常より遅くなる可能性があります</value>
-  </data>
-  <data name="Dialogs_Latency_HighRange_Title">
-    <value>高 (150ms+)</value>
-  </data>
-  <data name="Dialogs_Latency_LowRange_Description">
-    <value>超高速スピード</value>
-  </data>
-  <data name="Dialogs_Latency_LowRange_Title">
-    <value>低 (1ms - 50ms)</value>
-  </data>
-  <data name="Dialogs_Latency_MediumRange_Description">
-    <value>VPN 速度に影響を与える可能性は低い</value>
-  </data>
-  <data name="Dialogs_Latency_MediumRange_Title">
-    <value>中 (50ms - 150ms)</value>
-  </data>
-  <data name="Dialogs_Latency_Title">
-    <value>遅延とは何ですか？</value>
-  </data>
   <data name="Dialogs_NpsSurvey_CommentLabel">
     <value>評価の理由を教えてください</value>
   </data>
   <data name="Dialogs_NpsSurvey_ErrorSubtitle">
-    <value>お客様のフィードバックを送信できませんでした。接続を確認して、もう一度お試しください。</value>
+    <value>送信に失敗しました。接続を確認して、再度お試しください。</value>
   </data>
   <data name="Dialogs_NpsSurvey_ErrorTitle">
     <value>不具合が発生しました。</value>
   </data>
   <data name="Dialogs_NpsSurvey_HighRateDescription">
-    <value>10はとても可能性が高い</value>
+    <value>10は「とても高い」</value>
   </data>
   <data name="Dialogs_NpsSurvey_LowRateDescription">
-    <value>0はとても可能性が低い</value>
+    <value>0は「とても低い」</value>
   </data>
   <data name="Dialogs_NpsSurvey_Optional">
     <value>任意</value>
@@ -1758,7 +1671,7 @@
     <value>匿名で共有</value>
   </data>
   <data name="Dialogs_NpsSurvey_SuccessSubtitle">
-    <value>お客様のフィードバックは、Proton VPN の改善に役立ちます。</value>
+    <value>お客様の感想は Proton VPN の改善に役立ちます。</value>
   </data>
   <data name="Dialogs_NpsSurvey_SuccessTitle">
     <value>ご意見ありがとうございます</value>
@@ -1770,53 +1683,13 @@
     <value>再試行</value>
   </data>
   <data name="Dialogs_P2PDetection_Description">
-    <value>このサーバーは P2P トラフィックに対応していないため、接続が解除されました。無料プランのサーバーは P2P に対応していません。P2P に対応した別のサーバーを選択してください。</value>
+    <value>P2P（ピアツーピア）サーバーを有効にして、高速なオンラインゲームやトレントをお楽しみいただくか、P2Pアクティビティを終了して接続を復元してください。</value>
   </data>
   <data name="Dialogs_P2PDetection_Title">
-    <value>P2Pトラフィックを検出</value>
+    <value>無料VPNサーバーではP2Pは許可されていません</value>
   </data>
-  <data name="Dialogs_P2P_HowToTorrentLink">
-    <value>P2Pでトレントする方法</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_Title">
-    <value>P2P</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsP2PServer">
-    <value>P2Pサーバーとは何ですか?</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsP2PServer_Description">
-    <value>P2P (ピアツーピア) VPN サーバーは、トレント サイトのブロックを解除します。</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsTorrenting">
-    <value>トレントとは何ですか?</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsTorrenting_Description">
-    <value>ピアツーピア (P2P) ネットワーク上で大きなファイルを高速に共有およびダウンロードします。</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhyUse">
-    <value>トレント時に P2P サーバーを使用する理由は何ですか?</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhyUse_Description">
-    <value>• アップロード速度とダウンロード速度の向上
-• アクティビティログなし
-• サービスプロバイダーやピアから IP アドレスを隠す</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_Protocol_Description">
-    <value>プロトコルは、デバイスがサーバーに接続して通信するために従う一連の指示です。</value>
-  </data>
-  <data name="Dialogs_Protocol_SwitchHeader">
-    <value>VPNプロトコルの切り替え</value>
-  </data>
-  <data name="Dialogs_Protocol_Title">
-    <value>VPN プロトコルとは何ですか?</value>
+  <data name="Dialogs_P2PDetection_WindowTitle">
+    <value>VPN Plusを発見</value>
   </data>
   <data name="Dialogs_ReportIssue_ContactForm_Email">
     <value>メール</value>
@@ -1874,34 +1747,14 @@
   <data name="Dialogs_ReportIssue_Title">
     <value>問題を報告</value>
   </data>
-  <data name="Dialogs_ServerLoad_Description">
-    <value>サーバーの負荷は、サーバーが最大容量にどの程度近づいているかを示します。
-
-サーバーの負荷が高いと、接続が遅くなる可能性があります。</value>
+  <data name="Dialogs_StreamingDetection_WindowTitle">
+    <value>VPN Plusを発見</value>
   </data>
-  <data name="Dialogs_ServerLoad_HighRange_Description">
-    <value>VPN の実行が通常より遅くなる可能性があります</value>
+  <data name="Dialogs_StreamingWarning_Description">
+    <value>VPN Plusサーバーを利用して、お気に入りの映画やテレビ番組を世界中からお楽しみください。</value>
   </data>
-  <data name="Dialogs_ServerLoad_HighRange_Title">
-    <value>高 (91-100%)</value>
-  </data>
-  <data name="Dialogs_ServerLoad_LowRange_Description">
-    <value>超高速スピード</value>
-  </data>
-  <data name="Dialogs_ServerLoad_LowRange_Title">
-    <value>低 (1-75%)</value>
-  </data>
-  <data name="Dialogs_ServerLoad_MediumRange_Description">
-    <value>VPN 速度に影響を与える可能性は低い</value>
-  </data>
-  <data name="Dialogs_ServerLoad_MediumRange_Title">
-    <value>中 (76-90%)</value>
-  </data>
-  <data name="Dialogs_ServerLoad_Title">
-    <value>サーバー負荷とは何ですか?</value>
-  </data>
-  <data name="Dialogs_SmartRouting_Title">
-    <value>スマートルーティング</value>
+  <data name="Dialogs_StreamingWarning_Title">
+    <value>VPNブロックを回避するためにアップグレード</value>
   </data>
   <data name="Dialogs_SubscriptionExpired_MaybeLater">
     <value>またあとで</value>
@@ -1909,20 +1762,8 @@
   <data name="Dialogs_SystemProxy_Description">
     <value>お使いのデバイスはプロキシサーバーを使用しているようです。これはVPN保護に干渉する可能性があります。</value>
   </data>
-  <data name="Dialogs_SystemProxy_Disable">
-    <value>プロキシを無効にする</value>
-  </data>
   <data name="Dialogs_SystemProxy_Title">
     <value>プロキシサーバーを検出</value>
-  </data>
-  <data name="Dialogs_Tor_Description">
-    <value>Tor サーバーに接続し、任意のブラウザを使用して隠しサービスやオニオン サイトにアクセスします。</value>
-  </data>
-  <data name="Dialogs_Tor_LearnMore">
-    <value>Tor ネットワークにアクセスする方法</value>
-  </data>
-  <data name="Dialogs_Tor_Title">
-    <value>Tor</value>
   </data>
   <data name="Dialogs_Troubleshooting_Antivirus">
     <value>ウイルス対策ソフトウェアまたはファイアウォール ソフトウェアをオフにする</value>
@@ -2011,38 +1852,18 @@
   <data name="Dialogs_WelcomeToVpnPlus_Title">
     <value>VPN Plusへようこそ</value>
   </data>
-  <data name="Dialogs_WelcomeUnlimited_Description1">
-    <value>おめでとうございます！すべての Proton サービスでプレミアムセキュリティとパフォーマンス機能を使用できるようになりました。</value>
-  </data>
-  <data name="Dialogs_WelcomeUnlimited_Description2">
-    <value>Proton のプライバシーを最大限にお楽しみください。</value>
+  <data name="Dialogs_WelcomeUnlimited_Description">
+    <value>You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features.</value>
   </data>
   <data name="Dialogs_WelcomeUnlimited_Title">
-    <value>Proton Unlimitedへようこそ</value>
-  </data>
-  <data name="Dialogs_Welcome_Message">
-    <value>新しいVPN体験の準備をしています。しばらくお待ちください。</value>
-  </data>
-  <data name="Dialogs_Welcome_Title">
-    <value>Proton VPNへようこそ</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Gateways_Description">
-    <value>あなたの組織専用のサーバーにメインサイドバーからアクセスできるようになりました。</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Gateways_Title">
-    <value>ゲートウェイが移動されました</value>
+    <value>Welcome to {0}</value>
+    <comment>Title to welcome the user after an account upgrade. {0} is a placeholder for the name of the new plan (eg. Proton Unlimited, Proton Duo, Proton Family).</comment>
   </data>
   <data name="Dialogs_WhatsNew_LanConnections_Description">
-    <value>お客様は現在、VPNトンネルをバイパスして、ローカルネットワーク (LAN) 上のプリンター、スピーカー、その他のデバイスに接続できます。</value>
+    <value>VPNトンネルを抜けて、ローカルネットワーク (LAN) 上のプリンターやスピーカーなどに接続できるようになりました。</value>
   </data>
   <data name="Dialogs_WhatsNew_LanConnections_Title">
     <value>LAN 接続</value>
-  </data>
-  <data name="Dialogs_WhatsNew_NewLook_Description">
-    <value>デザインを刷新し、いくつかの要素を移動させてアプリを使いやすくしました。</value>
-  </data>
-  <data name="Dialogs_WhatsNew_NewLook_Title">
-    <value>新しい外観、変わらない保護</value>
   </data>
   <data name="Dialogs_WhatsNew_PortNumber_Description">
     <value>ポート転送が有効の場合、ホーム画面でアクティブなポート番号を確認できるようになります。</value>
@@ -2050,20 +1871,8 @@
   <data name="Dialogs_WhatsNew_PortNumber_Title">
     <value>アクティブなポート番号</value>
   </data>
-  <data name="Dialogs_WhatsNew_Profiles_Description">
-    <value>NetShieldやポート転送などの高度なプロファイル設定を追加するか、接続時に選択したWebサイトを起動するように接続してください。</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Profiles_Title">
-    <value>さらに強力なプロファイル</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Recents_Description">
-    <value>これでお気に入りのサーバーに再接続するのがさらに簡単になりました。ホーム画面で最近の接続を表示したり、クイックアクセスのためにピン留めしたりできます。</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Recents_Title">
-    <value>最近あったことを紹介</value>
-  </data>
   <data name="Dialogs_WhatsNew_TakeALook">
-    <value>見てください</value>
+    <value>見てみる</value>
   </data>
   <data name="Dialogs_WhatsNew_Title">
     <value>最新情報</value>
@@ -2073,6 +1882,30 @@
   </data>
   <data name="Dialogs_WhatsNew_TrayApp_Title">
     <value>新規システムトレイアプリ</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_ExcludeLocations">
+    <value>Exclude locations</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Message">
+    <value>If there are locations you don't want to be automatically connected to, you can exclude them from Fastest and Random country.</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Skip">
+    <value>Skip</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Title">
+    <value>Not the country you wanted?</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_ActionButton">
+    <value>Exclude locations</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_CloseButton">
+    <value>Maybe later</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_Subtitle">
+    <value>You can now exclude countries or cities from Fastest and Random connections.</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_Title">
+    <value>Avoid unwanted locations</value>
   </data>
   <data name="Exit_Confirmation_Title">
     <value>Proton VPN を終了しますか?</value>
@@ -2164,17 +1997,20 @@
   <data name="Flyouts_KillSwitch_Warning_Disconnected">
     <value>接続を復元するには、VPNに接続するか、高度なキルスイッチを無効にしてください</value>
   </data>
+  <data name="Flyouts_NetShield_AdsMalwareTrackersAdultContent_Success">
+    <value>広告、トラッカー、マルウェア、成人向けコンテンツから保護されています。</value>
+  </data>
   <data name="Flyouts_NetShield_AdsMalwareTrackers_Success">
-    <value>広告やトラッカーやウイルスから守られています</value>
+    <value>広告、トラッカー、マルウェアから保護されています。</value>
   </data>
   <data name="Flyouts_NetShield_Info">
-    <value>ウェブサイトやアプリの広告・トラッカー・ウイルスから身を守りましょう</value>
+    <value>ウェブサイトやアプリでのブラウジングを保護します。</value>
   </data>
   <data name="Flyouts_NetShield_MalwareOnly_Success">
-    <value>マルウェアのみから保護されています</value>
+    <value>マルウェアからのみ保護されています。</value>
   </data>
   <data name="Flyouts_NetShield_Upsell_Description">
-    <value>VPN Plus で広告・トラッカー・マルウェアをブロックしましょう。</value>
+    <value>VPN Plusで広告、トラッカー、マルウェア、成人向けコンテンツをブロック。</value>
   </data>
   <data name="Flyouts_NetShield_Upsell_Title">
     <value>広告なしのブラウジングをお楽しみください</value>
@@ -2182,8 +2018,11 @@
   <data name="Flyouts_PortForwarding_ActivePort">
     <value>アクティブなポート番号</value>
   </data>
+  <data name="Flyouts_PortForwarding_ActivePort_Error">
+    <value>アクティブなポート番号を取得できません。接続を再起動して再度お試しください。</value>
+  </data>
   <data name="Flyouts_PortForwarding_ActivePort_Info">
-    <value>P2P速度を向上させるために、BitTorrentアプリにアクティブなポート番号を入力してください</value>
+    <value>パフォーマンス向上のため、アクティブなポート番号をトレントクライアントまたはP2Pアプリに入力してください。</value>
   </data>
   <data name="Flyouts_PortForwarding_Info">
     <value>ピアツーピアのダウンロード速度の向上</value>
@@ -2232,9 +2071,6 @@
   </data>
   <data name="Flyouts_ServerLoad_Title">
     <value>サーバー負荷</value>
-  </data>
-  <data name="Flyouts_Speed_BoostedByVpnAccelerator">
-    <value>VPN Acceleratorで強化</value>
   </data>
   <data name="Flyouts_Speed_Description1">
     <value>VPNトンネルを通過するデータ量をリアルタイムで表示します。</value>
@@ -2296,10 +2132,6 @@
   <data name="Flyouts_Volume_Upload">
     <value>アップロード</value>
     <comment>Refers to the uploaded volume (e.g., Upload [new line] 250 MB).</comment>
-  </data>
-  <data name="Format_Milliseconds">
-    <value>{0} ms</value>
-    <comment>Format a number as a time in milliseconds. {0} is a place holder for the number of milliseconds (eg. 46ms)</comment>
   </data>
   <data name="Format_Size_Bytes">
     <value>{0} B</value>
@@ -2428,9 +2260,6 @@
   <data name="Gateways_Page_Title">
     <value>ゲートウェイ</value>
   </data>
-  <data name="Gateways_Server">
-    <value>専用サーバー</value>
-  </data>
   <data name="Home_Account_SignOut">
     <value>サインアウト</value>
   </data>
@@ -2438,46 +2267,17 @@
     <value>{0} からサインアウトしますか?</value>
     <comment>{0} is a placeholder for the username</comment>
   </data>
-  <data name="Home_Account_Title">
-    <value>マイアカウント</value>
-  </data>
   <data name="Home_ConnectionCard_ChangeDefaultConnection">
     <value>デフォルトの接続を変更する</value>
   </data>
   <data name="Home_ConnectionCard_ChangeServer">
     <value>サーバーを変更</value>
   </data>
-  <data name="Home_ConnectionCard_Header_BrowseSafely">
-    <value>安全なブラウジング</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_ConnectingTo">
-    <value>接続中：...</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_DefaultConnection">
-    <value>デフォルト接続</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_FreeConnection">
-    <value>無料接続</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_LastConnectedTo">
-    <value>最後の接続</value>
-  </data>
-  <data name="Home_ConnectionCard_Landmark">
-    <value>接続カード</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
   <data name="Home_ConnectionDetails_AdvancedKillSwitchActivated">
     <value>高度なキルスイッチが有効です</value>
   </data>
-  <data name="Home_ConnectionDetails_City">
-    <value>都市</value>
-  </data>
   <data name="Home_ConnectionDetails_ConnectToRestoreConnection">
     <value>お客様のインターネット接続を復元するためにVPNに接続してください。</value>
-  </data>
-  <data name="Home_ConnectionDetails_ConnectedFor">
-    <value>へ接続</value>
-    <comment>Label for the time the session has been active. (eg. Connected for     1 h 25 min 2s)</comment>
   </data>
   <data name="Home_ConnectionDetails_Connecting">
     <value>接続中</value>
@@ -2488,28 +2288,8 @@
   <data name="Home_ConnectionDetails_Country">
     <value>国</value>
   </data>
-  <data name="Home_ConnectionDetails_Gateway">
-    <value>ゲートウェイ</value>
-  </data>
-  <data name="Home_ConnectionDetails_Hide">
-    <value>接続の詳細を非表示にする</value>
-  </data>
-  <data name="Home_ConnectionDetails_HideIP">
-    <value>非表示</value>
-    <comment>Tooltip displayed when the user hover the button to hide the User IP Address</comment>
-  </data>
-  <data name="Home_ConnectionDetails_HideIP_Description">
-    <value>ユーザーのIPアドレスを非表示にする</value>
-  </data>
   <data name="Home_ConnectionDetails_Isp">
     <value>プロバイダ</value>
-  </data>
-  <data name="Home_ConnectionDetails_Landmark">
-    <value>接続の詳細</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_ConnectionDetails_MyIp">
-    <value>自分のIP</value>
   </data>
   <data name="Home_ConnectionDetails_Protected">
     <value>保護されています</value>
@@ -2517,33 +2297,14 @@
   <data name="Home_ConnectionDetails_Protocol">
     <value>プロトコル</value>
   </data>
-  <data name="Home_ConnectionDetails_Server">
-    <value>サーバー</value>
-  </data>
   <data name="Home_ConnectionDetails_ServerLoad">
     <value>サーバー負荷</value>
   </data>
-  <data name="Home_ConnectionDetails_Show">
-    <value>接続の詳細を表示する</value>
-  </data>
-  <data name="Home_ConnectionDetails_ShowIP">
-    <value>表示</value>
-    <comment>Tooltip displayed when the user hover the button to show the User IP Address</comment>
-  </data>
-  <data name="Home_ConnectionDetails_ShowIP_Description">
-    <value>ユーザーのIPアドレスを表示</value>
-  </data>
-  <data name="Home_ConnectionDetails_State">
-    <value>州</value>
-  </data>
-  <data name="Home_ConnectionDetails_Title">
-    <value>接続の詳細</value>
-  </data>
   <data name="Home_ConnectionDetails_TwoFactorRequired_Description">
-    <value>Re-authenticate in your organization's 2FA portal to continue.</value>
+    <value>続行するには、お客様の組織の2要素認証ポータルで再認証を行ってください。</value>
   </data>
   <data name="Home_ConnectionDetails_TwoFactorRequired_Title">
-    <value>2FA expired</value>
+    <value>2要素認証の有効期限切れ</value>
   </data>
   <data name="Home_ConnectionDetails_Unprotected">
     <value>保護されていません</value>
@@ -2554,15 +2315,6 @@
   <data name="Home_ConnectionDetails_Volume">
     <value>合計トラフィック</value>
   </data>
-  <data name="Home_ConnectionDetails_Volume_Download">
-    <value>ダウンロード量</value>
-  </data>
-  <data name="Home_ConnectionDetails_Volume_Total">
-    <value>トータル量</value>
-  </data>
-  <data name="Home_ConnectionDetails_Volume_Upload">
-    <value>アップロード量</value>
-  </data>
   <data name="Home_ConnectionDetails_VpnIp">
     <value>VPN IP</value>
   </data>
@@ -2571,13 +2323,6 @@
   </data>
   <data name="Home_FreeConnections_About">
     <value>無料接続の詳細情報</value>
-  </data>
-  <data name="Home_Help_Title">
-    <value>ヘルプ</value>
-  </data>
-  <data name="Home_Map_Landmark">
-    <value>マップ</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
   </data>
   <data name="Home_NetShield_AdsBlocked_Other">
     <value>件の広告をブロック</value>
@@ -2591,34 +2336,17 @@
   <data name="Home_NetShield_DataSaved_Description">
     <value>不要な広告、トラッカー、マルウェアをブロックすることで節約される推定データ。</value>
   </data>
-  <data name="Home_NetShield_Landmark">
-    <value>NetShield 統計</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_NetShield_Title">
-    <value>NetShield の統計</value>
-  </data>
   <data name="Home_NetShield_TrackersStopped_Other">
     <value>件のトラッカーを停止</value>
   </data>
   <data name="Home_NetShield_TrackersStopped_Description">
     <value>トラッカーは、Web アクティビティに関する情報を収集、保存、販売する Cookie およびサードパーティ Web サイトです。</value>
   </data>
-  <data name="Home_Page_Title">
-    <value>ホーム</value>
-  </data>
-  <data name="Home_Recents_Landmark">
-    <value>最近の接続</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
   <data name="Home_Recents_Pin">
     <value>ピン留めする</value>
   </data>
   <data name="Home_Recents_Restricted">
     <value>サーバーはVPN Plusで利用可能</value>
-  </data>
-  <data name="Home_Recents_SecondaryActions_ToolTip">
-    <value>アクション</value>
   </data>
   <data name="Home_Recents_ServerUnderMaintenance">
     <value>サーバーはメンテナンス中です</value>
@@ -2653,33 +2381,23 @@
   <data name="Home_TitleBar_Menu_UpdateNow">
     <value>今すぐ更新</value>
   </data>
-  <data name="Home_Update_UpdateAvailable">
-    <value>アップデートが利用可能です</value>
-  </data>
-  <data name="Home_Update_UpdateReady">
-    <value>アップデートの準備完了</value>
-  </data>
-  <data name="Home_VpnStatus_Landmark">
-    <value>VPN ステータス</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_VpnStatus_Subtitle_Connecting">
-    <value>デジタルアイデンティティを保護する...</value>
-  </data>
-  <data name="Home_VpnStatus_Subtitle_Disconnected">
-    <value>あなたは無防備です</value>
-  </data>
-  <data name="Home_VpnStatus_Title_Connected">
-    <value>保護されています</value>
-  </data>
   <data name="LoadingPage_Tip">
     <value>より良い世界は プライバシー と デジタルの自由から始まります。</value>
   </data>
   <data name="Login_Error_GetSessionDetailsFailed">
     <value>セッションの詳細を取得するときにエラーが発生しました。 もう一度試してください。</value>
   </data>
+  <data name="Login_Error_GuestHoleFailedDueToMobileHotspot">
+    <value>お客様のデバイスのネットワーク設定によりサインインすることができません。これは、モバイルホットスポット、別のVPNアプリ、または仮想マシンソフトウェアが原因である可能性があります。ネットワーク構成を確認するか、サポートにお問い合わせください。</value>
+  </data>
   <data name="Login_Error_IncorrectTwoFactorCode">
     <value>無効なコードです。再度お試しください。</value>
+  </data>
+  <data name="Login_Error_MissingSrpDll_Message">
+    <value>A file required for sign-in is missing from your installation. Please reinstall Proton VPN to fix this issue.</value>
+  </data>
+  <data name="Login_Error_MissingSrpDll_Title">
+    <value>Unable to sign in</value>
   </data>
   <data name="Login_Error_SessionExpired">
     <value>セッションの有効期限が切れました。再度サインインしてください。</value>
@@ -2688,14 +2406,11 @@
   <data name="Login_Error_SsoAuthFailed">
     <value>SSO認証に失敗しました。 もう一度試してください。</value>
   </data>
-  <data name="Login_Error_TwoFactorAuthFailed">
-    <value>ユーザー名かパスワードが正しくありません。再度お試しください。</value>
-  </data>
   <data name="Login_Error_TwoFactorFailed">
     <value>二要素認証に失敗しました。 再度サインインしてください。</value>
   </data>
   <data name="Login_Error_WebAuthnNotSupported">
-    <value>Security key authentication is not available for your device or remote desktop connection.</value>
+    <value>セキュリティキー認証は、お客様のデバイスまたはリモートデスクトップ接続では利用できません。</value>
   </data>
   <data name="Login_TwoFactorForm_Authenticate">
     <value>認証</value>
@@ -2732,7 +2447,7 @@
     <value>コードを入力してください</value>
   </data>
   <data name="Login_TwoFactor_NoMethodAvailable">
-    <value>既知の2要素認証方式が見つかりませんでした。</value>
+    <value>2要素認証の方法が見つかりませんでした。</value>
   </data>
   <data name="Login_TwoFactor_SecurityKey">
     <value>セキュリティキー</value>
@@ -2778,6 +2493,9 @@
   <data name="NoServers_Title">
     <value>VPN接続が利用できません。</value>
   </data>
+  <data name="NoServers_UnderMaintenance_Tip">
+    <value>サーバーを読み込めませんでした。「再読み込み」をクリックして、サーバーリストを更新してください。</value>
+  </data>
   <data name="Notifications_KillSwitch_Description">
     <value>IPアドレスを保護するため、キルスイッチがインターネット接続をブロックしています。</value>
   </data>
@@ -2785,7 +2503,7 @@
     <value>ポート番号をコピー</value>
   </data>
   <data name="Notifications_PortForwarding_Description">
-    <value>速度を上げるために BitTorrent へこの番号を指定します。</value>
+    <value>お使いのトレントクライアントまたはP2Pアプリを開き、この番号を入力してください。</value>
   </data>
   <data name="Notifications_SessionLimit_Description">
     <value>最大のデバイス数に達しました。VPNに再接続するには、他のデバイスで切断してください。</value>
@@ -2804,10 +2522,10 @@
     <comment>The window title displayed at the top of the NPS (Net Promoter Score) survey</comment>
   </data>
   <data name="Overlay_Ipv6Disabled_Description">
-    <value>このアドレスを含めるには、VPNトンネル経由のIPv6接続を許可する必要があります。</value>
+    <value>IPv6アドレスを含めるには、VPNトンネル経由のIPv6接続を許可する必要があります。</value>
   </data>
   <data name="Overlay_Ipv6Disabled_PrimaryButton">
-    <value>IPv6接続は有効です</value>
+    <value>IPv6を有効化</value>
   </data>
   <data name="Overlay_Ipv6Disabled_SecondaryButton">
     <value>後で</value>
@@ -2924,7 +2642,7 @@ VPN接続</value>
     <value>サーバー負荷</value>
   </data>
   <data name="Overlay_SmartRouting_Description1">
-    <value>スマートルーティングは、仮想サーバーを使用して、到達困難な国でVPNカバレッジを提供します。</value>
+    <value>Smart Routingにより、到達困難な国でもVPNカバレッジを提供できます。</value>
   </data>
   <data name="Overlay_SmartRouting_Description2">
     <value>スマートルーティングサーバーに接続すると、物理サーバーが他の場所にあるにもかかわらず、目的地の国をブラウズしているように見えます。</value>
@@ -2933,10 +2651,8 @@ VPN接続</value>
     <value>スマートルーティングは、通常、プライバシー保護法やその他の検閲を回避するために使用されます。</value>
   </data>
   <data name="Overlay_SmartRouting_Header">
-    <value>サーバーは物理的に{0}に位置していますが、{1}からブラウジングしているように見えます</value>
-    <comment>{0} is a placeholder for the physical server location country. {1} is a placeholder for the destination country
-    Warning: country names are inserted in the nominative case. For INFLECTED languages, use alternative wording as follows:
-    Connects you to your destination country ({1}) through servers that are physically located somewhere else ({0})</comment>
+    <value>Connects you to your destination country through servers physically located elsewhere: {0}.</value>
+    <comment>{0} is a placeholder for the countries where the physical servers are. Can be either one country or multiple countries separated with comma.</comment>
   </data>
   <data name="Overlay_SmartRouting_LearnMore">
     <value>スマートルーティングとは？</value>
@@ -2980,17 +2696,14 @@ VPN接続</value>
   <data name="Profile_Options_ConnectAndGo_Application">
     <value>アプリを開く</value>
   </data>
-  <data name="Profile_Options_ConnectAndGo_DefaultBrowser">
-    <value>デフォルトのブラウザ</value>
-  </data>
   <data name="Profile_Options_ConnectAndGo_PrivateBrowsingMode">
-    <value>プライベートブラウジングモードを使用する</value>
+    <value>プライバシーモードを使用</value>
   </data>
   <data name="Profile_Options_ConnectAndGo_Website">
     <value>ウェブサイトを開く</value>
   </data>
   <data name="Profile_Options_Description">
-    <value>このプロファイルに接続すると、選択した Web サイトまたはアプリが自動的に開きます。</value>
+    <value>このプロファイルに接続すると、特定のサイトまたはアプリが自動的に開きます。</value>
   </data>
   <data name="Profile_Options_Header">
     <value>接続して続ける</value>
@@ -3009,9 +2722,6 @@ VPN接続</value>
   </data>
   <data name="Profiles_Default_MaxSecurity">
     <value>最大のセキュリティ</value>
-  </data>
-  <data name="Profiles_Default_Office">
-    <value>オフィス</value>
   </data>
   <data name="Profiles_Default_P2P">
     <value>P2P</value>
@@ -3097,9 +2807,6 @@ VPN接続</value>
   <data name="Servers">
     <value>サーバー</value>
   </data>
-  <data name="Settings_About">
-    <value>詳細</value>
-  </data>
   <data name="Settings_About_Changelog">
     <value>更新履歴</value>
   </data>
@@ -3162,9 +2869,6 @@ VPN接続</value>
     <value>192.0.2.0</value>
     <comment>Watermark for the IP Address field in the Custom DNS servers settings page</comment>
   </data>
-  <data name="Settings_Common_Ipv6WarningButton">
-    <value>警告 - 詳しくはこちら</value>
-  </data>
   <data name="Settings_Connection">
     <value>接続</value>
   </data>
@@ -3196,12 +2900,15 @@ VPN接続</value>
   <data name="Settings_Connection_Advanced_CustomDnsServers_Footer">
     <value>これらのサーバーに順番に接続しようとします。どれも動作しない場合は、デフォルトのProton VPN DNSが使用されます。</value>
   </data>
-  <data name="Settings_Connection_Advanced_CustomDnsServers_Header">
+  <data name="Settings_Connection_Advanced_CustomDnsServers_FormattedHeader">
     <value>DNS サーバー ({0})</value>
     <comment>Header for the list of Custom DNS servers defined. {0} is a placeholder for the number of DNS servers in the list. (eg. "DNS servers (4)")</comment>
   </data>
-  <data name="Settings_Connection_Advanced_CustomDnsServers_IpAddress_Description">
-    <value>サーバーのIPv4またはIPv6アドレスを入力してください。</value>
+  <data name="Settings_Connection_Advanced_CustomDnsServers_Header">
+    <value>DNS サーバー</value>
+  </data>
+  <data name="Settings_Connection_Advanced_CustomDnsServers_Select">
+    <value>DNSサーバーを選択</value>
   </data>
   <data name="Settings_Connection_Advanced_Ipv6">
     <value>IPv6対応</value>
@@ -3219,10 +2926,10 @@ VPN接続</value>
     <value>LAN への接続を許可</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections_Description">
-    <value>お客様のローカル ネットワーク内のプリンター、スピーカー、その他のデバイスへの接続を許可します。</value>
+    <value>ローカルネットワーク内のプリンター、スピーカー、その他のデバイスへの接続を可能にします。</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections_LocalDns_Description">
-    <value>IPアドレスの代わりに「My-Printer」や「router.local」などの名前を使用してデバイスに接続します。ローカルDNS解決を使用します。VPN速度を高速化するため、デフォルトでは無効になっています。</value>
+    <value>mDNS を利用して、IPアドレスではなく「My-Printer」や「router.local」のような名前でデバイスに接続します。標準DNSは引き続き VPNトンネル経由でルーティングされます。VPN速度を高速化するため、この機能はデフォルトで無効になっています。</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections_LocalDns_Title">
     <value>名前でデバイスにアクセスする</value>
@@ -3252,10 +2959,16 @@ VPN接続</value>
     <value>ネットワークに入るデータを制限します。 このオプションはより安全ですが、ピアツーピア ゲーム接続がより困難になる可能性があります。</value>
   </data>
   <data name="Settings_Connection_Advanced_OpenVpnDriver_Tap">
-    <value>異なるネットワーク間のルートトラフィック</value>
+    <value>ネットワークトラフィックをブリッジします。 TUNより遅いですが、一部のレガシーや特殊なネットワーク設定には必要です。</value>
   </data>
   <data name="Settings_Connection_Advanced_OpenVpnDriver_Tun_Description">
-    <value>ブリッジングを使用してネットワークを接続します。TUNはTAPよりも高速ですが、安定性が低い場合があります。</value>
+    <value>異なるネットワーク間のトラフィックをルーティングします。TUNはTAPよりも高速で安定している場合があります。</value>
+  </data>
+  <data name="Settings_Connection_ConnectionPreferences">
+    <value>接続設定</value>
+  </data>
+  <data name="Settings_Connection_ConnectionPreferences_Description">
+    <value>Default connection and excluded locations</value>
   </data>
   <data name="Settings_Connection_CustomDns_Conflict_Information_WhenDisabled">
     <value>NetShield が有効なプロファイルに接続しているため、カスタム DNS を有効にできません。</value>
@@ -3287,6 +3000,27 @@ VPN接続</value>
   <data name="Settings_Connection_Default_Recents">
     <value>最近</value>
   </data>
+  <data name="Settings_Connection_ExcludedLocations">
+    <value>Excluded locations</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Cities">
+    <value>Cities</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Countries">
+    <value>Countries</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Description">
+    <value>The selected locations will never be used when you connect to Fastest or Random</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_NoLocations">
+    <value>No locations available</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Search">
+    <value>Select...</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_States">
+    <value>States</value>
+  </data>
   <data name="Settings_Connection_KillSwitch">
     <value>キルスイッチ</value>
   </data>
@@ -3296,17 +3030,8 @@ VPN接続</value>
   <data name="Settings_Connection_KillSwitch_Advanced_Description">
     <value>インターネットへのアクセスは、Proton VPNに接続しているときのみ許可されます。高度なキルスイッチは、デバイスを再起動してもアクティブなままです。</value>
   </data>
-  <data name="Settings_Connection_KillSwitch_Conflict_Description">
-    <value>これは無効なスプリットトンネルです。</value>
-  </data>
-  <data name="Settings_Connection_KillSwitch_Conflict_Title">
-    <value>キルスイッチを有効にしますか？</value>
-  </data>
   <data name="Settings_Connection_KillSwitch_Description">
     <value>VPN接続を中断した場合に、インターネットの接続を解除することでIPアドレスを保護します。</value>
-  </data>
-  <data name="Settings_Connection_KillSwitch_Footer">
-    <value>キルスイッチがオンのとき、スプリットトンネルを通じてVPN接続から除外されたウェブサイトやアプリに接続することはできません。</value>
   </data>
   <data name="Settings_Connection_KillSwitch_Standard">
     <value>標準</value>
@@ -3318,7 +3043,10 @@ VPN接続</value>
     <value>NetShield</value>
   </data>
   <data name="Settings_Connection_NetShield_BlockAdsMalwareTrackers">
-    <value>広告やマルウェア、追跡をブロック</value>
+    <value>広告、トラッカー、マルウェアをブロック</value>
+  </data>
+  <data name="Settings_Connection_NetShield_BlockAdsMalwareTrackersAdultContent">
+    <value>広告、トラッカー、マルウェア、成人向けコンテンツをブロック</value>
   </data>
   <data name="Settings_Connection_NetShield_BlockMalwareOnly">
     <value>マルウェアのみブロック</value>
@@ -3333,7 +3061,7 @@ VPN接続</value>
     <value>NetShieldを有効にしますか？</value>
   </data>
   <data name="Settings_Connection_NetShield_Description">
-    <value>ウェブサイトやアプリの使用中に、広告やマルウェア、追跡から保護</value>
+    <value>ウェブサイトやアプリでのブラウジングを保護。</value>
   </data>
   <data name="Settings_Connection_NetShield_Footer">
     <value>広告やトラッカーがブロックされていると、一部の Web サイトが正しく読み込まれない場合があります。</value>
@@ -3345,7 +3073,7 @@ VPN接続</value>
     <value>ポート転送</value>
   </data>
   <data name="Settings_Connection_PortForwarding_ActivePort">
-    <value>有効なポート:</value>
+    <value>アクティブなポート番号:</value>
   </data>
   <data name="Settings_Connection_PortForwarding_ActivePort_Copy">
     <value>ポート番号をコピー</value>
@@ -3375,41 +3103,41 @@ VPN接続</value>
   <data name="Settings_Connection_PortForwarding_Notifications_Description">
     <value>お客様の有効なポート転送番号が変更されたときに通知を受け取る。</value>
   </data>
+  <data name="Settings_Connection_PortForwarding_Unavailable">
+    <value>利用不可</value>
+  </data>
   <data name="Settings_Connection_Protocol">
     <value>プロトコル</value>
   </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Action">
-    <value>プロファイルへ移動</value>
-  </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Message">
-    <value>現在、VPN プロファイルに接続しています。 
-
-• この接続のプロトコルを変更するには、切断してからプロファイルを編集します。
-
-• 他のVPN 接続のプロトコルを変更するには、まずプロファイルから切断する必要があります。</value>
-  </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Title">
-    <value>プロファイルでプロトコルを変更</value>
-  </data>
   <data name="Settings_Connection_SplitTunneling">
     <value>スプリットトンネル</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_Description">
+    <value>VPN接続から除外するアプリを選択</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_FormattedHeader">
+    <value>除外するアプリ ({0})</value>
+    <comment>Header for the list of apps to exclude for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Excluded apps (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_Header">
+    <value>除外するアプリ</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Apps_FilesFilterName">
     <value>アプリファイル</value>
     <comment>Describe the name of the filter used to select executable files in the Open file dialog</comment>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Apps_Header">
-    <value>選択されたアプリ({0})</value>
-    <comment>Header for the list of Apps defined for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Selected apps (2)")</comment>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_Description">
+    <value>VPN接続に含めるアプリを選択</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Apps_Remove">
-    <value>アプリを削除</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_FormattedHeader">
+    <value>含まれるアプリ({0})</value>
+    <comment>Header for the list of apps to include for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Included apps (2)")</comment>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Conflict_Description">
-    <value>これは無効化されたキルスイッチです。</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_Header">
+    <value>含まれるアプリ</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Conflict_Title">
-    <value>スプリットトンネルを有効にしますか？</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Select">
+    <value>アプリを選択</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Description">
     <value>どのアプリとIP アドレスをVPN によって保護するかを決定して、接続をカスタマイズします。</value>
@@ -3427,12 +3155,28 @@ VPN接続</value>
   <data name="Settings_Connection_SplitTunneling_IpAddresses_AddNew">
     <value>新しいIPv4またはIPv6アドレスを追加する</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_IpAddresses_Header">
-    <value>選択したIPアドレス({0})</value>
-    <comment>Header for the list of IP addresses defined for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Selected IP addresses (2)")</comment>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_Description">
+    <value>VPN接続から除外するIPアドレスを選択</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_IpAddresses_Remove">
-    <value>IPを削除</value>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_FormattedHeader">
+    <value>除外されたIP アドレス ({0})</value>
+    <comment>Header for the list of IP addresses to exclude for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Excluded IP addresses (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_Header">
+    <value>除外されたIPアドレス</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_Description">
+    <value>VPN接続に含めるIPアドレスを選択してください</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_FormattedHeader">
+    <value>含まれているIPアドレス({0})</value>
+    <comment>Header for the list of IP addresses to include for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Included IP addresses (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_Header">
+    <value>含まれているIPアドレス</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Select">
+    <value>IPアドレスを選択</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Standard">
     <value>除外モード</value>
@@ -3456,9 +3200,6 @@ VPN接続</value>
   <data name="Settings_DiscardChanges_Confirmation_Title">
     <value>保存されていない変更を削除しますか?</value>
   </data>
-  <data name="Settings_Features">
-    <value>VPN機能</value>
-  </data>
   <data name="Settings_General">
     <value>一般</value>
   </data>
@@ -3470,12 +3211,6 @@ VPN接続</value>
   </data>
   <data name="Settings_General_AutoStartup_AutoConnect_Description">
     <value>Proton VPN が開くと、デフォルトの接続に自動的に接続されます。</value>
-  </data>
-  <data name="Settings_General_AutoStartup_AutoConnect_Fastest">
-    <value>最速の接続</value>
-  </data>
-  <data name="Settings_General_AutoStartup_AutoConnect_Latest">
-    <value>最後の接続</value>
   </data>
   <data name="Settings_General_AutoStartup_AutoLaunch">
     <value>自動起動</value>
@@ -3493,7 +3228,7 @@ VPN接続</value>
     <value>タスクバーに最小化する</value>
   </data>
   <data name="Settings_General_AutoStartup_Description">
-    <value>アプリが自動的に起動または接続されるように設定する.</value>
+    <value>アプリが自動的に起動・接続されるようにする。</value>
   </data>
   <data name="Settings_General_AutomaticUpdates">
     <value>自動更新</value>
@@ -3519,20 +3254,8 @@ VPN接続</value>
   <data name="Settings_General_OpenVpnNetworkDriver">
     <value>OpenVPN ネットワークドライバ</value>
   </data>
-  <data name="Settings_General_OpenVpnNetworkDriver_Description">
-    <value>ネットワークドライバーは接続速度に影響を与える可能性があります。 新しい TUN アダプターはより高速な速度を提供し、接続上の問題が発生した場合は TAP アダプターに戻ります。</value>
-  </data>
   <data name="Settings_General_Theme">
     <value>テーマ</value>
-  </data>
-  <data name="Settings_General_Theme_Dark">
-    <value>ダーク</value>
-  </data>
-  <data name="Settings_General_Theme_Default">
-    <value>デフォルト</value>
-  </data>
-  <data name="Settings_General_Theme_Light">
-    <value>ライト</value>
   </data>
   <data name="Settings_Improve">
     <value>Protonを改善する</value>
@@ -3574,6 +3297,30 @@ VPN接続</value>
   </data>
   <data name="Settings_Protocols_OpenVpnUdp_Title">
     <value>OpenVPN</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTcp_Description">
+    <value>Our new WireGuard-based framework for increased stability, functionality, and censorship resistance.</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTcp_Title">
+    <value>Proton WireGuard</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTls_Description">
+    <value>Our new WireGuard-based framework for increased stability, functionality, and censorship resistance.</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTls_Title">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="Settings_Protocols_ProTunUdp_Description">
+    <value>Our new WireGuard-based framework for increased stability, functionality, and censorship resistance.</value>
+  </data>
+  <data name="Settings_Protocols_ProTunUdp_Title">
+    <value>Proton WireGuard</value>
+  </data>
+  <data name="Settings_Protocols_ProtonProtocols_Description">
+    <value>Use Proton VPN's own implementation of WireGuard. This is an experimental feature, so you may experience some instability.</value>
+  </data>
+  <data name="Settings_Protocols_ProtonProtocols_Title">
+    <value>Proton protocols</value>
   </data>
   <data name="Settings_Protocols_Smart_Description">
     <value>接続に最適なプロトコルを自動選択します。</value>
@@ -3629,6 +3376,15 @@ VPN接続</value>
   <data name="Settings_SelectedProtocol_OpenVpnUdp">
     <value>OpenVPN (UDP)</value>
   </data>
+  <data name="Settings_SelectedProtocol_ProTunTcp">
+    <value>Proton WireGuard (TCP)</value>
+  </data>
+  <data name="Settings_SelectedProtocol_ProTunTls">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="Settings_SelectedProtocol_ProTunUdp">
+    <value>Proton WireGuard (UDP)</value>
+  </data>
   <data name="Settings_SelectedProtocol_Smart">
     <value>Smart</value>
   </data>
@@ -3673,9 +3429,6 @@ VPN接続</value>
   </data>
   <data name="Settings_VpnAccelerator_Description">
     <value>パフォーマンス強化テクノロジーにより、接続速度が最大 400% 向上します。</value>
-  </data>
-  <data name="SignIn_Form">
-    <value>サインインフォーム</value>
   </data>
   <data name="SignIn_Form_AdvancedKillSwitchDescription">
     <value>高度なキルスイッチがあなたのインターネット接続をブロックしています。</value>
@@ -3770,12 +3523,37 @@ VPN接続</value>
   <data name="SystemNotification_Disconnected">
     <value>切断されました</value>
   </data>
+  <data name="SystemNotification_P2PWarning_Description">
+    <value>P2P (ピアツーピア) プロトコル経由でのトレントやオンラインゲームを、有料VPNサーバーで利用可能にします。</value>
+  </data>
+  <data name="SystemNotification_P2PWarning_Title">
+    <value>VPN FreeではP2Pが利用できません</value>
+  </data>
+  <data name="SystemNotification_StreamingWarning_Description">
+    <value>一部のウェブサイトやストリーミングサービスでは、無料VPNユーザーがブロックされます。これらのブロックを回避するには、Proton VPN Plusにアップグレードしてください。</value>
+  </data>
+  <data name="SystemNotification_StreamingWarning_Title">
+    <value>ブロックされたウェブサイトですか？</value>
+  </data>
+  <data name="System_Tray_Actions_Connect">
+    <value>Connect</value>
+  </data>
+  <data name="System_Tray_Actions_Disconnect">
+    <value>Disconnect</value>
+  </data>
+  <data name="System_Tray_Actions_ExitApplication">
+    <value>Exit</value>
+  </data>
+  <data name="System_Tray_Actions_OpenApplication">
+    <value>Open {0}</value>
+    <comment>Button displayed in the tray icon to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
+  </data>
   <data name="Tray_Actions_ExitApplication">
     <value>終了</value>
   </data>
   <data name="Tray_Actions_OpenApplication">
     <value>{0} を開く</value>
-    <comment>Button displayed in the tray icon to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
+    <comment>Button displayed in the tray window to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
   </data>
   <data name="Tray_Actions_OpenApplicationToSignIn">
     <value>サインインするためにアプリを開く</value>
@@ -3808,11 +3586,11 @@ VPN接続</value>
     <value>TB/s</value>
     <comment>Unit for Terabytes per second</comment>
   </data>
-  <data name="UpsellBanner_NetShield_Description">
-    <value>ウェブサイトとアプリの広告、トラッカー、マルウェアをブロック</value>
+  <data name="UpsellBanner_P2P_Description">
+    <value>BitTorrentやその他のファイル共有プロトコルを使用してファイルをダウンロードします。</value>
   </data>
-  <data name="UpsellBanner_NetShield_Title">
-    <value>NetShield</value>
+  <data name="UpsellBanner_P2P_Title">
+    <value>P2P対応</value>
   </data>
   <data name="UpsellBanner_WrongCountry_Description">
     <value>アップグレードして任意のサーバーを選択。</value>
@@ -3824,7 +3602,7 @@ VPN接続</value>
     <value>高度な VPN カスタマイズを解除する</value>
   </data>
   <data name="Upsell_Carousel_AdvancedSettings_DNS">
-    <value>カスタム ドメイン ネーム システム (DNS)を使用して VPN に接続します。</value>
+    <value>カスタム DNS で VPN に接続</value>
   </data>
   <data name="Upsell_Carousel_AdvancedSettings_LAN">
     <value>接続中にローカル エリア ネットワーク (LAN) 上のデバイスにアクセスする</value>
@@ -3944,9 +3722,6 @@ VPN接続</value>
   <data name="Upsell_Carousel_Streaming_Platforms_HBO">
     <value>HBO Max</value>
   </data>
-  <data name="Upsell_Carousel_Streaming_Platforms_Hulu">
-    <value>Hulu</value>
-  </data>
   <data name="Upsell_Carousel_Streaming_Platforms_Netflix">
     <value>Netflix</value>
   </data>
@@ -4001,6 +3776,24 @@ VPN接続</value>
   </data>
   <data name="VpnProtocol_OpenVPN_Udp_Description">
     <value>確立され、十分にテストされ、安全です</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tcp">
+    <value>Proton WireGuard (TCP)</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tcp_Description">
+    <value>State-of-the-art protocol for security and performance</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tls">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tls_Description">
+    <value>Overcomes VPN blocks by hiding your connection from censors</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Udp">
+    <value>Proton WireGuard (UDP)</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Udp_Description">
+    <value>State-of-the-art protocol for security and performance</value>
   </data>
   <data name="VpnProtocol_Smart">
     <value>Smart</value>

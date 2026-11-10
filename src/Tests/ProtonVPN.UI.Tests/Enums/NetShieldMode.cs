@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -21,6 +21,7 @@ namespace ProtonVPN.UI.Tests.Enums;
 
 public enum NetShieldMode
 {
-    BlockMalwareOnly = 1,
-    BlockAdsMalwareTrackers = 2,
+    BlockMalwareOnly,
+    BlockAdsMalwareTrackers,
+    BlockAdsMalwareTrackersAdultContent,
 }

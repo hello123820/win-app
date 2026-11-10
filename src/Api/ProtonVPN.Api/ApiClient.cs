@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -19,7 +19,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ProtonVPN.Api.Contracts;
@@ -27,14 +29,11 @@ using ProtonVPN.Api.Contracts.Announcements;
 using ProtonVPN.Api.Contracts.Auth;
 using ProtonVPN.Api.Contracts.Certificates;
 using ProtonVPN.Api.Contracts.Common;
-using ProtonVPN.Api.Contracts.Events;
 using ProtonVPN.Api.Contracts.Features;
 using ProtonVPN.Api.Contracts.Geographical;
 using ProtonVPN.Api.Contracts.NpsSurvey;
-using ProtonVPN.Api.Contracts.Partners;
 using ProtonVPN.Api.Contracts.ReportAnIssue;
 using ProtonVPN.Api.Contracts.Servers;
-using ProtonVPN.Api.Contracts.Streaming;
 using ProtonVPN.Api.Contracts.Users;
 using ProtonVPN.Api.Contracts.VpnConfig;
 using ProtonVPN.Client.Settings.Contracts;
@@ -52,6 +51,9 @@ public class ApiClient : BaseApiClient, IApiClient
     private const int SERVERS_TIMEOUT_IN_SECONDS = 30;
     private const int SERVERS_RETRY_COUNT = 3;
     private const int CERTIFICATE_RETRY_COUNT = 5;
+
+    private const string LOGICALS_SIGN_SERVER_PARAM_VALUE = "Server.EntryIP,Server.Label";
+    private const string LOGICALS_PROTOCOL_ENTRIES_PARAM_VALUE = "WireGuardUDP,WireGuardTCP,WireGuardTLS,OpenVPNUDP,OpenVPNTCP";
 
     private readonly HttpClient _client;
     private readonly HttpClient _noCacheClient;
@@ -71,21 +73,27 @@ public class ApiClient : BaseApiClient, IApiClient
     {
         HttpRequestMessage request = GetUnauthorizedRequest(HttpMethod.Post, "auth/v4/sessions");
 
-        return await SendRequest<UnauthSessionResponse>(request, cancellationToken, "Post unauth sessions");
+        return await SendRequestAsync<UnauthSessionResponse>(request, cancellationToken, "Post unauth sessions");
+    }
+
+    public async Task<ApiResponseResult<LocalizedLocationsResponse>> GetCityNamesAsync(CancellationToken cancellationToken = default)
+    {
+        HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Get, "vpn/v1/cities/names");
+        return await SendRequestAsync<LocalizedLocationsResponse>(request, cancellationToken, "Get city names");
     }
 
     public async Task<ApiResponseResult<AuthResponse>> GetAuthResponse(AuthRequest authRequest, CancellationToken cancellationToken)
     {
-        HttpRequestMessage request = GetRequest(HttpMethod.Post, "auth");
+        HttpRequestMessage request = GetRequest(HttpMethod.Post, "auth/v4");
         request.Content = GetJsonContent(authRequest);
-        return await SendRequest<AuthResponse>(request, cancellationToken, "Get auth");
+        return await SendRequestAsync<AuthResponse>(request, cancellationToken, "Get auth");
     }
 
     public async Task<ApiResponseResult<AuthInfoResponse>> GetAuthInfoResponse(AuthInfoRequest authInfoRequest, CancellationToken cancellationToken)
     {
-        HttpRequestMessage request = GetRequest(HttpMethod.Post, "auth/info");
+        HttpRequestMessage request = GetRequest(HttpMethod.Post, "auth/v4/info");
         request.Content = GetJsonContent(authInfoRequest);
-        return await SendRequest<AuthInfoResponse>(request, cancellationToken, "Get auth info");
+        return await SendRequestAsync<AuthInfoResponse>(request, cancellationToken, "Get auth info");
     }
 
     public async Task<ApiResponseResult<BaseResponse>> GetTwoFactorAuthResponse(
@@ -96,62 +104,72 @@ public class ApiClient : BaseApiClient, IApiClient
     {
         HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Post, "auth/v4/2fa", accessToken, uid);
         request.Content = GetJsonContent(twoFactorRequest);
-        return await SendRequest<BaseResponse>(request, cancellationToken, "Get two factor auth info");
+        return await SendRequestAsync<BaseResponse>(request, cancellationToken, "Get two factor auth info");
     }
 
     public async Task<ApiResponseResult<VpnInfoWrapperResponse>> GetVpnInfoResponse(CancellationToken cancellationToken)
     {
         HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Get, "vpn/v2");
-        return await SendRequest<VpnInfoWrapperResponse>(request, cancellationToken, "Get VPN info");
+        return await SendRequestAsync<VpnInfoWrapperResponse>(request, cancellationToken, "Get VPN info");
     }
 
     public async Task<ApiResponseResult<BaseResponse>> GetLogoutResponse()
     {
-        HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Delete, "auth");
-        return await SendRequest<BaseResponse>(request, CancellationToken.None, "Logout");
+        HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Delete, "auth/v4");
+        return await SendRequestAsync<BaseResponse>(request, CancellationToken.None, "Logout");
     }
 
-    public async Task<ApiResponseResult<EventResponse>> GetEventResponse(string lastId)
+    public async Task<ApiResponseResult<ServersResponse>> GetServersAsync(
+        DeviceLocation? deviceLocation,
+        IEnumerable<string> favoriteServerIds = default,
+        CancellationToken cancellationToken = default)
     {
-        string id = string.IsNullOrEmpty(lastId) ? "latest" : lastId;
-        HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Get, "events/" + id);
-        return await SendRequest<EventResponse>(request, CancellationToken.None, "Get events");
-    }
+        StringBuilder endpoint = new("vpn/v2/logicals" +
+            $"?SignServer={LOGICALS_SIGN_SERVER_PARAM_VALUE}" +
+            "&SecureCoreFilter=all" +
+            "&WithState=true" +
+            $"&WithEntriesForProtocols={LOGICALS_PROTOCOL_ENTRIES_PARAM_VALUE}");
 
-    public async Task<ApiResponseResult<ServersResponse>> GetServersAsync(DeviceLocation? deviceLocation, CancellationToken cancellationToken = default)
-    {
-        HttpRequestMessage request = GetAuthorizedRequestWithLocation(HttpMethod.Get, "vpn/logicals?" +
-            "SignServer=Server.EntryIP,Server.Label&SecureCoreFilter=all&WithState=true&" +
-            "WithEntriesForProtocols=WireGuardUDP,WireGuardTCP,WireGuardTLS,OpenVPNUDP,OpenVPNTCP", deviceLocation);
+        if (favoriteServerIds is not null && favoriteServerIds.Any())
+        {
+            foreach (string requestServerId in favoriteServerIds)
+            {
+                endpoint.Append($"&IncludeID[]={requestServerId}");
+            }
+        }
+
+        HttpRequestMessage request = GetAuthorizedRequestWithLocation(HttpMethod.Get, endpoint.ToString(), deviceLocation);
         request.SetRetryCount(SERVERS_RETRY_COUNT);
         request.SetCustomTimeout(TimeSpan.FromSeconds(SERVERS_TIMEOUT_IN_SECONDS));
         request.Headers.IfModifiedSince = Settings.LogicalsLastModifiedDate;
+        request.Headers.Add("x-pm-response-truncation-permitted", "true");
 
-        return await SendRequest<ServersResponse>(request, cancellationToken, "Get servers");
+        return await SendRequestAsync<ServersResponse>(request, cancellationToken, "Get servers");
+    }
+
+    public async Task<ApiResponseResult<byte[]>> GetServerLoadsAndStatusBinaryStringAsync(string statusId, CancellationToken cancellationToken = default)
+    {
+        HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Get, $"vpn/v2/status/{statusId}/binary");
+
+        return await SendRequestAsync<byte[]>(request, cancellationToken, "Get server loads and status binary string");
     }
 
     public async Task<ApiResponseResult<ServerCountResponse>> GetServersCountAsync()
     {
-        HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Get, "vpn/servers-count");
-        return await SendRequest<ServerCountResponse>(request, CancellationToken.None, "Get servers and countries count");
-    }
-
-    public async Task<ApiResponseResult<ServersResponse>> GetServerLoadsAsync(DeviceLocation? deviceLocation, CancellationToken cancellationToken)
-    {
-        HttpRequestMessage request = GetAuthorizedRequestWithLocation(HttpMethod.Get, "vpn/loads", deviceLocation);
-        return await SendRequest<ServersResponse>(request, cancellationToken, "Get server loads");
+        HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Get, "vpn/v1/servers-count");
+        return await SendRequestAsync<ServerCountResponse>(request, CancellationToken.None, "Get servers and countries count");
     }
 
     public async Task<ApiResponseResult<ReportAnIssueFormResponse>> GetReportAnIssueFormData()
     {
         HttpRequestMessage request = GetRequest(HttpMethod.Get, "vpn/v1/featureconfig/dynamic-bug-reports");
-        return await SendRequest<ReportAnIssueFormResponse>(request, CancellationToken.None, "Get report an issue form data");
+        return await SendRequestAsync<ReportAnIssueFormResponse>(request, CancellationToken.None, "Get report an issue form data");
     }
 
     public async Task<ApiResponseResult<DeviceLocationResponse>> GetLocationDataAsync()
     {
-        HttpRequestMessage request = GetRequest(HttpMethod.Get, "vpn/location");
-        return await SendRequestWithNoCache<DeviceLocationResponse>(request, CancellationToken.None, "Get location data");
+        HttpRequestMessage request = GetRequest(HttpMethod.Get, "vpn/v1/location");
+        return await SendRequestWithNoCacheAsync<DeviceLocationResponse>(request, CancellationToken.None, "Get location data");
     }
 
     public async Task<ApiResponseResult<BaseResponse>> ReportBugAsync(
@@ -173,21 +191,21 @@ public class ApiClient : BaseApiClient, IApiClient
             fileCount++;
         }
 
-        HttpRequestMessage request = GetRequest(HttpMethod.Post, "reports/bug");
+        HttpRequestMessage request = GetRequest(HttpMethod.Post, "core/v4/reports/bug");
         request.Content = content;
-        return await SendRequest<BaseResponse>(request, CancellationToken.None, "Report bug");
+        return await SendRequestAsync<BaseResponse>(request, CancellationToken.None, "Report bug");
     }
 
     public async Task<ApiResponseResult<VpnConfigResponse>> GetVpnConfigAsync(DeviceLocation? deviceLocation, CancellationToken cancellationToken)
     {
         HttpRequestMessage request = GetAuthorizedRequestWithLocation(HttpMethod.Get, "vpn/v2/clientconfig", deviceLocation);
-        return await SendRequest<VpnConfigResponse>(request, cancellationToken, "Get VPN config");
+        return await SendRequestAsync<VpnConfigResponse>(request, cancellationToken, "Get VPN config");
     }
 
     public async Task<ApiResponseResult<PhysicalServerWrapperResponse>> GetServerAsync(string serverId)
     {
-        HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Get, $"vpn/servers/{serverId}");
-        return await SendRequest<PhysicalServerWrapperResponse>(request, CancellationToken.None, "Get server status");
+        HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Get, $"vpn/v1/servers/{serverId}");
+        return await SendRequestAsync<PhysicalServerWrapperResponse>(request, CancellationToken.None, "Get server status");
     }
 
     public async Task<ApiResponseResult<AnnouncementsResponse>> GetAnnouncementsAsync(
@@ -198,19 +216,7 @@ public class ApiClient : BaseApiClient, IApiClient
                      $"FullScreenImageWidth={announcementsRequest.FullScreenImageWidth}&" +
                      $"FullScreenImageHeight={announcementsRequest.FullScreenImageHeight}";
         HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Get, url);
-        return await SendRequest<AnnouncementsResponse>(request, CancellationToken.None, "Get announcements");
-    }
-
-    public async Task<ApiResponseResult<StreamingServicesResponse>> GetStreamingServicesAsync()
-    {
-        HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Get, "vpn/streamingservices");
-        return await SendRequest<StreamingServicesResponse>(request, CancellationToken.None, "Get streaming services");
-    }
-
-    public async Task<ApiResponseResult<PartnersResponse>> GetPartnersAsync()
-    {
-        HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Get, "vpn/v1/partners");
-        return await SendRequest<PartnersResponse>(request, CancellationToken.None, "Get partners");
+        return await SendRequestAsync<AnnouncementsResponse>(request, CancellationToken.None, "Get announcements");
     }
 
     public async Task<ApiResponseResult<CertificateResponse>> RequestConnectionCertificateAsync(
@@ -220,14 +226,7 @@ public class ApiClient : BaseApiClient, IApiClient
         HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Post, "vpn/v1/certificate");
         request.Content = GetJsonContent(certificateRequest);
         request.SetRetryCount(CERTIFICATE_RETRY_COUNT);
-        return await SendRequest<CertificateResponse>(request, cancellationToken, "Create connection certificate");
-    }
-
-    public async Task<ApiResponseResult<BaseResponse>> ApplyPromoCodeAsync(PromoCodeRequest promoCodeRequest)
-    {
-        HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Post, "payments/v4/promocode");
-        request.Content = GetJsonContent(promoCodeRequest);
-        return await SendRequest<BaseResponse>(request, CancellationToken.None, "Apply promo code");
+        return await SendRequestAsync<CertificateResponse>(request, cancellationToken, "Create connection certificate");
     }
 
     public async Task<ApiResponseResult<ForkedAuthSessionResponse>> ForkAuthSessionAsync(AuthForkSessionRequest authForkSessionRequest)
@@ -235,82 +234,94 @@ public class ApiClient : BaseApiClient, IApiClient
         HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Post, "auth/v4/sessions/forks");
         request.SetCustomTimeout(TimeSpan.FromSeconds(3));
         request.Content = GetJsonContent(authForkSessionRequest);
-        return await SendRequest<ForkedAuthSessionResponse>(request, CancellationToken.None, "Fork auth session");
+        return await SendRequestAsync<ForkedAuthSessionResponse>(request, CancellationToken.None, "Fork auth session");
     }
 
     public async Task<ApiResponseResult<BaseResponse>> PostUnauthenticatedStatisticalEventsAsync(StatisticalEventsBatch statisticalEvents)
     {
         HttpRequestMessage request = GetRequest(HttpMethod.Post, "data/v1/stats/multiple");
         request.Content = GetJsonContent(statisticalEvents);
-        return await SendRequest<BaseResponse>(request, CancellationToken.None, "Post unauthenticated statistical events batch");
+        return await SendRequestAsync<BaseResponse>(request, CancellationToken.None, "Post unauthenticated statistical events batch");
     }
 
     public async Task<ApiResponseResult<BaseResponse>> PostAuthenticatedStatisticalEventsAsync(StatisticalEventsBatch statisticalEvents)
     {
         HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Post, "data/v1/stats/multiple");
         request.Content = GetJsonContent(statisticalEvents);
-        return await SendRequest<BaseResponse>(request, CancellationToken.None, "Post authenticated statistical events batch");
+        return await SendRequestAsync<BaseResponse>(request, CancellationToken.None, "Post authenticated statistical events batch");
     }
 
     public async Task<ApiResponseResult<UsersResponse>> GetUserAsync(CancellationToken cancellationToken = default)
     {
         HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Get, "core/v4/users");
-        return await SendRequest<UsersResponse>(request, cancellationToken, "Get user");
+        return await SendRequestAsync<UsersResponse>(request, cancellationToken, "Get user");
     }
 
     public async Task<ApiResponseResult<Ipv6FragmentsResponse>> GetIpv6FragmentsAsync(CancellationToken cancellationToken = default)
     {
         HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Get, "vpn/v1/ipv6-fragments");
-        return await SendRequest<Ipv6FragmentsResponse>(request, cancellationToken, "Get IPv6 fragments");
+        return await SendRequestAsync<Ipv6FragmentsResponse>(request, cancellationToken, "Get IPv6 fragments");
     }
 
     public async Task<ApiResponseResult<FeatureFlagsResponse>> GetFeatureFlagsAsync(CancellationToken cancellationToken = default)
     {
         HttpRequestMessage request = GetRequest(HttpMethod.Get, "feature/v2/frontend");
-        return await SendRequest<FeatureFlagsResponse>(request, cancellationToken, "Get feature flags");
+        return await SendRequestAsync<FeatureFlagsResponse>(request, cancellationToken, "Get feature flags");
     }
 
-    public async Task<ApiResponseResult<BaseResponse>> SubmitNpsSurveyAsync(NpsSurveyRequest npsSurveyRequest)
+    public async Task<ApiResponseResult<BaseResponse>> SubmitNpsSurveyAsync(NpsSurveyRequest npsSurveyRequest, DeviceLocation? deviceLocation)
     {
-        HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Post, "vpn/v1/nps/submit");
+        HttpRequestMessage request = GetAuthorizedRequestWithLocation(HttpMethod.Post, "vpn/v1/nps/submit", deviceLocation);
         request.Content = GetJsonContent(npsSurveyRequest);
-        return await SendRequest<BaseResponse>(request, CancellationToken.None, "Submit NPS survey");
+        return await SendRequestAsync<BaseResponse>(request, CancellationToken.None, "Submit NPS survey");
     }
 
-    public async Task<ApiResponseResult<BaseResponse>> DismissNpsSurveyAsync()
+    public async Task<ApiResponseResult<BaseResponse>> DismissNpsSurveyAsync(DeviceLocation? deviceLocation)
     {
-        HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Post, "vpn/v1/nps/dismiss");
-        return await SendRequest<BaseResponse>(request, CancellationToken.None, "Dismiss NPS survey");
+        HttpRequestMessage request = GetAuthorizedRequestWithLocation(HttpMethod.Post, "vpn/v1/nps/dismiss", deviceLocation);
+        return await SendRequestAsync<BaseResponse>(request, CancellationToken.None, "Dismiss NPS survey");
     }
 
-    private async Task<ApiResponseResult<T>> SendRequest<T>(
+    public async Task<ApiResponseResult<LookupServerResponse>> GetServerByNameAsync(string serverName, DeviceLocation? deviceLocation)
+    {
+        serverName = Uri.EscapeDataString(serverName);
+
+        StringBuilder endpoint = new($"vpn/v1/logicals/lookup/{serverName}" +
+            $"?SignServer={LOGICALS_SIGN_SERVER_PARAM_VALUE}" +
+            $"&WithEntriesForProtocols={LOGICALS_PROTOCOL_ENTRIES_PARAM_VALUE}");
+
+        HttpRequestMessage request = GetAuthorizedRequestWithLocation(HttpMethod.Get, endpoint.ToString(), deviceLocation);
+        request.SetRetryCount(0);
+        return await SendRequestAsync<LookupServerResponse>(request, CancellationToken.None, $"Get server by name ({serverName})");
+    }
+
+    private async Task<ApiResponseResult<T>> SendRequestAsync<T>(
         HttpRequestMessage request,
         CancellationToken cancellationToken,
         string logDescription)
-        where T : BaseResponse
     {
-        return await SendRequest<T>(_client, request, cancellationToken, logDescription);
+        return await SendRequestAsync<T>(_client, request, cancellationToken, logDescription);
     }
 
-    private async Task<ApiResponseResult<T>> SendRequestWithNoCache<T>(
+    private async Task<ApiResponseResult<T>> SendRequestWithNoCacheAsync<T>(
         HttpRequestMessage request,
         CancellationToken cancellationToken,
-        string logDescription) where T : BaseResponse
+        string logDescription)
     {
-        return await SendRequest<T>(_noCacheClient, request, cancellationToken, logDescription);
+        return await SendRequestAsync<T>(_noCacheClient, request, cancellationToken, logDescription);
     }
 
-    private async Task<ApiResponseResult<T>> SendRequest<T>(
+    private async Task<ApiResponseResult<T>> SendRequestAsync<T>(
         HttpClient httpClient,
         HttpRequestMessage request,
         CancellationToken cancellationToken,
-        string logDescription) where T : BaseResponse
+        string logDescription)
     {
         try
         {
             using (HttpResponseMessage response = await httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false))
             {
-                return Logged(await GetApiResponseResult<T>(response, cancellationToken), logDescription);
+                return Logged(await GetApiResponseResultAsync<T>(response, cancellationToken), logDescription);
             }
         }
         catch (Exception e)

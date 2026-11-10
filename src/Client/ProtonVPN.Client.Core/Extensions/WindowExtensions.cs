@@ -227,7 +227,7 @@ public static class WindowExtensions
 
         double windowPositionX;
         double windowPositionY;
-        if (isPositionSpecified)
+        if (isPositionSpecified && !parameters.IsCentered)
         {
             // Ensure the window position is within the work area bounds (position is calculated in pixels)
             windowPositionX = parameters.XPosition!.Value.Clamp(workArea.X, workArea.X + workArea.Width - windowWidth.ToPixels(dpi));
@@ -235,7 +235,8 @@ public static class WindowExtensions
         }
         else
         {
-            // No position specified, center the window on the current monitor (position is calculated in pixels)
+            // Center the window on the target monitor (position is calculated in pixels).
+            // The target monitor is the one indicated by the position when specified, otherwise the one where the cursor is.
             windowPositionX = workArea.X + ((workArea.Width - windowWidth.ToPixels(dpi)) / 2);
             windowPositionY = workArea.Y + ((workArea.Height - windowHeight.ToPixels(dpi)) / 2);
         }
@@ -391,5 +392,15 @@ public static class WindowExtensions
     {
         public const double TITLE_BAR_FOCUSED = 1.0;
         public const double TITLE_BAR_UNFOCUSED = 0.6;
+    }
+
+    /// <summary>Wraps IsShownInSwitchers setter because an Exception is thrown when Explorer.exe is not running</summary>
+    public static void TrySetIsShownInSwitchers(this WindowEx window, bool value)
+    {
+        try
+        {
+            window.IsShownInSwitchers = value;
+        }
+        catch { }
     }
 }

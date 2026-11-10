@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -17,12 +17,11 @@
  * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System.Net;
+using System.Linq;
+using System.Diagnostics;
 using System.Net.Sockets;
-using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Tools;
 using NUnit.Framework;
-using ProtonVPN.UI.Tests.UiTools;
 
 namespace ProtonVPN.UI.Tests.TestsHelper;
 
@@ -36,7 +35,23 @@ public static class CommonAssertions
         },
         TestConstants.TenSecondsTimeout, TestConstants.RetryInterval);
 
-        Assert.That(retry.Result,Is.True, $"Dns was not resolved for {url}.");
+        Assert.That(retry.Result, Is.True, $"Dns was not resolved for {url}.");
+    }
+
+    public static void AssertAtLeastOneDomainResolved(string[] domains)
+    {
+        foreach (string domain in domains)
+        {
+            RetryResult<bool> retry = Retry.WhileFalse(() => TryToResolveDns(domain),
+                TestConstants.TenSecondsTimeout, TestConstants.RetryInterval);
+
+            if (retry.Result)
+            {
+                return; // at least one resolved, we're done
+            }
+        }
+
+        throw new System.Exception($"None of the expected domains resolved: {string.Join(", ", domains)}");
     }
 
     public static void AssertDnsIsNotResolved(string url)
@@ -47,7 +62,7 @@ public static class CommonAssertions
         },
         TestConstants.TenSecondsTimeout, TestConstants.RetryInterval);
 
-        Assert.That(retry.Result,Is.True, $"DNS was resolved for {url}");
+        Assert.That(retry.Result, Is.True, $"DNS was resolved for {url}");
     }
 
     public static void AssertIpAddressChanged(string previousIpAddress)
@@ -78,7 +93,7 @@ public static class CommonAssertions
     {
         try
         {
-            Dns.GetHostEntry(url);
+            System.Net.Dns.GetHostEntry(url);
 
             return true;
         }
@@ -88,11 +103,9 @@ public static class CommonAssertions
         }
     }
 
-    public static T AssertChecked<T>(this T desiredElement) where T : Element
+    public static void VerifyAppIsNotRunning()
     {
-        AutomationElement element = UiActions.WaitUntilExists(desiredElement);
-        RadioButton radioButton = new RadioButton(element.FrameworkAutomationElement);
-        Assert.That(radioButton.IsChecked, Is.True, $"Radio button '{desiredElement.SelectorName}' should be checked.");
-        return desiredElement;
+        Process[] processes = Process.GetProcessesByName("ProtonVPN.Client");
+        Assert.That(processes.Length == 0, Is.True, $"ProtonVPN.Client is still running (PIDs: {string.Join(", ", processes.Select(p => p.Id))})");
     }
 }

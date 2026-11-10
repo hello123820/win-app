@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -20,14 +20,14 @@
 using ProtonVPN.Api.Contracts;
 using ProtonVPN.Api.Contracts.Servers;
 using ProtonVPN.Client.EventMessaging.Contracts;
+using ProtonVPN.Client.Logic.Servers.Contracts;
 using ProtonVPN.Client.Logic.Servers.Contracts.Enums;
 using ProtonVPN.Client.Logic.Servers.Contracts.Extensions;
 using ProtonVPN.Client.Logic.Servers.Contracts.Messages;
 using ProtonVPN.Client.Logic.Servers.Contracts.Models;
 using ProtonVPN.Client.Logic.Servers.Files;
+using ProtonVPN.Client.Logic.Servers.Loads;
 using ProtonVPN.Client.Settings.Contracts;
-using ProtonVPN.Client.Settings.Contracts.Messages;
-using ProtonVPN.Client.Settings.Contracts.Observers;
 using ProtonVPN.Common.Core.Geographical;
 using ProtonVPN.Configurations.Contracts;
 using ProtonVPN.EntityMapping.Contracts;
@@ -37,9 +37,13 @@ using ProtonVPN.Logging.Contracts.Events.AppLogs;
 
 namespace ProtonVPN.Client.Logic.Servers.Cache;
 
-public class ServersCache : IServersCache,
-    IEventMessageReceiver<FeatureFlagsChangedMessage>
+public class ServersCache : IServersCache
 {
+    private static readonly TimeSpan _updateIntervalTolerance = TimeSpan.FromSeconds(5);
+
+    // The observer refreshes the loads every interval, so loads this much older mean it missed one.
+    private const double OVERDUE_INTERVAL_FACTOR = 1.5;
+
     private readonly IApiClient _apiClient;
     private readonly IEntityMapper _entityMapper;
     private readonly IServersFileReaderWriter _serversFileReaderWriter;
@@ -47,12 +51,22 @@ public class ServersCache : IServersCache,
     private readonly IConfiguration _config;
     private readonly ISettings _settings;
     private readonly ILogger _logger;
+    private readonly IFavoriteServersStorage _favoriteServersStorage;
+    private readonly IServerLoadsCalculator _serverLoadsCalculator;
 
     private readonly ReaderWriterLockSlim _lock = new();
 
-    private string? _deviceCountryLocation;
+    // The device location the cached servers were fetched with, not where the device is now.
+    private DeviceLocation _serversDeviceLocation = DeviceLocation.Unknown;
+    private DeviceLocation ServersDeviceLocation => GetWithReadLock(() => _serversDeviceLocation);
 
-    private sbyte? _userMaxTier;
+    // The tier the cached servers were fetched with, not the current plan's.
+    private sbyte? _serversUserMaxTier;
+    private sbyte? ServersUserMaxTier => GetWithReadLock(() => _serversUserMaxTier);
+
+    // Retained so servers can be scored with new coordinates without calling the API.
+    private byte[]? _statusFile;
+    private byte[]? StatusFile => GetWithReadLock(() => _statusFile);
 
     private bool _hasServersRequestFailed;
 
@@ -60,6 +74,7 @@ public class ServersCache : IServersCache,
     private DateTime _lastLoadsUpdateUtc = DateTime.MinValue;
 
     private IReadOnlyList<Server> _originalServers = [];
+    private IReadOnlyList<Server> AllServers => GetWithReadLock(() => _originalServers);
 
     private IReadOnlyList<Server> _filteredServers = [];
     public IReadOnlyList<Server> Servers => GetWithReadLock(() => _filteredServers);
@@ -88,7 +103,9 @@ public class ServersCache : IServersCache,
         IEventMessageSender eventMessageSender,
         IConfiguration config,
         ISettings settings,
-        ILogger logger)
+        ILogger logger,
+        IFavoriteServersStorage favoriteServersLoader,
+        IServerLoadsCalculator serverLoadsCalculator)
     {
         _apiClient = apiClient;
         _entityMapper = entityMapper;
@@ -97,6 +114,8 @@ public class ServersCache : IServersCache,
         _config = config;
         _settings = settings;
         _logger = logger;
+        _favoriteServersStorage = favoriteServersLoader;
+        _serverLoadsCalculator = serverLoadsCalculator;
     }
 
     public bool IsEmpty()
@@ -104,20 +123,46 @@ public class ServersCache : IServersCache,
         return Servers is null || Servers.Count == 0;
     }
 
+    public bool AreAllServersUnderMaintenance()
+    {
+        return Servers.All(s => s.IsUnderMaintenance());
+    }
+
     public bool IsStale()
     {
-        return _deviceCountryLocation != _settings.DeviceLocation?.CountryCode
-            || _userMaxTier != _settings.VpnPlan.MaxTier;
+        DeviceLocation serversDeviceLocation = ServersDeviceLocation;
+        DeviceLocation? deviceLocation = _settings.DeviceLocation;
+
+        return serversDeviceLocation.HasCountryChanged(deviceLocation)
+            || serversDeviceLocation.HasIpAddressChanged(deviceLocation)
+            || ServersUserMaxTier != _settings.VpnPlan.MaxTier;
+    }
+
+    public bool IsLoadStale()
+    {
+        return ServersDeviceLocation.HaveCoordinatesChanged(_settings.DeviceLocation);
     }
 
     public bool IsOutdated()
     {
-        return DateTime.UtcNow - _lastFullUpdateUtc >= _config.ServerUpdateInterval;
+        return DateTime.UtcNow - _lastFullUpdateUtc >= _config.ServerUpdateInterval - _updateIntervalTolerance;
     }
 
     public bool IsLoadOutdated()
     {
-        return DateTime.UtcNow - _lastLoadsUpdateUtc >= _config.MinimumServerLoadUpdateInterval;
+        return IsLoadOlderThan(_config.ServerLoadUpdateInterval - _updateIntervalTolerance);
+    }
+
+    public bool IsLoadOverdue()
+    {
+        return IsLoadOlderThan(_config.ServerLoadUpdateInterval * OVERDUE_INTERVAL_FACTOR);
+    }
+
+    private bool IsLoadOlderThan(TimeSpan maxAge)
+    {
+        // Without a retained blob there is nothing to score against, and a recompute cannot produce one.
+        return StatusFile is null
+            || DateTime.UtcNow - _lastLoadsUpdateUtc >= maxAge;
     }
 
     public bool HasServersRequestFailed()
@@ -128,6 +173,18 @@ public class ServersCache : IServersCache,
     public bool HasGatewaysAndNoCountries()
     {
         return Gateways.Any() && !Countries.Any();
+    }
+
+    public bool HasNoServers()
+    {
+#if DEBUG
+        if (_settings.SkipNoConnectionsPage)
+        {
+            return false;
+        }
+#endif
+
+        return IsEmpty() || AreAllServersUnderMaintenance();
     }
 
     private T GetWithReadLock<T>(Func<T> func)
@@ -150,7 +207,15 @@ public class ServersCache : IServersCache,
             _logger.Info<AppLog>("Cache is empty, loading servers from file.");
 
             ServersFile file = _serversFileReaderWriter.Read();
-            ProcessServers(file.DeviceCountryLocation, file.UserMaxTier, file.Servers);
+
+            // Only the country code and the ip address are persisted in the file.
+            DeviceLocation deviceLocation = new()
+            {
+                CountryCode = file.DeviceCountryLocation ?? string.Empty,
+                IpAddress = file.DeviceIpAddress ?? string.Empty,
+            };
+
+            ProcessServers(deviceLocation, file.UserMaxTier, file.Servers, statusFile: null);
         }
     }
 
@@ -162,8 +227,10 @@ public class ServersCache : IServersCache,
             _lastFullUpdateUtc = DateTime.MinValue;
             _lastLoadsUpdateUtc = DateTime.MinValue;
 
-            _deviceCountryLocation = null;
-            _userMaxTier = null;
+            _serversDeviceLocation = DeviceLocation.Unknown;
+            _serversUserMaxTier = null;
+
+            _statusFile = null;
 
             _originalServers = [];
             _filteredServers = [];
@@ -184,41 +251,71 @@ public class ServersCache : IServersCache,
     {
         try
         {
+            IEnumerable<string> favoriteServerIds = GetFavoriteServerIds();
+
             DeviceLocation? deviceLocation = _settings.DeviceLocation;
             DateTime utcNow = DateTime.UtcNow;
 
-            ApiResponseResult<ServersResponse> response = await _apiClient.GetServersAsync(deviceLocation, cancellationToken);
-            if (response.Success)
-            {
-                _lastFullUpdateUtc = utcNow;
-                _lastLoadsUpdateUtc = utcNow;
-                _hasServersRequestFailed = false;
+            ApiResponseResult<ServersResponse> response = await _apiClient.GetServersAsync(
+                deviceLocation,
+                favoriteServerIds,
+                cancellationToken);
 
-                if (response.LastModified.HasValue)
-                {
-                    _settings.LogicalsLastModifiedDate = response.LastModified.Value;
-                }
-                
-                if (response.IsNotModified)
-                {
-                    _logger.Info<ApiLog>("API: Get servers response was not modified since last call, using cached data.");
-                }
-                else
-                {
-                    _logger.Info<ApiLog>("API: Get servers response was modified since last call, updating cached data.");
-
-                    List<Server> servers = _entityMapper.Map<LogicalServerResponse, Server>(response.Value.Servers);
-
-                    string deviceCountryLocation = deviceLocation?.CountryCode ?? string.Empty;
-                    sbyte userMaxTier = _settings.VpnPlan.MaxTier;
-
-                    SaveToFile(deviceCountryLocation, userMaxTier, servers);
-                    ProcessServers(deviceCountryLocation, userMaxTier, servers);
-                }
-            }
-            else
+            if (!response.Success)
             {
                 _hasServersRequestFailed = true;
+                return;
+            }
+
+            _hasServersRequestFailed = false;
+
+            if (response.IsNotModified)
+            {
+                _logger.Info<ApiLog>("API: Get servers response was not modified since last call, using cached data.");
+
+                // _lastLoadsUpdateUtc is left stale on purpose, so the caller still runs a loads update.
+                _lastFullUpdateUtc = utcNow;
+                return;
+            }
+
+            List<Server> servers = _entityMapper.Map<LogicalServerResponse, Server>(response.Value.Servers);
+
+            _logger.Info<ApiLog>($"API: Get servers response was modified since last call, " +
+                $"updating cached data. Number of servers received: {servers.Count}");
+
+            // Handle race condition when new favorite servers are added between API request and response
+            if (response.Value.ResponseMetadata is not null && response.Value.ResponseMetadata.ListIsTruncated && favoriteServerIds.Any())
+            {
+                IEnumerable<string> favoriteServerIdsUpdated = GetFavoriteServerIds();
+                IEnumerable<string> preserveIds = favoriteServerIdsUpdated.Except(favoriteServerIds);
+                if (preserveIds.Any())
+                {
+                    servers.AddRange(_originalServers.Where(s => preserveIds.Contains(s.Id)));
+                }
+            }
+
+            // IsVisible and IsAutoconnectable are only set by the loads calculator, so the list cannot be
+            // published without them, they would default to true for every server.
+            byte[]? statusFile = await UpdateBinaryLoadsAsync(servers, response.Value.StatusId, deviceLocation, cancellationToken);
+            if (statusFile is null)
+            {
+                _logger.Warn<ApiLog>("Loads were not updated, the server list is discarded.");
+                return;
+            }
+
+            sbyte userMaxTier = _settings.VpnPlan.MaxTier;
+
+            SaveToFile(deviceLocation ?? DeviceLocation.Unknown, userMaxTier, servers);
+            ProcessServers(deviceLocation ?? DeviceLocation.Unknown, userMaxTier, servers, statusFile);
+
+            // Committed only once the list is applied.
+            _settings.LastLogicalsStatusId = response.Value.StatusId;
+            _lastFullUpdateUtc = utcNow;
+            _lastLoadsUpdateUtc = utcNow;
+
+            if (response.LastModified.HasValue)
+            {
+                _settings.LogicalsLastModifiedDate = response.LastModified.Value;
             }
         }
         catch (Exception e)
@@ -234,61 +331,141 @@ public class ServersCache : IServersCache,
         }
     }
 
+    private IEnumerable<string> GetFavoriteServerIds()
+    {
+        return _favoriteServersStorage.Get();
+    }
+
+    private async Task<byte[]?> GetServerStatusAndLoadFileAsync(string statusId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            ApiResponseResult<byte[]> response = await _apiClient.GetServerLoadsAndStatusBinaryStringAsync(statusId, cancellationToken);
+            return response.Success
+                ? response.Value
+                : null;
+        }
+        catch (Exception e)
+        {
+            _logger.Error<ApiErrorLog>("API: Get binary status file failed", e);
+            return null;
+        }
+    }
+
     public async Task UpdateLoadsAsync(CancellationToken cancellationToken)
     {
         try
         {
-            DeviceLocation? deviceLocation = _settings.DeviceLocation;
             DateTime utcNow = DateTime.UtcNow;
 
-            ApiResponseResult<ServersResponse> response = await _apiClient.GetServerLoadsAsync(deviceLocation, cancellationToken);
-            if (response.Success)
+            // Read once, so the marker below cannot record coordinates the scores were not computed with.
+            DeviceLocation? currentLocation = _settings.DeviceLocation;
+            List<Server> servers = AllServers.ToList();
+
+            byte[]? statusFile = await UpdateBinaryLoadsAsync(servers, _settings.LastLogicalsStatusId, currentLocation, cancellationToken);
+            if (statusFile is null)
             {
-                _lastLoadsUpdateUtc = utcNow;
-
-                _logger.Info<ApiLog>("API: Get server loads response received, updating cached data.");
-
-                List<Server> servers = Servers.ToList();
-                List<ServerLoad> serverLoads = _entityMapper.Map<LogicalServerResponse, ServerLoad>(response.Value.Servers);
-
-                foreach (ServerLoad serverLoad in serverLoads)
-                {
-                    Server? server = servers.FirstOrDefault(s => s.Id == serverLoad.Id);
-                    if (server != null)
-                    {
-                        server.Load = serverLoad.Load;
-                        server.Score = serverLoad.Score;
-
-                        // Server loads response does not give physical server details, so...
-                        // If the logical server only has one physical server, then the status of the logical and physical server are tied
-                        // If the status for the logical is down, it means that all physical servers for this logical are down
-                        // If the status for the logical is up, it means that at least one physical server is up, but we can't know which one(s)
-                        // -> in that case, we need to wait the update servers call to update the status properly
-                        if (serverLoad.Status == 0 || server.Servers.Count <= 1)
-                        {
-                            foreach (PhysicalServer physicalServer in server.Servers)
-                            {
-                                physicalServer.Status = serverLoad.Status;
-                            }
-                            server.Status = serverLoad.Status;
-                        }
-                    }
-                }
-
-                string deviceCountryLocation = deviceLocation?.CountryCode ?? string.Empty;
-                sbyte userMaxTier = _settings.VpnPlan.MaxTier;
-
-                SaveToFile(deviceCountryLocation, userMaxTier, servers);
-                ProcessServers(deviceCountryLocation, userMaxTier, servers);
+                _logger.Warn<ApiLog>("Loads were not updated.");
+                return;
             }
+
+            // Country, IP and tier record what the list was fetched with, updating loads fetched no list.
+            // Stamping them would mark the cache valid for parameters it was never fetched for, and stop
+            // the retry that would have corrected it. Only the coordinates move on, they were just scored.
+            DeviceLocation deviceLocation = WithCoordinatesOf(ServersDeviceLocation, currentLocation);
+            sbyte? userMaxTier = ServersUserMaxTier;
+
+            SaveToFile(deviceLocation, userMaxTier, servers);
+            ProcessServers(deviceLocation, userMaxTier, servers, statusFile);
+
+            _lastLoadsUpdateUtc = utcNow;
         }
         catch (Exception e)
         {
-            _logger.Error<ApiErrorLog>("API: Get servers load failed", e);
+            _logger.Error<ApiErrorLog>("Update server loads failed", e);
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                throw;
+            }
         }
     }
 
-    private void ProcessServers(string? deviceCountryLocation, sbyte? userMaxTier, IReadOnlyList<Server> servers)
+    public void RecomputeLoads()
+    {
+        try
+        {
+            // No API request, so the loads freshness is left untouched: newer coordinates, not newer status.
+            byte[]? statusFile = StatusFile;
+            if (statusFile is null)
+            {
+                _logger.Info<AppLog>("Scores were not recomputed, no status file has been retained yet.");
+                return;
+            }
+
+            List<Server> servers = AllServers.ToList();
+            if (servers.Count == 0)
+            {
+                return;
+            }
+
+            DeviceLocation? currentLocation = _settings.DeviceLocation;
+            if (!_serverLoadsCalculator.UpdateServerLoads(servers, statusFile, currentLocation))
+            {
+                _logger.Warn<AppLog>("Scores were not recomputed for the new device coordinates.");
+                return;
+            }
+
+            _logger.Info<AppLog>("Scores recomputed for the new device coordinates.");
+
+            DeviceLocation deviceLocation = WithCoordinatesOf(ServersDeviceLocation, currentLocation);
+            sbyte? userMaxTier = ServersUserMaxTier;
+
+            SaveToFile(deviceLocation, userMaxTier, servers);
+            ProcessServers(deviceLocation, userMaxTier, servers, statusFile);
+        }
+        catch (Exception e)
+        {
+            _logger.Error<AppLog>("Failed to recompute the server scores", e);
+        }
+    }
+
+    private static DeviceLocation WithCoordinatesOf(DeviceLocation deviceLocation, DeviceLocation? currentLocation)
+    {
+        return deviceLocation with
+        {
+            Latitude = currentLocation?.Latitude,
+            Longitude = currentLocation?.Longitude,
+        };
+    }
+
+    private async Task<byte[]?> UpdateBinaryLoadsAsync(List<Server> servers, string? statusId, DeviceLocation? deviceLocation, CancellationToken cancellationToken)
+    {
+        if (statusId is null)
+        {
+            _logger.Warn<AppLog>("Cannot make the API request because the logicals status id is null.");
+            return null;
+        }
+
+        byte[]? statusFile = await GetServerStatusAndLoadFileAsync(statusId, cancellationToken);
+        if (statusFile is null)
+        {
+            _logger.Warn<AppLog>("Cached server data was not updated, because status file is missing.");
+            return null;
+        }
+
+        bool result = _serverLoadsCalculator.UpdateServerLoads(servers, statusFile, deviceLocation);
+        if (!result)
+        {
+            _logger.Warn<AppLog>("Cached server data was not updated, because server status and loads were not updated.");
+            return null;
+        }
+
+        return statusFile;
+    }
+
+
+    private void ProcessServers(DeviceLocation deviceLocation, sbyte? userMaxTier, IReadOnlyList<Server> servers, byte[]? statusFile)
     {
         SetIpv6Flags(servers);
 
@@ -303,8 +480,9 @@ public class ServersCache : IServersCache,
         _lock.EnterWriteLock();
         try
         {
-            _deviceCountryLocation = deviceCountryLocation;
-            _userMaxTier = userMaxTier;
+            _serversDeviceLocation = deviceLocation;
+            _serversUserMaxTier = userMaxTier;
+            _statusFile = statusFile;
 
             _originalServers = servers;
             _filteredServers = filteredServers;
@@ -378,7 +556,7 @@ public class ServersCache : IServersCache,
 
     private bool IsUnderMaintenance<T>(IGrouping<T, Server> servers, Func<Server, bool>? filterFunc = null)
     {
-        return !servers.Any(s => (filterFunc == null || filterFunc(s)) 
+        return !servers.Any(s => (filterFunc == null || filterFunc(s))
                               && !s.IsUnderMaintenance());
     }
 
@@ -408,19 +586,52 @@ public class ServersCache : IServersCache,
             .Where(s => !string.IsNullOrWhiteSpace(s.ExitCountry)
                      && !string.IsNullOrWhiteSpace(s.City)
                      && s.IsPaidNonB2B())
-            .GroupBy(s => new { Country = s.ExitCountry, s.State, s.City })
-            .Select(g => new City()
+            .GroupBy(s => new { Country = s.ExitCountry, s.City })
+            .SelectMany(cityGroup =>
             {
-                CountryCode = g.Key.Country,
-                StateName = g.Key.State,
-                Name = g.Key.City,
-                Features = AggregateFeatures(g),
-                IsStandardUnderMaintenance = IsUnderMaintenance(g, s => s.Features.IsStandard()),
-                IsP2PUnderMaintenance = IsUnderMaintenance(g, s => s.Features.IsSupported(ServerFeatures.P2P)),
-                IsSecureCoreUnderMaintenance = IsUnderMaintenance(g, s => s.Features.IsSupported(ServerFeatures.SecureCore)),
-                IsTorUnderMaintenance = IsUnderMaintenance(g, s => s.Features.IsSupported(ServerFeatures.Tor))
+                List<string> distinctStates = cityGroup
+                    .Select(s => s.State)
+                    .Where(state => !string.IsNullOrWhiteSpace(state))
+                    .Distinct()
+                    .ToList();
+
+                // 0 or 1 distinct non-null states => merge everything into one state
+                if (distinctStates.Count <= 1)
+                {
+                    return
+                    [
+                        CreateCity(countryCode: cityGroup.Key.Country,
+                                   stateName: distinctStates.FirstOrDefault(),
+                                   cityName: cityGroup.Key.City,
+                                   servers: cityGroup)
+                    ];
+                }
+
+                // 2+ distinct states => keep them all separate including null states
+                return cityGroup
+                    .GroupBy(s => string.IsNullOrWhiteSpace(s.State) ? null : s.State)
+                    .Select(stateGroup => CreateCity(
+                        countryCode: cityGroup.Key.Country,
+                        stateName: stateGroup.Key,
+                        cityName: cityGroup.Key.City,
+                        servers: stateGroup));
             })
             .ToList();
+    }
+
+    private City CreateCity<T>(string countryCode, string? stateName, string cityName, IGrouping<T, Server> servers)
+    {
+        return new City
+        {
+            CountryCode = countryCode,
+            StateName = stateName,
+            Name = cityName,
+            Features = AggregateFeatures(servers),
+            IsStandardUnderMaintenance = IsUnderMaintenance(servers, s => s.Features.IsStandard()),
+            IsP2PUnderMaintenance = IsUnderMaintenance(servers, s => s.Features.IsSupported(ServerFeatures.P2P)),
+            IsSecureCoreUnderMaintenance = IsUnderMaintenance(servers, s => s.Features.IsSupported(ServerFeatures.SecureCore)),
+            IsTorUnderMaintenance = IsUnderMaintenance(servers, s => s.Features.IsSupported(ServerFeatures.Tor))
+        };
     }
 
     private IReadOnlyList<Gateway> GetGateways(IReadOnlyList<Server> servers)
@@ -458,7 +669,7 @@ public class ServersCache : IServersCache,
         ServerTiers maxTier = (ServerTiers)_settings.VpnPlan.MaxTier;
 
         List<Server> filteredServers = [];
-        foreach (Server server in servers)
+        foreach (Server server in servers.Where(s => s.IsVisible))
         {
             if (server.Tier <= maxTier)
             {
@@ -474,24 +685,116 @@ public class ServersCache : IServersCache,
         return filteredServers;
     }
 
-    private void SaveToFile(string? deviceCountryLocation, sbyte? userMaxTier, List<Server> servers)
+    private void SaveToFile(DeviceLocation deviceLocation, sbyte? userMaxTier, List<Server> servers)
     {
         ServersFile serversFile = new()
         {
-            DeviceCountryLocation = deviceCountryLocation,
+            DeviceCountryLocation = deviceLocation.CountryCode,
             UserMaxTier = userMaxTier,
             Servers = servers,
+            DeviceIpAddress = deviceLocation.IpAddress,
         };
         _serversFileReaderWriter.Save(serversFile);
     }
 
-    public void Receive(FeatureFlagsChangedMessage message)
+    public void ReprocessServers()
     {
-        FeatureFlagChange? ipv6FeatureFlag = message.Changes.FirstOrDefault(f => f.Name == nameof(IFeatureFlagsObserver.IsIpv6SupportEnabled));
-        if (ipv6FeatureFlag is not null && ipv6FeatureFlag.NewValue == true)
+        _logger.Info<AppLog>("Reprocessing servers.");
+        ProcessServers(_serversDeviceLocation, _serversUserMaxTier, _originalServers, _statusFile);
+    }
+
+    public async Task<ApiResponseResult<LookupServerResponse>?> LookupAsync(string input)
+    {
+        LoadFromFileIfEmpty();
+        try
         {
-            _logger.Info<AppLog>("Reprocessing servers.");
-            ProcessServers(_deviceCountryLocation, _userMaxTier, _originalServers);
+            DeviceLocation? deviceLocation = _settings.DeviceLocation;
+            ApiResponseResult<LookupServerResponse> response = await _apiClient.GetServerByNameAsync(input, deviceLocation);
+            if (response.Success)
+            {
+                Server server = _entityMapper.Map<LogicalServerResponse, Server>(response.Value.LogicalServer);
+                List<Server> servers = _originalServers.ToList();
+                Server? alreadyExistingServer = servers.FirstOrDefault(s => s.Id == server.Id);
+                if (alreadyExistingServer is not null)
+                {
+                    servers.Remove(alreadyExistingServer);
+                }
+                servers.Add(server);
+
+                // Same as in UpdateLoadsAsync.
+                DeviceLocation serversDeviceLocation = ServersDeviceLocation;
+                sbyte? userMaxTier = ServersUserMaxTier;
+
+                SaveToFile(serversDeviceLocation, userMaxTier, servers);
+                ProcessServers(serversDeviceLocation, userMaxTier, servers, StatusFile);
+            }
+            else
+            {
+                _logger.Warn<ApiLog>($"API: Get server by name returned with Code: {response.ResponseMessage?.StatusCode}, Error: {response.Error}");
+            }
+
+            return response;
         }
+        catch (Exception e)
+        {
+            _logger.Error<ApiErrorLog>("API: Get server by name failed", e);
+        }
+
+        return null;
+    }
+
+    public IEnumerable<KeyValuePair<string, dynamic?>> GetStats()
+    {
+        IReadOnlyList<Server> servers;
+        IReadOnlyList<Server> filteredServers;
+        IReadOnlyList<Country> countries;
+        IReadOnlyList<FreeCountry> freeCountries;
+        IReadOnlyList<State> states;
+        IReadOnlyList<City> cities;
+        IReadOnlyList<Gateway> gateways;
+        IReadOnlyList<SecureCoreCountryPair> secureCoreCountryPairs;
+
+        _lock.EnterReadLock();
+        try
+        {
+            servers = _originalServers;
+            filteredServers = _filteredServers;
+            countries = _countries;
+            freeCountries = _freeCountries;
+            states = _states;
+            cities = _cities;
+            gateways = _gateways;
+            secureCoreCountryPairs = _secureCoreCountryPairs;
+        }
+        finally
+        {
+            _lock.ExitReadLock();
+        }
+
+        List<PhysicalServer> physicalServers = servers.SelectMany(s => s.Servers).ToList();
+
+        yield return new("Logical servers", servers.Count);
+        yield return new("Logical servers under maintenance", servers.Count(s => s.IsUnderMaintenance()));
+        yield return new("Logical servers visible", servers.Count(s => s.IsVisible));
+        yield return new("Logical servers auto connectable", servers.Count(s => s.IsAutoconnectable));
+        yield return new("Logical servers filtered", filteredServers.Count);
+
+        yield return new("Free logical servers", servers.Count(s => s.IsFree()));
+        yield return new("Paid logical servers", servers.Count(s => s.IsPaid()));
+
+        yield return new("B2B logical servers", servers.Count(s => s.IsB2B()));
+
+        yield return new("Physical servers", physicalServers.Count);
+        yield return new("Physical servers under maintenance", physicalServers.Count(ps => ps.IsUnderMaintenance()));
+
+        yield return new("Physical servers with relays", physicalServers.Count(ps => ps.RelayIpByProtocol.Count > 0));
+
+        yield return new("Countries", countries.Count);
+        yield return new("Free countries", freeCountries.Count);
+
+        yield return new("States", states.Count);
+        yield return new("Cities", cities.Count);
+        yield return new("Gateways", gateways.Count);
+        yield return new("Secure core country pairs", secureCoreCountryPairs.Count);
     }
 }

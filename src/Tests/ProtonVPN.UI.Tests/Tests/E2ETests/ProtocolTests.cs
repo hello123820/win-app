@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -18,8 +18,11 @@
  */
 
 using NUnit.Framework;
+using ProtonVPN.UI.Tests.Enums;
+using ProtonVPN.UI.Tests.Robots;
 using ProtonVPN.UI.Tests.TestBase;
 using ProtonVPN.UI.Tests.TestsHelper;
+using ProtonVPN.UI.Tests.TestsHelper.UiFlows;
 using static ProtonVPN.UI.Tests.TestsHelper.TestConstants;
 
 namespace ProtonVPN.UI.Tests.Tests.E2ETests;
@@ -29,6 +32,15 @@ namespace ProtonVPN.UI.Tests.Tests.E2ETests;
 [Category("ARM")]
 public class ProtocolTests : FreshSessionSetUp
 {
+    private const string LINE_TO_LOOK_FOR = "VpnProtocol: ";
+    private const string OPENVPN_TUN_ADAPTER_LOG_LINE = "VpnProtocol: 'OpenVpnUdp', OpenVpnAdapter: 'Tun'";
+    private const string OPENVPN_TAP_ADAPTER_LOG_LINE = "VpnProtocol: 'OpenVpnUdp', OpenVpnAdapter: 'Tap'";
+
+    private const string OPENVPN_TUN_ADAPTER_FULL_NAME = "ProtonVPN TUN Tunnel";
+    private const string OPENVPN_TAP_ADAPTER_FULL_NAME = "TAP-ProtonVPN Windows Adapter V9";
+
+    private static readonly string _serviceLogsPath = TestEnvironment.GetServiceLogsPath();
+
     [SetUp]
     public void TestInitialize()
     {
@@ -36,36 +48,25 @@ public class ProtocolTests : FreshSessionSetUp
     }
 
     [Test]
-    public void ConnectUsingOpenVpnUdp()
+    [Property("TestCaseId", "602365")]
+    [Category("SMOKE_3")]
+    [TestCaseSource(typeof(TestConstants), nameof(AllNonProTunProtocols))]
+    public void ConnectUsingDifferentProtocols(Protocol protocol)
     {
-        PerformProtocolTest(Protocol.OpenVpnUdp);
+        PerformProtocolTest(protocol);
     }
 
     [Test]
-    public void ConnectUsingOpenVpnTcp()
+    [Property("TestCaseId", "841907")]
+    [Category("SMOKE_3")]
+    [TestCaseSource(typeof(TestConstants), nameof(ProTunProtocols))]
+    public void ConnectUsingDifferentProTunProtocols(Protocol protocol)
     {
-        PerformProtocolTest(Protocol.OpenVpnTcp);
+        PerformProtocolTest(protocol, shouldEnableProTun: true);
     }
 
     [Test]
-    public void ConnectUsingWireguardTcp()
-    {
-        PerformProtocolTest(Protocol.WireGuardTcp);
-    }
-
-    [Test]
-    public void ConnectUsingStealth()
-    {
-        PerformProtocolTest(Protocol.WireGuardTls);
-    }
-
-    [Test]
-    public void ConnectUsingWireguardUdp()
-    {
-        PerformProtocolTest(Protocol.WireGuardUdp);
-    }
-
-    [Test]
+    [Property("TestCaseId", "602412")]
     public void ChangeProtocolFromConnectionDetails()
     {
         PerformProtocolTest(Protocol.OpenVpnUdp);
@@ -82,16 +83,89 @@ public class ProtocolTests : FreshSessionSetUp
             .IsProtocolDisplayed(Protocol.WireGuardTls);
     }
 
-    private void PerformProtocolTest(Protocol protocol) {
+    [Test]
+    [Property("TestCaseId", "602354")]
+    [TestCaseSource(typeof(TestConstants), nameof(WireGuardProtocols))]
+    public void ConnectUsingWireGuardWhileConnectedToNativeWireGuard(Protocol wireGuardProtocol)
+    {
+        try
+        {
+            ScriptHelper.ConnectToWireGuard();
+
+            CommonUiFlows.ChangeProtocol(wireGuardProtocol);
+
+            HomeRobot
+                .ConnectViaConnectionCard()
+                .Verify.IsWireGuardErrorDisplayed()
+                .CloseConnectionError();
+            CommonUiFlows.EnsureUserIsDisconnected(shouldCancelConnection: true);
+        }
+        finally
+        {
+            ScriptHelper.DisconnectFromWireGuard();
+        }
+    }
+
+    [Test]
+    [Property("TestCaseId", "602448")]
+    public void OpenVpnAdapterTAP()
+    {
+        VerifyOpenVpnAdapter(
+            OpenVpnAdapter.TAP,
+            OPENVPN_TAP_ADAPTER_LOG_LINE,
+            OPENVPN_TAP_ADAPTER_FULL_NAME);
+
+        CommonUiFlows.EnsureUserIsDisconnected();
+    }
+
+    [Test]
+    [Property("TestCaseId", "602447")]
+    public void OpenVpnAdapterTUN()
+    {
+        VerifyOpenVpnAdapter(
+            OpenVpnAdapter.TUN,
+            OPENVPN_TUN_ADAPTER_LOG_LINE,
+            OPENVPN_TUN_ADAPTER_FULL_NAME);
+
+        CommonUiFlows.EnsureUserIsDisconnected();
+    }
+
+    private void VerifyOpenVpnAdapter(
+        OpenVpnAdapter openVpnAdapter,
+        string expectedLogLine,
+        string expectedNetworkAdapterName)
+    {
+        CommonUiFlows.ChangeProtocol(Protocol.OpenVpnUdp, shouldEnableProTun: true);
         SettingRobot
             .OpenSettings()
-            .OpenProtocolSettings()
-            .SelectProtocol(protocol)
-            .ApplySettings()
-            .CloseSettings();
+            .OpenAdvancedSettings();
+        AdvancedSettingsRobot
+            .SelectOpenVpnAdapter(openVpnAdapter);
 
-        SidebarRobot.ConnectToFastest();
-        HomeRobot.Verify.IsConnected()
-            .IsProtocolDisplayed(protocol);
+        if (openVpnAdapter == OpenVpnAdapter.TAP)
+        {
+            SettingRobot.ApplySettings();
+        }
+
+        SettingRobot.CloseSettings();
+
+        HomeRobot
+            .ConnectViaConnectionCard()
+            .Verify.IsConnected();
+
+        WindowsUtils.AssertLogFile(_serviceLogsPath, LINE_TO_LOOK_FOR, expectedLogLine);
+        NetworkUtils.AssertCorrectNetworkAdapter(expectedNetworkAdapterName);
+    }
+
+    private void PerformProtocolTest(Protocol protocol, bool shouldEnableProTun = false)
+    {
+        CommonUiFlows.ChangeProtocol(protocol, shouldEnableProTun);
+
+        HomeRobot
+            .ConnectViaConnectionCard()
+            .Verify.IsConnected()
+                   .IsProtocolDisplayed(protocol);
+
+        WindowsUtils.AssertLogFile(_serviceLogsPath, LINE_TO_LOOK_FOR, protocol.GetEnumValue());
     }
 }

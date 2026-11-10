@@ -25,6 +25,7 @@ public static class VpnErrorExtensions
 {
     private static readonly List<VpnError> _errorsForUser =
     [
+        VpnError.AllServersExcluded,
         VpnError.NoServers,
         VpnError.TapAdapterInUseError,
         VpnError.TapRequiresUpdateError,
@@ -32,6 +33,8 @@ public static class VpnErrorExtensions
         VpnError.RpcServerUnavailable,
         VpnError.MissingConnectionCertificate,
         VpnError.WireGuardAdapterInUseError,
+        VpnError.InterfaceHasForwardingEnabled,
+        VpnError.ServerValidationError,
     ];
 
     private static readonly List<VpnError> _sessionLimitErrors =
@@ -67,16 +70,11 @@ public static class VpnErrorExtensions
 
     private static readonly List<VpnError> _errorsForCertificateUpdate =
     [
-        VpnError.CertificateRevoked,
-        VpnError.CertCARevokedOrExpired,
-        VpnError.ClientKeyMismatch,
-        VpnError.SessionKilledDueToMultipleKeys,
-        VpnError.ServerSessionDoesNotMatch,
+        VpnError.CertificateExpired,
     ];
 
     private static readonly List<VpnError> _errorsForCertificateDeletion =
     [
-        VpnError.CertificateExpired,
         VpnError.CertificateRevoked,
         VpnError.CertCARevokedOrExpired,
         VpnError.ClientKeyMismatch,

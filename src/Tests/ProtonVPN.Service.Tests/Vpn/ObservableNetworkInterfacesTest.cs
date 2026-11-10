@@ -201,9 +201,17 @@ namespace ProtonVPN.Service.Tests.Vpn
 
             public bool IsActive => false;
 
+            public bool IsIPv4ForwardingEnabled => false;
+
             public IPAddress DefaultGateway => IPAddress.None;
 
             public uint Index => 0;
+
+
+            public IPAddress GetPreferredIpv6UnicastAddress()
+            {
+                return null;
+            }
 
             public List<NetworkAddress> GetUnicastAddresses()
             {

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -17,33 +17,44 @@
  * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using FlaUI.Core.WindowsAPI;
+using System;
 using System.Threading;
-using ProtonVPN.UI.Tests.TestsHelper;
-using ProtonVPN.UI.Tests.UiTools;
 using FlaUI.Core.Input;
+using FlaUI.Core.WindowsAPI;
+using ProtonVPN.UI.Tests.UiTools;
+using ProtonVPN.UI.Tests.TestsHelper;
 
 namespace ProtonVPN.UI.Tests.Robots;
 
 public class LoginRobot
 {
-    protected Element UsernameTextBox = Element.ByAutomationId("UsernameTextBox");
-    protected Element PasswordTextBox = Element.ByAutomationId("PasswordBox");
+    private static readonly string _killSwitchDisabledLabelTranslated = LanguageHelper.GetTranslatedString("SignIn_KillSwitch_Disabled");
+
+    protected Element KillSwitchDisabledLabel = Element.ByName(_killSwitchDisabledLabelTranslated);
+    protected Element DisableKillSwitchButton = Element.ByAutomationId("DisableKillSwitchButton");
+    protected Element DisableKillSwitchLabel = Element.ByAutomationId("AdvancedKillSwitchDescriptionText");
+    public Element UsernameTextBox => Element.ByAutomationId("UsernameTextBox");
+    public Element PasswordTextBox => Element.ByAutomationId("PasswordBox");
     protected Element TwoFactorFirstDigit = Element.ByAutomationId("FirstDigit");
     protected Element TwoFactorSecondDigit = Element.ByAutomationId("SecondDigit");
     protected Element TwoFactorThirdDigit = Element.ByAutomationId("ThirdDigit");
     protected Element TwoFactorFourthDigit = Element.ByAutomationId("FourthDigit");
     protected Element TwoFactorFifthDigit = Element.ByAutomationId("FifthDigit");
     protected Element TwoFactorLastDigit = Element.ByAutomationId("LastDigit");
+
     protected Element SignInButton = Element.ByAutomationId("SignInButton");
+    protected Element CreateAccountButton = Element.ByAutomationId("CreateAccountButton");
     protected Element SsoWindow = Element.ByAutomationId("ContentScrollViewer");
-    protected Element SignInWithSsoButton = Element.ByName("Sign in with SSO");
+    protected Element SignInWithSsoButton = Element.ByAutomationId("SwitchSignInButton");
+    protected Element CancelSignInButton = Element.ByAutomationId("CancelSignInButton");
+
+    protected Element CaptchaWindow = Element.ByAutomationId("WebView2");
+    protected Element CloseCaptchaButton = Element.ByAutomationId("CloseContentDialogButton");
+
     protected Element HelpButton = Element.ByAutomationId("HelpButton");
     protected Element ReportIssueMenuItem = Element.ByAutomationId("ReportIssueMenuItem");
-    protected Element CancelSignInButton = Element.ByAutomationId("CancelSignInButton");
-    protected Element DisableKillSwitchBtn = Element.ByAutomationId("DisableKillSwitchButton");
-    protected Element DisableKillSwitchLabel = Element.ByAutomationId("AdvancedKillSwitchDescriptionText");
-    protected Element KillSwitchDisabledLabel = Element.ByName("Kill switch is disabled");
+    protected Element ForgotUsernameMenuItem = Element.ByAutomationId("ForgotUsernameMenuItem");
+    protected Element ForgotPasswordMenuItem = Element.ByAutomationId("ForgotPasswordMenuItem");
 
     public LoginRobot Login(TestUserData user)
     {
@@ -60,9 +71,27 @@ public class LoginRobot
         return this;
     }
 
+    public LoginRobot EnterEmail(string user)
+    {
+        UsernameTextBox.SetText(user);
+        return this;
+    }
+
+    public LoginRobot EnterPassword(string password)
+    {
+        PasswordTextBox.SetText(password);
+        return this;
+    }
+
     public LoginRobot ClickSignInButton()
     {
         SignInButton.Invoke();
+        return this;
+    }
+
+    public LoginRobot ClickCreateAccountButton()
+    {
+        CreateAccountButton.Invoke();
         return this;
     }
 
@@ -74,6 +103,7 @@ public class LoginRobot
 
     public LoginRobot EnterTwoFactorCode(string twoFactorCode)
     {
+        TwoFactorFirstDigit.WaitUntilDisplayed(TestConstants.OneMinuteTimeout);
         TwoFactorFirstDigit.SetText(twoFactorCode[0].ToString());
         TwoFactorSecondDigit.SetText(twoFactorCode[1].ToString());
         TwoFactorThirdDigit.SetText(twoFactorCode[2].ToString());
@@ -87,8 +117,8 @@ public class LoginRobot
     public LoginRobot DoLoginSsoWebview(string password)
     {
         //We have a very limited ability to use WebView, that is why we are using static pauses and keyboard strokes.
-        SsoWindow.WaitUntilDisplayed(TestConstants.ThirtySecondsTimeout);
-        Thread.Sleep(15000);
+        SsoWindow.WaitUntilDisplayed(TestConstants.OneMinuteTimeout);
+        Thread.Sleep(TestConstants.ThirtySecondsTimeout);
         SsoWindow.Click();
 
         Keyboard.Type(VirtualKeyShort.TAB);
@@ -98,11 +128,28 @@ public class LoginRobot
         return this;
     }
 
-    public void NavigateToBugReport()
+    public void OpenHelpMenu()
     {
         HelpButton.Click();
         // Remove when VPNWIN-2599 is implemented.
         Thread.Sleep(TestConstants.AnimationDelay);
+    }
+
+    public void NavigateToForgotUsername()
+    {
+        OpenHelpMenu();
+        ForgotUsernameMenuItem.DoubleClick();
+    }
+
+    public void NavigateToForgotPassword()
+    {
+        OpenHelpMenu();
+        ForgotPasswordMenuItem.DoubleClick();
+    }
+
+    public void NavigateToBugReport()
+    {
+        OpenHelpMenu();
         ReportIssueMenuItem.DoubleClick();
     }
 
@@ -114,22 +161,43 @@ public class LoginRobot
 
     public LoginRobot DisableKillSwitch()
     {
-        DisableKillSwitchBtn.Click();
+        DisableKillSwitchButton.Click();
         KillSwitchDisabledLabel.WaitUntilDisplayed();
+        return this;
+    }
+
+    public LoginRobot ClickCloseCaptchaButton()
+    {
+        CloseCaptchaButton.Click();
         return this;
     }
 
     public class Verifications : LoginRobot
     {
+        public Verifications IsCaptchaDisplayed(TimeSpan? timeout = null)
+        {
+            timeout ??= TestConstants.TenSecondsTimeout;
+            CaptchaWindow.WaitUntilDisplayed(timeout);
+            Thread.Sleep(TestConstants.OneSecondTimeout);
+            return this;
+        }
+
         public Verifications IsErrorMessageDisplayed(string errorMessage)
         {
             Element.ByName(errorMessage).WaitUntilDisplayed();
             return this;
         }
 
-        public Verifications IsLoginWindowDisplayed()
+        public Verifications IsSignInButtonDisplayed()
         {
-            UsernameTextBox.WaitUntilDisplayed(TestConstants.ThirtySecondsTimeout);
+            SignInButton.WaitUntilDisplayed();
+            return this;
+        }
+
+        public Verifications IsLoginWindowDisplayed(TimeSpan? timeout = null)
+        {
+            timeout ??= TestConstants.OneMinuteTimeout;
+            UsernameTextBox.WaitUntilDisplayed(timeout);
             PasswordTextBox.WaitUntilDisplayed();
             return this;
         }

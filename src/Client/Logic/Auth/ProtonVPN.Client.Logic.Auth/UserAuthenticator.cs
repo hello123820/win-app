@@ -27,8 +27,11 @@ using ProtonVPN.Client.Logic.Auth.Contracts.Messages;
 using ProtonVPN.Client.Logic.Auth.Contracts.Models;
 using ProtonVPN.Client.Logic.Connection.Contracts;
 using ProtonVPN.Client.Logic.Connection.Contracts.GuestHole;
+using ProtonVPN.Client.Logic.Profiles.Contracts;
+using ProtonVPN.Client.Logic.Recents.Contracts;
 using ProtonVPN.Client.Logic.Servers.Contracts;
 using ProtonVPN.Client.Logic.Users.Contracts;
+using ProtonVPN.Client.Logic.Users.Contracts.Messages;
 using ProtonVPN.Client.Settings.Contracts;
 using ProtonVPN.Client.Settings.Contracts.Migrations;
 using ProtonVPN.Client.Settings.Contracts.Observers;
@@ -40,7 +43,9 @@ using ProtonVPN.StatisticalEvents.Contracts.Dimensions;
 
 namespace ProtonVPN.Client.Logic.Auth;
 
-public class UserAuthenticator : IUserAuthenticator, IEventMessageReceiver<ClientOutdatedMessage>
+public class UserAuthenticator : IUserAuthenticator,
+    IEventMessageReceiver<ClientOutdatedMessage>,
+    IEventMessageReceiver<NoVpnConnectionsAssignedMessage>
 {
     private readonly ILogger _logger;
     private readonly IApiClient _apiClient;
@@ -52,6 +57,8 @@ public class UserAuthenticator : IUserAuthenticator, IEventMessageReceiver<Clien
     private readonly IConnectionManager _connectionManager;
     private readonly IServersUpdater _serversUpdater;
     private readonly IUserSettingsMigrator _userSettingsMigrator;
+    private readonly IRecentConnectionsManager _recentConnectionsManager;
+    private readonly IProfilesManager _profilesManager;
     private readonly IVpnPlanUpdater _vpnPlanUpdater;
     private readonly IUnauthSessionManager _unauthSessionManager;
     private readonly ISrpAuthenticator _srpAuthenticator;
@@ -81,6 +88,8 @@ public class UserAuthenticator : IUserAuthenticator, IEventMessageReceiver<Clien
         IConnectionManager connectionManager,
         IServersUpdater serversUpdater,
         IUserSettingsMigrator userSettingsMigrator,
+        IRecentConnectionsManager recentConnectionsManager,
+        IProfilesManager profilesManager,
         IVpnPlanUpdater vpnPlanUpdater,
         IUnauthSessionManager unauthSessionManager,
         ISrpAuthenticator srpAuthenticator,
@@ -98,6 +107,8 @@ public class UserAuthenticator : IUserAuthenticator, IEventMessageReceiver<Clien
         _connectionManager = connectionManager;
         _serversUpdater = serversUpdater;
         _userSettingsMigrator = userSettingsMigrator;
+        _recentConnectionsManager = recentConnectionsManager;
+        _profilesManager = profilesManager;
         _vpnPlanUpdater = vpnPlanUpdater;
         _unauthSessionManager = unauthSessionManager;
         _srpAuthenticator = srpAuthenticator;
@@ -105,7 +116,7 @@ public class UserAuthenticator : IUserAuthenticator, IEventMessageReceiver<Clien
         _featureFlagsObserver = featureFlagsObserver;
         _clientConfigObserver = clientConfigObserver;
 
-        _tokenClient.RefreshTokenExpired += OnTokenExpiredAsync;
+        _tokenClient.RefreshTokenExpired += OnTokenExpired;
     }
 
     public async Task<AuthResult> LoginUserAsync(string username, SecureString password)
@@ -114,10 +125,10 @@ public class UserAuthenticator : IUserAuthenticator, IEventMessageReceiver<Clien
         ClearAuthSessionDetails();
         ResetCancellationTokenIfCancelled();
 
-        await _unauthSessionManager.CreateIfDoesNotExistAsync(_cts.Token);
-
         try
         {
+            await _unauthSessionManager.CreateIfDoesNotExistAsync(_cts.Token);
+
             AuthResult result = await _srpAuthenticator.LoginUserAsync(username, password, _cts.Token);
             if (result.Failure)
             {
@@ -144,6 +155,11 @@ public class UserAuthenticator : IUserAuthenticator, IEventMessageReceiver<Clien
         }
     }
 
+    public void Receive(NoVpnConnectionsAssignedMessage message)
+    {
+        SetAuthenticationStatus(AuthenticationStatus.LoggingIn);
+    }
+
     private async Task<AuthResult> HandleLoginOverGuestHoleAsync(string username, SecureString password)
     {
         try
@@ -163,6 +179,13 @@ public class UserAuthenticator : IUserAuthenticator, IEventMessageReceiver<Clien
 
                 return authResult;
             }, _cts.Token);
+
+            if (_connectionManager.IsMobileHotspotError)
+            {
+                SetAuthenticationStatus(AuthenticationStatus.LoggedOut);
+
+                return AuthResult.Fail(AuthError.GuestHoleFailedDueToMobileHotspot);
+            }
 
             if (authResult != null)
             {
@@ -211,10 +234,10 @@ public class UserAuthenticator : IUserAuthenticator, IEventMessageReceiver<Clien
         ClearAuthSessionDetails();
         ResetCancellationTokenIfCancelled();
 
-        await _unauthSessionManager.CreateIfDoesNotExistAsync(_cts.Token);
-
         try
-        {
+        {   
+            await _unauthSessionManager.CreateIfDoesNotExistAsync(_cts.Token);
+
             return await _ssoAuthenticator.StartSsoAuthAsync(username, _cts.Token);
         }
         catch (Exception) when (_cts.IsCancellationRequested)
@@ -297,16 +320,28 @@ public class UserAuthenticator : IUserAuthenticator, IEventMessageReceiver<Clien
         SetAuthenticationStatus(AuthenticationStatus.LoggedOut);
     }
 
-    public async Task AutoLoginUserAsync()
+    public async Task<AuthResult> AutoLoginUserAsync(bool isAppStartup)
     {
         if (HasAuthenticatedSessionData())
         {
             SetAuthenticationStatus(AuthenticationStatus.LoggingIn);
-            await CompleteLoginAsync(isAutoLogin: true, isToSendLoggedInEvent: true);
+            ResetCancellationTokenIfCancelled();
+
+            try
+            {
+                return await CompleteLoginAsync(isAutoLogin: isAppStartup, isToSendLoggedInEvent: true);
+            }
+            catch (Exception) when (_cts.IsCancellationRequested)
+            {
+                HandleAuthCancellation();
+
+                return AuthResult.Fail(AuthError.None);
+            }
         }
         else
         {
             await _unauthSessionManager.CreateIfDoesNotExistAsync(_cts.Token);
+            return AuthResult.Ok();
         }
     }
 
@@ -344,7 +379,12 @@ public class UserAuthenticator : IUserAuthenticator, IEventMessageReceiver<Clien
                !string.IsNullOrWhiteSpace(_settings.UniqueSessionId);
     }
 
-    private async void OnTokenExpiredAsync(object? sender, EventArgs e)
+    private void OnTokenExpired(object? sender, EventArgs e)
+    {
+        HandleTokenExpiredAsync().FireAndForget();
+    }
+
+    private async Task HandleTokenExpiredAsync()
     {
         if (AuthenticationStatus is AuthenticationStatus.LoggingOut)
         {
@@ -394,16 +434,25 @@ public class UserAuthenticator : IUserAuthenticator, IEventMessageReceiver<Clien
                     return AuthResult.Fail(usersResponse);
                 }
             }
+            else
+            {
+                usersResponseTask.FireAndForget();
+            }
 
             VpnPlanChangeResult vpnPlanChangeResult = await _vpnPlanUpdater.ForceUpdateAsync(_cts.Token);
 
             if (vpnPlanChangeResult.ApiResponse is not null &&
                 vpnPlanChangeResult.ApiResponse.Failure &&
-                vpnPlanChangeResult.ApiResponse.Value.Code == ResponseCodes.NoVpnConnectionsAssigned)
+                vpnPlanChangeResult.ApiResponse.Value.Code == ResponseCodes.NO_VPN_CONNECTIONS_ASSIGNED)
             {
-                await LogoutAsync(LogoutReason.NoVpnConnectionsAssigned);
                 return AuthResult.Fail(vpnPlanChangeResult.ApiResponse);
             }
+
+            _profilesManager.LoadProfiles();
+            _recentConnectionsManager.LoadRecentConnections();
+
+            // We need to get feature flags before fetching logicals
+            await _featureFlagsObserver.UpdateAsync(_cts.Token);
 
             hasPlanChanged = vpnPlanChangeResult.PlanChangeMessage?.HasChanged() ?? false;
 
@@ -459,16 +508,21 @@ public class UserAuthenticator : IUserAuthenticator, IEventMessageReceiver<Clien
             _logger.Error<AppLog>("An unexpected exception was thrown when updating the user info.", e);
         }
 
+        if (_cts.IsCancellationRequested)
+        {
+            ClearAuthSessionDetails();
+            throw new OperationCanceledException(_cts.Token);
+        }
+
         _unauthSessionManager.Revoke();
 
         DeleteKeyPairIfNotAutoLogin(isAutoLogin, _guestHoleManager.IsActive);
 
         Task postAuthInitializationTask = Task.WhenAll(
             GetCertificateTask(hasPlanChanged),
-            _clientConfigObserver.UpdateAsync(_cts.Token),
-            _featureFlagsObserver.UpdateAsync(_cts.Token));
+            _clientConfigObserver.UpdateAsync(_cts.Token));
 
-        if (_guestHoleManager.IsActive)
+        if (_guestHoleManager.IsActive || hasPlanChanged)
         {
             await postAuthInitializationTask;
         }
@@ -505,6 +559,7 @@ public class UserAuthenticator : IUserAuthenticator, IEventMessageReceiver<Clien
 
             _settings.Username = response.Value.User.GetUsername();
             _settings.UserDisplayName = response.Value.User.GetDisplayName();
+            _settings.UserEmail = response.Value.User.Email;
             _settings.UserCreationDateUtc = DateTimeOffset.FromUnixTimeSeconds(response.Value.User.CreateTime).UtcDateTime;
         }
         return response;
@@ -574,11 +629,11 @@ public class UserAuthenticator : IUserAuthenticator, IEventMessageReceiver<Clien
         }
     }
 
-    public async void Receive(ClientOutdatedMessage message)
+    public void Receive(ClientOutdatedMessage message)
     {
         if (IsLoggedIn)
         {
-            await LogoutAsync(LogoutReason.ClientOutdated);
+            LogoutAsync(LogoutReason.ClientOutdated).FireAndForget();
         }
     }
 

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -39,6 +39,8 @@ public class VpnConfig
     public bool PortForwarding { get; }
     public bool IsIpv6Enabled { get; }
     public DnsBlockMode DnsBlockMode { get; }
+    public bool ShouldDisableWeakHostSetting { get; }
+    public bool IsWireGuardServerRouteEnabled { get; }
 
     public bool ModerateNat { get; }
     public TimeSpan WireGuardConnectionTimeout { get; }
@@ -62,6 +64,8 @@ public class VpnConfig
         IsIpv6Enabled = parameters.IsIpv6Enabled;
         WireGuardConnectionTimeout = parameters.WireGuardConnectionTimeout;
         DnsBlockMode = parameters.DnsBlockMode;
+        ShouldDisableWeakHostSetting = parameters.ShouldDisableWeakHostSetting;
+        IsWireGuardServerRouteEnabled = parameters.IsWireGuardServerRouteEnabled;
     }
 
     public void UpdateVpnProtocol(VpnProtocol protocol)

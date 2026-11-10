@@ -53,7 +53,8 @@ public partial class ConnectionCardComponentViewModel : ActivatableViewModelBase
     IEventMessageReceiver<RecentConnectionsChangedMessage>,
     IEventMessageReceiver<ProfilesChangedMessage>,
     IEventMessageReceiver<SettingChangedMessage>,
-    IEventMessageReceiver<ServerListChangedMessage>
+    IEventMessageReceiver<ServerListChangedMessage>,
+    IEventMessageReceiver<LocationNamesChangedMessage>
 {
     private const int FREE_COUNTRIES_DISPLAYED_AS_FLAGS = 3;
 
@@ -82,10 +83,13 @@ public partial class ConnectionCardComponentViewModel : ActivatableViewModelBase
     [NotifyPropertyChangedFor(nameof(IsChangeDefaultConnectionOptionVisible))]
     [NotifyPropertyChangedFor(nameof(ExitCountry))]
     [NotifyPropertyChangedFor(nameof(EntryCountry))]
+    [NotifyPropertyChangedFor(nameof(HostCountry))]
     [NotifyPropertyChangedFor(nameof(IsSecureCore))]
     [NotifyPropertyChangedFor(nameof(IsTor))]
     [NotifyPropertyChangedFor(nameof(IsP2P))]
     [NotifyPropertyChangedFor(nameof(IsB2B))]
+    [NotifyPropertyChangedFor(nameof(IsVirtual))]
+    [NotifyPropertyChangedFor(nameof(SmartRoutingLabel))]
     [NotifyPropertyChangedFor(nameof(FlagType))]
     private ConnectionStatus _currentConnectionStatus;
 
@@ -114,10 +118,13 @@ public partial class ConnectionCardComponentViewModel : ActivatableViewModelBase
     [NotifyPropertyChangedFor(nameof(HasSubtitleOrFeature))]
     [NotifyPropertyChangedFor(nameof(ExitCountry))]
     [NotifyPropertyChangedFor(nameof(EntryCountry))]
+    [NotifyPropertyChangedFor(nameof(HostCountry))]
     [NotifyPropertyChangedFor(nameof(IsSecureCore))]
     [NotifyPropertyChangedFor(nameof(IsTor))]
     [NotifyPropertyChangedFor(nameof(IsP2P))]
     [NotifyPropertyChangedFor(nameof(IsB2B))]
+    [NotifyPropertyChangedFor(nameof(IsVirtual))]
+    [NotifyPropertyChangedFor(nameof(SmartRoutingLabel))]
     [NotifyPropertyChangedFor(nameof(FlagType))]
     private ConnectionDetails? _currentConnectionDetails;
 
@@ -176,6 +183,13 @@ public partial class ConnectionCardComponentViewModel : ActivatableViewModelBase
             _ => (CurrentConnectionIntent?.Feature as SecureCoreFeatureIntent)?.EntryCountryCode
         };
 
+    public string? HostCountry =>
+        CurrentConnectionStatus switch
+        {
+            ConnectionStatus.Connected when IsVirtual => CurrentConnectionDetails?.Server.HostCountry,
+            _ => null
+        };
+
     public bool IsSecureCore => IsFeature<SecureCoreFeatureIntent>(ServerFeatures.SecureCore);
 
     public bool IsTor => IsFeature<TorFeatureIntent>(ServerFeatures.Tor);
@@ -183,6 +197,16 @@ public partial class ConnectionCardComponentViewModel : ActivatableViewModelBase
     public bool IsP2P => IsFeature<P2PFeatureIntent>(ServerFeatures.P2P);
 
     public bool IsB2B => IsFeature<B2BFeatureIntent>(ServerFeatures.B2B);
+
+    public bool IsVirtual =>
+        CurrentConnectionStatus switch
+        {
+            ConnectionStatus.Connected => CurrentConnectionDetails != null
+                                        && CurrentConnectionDetails.Server.IsVirtual,
+            _ => false
+        };
+
+    public string SmartRoutingLabel => Localizer.GetFormat("Countries_SmartRouting_RoutedThrough", Localizer.GetCountryName(HostCountry));
 
     public FlagType FlagType => (CurrentConnectionStatus switch
     {
@@ -238,6 +262,14 @@ public partial class ConnectionCardComponentViewModel : ActivatableViewModelBase
         }
     }
 
+    public void Receive(LocationNamesChangedMessage message)
+    {
+        if (IsActive)
+        {
+            ExecuteOnUIThread(() => OnPropertyChanged(nameof(Subtitle)));
+        }
+    }
+
     public void Receive(VpnPlanChangedMessage message)
     {
         if (IsActive)
@@ -287,6 +319,7 @@ public partial class ConnectionCardComponentViewModel : ActivatableViewModelBase
 
         OnPropertyChanged(nameof(Title));
         OnPropertyChanged(nameof(Subtitle));
+        OnPropertyChanged(nameof(SmartRoutingLabel));
     }
 
     [RelayCommand(CanExecute = nameof(CanConnect))]
@@ -301,9 +334,9 @@ public partial class ConnectionCardComponentViewModel : ActivatableViewModelBase
     }
 
     [RelayCommand(CanExecute = nameof(CanCancelConnection))]
-    private Task CancelConnectionAsync()
+    private async Task CancelConnectionAsync()
     {
-        return _connectionManager.DisconnectAsync(VpnTriggerDimension.ConnectionCard);
+        await _connectionManager.DisconnectAsync(VpnTriggerDimension.ConnectionCard);
     }
 
     private bool CanCancelConnection()
@@ -343,6 +376,12 @@ public partial class ConnectionCardComponentViewModel : ActivatableViewModelBase
     private Task ShowTorInfoOverlayAsync()
     {
         return _mainWindowOverlayActivator.ShowTorInfoOverlayAsync();
+    }
+
+    [RelayCommand]
+    private Task ShowSmartRoutingInfoOverlayAsync()
+    {
+        return _mainWindowOverlayActivator.ShowSmartRoutingInfoOverlayAsync();
     }
 
     private void InvalidateConnectionStatus()

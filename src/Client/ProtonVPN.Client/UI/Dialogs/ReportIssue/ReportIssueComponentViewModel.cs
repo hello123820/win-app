@@ -20,15 +20,16 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using ProtonVPN.Api.Contracts.ReportAnIssue;
-using ProtonVPN.Client.Contracts.Services.Activation;
 using ProtonVPN.Client.Core.Bases;
 using ProtonVPN.Client.Core.Bases.ViewModels;
 using ProtonVPN.Client.Core.Models.ReportIssue;
+using ProtonVPN.Client.Core.Services.Activation;
 using ProtonVPN.Client.Core.Services.Navigation;
 using ProtonVPN.Client.EventMessaging.Contracts;
 using ProtonVPN.Client.Logic.Auth.Contracts.Messages;
 using ProtonVPN.Client.Logic.Feedback.Contracts;
 using ProtonVPN.Client.Mappers;
+using ProtonVPN.Common.Core.Extensions;
 
 namespace ProtonVPN.Client.UI.Dialogs.ReportIssue;
 
@@ -71,11 +72,11 @@ public partial class ReportIssueComponentViewModel : ViewModelBase,
         return _reportIssueViewNavigator.NavigateToCategoryViewAsync(category);
     }
 
-    protected override async void OnLanguageChanged()
+    protected override void OnLanguageChanged()
     {
         base.OnLanguageChanged();
 
-        await InvalidateCategoriesAsync();
+        InvalidateCategoriesAsync().FireAndForget();
     }
 
     private async Task InvalidateCategoriesAsync()
@@ -101,6 +102,6 @@ public partial class ReportIssueComponentViewModel : ViewModelBase,
 
     public void Receive(LoggedInMessage message)
     {
-        ExecuteOnUIThread(async () => await InvalidateCategoriesAsync());
+        ExecuteOnUIThread(InvalidateCategoriesAsync);
     }
 }

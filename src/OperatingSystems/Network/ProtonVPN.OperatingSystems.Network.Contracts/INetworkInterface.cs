@@ -34,9 +34,13 @@ public interface INetworkInterface
 
     bool IsLoopback { get; }
 
+    bool IsIPv4ForwardingEnabled { get; }
+
     IPAddress DefaultGateway { get; }
 
     uint Index { get; }
 
     List<NetworkAddress> GetUnicastAddresses();
+
+    IPAddress? GetPreferredIpv6UnicastAddress();
 }

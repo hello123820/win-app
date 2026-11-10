@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -18,17 +18,18 @@
  */
 
 using System;
+using System.Runtime.CompilerServices;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using ProtonVPN.Client.Common.Dispatching;
 using ProtonVPN.Client.Common.UI.Controls.Custom;
 using ProtonVPN.Client.Common.UI.Keyboards;
-using ProtonVPN.Client.Contracts.Services.Activation.Bases;
 using ProtonVPN.Client.Core.Bases;
 using ProtonVPN.Client.Core.Extensions;
 using ProtonVPN.Client.Core.Services.Selection;
 using ProtonVPN.Client.Localization.Contracts;
 using ProtonVPN.Client.Settings.Contracts;
+using ProtonVPN.Common.Legacy.Helpers;
 using ProtonVPN.Logging.Contracts;
 using ProtonVPN.Logging.Contracts.Events.AppLogs;
 using Windows.System;
@@ -64,14 +65,21 @@ public abstract class WindowActivatorBase<TWindow> : WindowHostActivatorBase<TWi
 
     public event EventHandler? HostSizeChanged;
 
+    protected virtual bool ShouldCreateInstanceIfMissing => true;
+
     protected WindowActivatorBase(
         ILogger logger,
         IUIThreadDispatcher uiThreadDispatcher,
         IApplicationThemeSelector themeSelector,
         ISettings settings,
+        ILocalizationService localizationService,
         ILocalizationProvider localizer,
         IApplicationIconSelector iconSelector)
-        : base(logger, uiThreadDispatcher, themeSelector, settings)
+        : base(logger,
+               uiThreadDispatcher,
+               themeSelector,
+               settings,
+               localizationService)
     {
         Localizer = localizer;
         IconSelector = iconSelector;
@@ -79,24 +87,36 @@ public abstract class WindowActivatorBase<TWindow> : WindowHostActivatorBase<TWi
         HandleClosedEvent = true;
     }
 
-    private void CreateWindowInstanceAndSetAutoActivation()
+    private void CreateWindowInstanceAndSetAutoActivation(CallerProfile callerProfile)
     {
-        Logger.Info<AppLog>($"Creating instance of {HostTypeName}.");
+        if (ShouldCreateInstanceIfMissing)
+        {
+            Logger.Info<AppLog>($"Creating instance of {HostTypeName}, as requested by {callerProfile}.");
 
-        _isActivationPending = true;
+            _isActivationPending = true;
 
-        Activator.CreateInstance<TWindow>();
+            Activator.CreateInstance<TWindow>();
+        }
+        else
+        {
+            Logger.Warn<AppLog>($"Cannot activate {HostTypeName} because no instance exists and automatic creation is disabled. Requested by {callerProfile}.");
+        }
     }
 
-    public void Activate()
+    public void Activate(
+        [CallerFilePath] string sourceFilePath = "",
+        [CallerMemberName] string sourceMemberName = "",
+        [CallerLineNumber] int sourceLineNumber = 0)
     {
+        CallerProfile callerProfile = new(sourceFilePath, sourceMemberName, sourceLineNumber);
+
         if (Host == null)
         {
-            CreateWindowInstanceAndSetAutoActivation();
+            CreateWindowInstanceAndSetAutoActivation(callerProfile);
             return;
         }
 
-        Logger.Info<AppLog>($"Activating {HostTypeName}.");
+        Logger.Info<AppLog>($"Activating {HostTypeName}, as requested by {callerProfile}.");
 
         Host.Activate();
         Host.SetForegroundWindow();
@@ -333,7 +353,11 @@ public abstract class WindowActivatorBase<TWindow> : WindowHostActivatorBase<TWi
 
     private void InvalidateWindowFocusState()
     {
-        bool isWindowFocused = Host != null
+        bool isWindowVisible = Host != null
+            && Host.Visible
+            && CurrentWindowState is not WindowState.Minimized;
+
+        bool isWindowFocused = isWindowVisible
             && CurrentActivationState is not WindowActivationState.Deactivated;
 
         if (IsWindowFocused != isWindowFocused)

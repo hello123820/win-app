@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -17,17 +17,16 @@
  * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using NSubstitute.Core;
-using ProtonVPN.Common.Legacy;
+using ProtonVPN.Common.Core.Dns;
 using ProtonVPN.Common.Core.Networking;
+using ProtonVPN.Common.Legacy;
 using ProtonVPN.Common.Legacy.Vpn;
 using ProtonVPN.EntityMapping.Contracts;
-using ProtonVPN.ProcessCommunication.Contracts.Entities.Vpn;
-using ProtonVPN.ProcessCommunication.EntityMapping.Vpn;
-using ProtonVPN.Common.Core.Dns;
 using ProtonVPN.ProcessCommunication.Contracts.Entities.Dns;
+using ProtonVPN.ProcessCommunication.Contracts.Entities.Vpn;
+using ProtonVPN.ProcessCommunication.EntityMapping.Common.Legacy.Vpn;
 
 namespace ProtonVPN.ProcessCommunication.EntityMapping.Tests.Vpn;
 
@@ -91,12 +90,11 @@ public class VpnConfigMapperTest
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void TestMapLeftToRight_ThrowsWhenNull()
     {
         VpnConfig entityToTest = null;
 
-        _mapper.Map(entityToTest);
+        Assert.Throws<ArgumentNullException>(() => _mapper.Map(entityToTest));
     }
 
     [TestMethod]
@@ -107,6 +105,7 @@ public class VpnConfigMapperTest
             Ports = new Dictionary<VpnProtocol, IReadOnlyCollection<int>>()
             {
                 { VpnProtocol.WireGuardUdp, new List<int>() { 80, 443 } },
+                { VpnProtocol.ProTunUdp, new List<int>() { 1, 80, 443 } },
                 { VpnProtocol.OpenVpnUdp, new List<int>() { 8080, 1 } }
             },
             CustomDns = new List<string>() { "172.16.0.0" },
@@ -120,6 +119,8 @@ public class VpnConfigMapperTest
             ModerateNat = true,
             PortForwarding = true,
             IsIpv6Enabled = true,
+            ShouldDisableWeakHostSetting = true,
+            IsWireGuardServerRouteEnabled = true,
             DnsBlockMode = DnsBlockMode.Callout,
         });
 
@@ -137,6 +138,8 @@ public class VpnConfigMapperTest
         Assert.AreEqual(entityToTest.SplitTcp, result.SplitTcp);
         Assert.AreEqual(entityToTest.PortForwarding, result.PortForwarding);
         Assert.AreEqual(entityToTest.IsIpv6Enabled, result.IsIpv6Enabled);
+        Assert.AreEqual(entityToTest.ShouldDisableWeakHostSetting, result.ShouldDisableWeakHostSetting);
+        Assert.AreEqual(entityToTest.IsWireGuardServerRouteEnabled, result.IsWireGuardServerRouteEnabled);
         Assert.AreEqual((int)entityToTest.DnsBlockMode, (int)result.DnsBlockMode);
     }
 
@@ -146,7 +149,7 @@ public class VpnConfigMapperTest
 
         List<KeyValuePair<VpnProtocol, IReadOnlyCollection<int>>> leftEntityDictionary = entityToTest.Ports.ToList();
         List<KeyValuePair<VpnProtocolIpcEntity, int[]>> rightEntityDictionary = result.Ports.ToList();
-        Assert.AreEqual(leftEntityDictionary.Count, rightEntityDictionary.Count);
+        Assert.HasCount(leftEntityDictionary.Count, rightEntityDictionary);
 
         for (int keyValuePairIndex = 0; keyValuePairIndex < leftEntityDictionary.Count; keyValuePairIndex++)
         {
@@ -158,12 +161,11 @@ public class VpnConfigMapperTest
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void TestMapRightToLeft_ThrowsWhenNull()
     {
         VpnConfigIpcEntity entityToTest = null;
 
-        _mapper.Map(entityToTest);
+        Assert.Throws<ArgumentNullException>(() => _mapper.Map(entityToTest));
     }
 
     [TestMethod]
@@ -174,6 +176,7 @@ public class VpnConfigMapperTest
             Ports = new Dictionary<VpnProtocolIpcEntity, int[]>()
             {
                 { VpnProtocolIpcEntity.WireGuardUdp, new int[] { 80, 443 } },
+                { VpnProtocolIpcEntity.ProTunUdp, new int[] { 1, 80, 443 } },
                 { VpnProtocolIpcEntity.OpenVpnUdp, new int[] { 8080, 1 } }
             },
             CustomDns = new List<string>() { "172.16.0.0" },
@@ -185,6 +188,8 @@ public class VpnConfigMapperTest
             SplitTcp = true,
             ModerateNat = true,
             PortForwarding = true,
+            ShouldDisableWeakHostSetting = true,
+            IsWireGuardServerRouteEnabled = true,
             DnsBlockMode = DnsBlockModeIpcEntity.Disabled,
         };
 
@@ -201,6 +206,8 @@ public class VpnConfigMapperTest
         Assert.AreEqual(entityToTest.SplitTcp, result.SplitTcp);
         Assert.AreEqual(entityToTest.ModerateNat, result.ModerateNat);
         Assert.AreEqual(entityToTest.PortForwarding, result.PortForwarding);
+        Assert.AreEqual(entityToTest.ShouldDisableWeakHostSetting, result.ShouldDisableWeakHostSetting);
+        Assert.AreEqual(entityToTest.IsWireGuardServerRouteEnabled, result.IsWireGuardServerRouteEnabled);
         Assert.AreEqual((int)entityToTest.DnsBlockMode, (int)result.DnsBlockMode);
     }
 
@@ -210,7 +217,7 @@ public class VpnConfigMapperTest
 
         List<KeyValuePair<VpnProtocolIpcEntity, int[]>> leftEntityDictionary = entityToTest.Ports.ToList();
         List<KeyValuePair<VpnProtocol, IReadOnlyCollection<int>>> rightEntityDictionary = result.Ports.ToList();
-        Assert.AreEqual(leftEntityDictionary.Count, rightEntityDictionary.Count);
+        Assert.HasCount(leftEntityDictionary.Count, rightEntityDictionary);
 
         for (int keyValuePairIndex = 0; keyValuePairIndex < leftEntityDictionary.Count; keyValuePairIndex++)
         {

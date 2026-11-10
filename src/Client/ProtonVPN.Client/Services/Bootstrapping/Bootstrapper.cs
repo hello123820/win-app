@@ -1,5 +1,5 @@
-﻿/*
- * Copyright (c) 2025 Proton AG
+/*
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -21,6 +21,9 @@ using Microsoft.Windows.AppLifecycle;
 using ProtonVPN.Client.Common.Dispatching;
 using ProtonVPN.Client.Core.Services.Activation;
 using ProtonVPN.Client.Logic.Auth.Contracts;
+using ProtonVPN.Client.Logic.Auth.Contracts.Enums;
+using ProtonVPN.Client.Logic.Auth.Contracts.Models;
+using ProtonVPN.Client.Logic.Servers.Cache;
 using ProtonVPN.Client.Logic.Services.Contracts;
 using ProtonVPN.Client.Logic.Updates.Contracts;
 using ProtonVPN.Client.Logic.Users.Contracts;
@@ -29,7 +32,7 @@ using ProtonVPN.Client.Settings.Contracts.Enums;
 using ProtonVPN.Client.Settings.Contracts.Initializers;
 using ProtonVPN.Client.Settings.Contracts.Migrations;
 using ProtonVPN.Common.Core.Extensions;
-using ProtonVPN.IssueReporting.Installers;
+using ProtonVPN.IssueReporting.Static;
 using ProtonVPN.Logging.Contracts;
 using ProtonVPN.Logging.Contracts.Events.AppLogs;
 using ProtonVPN.StatisticalEvents.Contracts;
@@ -40,11 +43,12 @@ namespace ProtonVPN.Client.Services.Bootstrapping;
 
 public class Bootstrapper : IBootstrapper
 {
-    private readonly IClientInstallsStatisticalEventSender _clientInstallsStatisticalEventSender;
+    private readonly IClientInstallsReporter _clientInstallsReporter;
     private readonly IProcessCommunicationStarter _processCommunicationStarter;
     private readonly ISettingsRestorer _settingsRestorer;
     private readonly IServiceManager _serviceManager;
     private readonly IUserAuthenticator _userAuthenticator;
+    private readonly IServersCache _serversCache;
     private readonly IUpdatesManager _updatesManager;
     private readonly IGlobalSettingsMigrator _globalSettingsMigrator;
     private readonly ISettings _settings;
@@ -55,12 +59,15 @@ public class Bootstrapper : IBootstrapper
     private readonly IVpnPlanUpdater _vpnPlanUpdater;
     private readonly IUIThreadDispatcher _uiThreadDispatcher;
 
+    private bool _isOpenOnDesktopRequested;
+
     public Bootstrapper(
-        IClientInstallsStatisticalEventSender clientInstallsStatisticalEventSender,
+        IClientInstallsReporter clientInstallsReporter,
         IProcessCommunicationStarter processCommunicationStarter,
         ISettingsRestorer settingsRestorer,
         IServiceManager serviceManager,
         IUserAuthenticator userAuthenticator,
+        IServersCache serversCache,
         IUpdatesManager updatesManager,
         IGlobalSettingsMigrator settingsMigrator,
         ISettings settings,
@@ -71,11 +78,12 @@ public class Bootstrapper : IBootstrapper
         IVpnPlanUpdater vpnPlanUpdater,
         IUIThreadDispatcher uiThreadDispatcher)
     {
-        _clientInstallsStatisticalEventSender = clientInstallsStatisticalEventSender;
+        _clientInstallsReporter = clientInstallsReporter;
         _processCommunicationStarter = processCommunicationStarter;
         _settingsRestorer = settingsRestorer;
         _serviceManager = serviceManager;
         _userAuthenticator = userAuthenticator;
+        _serversCache = serversCache;
         _updatesManager = updatesManager;
         _globalSettingsMigrator = settingsMigrator;
         _settings = settings;
@@ -103,13 +111,29 @@ public class Bootstrapper : IBootstrapper
 
             HandleMainWindow();
 
-            await Task.WhenAll(
-                StartServiceAsync(),
-                _userAuthenticator.AutoLoginUserAsync());
+            await StartServiceAndLogInAsync();
         }
         catch (Exception e)
         {
             _logger.Error<AppLog>("Error occured during the app start up process.", e);
+        }
+    }
+
+    private async Task StartServiceAndLogInAsync()
+    {
+        Task<AuthResult> autoLoginTask = _userAuthenticator.AutoLoginUserAsync(isAppStartup: true);
+
+        await Task.WhenAll(
+            StartServiceAsync(),
+            autoLoginTask);
+
+        AuthResult autoLoginResult = await autoLoginTask;
+        bool isNoVpnAccess = autoLoginResult.Failure && autoLoginResult.Value == AuthError.NoVpnAccess;
+        bool isLoggedInWithoutServers = _userAuthenticator.IsLoggedIn && _serversCache.HasNoServers();
+
+        if (isNoVpnAccess || isLoggedInWithoutServers)
+        {
+            _mainWindowActivator.Activate();
         }
     }
 
@@ -195,6 +219,14 @@ public class Bootstrapper : IBootstrapper
             {
                 _settings.IsEfficiencyModeAllowed = true;
             }
+            else if (arg.EqualsIgnoringCase("-OpenOnDesktop"))
+            {
+                _isOpenOnDesktopRequested = true;
+            }
+            else if (arg.EqualsIgnoringCase("-SkipOnboarding"))
+            {
+                _settings.SkipOnboarding = true;
+            }
         }
 
         HandleProtonInstallerArguments(args);
@@ -230,7 +262,7 @@ public class Bootstrapper : IBootstrapper
 
         if (isCleanInstall)
         {
-            _clientInstallsStatisticalEventSender.Send(
+            _clientInstallsReporter.Report(
                 isMailInstalled: isMailInstalled,
                 isDriveInstalled: isDriveInstalled,
                 isPassInstalled: isPassInstalled);
@@ -243,9 +275,11 @@ public class Bootstrapper : IBootstrapper
         bool isAutoLaunchEnabled = _settings.IsAutoLaunchEnabled;
         bool isAutoLaunchModeOpenOnDesktop = _settings.AutoLaunchMode == AutoLaunchMode.OpenOnDesktop;
 
-        _logger.Info<AppLog>($"Handle main window start condtions - HasAuthenticatedSessionData: {hasAuthenticatedSessionData}, IsAutoLaunchEnabled: {isAutoLaunchEnabled}, IsAutoLaunchModeOpenOnDesktop: {isAutoLaunchModeOpenOnDesktop}");
+        _logger.Info<AppLog>($"Handle main window start conditions - HasAuthenticatedSessionData: {hasAuthenticatedSessionData}, " +
+            $"IsAutoLaunchEnabled: {isAutoLaunchEnabled}, IsAutoLaunchModeOpenOnDesktop: {isAutoLaunchModeOpenOnDesktop}, " +
+            $"IsOpenOnDesktopRequested: {_isOpenOnDesktopRequested}");
 
-        if (!hasAuthenticatedSessionData || !isAutoLaunchEnabled || isAutoLaunchModeOpenOnDesktop)
+        if (!hasAuthenticatedSessionData || !isAutoLaunchEnabled || isAutoLaunchModeOpenOnDesktop || _isOpenOnDesktopRequested)
         {
             _mainWindowActivator.Activate();
         }

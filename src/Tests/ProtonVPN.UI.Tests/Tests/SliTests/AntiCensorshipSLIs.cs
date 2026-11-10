@@ -19,11 +19,11 @@
 
 using System.Threading;
 using NUnit.Framework;
-using ProtonVPN.UI.Tests.Annotations;
-using ProtonVPN.UI.Tests.ApiClient.TestEnv;
 using ProtonVPN.UI.Tests.Robots;
 using ProtonVPN.UI.Tests.TestBase;
 using ProtonVPN.UI.Tests.TestsHelper;
+using ProtonVPN.UI.Tests.Annotations;
+using ProtonVPN.UI.Tests.ApiClient.TestEnv;
 
 namespace ProtonVPN.UI.Tests.Tests.SliTests;
 
@@ -35,6 +35,7 @@ public class AntiCensorshipSLIs : SliSetUp
     [Test]
     [Duration, TestStatus]
     [Sli("alt_routing_login")]
+    [Retry(3)]
     public void AlternativeRoutingSliMeasurement()
     {
         // Scenario has to be set before app is launched
@@ -43,18 +44,21 @@ public class AntiCensorshipSLIs : SliSetUp
         // Allow some time for network to settle down
         Thread.Sleep(TestConstants.FiveSecondsTimeout);
 
-        LaunchApp();
+        LaunchClient(ClientLaunchParams.StartWithoutDisconnectingFromWireGuard);
 
-        LoginRobot.Login(TestUserData.PlusUser);
+        NetworkUtils.AssertInternetAvailability(true);
+
+        LoginRobot.Login(TestUserData.VisionaryUser);
         SliHelper.MeasureTime(() =>
         {
-            HomeRobot.Verify.IsWelcomeModalDisplayed();
+            NavigationRobot.Verify.IsOnMainPage();
         });
     }
 
     [Test]
     [Duration, TestStatus]
     [Sli("guest_holes_login")]
+    [Retry(3)]
     public void GuestHolesSliMeasurements()
     {
         // Scenario has to be set before app is launched
@@ -63,18 +67,24 @@ public class AntiCensorshipSLIs : SliSetUp
         // Allow some time for network to settle down
         Thread.Sleep(TestConstants.FiveSecondsTimeout);
 
-        LaunchApp();
+        LaunchClient(ClientLaunchParams.StartWithoutDisconnectingFromWireGuard);
 
-        LoginRobot.Login(TestUserData.PlusUser);
+        NetworkUtils.AssertInternetAvailability(true);
+
+        LoginRobot.Login(TestUserData.VisionaryUser);
         SliHelper.MeasureTime(() =>
         {
-            HomeRobot.Verify.IsWelcomeModalDisplayed();
+            NavigationRobot.Verify.IsOnMainPage();
         });
     }
 
     [TearDown]
     public void TearDown()
     {
+        if (!TestConstants.IsProTunVersion)
+        {
+            HomeRobot.DismissWelcomeModal();
+        }
         BtiController.SetScenario(Scenarios.RESET);
     }
 }

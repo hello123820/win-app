@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -28,7 +28,7 @@ using ProtonVPN.Dns.Contracts;
 
 namespace ProtonVPN.Client.Settings;
 
-public class GlobalSettings : IGlobalSettings
+public class GlobalSettings : TransientSettings, IGlobalSettings
 {
     private readonly IGlobalSettingsCache _globalCache;
 
@@ -96,6 +96,24 @@ public class GlobalSettings : IGlobalSettings
     {
         get => _globalCache.GetValueType<AutoLaunchMode>(SettingEncryption.Unencrypted) ?? DefaultSettings.AutoLaunchMode;
         set => _globalCache.SetValueType<AutoLaunchMode>(value, SettingEncryption.Unencrypted);
+    }
+
+    public int[] ProTunUdpPorts
+    {
+        get => _globalCache.GetReferenceType<int[]>(SettingEncryption.Unencrypted) ?? DefaultSettings.ProTunUdpPorts;
+        set => _globalCache.SetReferenceType(value, SettingEncryption.Unencrypted);
+    }
+
+    public int[] ProTunTcpPorts
+    {
+        get => _globalCache.GetReferenceType<int[]>(SettingEncryption.Unencrypted) ?? DefaultSettings.ProTunTcpPorts;
+        set => _globalCache.SetReferenceType(value, SettingEncryption.Unencrypted);
+    }
+
+    public int[] ProTunTlsPorts
+    {
+        get => _globalCache.GetReferenceType<int[]>(SettingEncryption.Unencrypted) ?? DefaultSettings.ProTunTlsPorts;
+        set => _globalCache.SetReferenceType(value, SettingEncryption.Unencrypted);
     }
 
     public int[] WireGuardUdpPorts
@@ -176,18 +194,6 @@ public class GlobalSettings : IGlobalSettings
         set => _globalCache.SetListValueType(value, SettingEncryption.Encrypted);
     }
 
-    public bool IsFeatureConnectedServerCheckEnabled
-    {
-        get => _globalCache.GetValueType<bool>(SettingEncryption.Encrypted) ?? DefaultSettings.IsFeatureConnectedServerCheckEnabled;
-        set => _globalCache.SetValueType<bool>(value, SettingEncryption.Encrypted);
-    }
-
-    public TimeSpan ConnectedServerCheckInterval
-    {
-        get => _globalCache.GetValueType<TimeSpan>(SettingEncryption.Encrypted) ?? DefaultSettings.ConnectedServerCheckInterval;
-        set => _globalCache.SetValueType<TimeSpan>(value, SettingEncryption.Encrypted);
-    }
-
     public ChangeServerSettings ChangeServerSettings
     {
         get => _globalCache.GetValueType<ChangeServerSettings>(SettingEncryption.Encrypted) ?? DefaultSettings.ChangeServerSettings;
@@ -254,8 +260,34 @@ public class GlobalSettings : IGlobalSettings
         set => _globalCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
     }
 
+    public WindowLocation WindowLocation
+    {
+        // TODO: Remove once fully rolled out to stable
+        get
+        {
+            WindowLocation? windowLocation = _globalCache.GetValueType<WindowLocation>(SettingEncryption.Unencrypted);
+            if (windowLocation is null)
+            {
+                windowLocation = GetWindowLocationFromUserSettings();
+                if (windowLocation is not null)
+                {
+                    _globalCache.SetValueType<WindowLocation>(windowLocation, SettingEncryption.Unencrypted);
+                }
+            }
+            return windowLocation ?? DefaultSettings.WindowLocation;
+        }
+        //get => _globalCache.GetValueType<WindowLocation>(SettingEncryption.Unencrypted) ?? DefaultSettings.WindowLocation;
+        set => _globalCache.SetValueType<WindowLocation>(value, SettingEncryption.Unencrypted);
+    }
+
     public GlobalSettings(IGlobalSettingsCache globalSettingsCache)
     {
         _globalCache = globalSettingsCache;
+    }
+
+    // TODO: Remove once fully rolled out to stable
+    protected virtual WindowLocation? GetWindowLocationFromUserSettings()
+    {
+        return null;
     }
 }

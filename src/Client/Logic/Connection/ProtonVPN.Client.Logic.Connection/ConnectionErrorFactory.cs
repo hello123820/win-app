@@ -19,6 +19,7 @@
 
 using ProtonVPN.Client.Logic.Connection.ConnectionErrors;
 using ProtonVPN.Client.Logic.Connection.Contracts;
+using ProtonVPN.Client.Logic.Connection.Contracts.ConnectionErrors;
 using ProtonVPN.Client.Logic.Connection.Contracts.Enums;
 using ProtonVPN.Client.Logic.Profiles.Contracts.Models;
 
@@ -41,13 +42,20 @@ public class ConnectionErrorFactory : IConnectionErrorFactory
         _unknownConnectionError = unknownConnectionError;
     }
 
+    public IConflictingAdapterConnectionError GetConflictingAdapterConnectionError()
+    {
+        return _connectionErrors.Value.OfType<IConflictingAdapterConnectionError>().Single();
+    }
+
     public IConnectionError GetConnectionError(VpnError vpnError)
     {
         return vpnError switch
         {
             VpnError.None or
-            VpnError.NoneKeepEnabledKillSwitch or
-            VpnError.BaseFilteringEngineServiceNotRunning => GetConnectionError<NoConnectionError>(vpnError),
+                VpnError.NoneKeepEnabledKillSwitch or
+                VpnError.BaseFilteringEngineServiceNotRunning => GetConnectionError<NoConnectionError>(vpnError),
+
+            VpnError.AllServersExcluded => GetConnectionError<AllServersExcludedConnectionError>(vpnError),
 
             VpnError.NoServers when _connectionManager.CurrentConnectionIntent is IConnectionProfile =>
                 GetConnectionError<NoServersForProfileConnectionError>(vpnError),
@@ -56,6 +64,8 @@ public class ConnectionErrorFactory : IConnectionErrorFactory
             VpnError.WireGuardAdapterInUseError => GetConnectionError<WireGuardAdapterInUseConnectionError>(vpnError),
             VpnError.MissingConnectionCertificate => GetConnectionError<MissingConnectionCertificateError>(vpnError),
             VpnError.TlsCertificateError => GetConnectionError<TlsCertificateConnectionError>(vpnError),
+            VpnError.InterfaceHasForwardingEnabled => GetConnectionError<MobileHotspotConnectionError>(vpnError),
+            VpnError.ServerValidationError => GetConnectionError<ServerValidationConnectionError>(vpnError),
 
             VpnError.NoTapAdaptersError => GetConnectionError<NoTapAdaptersConnectionError>(vpnError),
             VpnError.TapAdapterInUseError => GetConnectionError<TapAdapterInUseConnectionError>(vpnError),
@@ -63,15 +73,15 @@ public class ConnectionErrorFactory : IConnectionErrorFactory
             VpnError.RpcServerUnavailable => GetConnectionError<RpcServerUnavailableConnectionError>(vpnError),
 
             VpnError.SessionLimitReachedBasic or
-            VpnError.SessionLimitReachedFree or
-            VpnError.SessionLimitReachedPlus or
-            VpnError.SessionLimitReachedPro or
-            VpnError.SessionLimitReachedVisionary or
-            VpnError.SessionLimitReachedUnknown => GetConnectionError<SessionLimitReachedConnectionError>(vpnError),
+                VpnError.SessionLimitReachedFree or
+                VpnError.SessionLimitReachedPlus or
+                VpnError.SessionLimitReachedPro or
+                VpnError.SessionLimitReachedVisionary or
+                VpnError.SessionLimitReachedUnknown => GetConnectionError<SessionLimitReachedConnectionError>(vpnError),
 
             VpnError.TwoFactorRequiredReasonUnknown or
-            VpnError.TwoFactorExpired or
-            VpnError.TwoFactorNewConnection => GetConnectionError<TwoFactorRequiredConnectionError>(vpnError),
+                VpnError.TwoFactorExpired or
+                VpnError.TwoFactorNewConnection => GetConnectionError<TwoFactorRequiredConnectionError>(vpnError),
 
             _ => GetUnknownConnectionError(vpnError),
         };

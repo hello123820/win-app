@@ -52,6 +52,7 @@ public partial class ProfilesPageViewModel : ConnectionPageViewModelBase,
     private readonly IAccountUpgradeUrlLauncher _accountUpgradeUrlLauncher;
 
     public override string Header => Localizer.Get("Profiles_Page_Title");
+    public string UpsellBannerTitle => Localizer.Get("Profiles_Page_Description");
     public override IconElement Icon => new WindowTerminal() { Size = PathIconSize.Pixels16 };
     public override int SortIndex { get; } = 3;
     public bool IsUpsellBannerVisible => !Settings.VpnPlan.IsPaid;
@@ -103,7 +104,6 @@ public partial class ProfilesPageViewModel : ConnectionPageViewModelBase,
                     break;
             }
         });
-
     }
 
     protected override IEnumerable<ConnectionItemBase> GetItems()
@@ -149,6 +149,6 @@ public partial class ProfilesPageViewModel : ConnectionPageViewModelBase,
     [RelayCommand]
     private async Task UpgradeAsync()
     {
-        await _accountUpgradeUrlLauncher.OpenAsync(ModalSource.Profiles);
+        await _accountUpgradeUrlLauncher.OpenAsync(new UpsellModalContext(ModalSource.Profiles, ModalTrigger.CountriesBanner));
     }
 }

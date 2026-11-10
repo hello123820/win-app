@@ -24,6 +24,9 @@ using ProtonVPN.Client.Core.Bases;
 using ProtonVPN.Client.Core.Bases.ViewModels;
 using ProtonVPN.Client.Core.Services.Navigation;
 using ProtonVPN.Client.EventMessaging.Contracts;
+using ProtonVPN.Client.Logic.Auth.Contracts;
+using ProtonVPN.Client.Logic.Auth.Contracts.Enums;
+using ProtonVPN.Client.Logic.Auth.Contracts.Messages;
 using ProtonVPN.Client.Logic.Connection.Contracts;
 using ProtonVPN.Client.Logic.Connection.Contracts.Messages;
 using ProtonVPN.Client.Settings.Contracts;
@@ -35,11 +38,13 @@ namespace ProtonVPN.Client.UI.Login.Components;
 
 public partial class DisableKillSwitchBannerViewModel : ViewModelBase,
     IEventMessageReceiver<ConnectionStatusChangedMessage>,
-    IEventMessageReceiver<SettingChangedMessage>
+    IEventMessageReceiver<SettingChangedMessage>,
+    IEventMessageReceiver<AuthenticationStatusChanged>
 {
     private readonly ISettings _settings;
     private readonly ILoginViewNavigator _loginViewNavigator;
     private readonly IConnectionManager _connectionManager;
+    private readonly IUserAuthenticator _userAuthenticator;
 
     [ObservableProperty]
     private bool _isKillSwitchNotificationVisible;
@@ -48,13 +53,14 @@ public partial class DisableKillSwitchBannerViewModel : ViewModelBase,
         ISettings settings,
         ILoginViewNavigator loginViewNavigator,
         IConnectionManager connectionManager,
-        IViewModelHelper viewModelHelper)
+        IViewModelHelper viewModelHelper,
+        IUserAuthenticator userAuthenticator)
         : base(viewModelHelper)
     {
         _settings = settings;
         _loginViewNavigator = loginViewNavigator;
         _connectionManager = connectionManager;
-
+        _userAuthenticator = userAuthenticator;
         loginViewNavigator.Navigated += OnLoginViewNavigated;
     }
 
@@ -68,16 +74,26 @@ public partial class DisableKillSwitchBannerViewModel : ViewModelBase,
         ExecuteOnUIThread(InvalidateKillSwitchNotification);
     }
 
-    public void Receive(SettingChangedMessage message)
+    public void Receive(AuthenticationStatusChanged message)
     {
         ExecuteOnUIThread(InvalidateKillSwitchNotification);
+    }
+
+    public void Receive(SettingChangedMessage message)
+    {
+        if (message.PropertyName is nameof(ISettings.IsKillSwitchEnabled)
+                                 or nameof(ISettings.KillSwitchMode))
+        {
+            ExecuteOnUIThread(InvalidateKillSwitchNotification);
+        }
     }
 
     private void InvalidateKillSwitchNotification()
     {
         IsKillSwitchNotificationVisible = _loginViewNavigator.GetCurrentPageContext() is SignInPageViewModel or TwoFactorPageViewModel &&
                                           _settings.IsAdvancedKillSwitchActive() &&
-                                          _connectionManager.IsNetworkBlocked;
+                                          _connectionManager.IsNetworkBlocked &&
+                                          _userAuthenticator.AuthenticationStatus == AuthenticationStatus.LoggedOut;
     }
 
     [RelayCommand]

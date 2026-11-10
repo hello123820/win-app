@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -17,10 +17,14 @@
  * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using ProtonVPN.Api.Contracts.Common;
+
 namespace ProtonVPN.Client.Logic.Users.Contracts;
 
 public interface IVpnPlanUpdater
 {
+    BaseResponseDetail? AuthResponseDetails { get; }
+
     Task<VpnPlanChangeResult> ForceUpdateAsync(CancellationToken cancellationToken = default);
     Task<VpnPlanChangeResult> UpdateAsync(CancellationToken cancellationToken = default);
 }

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -19,42 +19,72 @@
 
 using System;
 using System.IO;
+using System.Linq;
+using System.Collections.Generic;
+using ProtonVPN.UI.Tests.Enums;
+using ProtonVPN.UI.Tests.Enums.Locations;
 
 namespace ProtonVPN.UI.Tests.TestsHelper;
 
 public static class TestConstants
 {
+    public const int DEFAULT_HOVER_DURATION_MS = 500;
+
     public static TimeSpan? DefaultElementWaitingTime => TimeSpan.FromSeconds(10);
     public static TimeSpan ApiRetryInterval => TimeSpan.FromSeconds(3);
     public static TimeSpan OneSecondTimeout => TimeSpan.FromSeconds(1);
+    public static TimeSpan TwoSecondsTimeout => TimeSpan.FromSeconds(2);
     public static TimeSpan FiveSecondsTimeout => TimeSpan.FromSeconds(5);
     public static TimeSpan TenSecondsTimeout => TimeSpan.FromSeconds(10);
+    public static TimeSpan EighteenSecondsTimeout => TimeSpan.FromSeconds(18);
     public static TimeSpan ThirtySecondsTimeout => TimeSpan.FromSeconds(30);
-    public static TimeSpan OneMinuteTimeout => TimeSpan.FromSeconds(60);
+    public static TimeSpan OneMinuteTimeout => TimeSpan.FromMinutes(1);
     public static TimeSpan TwoMinutesTimeout => TimeSpan.FromMinutes(2);
-    public static TimeSpan RetryInterval => TimeSpan.FromMilliseconds(200);
+    public static TimeSpan FourMinutesTimeout => TimeSpan.FromMinutes(4);
+    public static TimeSpan MoreFrequentRetryInterval => TimeSpan.FromMilliseconds(50);
+    public static TimeSpan RetryInterval => TimeSpan.FromMilliseconds(500);
     public static TimeSpan AnimationDelay => TimeSpan.FromMilliseconds(500);
     public static TimeSpan NavigationDelay => TimeSpan.FromMilliseconds(500);
+    public static TimeSpan UserInputSimulationDelay => TimeSpan.FromMilliseconds(500);
 
     public static string AppFolderPath = @"C:\Program Files\Proton\VPN";
     public static string LauncherPath = @"C:\Program Files\Proton\VPN\ProtonVPN.Launcher.exe";
-    public static string MapCountry = "CA";
-    public static string ClientLogsPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Proton\Proton VPN\Logs\client-logs.txt");
-    public static string UserStoragePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Proton\Proton VPN");
-    public enum Protocol
+    public static readonly string SolutionRoot = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\.."));
+    public static string LocalAppData => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+    public static string ClientLogsPath => Path.Combine(LocalAppData, @"Proton\Proton VPN\Logs\client-logs.txt");
+    public static string UserStoragePath => Path.Combine(LocalAppData, @"Proton\Proton VPN");
+    public static string StoragePath => Path.Combine(UserStoragePath, "Storage");
+    public static string? ServerStoragePath => Directory.GetFiles(StoragePath, "Servers.*.bin").OrderByDescending(File.GetLastWriteTime).FirstOrDefault();
+    public static string GlobalSettingsPath => Path.Combine(StoragePath, "GlobalSettings.json");
+
+    public static bool IsProTunVersion = Version.TryParse(TestEnvironment.GetAppVersion(), out Version? v) && v.Major >= 5;
+    public static readonly string ViaPrefix = LanguageHelper.GetTranslatedString("Connection_Via_SecureCore").Replace("{0}", "");
+
+    // These 4 countries are all available options in the All, Secure Core, P2P, and Tor tabs.
+    // United States is first as it has the most servers available and there are less chances for all of them to be under maintenance at the same time
+    public static readonly List<Country> AvailableCountries = [Country.UnitedStates, Country.France, Country.Germany, Country.HongKong];
+
+    private const string PROTUN_PROTOCOL_PREFIX = "ProTun";
+    private const string WIREGUARD_PROTOCOL_PREFIX = "WireGuard";
+    public static bool IsProTunProtocol(Protocol protocol) => protocol.ToString().StartsWith(PROTUN_PROTOCOL_PREFIX);
+
+    public static IEnumerable<Protocol> AllNonProTunProtocols()
     {
-        WireGuardUdp,
-        OpenVpnUdp,
-        WireGuardTcp,
-        OpenVpnTcp,
-        WireGuardTls,
+        return Enum.GetValues<Protocol>().Where(p => p != Protocol.Smart && !p.ToString().StartsWith(PROTUN_PROTOCOL_PREFIX));
     }
 
-    public enum VpnConnectionOptions
+    public static IEnumerable<Protocol> WireGuardProtocols()
     {
-        Fast,
-        Random,
-        Last,
-        Customized
+        return AllNonProTunProtocols().Where(p => p.ToString().StartsWith(WIREGUARD_PROTOCOL_PREFIX));
+    }
+
+    public static IEnumerable<Protocol> ProTunProtocols()
+    {
+        return Enum.GetValues<Protocol>().Where(p => p.ToString().StartsWith(PROTUN_PROTOCOL_PREFIX));
+    }
+
+    public static IEnumerable<Protocol> SomeProtocols()
+    {
+        return [Protocol.ProTunUdp, Protocol.WireGuardTcp, Protocol.OpenVpnUdp];
     }
 }

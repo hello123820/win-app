@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -24,10 +24,11 @@ using ProtonVPN.Client.Logic.Connection.Contracts.Enums;
 using ProtonVPN.Client.Logic.Connection.Contracts.GuestHole;
 using ProtonVPN.Client.Logic.Connection.Contracts.Messages;
 using ProtonVPN.Client.Logic.Connection.Contracts.Models.Intents;
+using ProtonVPN.Client.Logic.Connection.Contracts.Models.Intents.Features;
 using ProtonVPN.Client.Logic.Connection.Contracts.Models.Intents.Locations.Countries;
 using ProtonVPN.Client.Logic.Connection.Contracts.Models.Intents.Locations.FreeServers;
 using ProtonVPN.Client.Logic.Connection.Contracts.Models.Intents.Locations.Gateways;
-using ProtonVPN.Client.Logic.Connection.Contracts.Models.Intents.Features;
+using ProtonVPN.Client.Logic.Connection.Contracts.Models.Intents.Locations.Servers;
 using ProtonVPN.Client.Logic.Profiles.Contracts;
 using ProtonVPN.Client.Logic.Profiles.Contracts.Messages;
 using ProtonVPN.Client.Logic.Profiles.Contracts.Models;
@@ -62,6 +63,7 @@ public class RecentConnectionsManager : IRecentConnectionsManager,
     private readonly IConnectionManager _connectionManager;
     private readonly IEventMessageSender _eventMessageSender;
     private readonly IGuestHoleManager _guestHoleManager;
+    private readonly IFavoriteServersStorage _favoriteServersStorage;
     private readonly IRecentsFileReaderWriter _recentsFileReaderWriter;
 
     private readonly object _lock = new();
@@ -78,6 +80,7 @@ public class RecentConnectionsManager : IRecentConnectionsManager,
         IConnectionManager connectionManager,
         IEventMessageSender eventMessageSender,
         IGuestHoleManager guestHoleManager,
+        IFavoriteServersStorage favoriteServersStorage,
         IRecentsFileReaderWriter recentsFileReaderWriter)
     {
         _logger = logger;
@@ -87,6 +90,7 @@ public class RecentConnectionsManager : IRecentConnectionsManager,
         _connectionManager = connectionManager;
         _eventMessageSender = eventMessageSender;
         _guestHoleManager = guestHoleManager;
+        _favoriteServersStorage = favoriteServersStorage;
         _recentsFileReaderWriter = recentsFileReaderWriter;
     }
 
@@ -98,7 +102,8 @@ public class RecentConnectionsManager : IRecentConnectionsManager,
     public IOrderedEnumerable<IRecentConnection> GetRecentConnections()
     {
         return _recentConnections.OrderByDescending(c => c.IsPinned)
-                                 .ThenBy(c => c.PinTime);
+                                 .ThenBy(c => c.PinTimeUtc)
+                                 .ThenByDescending(c => c.LastConnectionTimeUtc);
     }
 
     public IRecentConnection? GetMostRecentConnection()
@@ -107,6 +112,7 @@ public class RecentConnectionsManager : IRecentConnectionsManager,
         DeviceLocation? deviceLocation = _settings.DeviceLocation;
 
         IRecentConnection? mostRecentConnection = _recentConnections
+            .OrderByDescending(c => c.LastConnectionTimeUtc)
             .FirstOrDefault(c => !c.ConnectionIntent.AreAllServersUnderMaintenance(servers, deviceLocation));
 
         return mostRecentConnection;
@@ -207,15 +213,6 @@ public class RecentConnectionsManager : IRecentConnectionsManager,
 
     public void Receive(LoggedInMessage message)
     {
-        lock (_lock)
-        {
-            LoadRecentConnections();
-
-            UpdateCurrentConnectionIntent();
-        }
-
-        _areRecentsLoaded = true;
-
         BroadcastRecentConnectionsChanges();
     }
 
@@ -226,7 +223,10 @@ public class RecentConnectionsManager : IRecentConnectionsManager,
 
     public void Receive(ConnectionStatusChangedMessage message)
     {
-        if (_areRecentsLoaded && !_guestHoleManager.IsActive && (message?.ConnectionStatus) == ConnectionStatus.Connecting)
+        if (_areRecentsLoaded 
+            && !_guestHoleManager.IsActive 
+            && message?.ConnectionStatus == ConnectionStatus.Connecting
+            && message.HasConnectionIntentChanged)
         {
             lock (_lock)
             {
@@ -292,11 +292,13 @@ public class RecentConnectionsManager : IRecentConnectionsManager,
 
         foreach (IRecentConnection duplicate in duplicates)
         {
-            // Remove duplicated intent, so it can be inserted at the top of the list
             _recentConnections.Remove(duplicate);
         }
 
-        _recentConnections.Insert(0, duplicates.FirstOrDefault() ?? new RecentConnection(Guid.NewGuid(), recentIntent));
+        IRecentConnection recentConnection = duplicates.FirstOrDefault() ?? new RecentConnection(Guid.NewGuid(), recentIntent);
+        recentConnection.LastConnectionTimeUtc = DateTime.UtcNow;
+
+        _recentConnections.Add(recentConnection);
 
         return true;
     }
@@ -327,7 +329,7 @@ public class RecentConnectionsManager : IRecentConnectionsManager,
         }
 
         recentConnection.IsPinned = true;
-        recentConnection.PinTime = DateTime.UtcNow;
+        recentConnection.PinTimeUtc = DateTime.UtcNow;
 
         return true;
     }
@@ -340,7 +342,7 @@ public class RecentConnectionsManager : IRecentConnectionsManager,
         }
 
         recentConnection.IsPinned = false;
-        recentConnection.PinTime = null;
+        recentConnection.PinTimeUtc = null;
 
         return true;
     }
@@ -401,12 +403,34 @@ public class RecentConnectionsManager : IRecentConnectionsManager,
     private void SaveAndBroadcastRecentConnectionsChanges()
     {
         SaveRecentConnections();
+        SetFavoriteServers();
         BroadcastRecentConnectionsChanges();
     }
 
-    private void LoadRecentConnections()
+    private void SetFavoriteServers()
     {
-        _recentConnections = _recentsFileReaderWriter.Read();
+        List<string> serverIds = _recentConnections
+            .Where(rc => rc.ConnectionIntent.Location is SingleServerLocationIntent sli)
+            .OrderByDescending(rc => rc.IsPinned)
+            .ThenByDescending(rc => rc.LastConnectionTimeUtc)
+            .Select(rc => ((SingleServerLocationIntent)rc.ConnectionIntent.Location).Server.Id)
+            .ToList();
+
+        _favoriteServersStorage.SetRecentConnectionServerIds(serverIds);
+    }
+
+    public void LoadRecentConnections()
+    {
+        lock (_lock)
+        {
+            _recentConnections = _recentsFileReaderWriter.Read();
+
+            UpdateCurrentConnectionIntent();
+        }
+
+        _areRecentsLoaded = true;
+
+        SetFavoriteServers();
     }
 
     private void SaveRecentConnections()
@@ -421,9 +445,14 @@ public class RecentConnectionsManager : IRecentConnectionsManager,
 
     private void TrimRecentConnections()
     {
-        while (_recentConnections.Count(c => !IsRecentInUseOrPinned(c)) > MAXIMUM_RECENT_CONNECTIONS)
+        List<IRecentConnection> recentConnections = _recentConnections
+            .Where(rc => !IsRecentInUseOrPinned(rc))
+            .OrderByDescending(rc => rc.LastConnectionTimeUtc)
+            .ToList();
+
+        for (int i = MAXIMUM_RECENT_CONNECTIONS; i < recentConnections.Count; i++)
         {
-            _recentConnections.Remove(_recentConnections.Last(c => !IsRecentInUseOrPinned(c)));
+            _recentConnections.Remove(recentConnections[i]);
         }
     }
 

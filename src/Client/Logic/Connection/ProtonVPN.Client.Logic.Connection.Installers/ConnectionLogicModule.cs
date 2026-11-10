@@ -21,6 +21,7 @@ using Autofac;
 using ProtonVPN.Client.Logic.Connection.ConnectionErrors;
 using ProtonVPN.Client.Logic.Connection.Contracts;
 using ProtonVPN.Client.Logic.Connection.EntityMapping;
+using ProtonVPN.Client.Logic.Connection.Preferences;
 using ProtonVPN.Client.Logic.Connection.GuestHole;
 using ProtonVPN.Client.Logic.Connection.NetworkingTraffic;
 using ProtonVPN.Client.Logic.Connection.RequestCreators;
@@ -43,15 +44,15 @@ public class ConnectionLogicModule : Module
         builder.RegisterType<VpnStateIpcEntityHandler>().AsImplementedInterfaces().AutoActivate().SingleInstance();
         builder.RegisterType<ConnectionErrorHandler>().AsImplementedInterfaces().SingleInstance();
         builder.RegisterType<VpnServiceSettingsUpdater>().AsImplementedInterfaces().SingleInstance();
-        builder.RegisterType<ConnectedServerChecker>().AsImplementedInterfaces().AutoActivate().SingleInstance();
         builder.RegisterType<VpnStatePollingObserver>().AsImplementedInterfaces().AutoActivate().SingleInstance();
         builder.RegisterType<ChangeServerModerator>().AsImplementedInterfaces().SingleInstance();
         builder.RegisterType<NetShieldStatsObserver>().AsImplementedInterfaces().SingleInstance().AutoActivate();
         builder.RegisterType<NetworkTrafficScheduler>().AsImplementedInterfaces().SingleInstance();
         builder.RegisterType<NetworkTrafficManager>().AsImplementedInterfaces().SingleInstance();
         builder.RegisterType<ConnectionErrorFactory>().AsImplementedInterfaces().SingleInstance();
-        builder.RegisterType<P2PTrafficObserver>().AsImplementedInterfaces().SingleInstance().AutoActivate();
         builder.RegisterType<ConnectionStatisticalEventsManager>().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<RestrictionsObserver>().AsImplementedInterfaces().SingleInstance().AutoActivate();
+        builder.RegisterType<ExclusionChecker>().AsImplementedInterfaces().SingleInstance();
 
         RegisterRequestCreators(builder);
         RegisterServerListGenerators(builder);
@@ -71,11 +72,12 @@ public class ConnectionLogicModule : Module
 
     private void RegisterRequestCreators(ContainerBuilder builder)
     {
-        builder.RegisterType<ReconnectionRequestCreator>().AsImplementedInterfaces().SingleInstance();
-        builder.RegisterType<ConnectionRequestCreator>().AsImplementedInterfaces().SingleInstance();
-        builder.RegisterType<GuestHoleConnectionRequestCreator>().AsImplementedInterfaces().SingleInstance();
-        builder.RegisterType<DisconnectionRequestCreator>().AsImplementedInterfaces().SingleInstance();
         builder.RegisterType<MainSettingsRequestCreator>().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<ConnectionRequestCreator>().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<ReconnectionRequestCreator>().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<DisconnectionRequestCreator>().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<GuestHoleConnectionRequestCreator>().AsImplementedInterfaces().SingleInstance();
+        builder.RegisterType<GuestHoleDisconnectionRequestCreator>().AsImplementedInterfaces().SingleInstance();
     }
 
     private void RegisterServerListGenerators(ContainerBuilder builder)

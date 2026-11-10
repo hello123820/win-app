@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
@@ -28,44 +28,45 @@ namespace ProtonVPN.Client.Services.Upselling;
 public class AccountUpgradeUrlLauncher : IAccountUpgradeUrlLauncher,
     IEventMessageReceiver<VpnPlanChangedMessage>
 {
-    private readonly IUpsellUpgradeAttemptStatisticalEventSender _upsellUpgradeAttemptStatisticalEventSender;
-    private readonly IUpsellSuccessStatisticalEventSender _upsellSuccessStatisticalEventSender;
+    private readonly IUpsellUpgradeAttemptReporter _upsellUpgradeAttemptReporter;
+    private readonly IUpsellSuccessReporter _upsellSuccessReporter;
     private readonly IUrlsBrowser _urlsBrowser;
     private readonly IWebAuthenticator _webAuthenticator;
 
-    private ModalSource? _currentAttemptModalSource;
+    private string? _currentAttemptUrl;
+    private UpsellModalContext? _currentAttemptContext;
     private string? _currentAttemptReference;
 
     public AccountUpgradeUrlLauncher(
-        IUpsellUpgradeAttemptStatisticalEventSender upsellUpgradeAttemptStatisticalEventSender,
-        IUpsellSuccessStatisticalEventSender upsellSuccessStatisticalEventSender,
+        IUpsellUpgradeAttemptReporter upsellUpgradeAttemptReporter,
+        IUpsellSuccessReporter upsellSuccessReporter,
         IUrlsBrowser urlsBrowser,
         IWebAuthenticator webAuthenticator)
     {
-        _upsellUpgradeAttemptStatisticalEventSender = upsellUpgradeAttemptStatisticalEventSender;
-        _upsellSuccessStatisticalEventSender = upsellSuccessStatisticalEventSender;
+        _upsellUpgradeAttemptReporter = upsellUpgradeAttemptReporter;
+        _upsellSuccessReporter = upsellSuccessReporter;
         _urlsBrowser = urlsBrowser;
         _webAuthenticator = webAuthenticator;
     }
 
-    public async Task OpenAsync(ModalSource modalSource, string? reference = null)
+    public async Task OpenAsync(UpsellModalContext context)
     {
-        string url = await _webAuthenticator.GetUpgradeAccountUrlAsync(modalSource, reference);
+        string url = await _webAuthenticator.GetUpgradeAccountUrlAsync(context.Source);
 
-        Open(url, modalSource, reference);
+        Open(url, context);
     }
 
-    public void Open(string url, ModalSource modalSource, string? reference = null)
+    public void Open(string url, UpsellModalContext context, string? reference = null)
     {
         try
         {
-            _upsellUpgradeAttemptStatisticalEventSender.Send(modalSource, reference);
+            _upsellUpgradeAttemptReporter.Report(context, reference);
 
             _urlsBrowser.BrowseTo(url);
         }
         finally
         {
-            SetAttempt(modalSource, reference);
+            SetAttempt(url, context, reference);
         }
     }
 
@@ -73,9 +74,14 @@ public class AccountUpgradeUrlLauncher : IAccountUpgradeUrlLauncher,
     {
         try
         {
-            if (_currentAttemptModalSource.HasValue && message.HasChanged() && !message.IsDowngrade())
+            if (_currentAttemptContext.HasValue && message.HasChanged() && !message.IsDowngrade())
             {
-                _upsellSuccessStatisticalEventSender.Send(_currentAttemptModalSource.Value, message.OldPlan, message.NewPlan, _currentAttemptReference);
+                _upsellSuccessReporter.Report(
+                    _currentAttemptUrl ?? string.Empty,
+                    _currentAttemptContext.Value,
+                    message.OldPlan,
+                    message.NewPlan,
+                    _currentAttemptReference);
             }
         }
         finally
@@ -84,15 +90,17 @@ public class AccountUpgradeUrlLauncher : IAccountUpgradeUrlLauncher,
         }
     }
 
-    private void SetAttempt(ModalSource modalSource, string? reference)
+    private void SetAttempt(string url, UpsellModalContext context, string? reference)
     {
-        _currentAttemptModalSource = modalSource;
+        _currentAttemptUrl = url;
+        _currentAttemptContext = context;
         _currentAttemptReference = reference;
     }
 
     private void ResetAttempt()
     {
-        _currentAttemptModalSource = null;
+        _currentAttemptUrl = null;
+        _currentAttemptContext = null;
         _currentAttemptReference = null;
     }
 }

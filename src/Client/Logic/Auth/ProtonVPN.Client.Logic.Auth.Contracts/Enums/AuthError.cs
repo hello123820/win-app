@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -24,13 +24,14 @@ public enum AuthError
     None,
     NoVpnAccess,
     InvalidServerProof,
-    MissingGoSrpDll,
+    MissingSrpDll,
     TwoFactorRequired,
     IncorrectTwoFactorCode,
     TwoFactorAuthFailed,
     TwoFactorCancelled,
     WebAuthnNotSupported,
     GuestHoleFailed,
+    GuestHoleFailedDueToMobileHotspot,
     GetSessionDetailsFailed,
     SsoAuthFailed,
     SwitchToSSO,

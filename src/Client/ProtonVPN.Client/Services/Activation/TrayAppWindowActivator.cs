@@ -27,6 +27,8 @@ using ProtonVPN.Client.UI.Dialogs.Tray;
 using ProtonVPN.Logging.Contracts;
 using ProtonVPN.Client.Core.Extensions;
 using ProtonVPN.Client.Logic.Auth.Contracts;
+using ProtonVPN.Client.EventMessaging.Contracts;
+using ProtonVPN.Client.Contracts.Messages;
 
 namespace ProtonVPN.Client.Services.Activation;
 
@@ -38,27 +40,34 @@ public class TrayAppWindowActivator : DialogActivatorBase<TrayAppWindow>, ITrayA
     private const double TRAY_APP_MARGIN = 10;
 
     private readonly IUserAuthenticator _userAuthenticator;
+    private readonly IEventMessageSender _eventMessageSender;
 
     public override string WindowTitle { get; } = $"{App.APPLICATION_NAME} (tray)";
+
+    protected override bool ShouldCreateInstanceIfMissing => false;
 
     public TrayAppWindowActivator(
         ILogger logger,
         IUIThreadDispatcher uiThreadDispatcher,
         IApplicationThemeSelector themeSelector,
         ISettings settings,
+        ILocalizationService localizationService,
         ILocalizationProvider localizer,
         IApplicationIconSelector iconSelector,
         IMainWindowActivator mainWindowActivator,
-        IUserAuthenticator userAuthenticator)
+        IUserAuthenticator userAuthenticator,
+        IEventMessageSender eventMessageSender)
         : base(logger,
                uiThreadDispatcher,
                themeSelector,
                settings,
+               localizationService,
                localizer,
                iconSelector,
                mainWindowActivator)
     {
         _userAuthenticator = userAuthenticator;
+        _eventMessageSender = eventMessageSender;
     }
 
     protected override void InvalidateWindowPosition()
@@ -75,6 +84,8 @@ public class TrayAppWindowActivator : DialogActivatorBase<TrayAppWindow>, ITrayA
         base.OnWindowFocused();
 
         InvalidateWindowPosition();
+
+        _eventMessageSender.Send(new TrayAppWindowFocusedMessage());
     }
 
     protected override void OnWindowUnfocused()

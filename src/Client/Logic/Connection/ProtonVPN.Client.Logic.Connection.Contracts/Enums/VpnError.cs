@@ -36,6 +36,7 @@ public enum VpnError
     ServerOffline,
     ServerRemoved,
     NoServers,
+    AllServersExcluded,
     Unknown,
     RpcServerUnavailable,
     ServerUnreachable,
@@ -72,4 +73,5 @@ public enum VpnError
 
     ServerSessionDoesNotMatch = 86202,
     ServerSessionError = 86203,
+    PortForwardingNotSupported = 86223,
 }

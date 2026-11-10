@@ -121,40 +121,37 @@
     <value>Proton VPN Free</value>
   </data>
   <data name="Automation_Properties_ConnectionDetails_Page">
-    <value>连接详细信息页面</value>
+    <value>连接详情</value>
+  </data>
+  <data name="Automation_Properties_ConnectionPreferences_Page">
+    <value>连接偏好</value>
   </data>
   <data name="Automation_Properties_Connection_Card_Component">
     <value>连接信息</value>
-  </data>
-  <data name="Automation_Properties_Features_Bar">
-    <value>功能栏</value>
-  </data>
-  <data name="Automation_Properties_Home_Page">
-    <value>首页</value>
   </data>
   <data name="Automation_Properties_KillSwitch_Page">
     <value>终止开关</value>
   </data>
   <data name="Automation_Properties_LocationDetails_Page">
-    <value>节点详情</value>
+    <value>位置详情</value>
   </data>
   <data name="Automation_Properties_Login_Page">
     <value>登录</value>
   </data>
   <data name="Automation_Properties_Main_Page">
-    <value>主页</value>
+    <value>主界面</value>
   </data>
   <data name="Automation_Properties_NetShield_Page">
-    <value>安全防护</value>
+    <value>NetShield 防护</value>
   </data>
   <data name="Automation_Properties_NoServers_Page">
-    <value>No servers page</value>
+    <value>无服务器</value>
   </data>
   <data name="Automation_Properties_PortForwarding_Page">
     <value>端口转发</value>
   </data>
   <data name="Automation_Properties_Profile_Page">
-    <value>个人资料</value>
+    <value>配置文件</value>
   </data>
   <data name="Automation_Properties_Settings_Advanced_Page">
     <value>高级设置</value>
@@ -169,7 +166,7 @@
     <value>侧边栏</value>
   </data>
   <data name="Automation_Properties_Sidebar_Connections_Countries_Page">
-    <value>国家</value>
+    <value>国家/地区</value>
   </data>
   <data name="Automation_Properties_Sidebar_Connections_Gateways_Page">
     <value>网关</value>
@@ -181,26 +178,19 @@
     <value>配置文件</value>
   </data>
   <data name="Automation_Properties_Sidebar_Connections_Recents_Page">
-    <value>最近访问</value>
+    <value>最近使用</value>
   </data>
   <data name="Automation_Properties_Sidebar_Search_Results_Page">
     <value>搜索结果</value>
   </data>
   <data name="Automation_Properties_SplitTunneling_Page">
-    <value>分流设置</value>
-  </data>
-  <data name="Cities">
-    <value>城市</value>
+    <value>拆分隧道</value>
   </data>
   <data name="City_Fastest">
     <value>最快的城市</value>
   </data>
   <data name="City_Random">
     <value>随机城市</value>
-  </data>
-  <data name="Common_Actions_ActionsFor">
-    <value>{0}相关操作</value>
-    <comment>Used for accessibility purposes (Narrator) in the recents list to open the alternate actions menu (pin, unpin...). {0} is a place holder which can be a country, a city, a server...</comment>
   </data>
   <data name="Common_Actions_Add">
     <value>添加</value>
@@ -220,25 +210,14 @@
   <data name="Common_Actions_Connect">
     <value>连接</value>
   </data>
-  <data name="Common_Actions_ConnectTo">
-    <value>连接到{0}</value>
-    <comment>Used for accessibility purposes (Narrator) to describe the action to Connect to something. {0} is a place holder which can be a country, a city, a server...</comment>
-  </data>
   <data name="Common_Actions_ContactUs">
     <value>联系我们</value>
-  </data>
-  <data name="Common_Actions_Customize">
-    <value>自定义</value>
   </data>
   <data name="Common_Actions_Delete">
     <value>删除</value>
   </data>
   <data name="Common_Actions_Disconnect">
     <value>断开连接</value>
-  </data>
-  <data name="Common_Actions_DisconnectFrom">
-    <value>已断开与{0}的连接</value>
-    <comment>Used for accessibility purposes (Narrator) to describe the action to disconnect from something. {0} is a place holder which can be a country, a city, a server...</comment>
   </data>
   <data name="Common_Actions_Duplicate">
     <value>复制</value>
@@ -268,7 +247,7 @@
     <value>重新连接</value>
   </data>
   <data name="Common_Actions_Refresh">
-    <value>Refresh</value>
+    <value>刷新</value>
   </data>
   <data name="Common_Actions_Remove">
     <value>注销</value>
@@ -289,19 +268,19 @@
     <value>升级账户</value>
   </data>
   <data name="Common_Confirmation_KillSwitch_Message">
-    <value>高级 Kill Switch 已开启。要在没有 VPN 的情况下使用互联网，请禁用高级 Kill Switch 。</value>
+    <value>高级终止开关已启用。若要使用非 VPN 的互联网，请禁用高级终止开关。</value>
   </data>
   <data name="Common_Confirmation_YouWillBeDisconnectedWithKillSwitch_Message">
-    <value>高级 Kill Switch 已启用。如果您继续，您将被断开连接。</value>
+    <value>高级终止开关已启用。如果继续，您将断开网络连接。</value>
   </data>
   <data name="Common_Confirmation_YouWillBeDisconnected_Message">
-    <value>断开 VPN 连接。</value>
+    <value>您将断开与 VPN 的连接！</value>
   </data>
   <data name="Common_Links_LearnMore">
     <value>了解详情</value>
   </data>
-  <data name="Common_Message_Loading">
-    <value>正在载入…</value>
+  <data name="Common_Message_AppNotFound">
+    <value>未找到应用</value>
   </data>
   <data name="Common_States_Off">
     <value>关闭</value>
@@ -309,15 +288,12 @@
   <data name="Common_States_On">
     <value>启用</value>
   </data>
-  <data name="Common_States_Updating">
-    <value>更新中…</value>
-  </data>
   <data name="Common_Tags_Beta">
-    <value>公测版</value>
+    <value>测试版</value>
     <comment>This tag indicates that this version of the app is currently in beta (early access)</comment>
   </data>
   <data name="Common_Tags_New">
-    <value>新功能</value>
+    <value>新</value>
     <comment>This tag indicates that a newer version of the app is currently available</comment>
   </data>
   <data name="Common_Tags_Recommended">
@@ -334,7 +310,19 @@
     <value>有可用更新</value>
   </data>
   <data name="Components_Update_UpdateProtonVpn">
-    <value>升级 Proton VPN</value>
+    <value>更新 Proton VPN</value>
+  </data>
+  <data name="Connection_Error_AllServersExcluded">
+    <value>您的偏好设置排除了所有可用服务器，请调整排除项以进行连接！</value>
+  </data>
+  <data name="Connection_Error_AllServersExcluded_Action">
+    <value>排除的位置</value>
+  </data>
+  <data name="Connection_Error_ConflictingAdapter_Description">
+    <value>若要解决此问题，请关闭或卸载与以下内容关联的应用：</value>
+  </data>
+  <data name="Connection_Error_ConflictingAdapter_Title">
+    <value>其他应用可能正在阻止 Proton VPN 连接</value>
   </data>
   <data name="Connection_Error_EditProfile">
     <value>修改个人资料</value>
@@ -342,11 +330,14 @@
   <data name="Connection_Error_MissingConnectionCertificate">
     <value>由于网络问题，Proton VPN 无法获取身份验证证书。</value>
   </data>
+  <data name="Connection_Error_MobileHotspotEnabled">
+    <value>你的设备上的网络设置阻止了此连接。这可能是由移动热点、另一个VPN应用程序或虚拟机软件引起的。请检查你的网络配置或联系支持部门寻求帮助。</value>
+  </data>
   <data name="Connection_Error_NoServers">
     <value>您选择的所有服务器均不可用。请扩大选择范围或稍后再试。</value>
   </data>
   <data name="Connection_Error_NoServers_Profile">
-    <value>您为 ' {0} ' 选择的服务器不可用。请选择其他服务器或稍后再试。</value>
+    <value>您在“{0}”中选择的服务器不可用，请选择其他服务器或稍后重试。</value>
     <comment>{0} is a placeholder for the profile name</comment>
   </data>
   <data name="Connection_Error_NoTapAdapters">
@@ -357,6 +348,9 @@
   </data>
   <data name="Connection_Error_RpcServerUnavailable">
     <value>Proton VPN 无法连接，因为 RPC 服务器在您的系统上不可用。</value>
+  </data>
+  <data name="Connection_Error_ServerValidation">
+    <value>The server details couldn't be verified. Try another server, or report the issue to our Customer Support team.</value>
   </data>
   <data name="Connection_Error_SessionLimitReachedFreeUser">
     <value>您已达到最大设备限制。请断开另一台设备以连接这台设备，或升级到 PLUS 以同时连接多达 10 台设备。</value>
@@ -377,15 +371,15 @@
     <value>VPN 服务器的证书未能通过验证，这意味着当前网络环境可能已遭到监控，或者服务器配置存在问题。请填写问题反馈以便我们的客服为您提供帮助。</value>
   </data>
   <data name="Connection_Error_TwoFactorRequired_Description">
-    <value>To connect to VPN, go to your organization's 2FA portal and tap your security key.</value>
+    <value>要连接到 VPN，请前往您所在组织的 2FA 门户并点击您的安全密钥。</value>
   </data>
   <data name="Connection_Error_TwoFactorRequired_Title">
-    <value>Two-factor authentication (2FA) required</value>
+    <value>需要 2FA</value>
   </data>
   <data name="Connection_Error_Unknown">
-    <value>Check your internet connection and try again. If that doesn't work, contact our customer support team.
+    <value>请检查您的网络连接并重试。如果问题依旧，请联系我们的客户支持团队。
 
-Error code: {0}</value>
+错误代码：{0}</value>
   </data>
   <data name="Connection_Error_ViewPossibleSolutions">
     <value>查看修复方法</value>
@@ -393,48 +387,43 @@ Error code: {0}</value>
   <data name="Connection_Error_WireGuardAdapterInUse">
     <value>您设备的 WireGuard 适配器正在使用中。断开设备上运行的任何其他 VPN，然后再试一次。</value>
   </data>
+  <data name="Connection_Feedback_Question">
+    <value>您的连接状况如何？</value>
+  </data>
   <data name="Connection_Intent_AutoSelected">
     <value>自动选择</value>
     <comment>Appears in the connection card for free users. A set of flags is displayed after the text (eg. Auto-selected from [us-flag] [jp-flag]...)</comment>
-  </data>
-  <data name="Connection_Intent_City_Server">
-    <value>{0}#{1}</value>
-    <comment>Name of the server including city name. {0} is a placeholder for the city name. {1} is a placeholder for the number associated to the server (eg. Zurich #20)</comment>
-  </data>
-  <data name="Connection_Intent_Country_Server">
-    <value>{0}#{1}</value>
-    <comment>Name of the server including country name. {0} is a placeholder for the country name. {1} is a placeholder for the number associated to the server (eg. Switzerland #20)</comment>
   </data>
   <data name="Connection_Via_SecureCore">
     <value>经由{0}中转</value>
     <comment>Label used when connecting through Secure Core. {0} is a place holder for the name of the country the user is going through.</comment>
   </data>
   <data name="Connections_Cities_Other">
-    <value>城市（{0}）</value>
+    <value>城市 ({0})</value>
   </data>
   <data name="Connections_City">
-    <value>城市 / 区县</value>
+    <value>城市</value>
   </data>
   <data name="Connections_City_Restricted">
-    <value>该城市的服务器可用 VPN Plus 服务</value>
+    <value>此城市的服务器需使用 VPN Plus 方可连接</value>
   </data>
   <data name="Connections_City_UnderMaintenance">
-    <value>所有在该城市的服务器均在维护</value>
+    <value>此城市的所有服务器均处于维护中</value>
   </data>
   <data name="Connections_Countries_Other">
-    <value>国家/地区（{0}）</value>
+    <value>国家/地区 ({0})</value>
   </data>
   <data name="Connections_Country">
     <value>国家/地区</value>
   </data>
   <data name="Connections_Country_Middle">
-    <value>中间国家</value>
+    <value>中转国家/地区</value>
   </data>
   <data name="Connections_Country_Restricted">
-    <value>该国家的服务器可用 VPN Plus 服务</value>
+    <value>此国家/地区的服务器需使用 VPN Plus 方可连接</value>
   </data>
   <data name="Connections_Country_UnderMaintenance">
-    <value>此国家的所有服务器都在维护中</value>
+    <value>此国家/地区的所有服务器均处于维护中</value>
   </data>
   <data name="Connections_Country_UnderMaintenance_Title">
     <value>无法连接</value>
@@ -443,7 +432,7 @@ Error code: {0}</value>
     <value>最快</value>
   </data>
   <data name="Connections_Free_Servers_Other">
-    <value>Free servers</value>
+    <value>免费服务器</value>
   </data>
   <data name="Connections_Gateway">
     <value>网关</value>
@@ -467,10 +456,10 @@ Error code: {0}</value>
     <value>P2P 城市 ({0})</value>
   </data>
   <data name="Connections_P2P_Countries_Other">
-    <value>P2P 国家 ({0})</value>
+    <value>P2P 国家/地区 ({0})</value>
   </data>
   <data name="Connections_P2P_Servers_Other">
-    <value>P2P servers</value>
+    <value>P2P 服务器</value>
   </data>
   <data name="Connections_P2P_States_Other">
     <value>P2P 州 ({0})</value>
@@ -520,15 +509,6 @@ Error code: {0}</value>
     <value>VPN Plus 提供的配置</value>
     <comment>The text in the tooltip when hovering a profile and the user has a free plan</comment>
   </data>
-  <data name="Connections_Profiles_Settings_Description">
-    <value>连接时，配置文件设置将覆盖 VPN 设置。</value>
-  </data>
-  <data name="Connections_Profiles_Settings_Header">
-    <value>添加自定义设置</value>
-  </data>
-  <data name="Connections_Random">
-    <value>随机</value>
-  </data>
   <data name="Connections_Recents_Other">
     <value>最近使用 ({0})</value>
   </data>
@@ -542,22 +522,10 @@ Error code: {0}</value>
     <value>已固定 ({0})</value>
   </data>
   <data name="Connections_SecureCore_Countries_Other">
-    <value>Secure Core 国家/地区（{0}）</value>
+    <value>Secure Core 国家/地区 ({0})</value>
   </data>
   <data name="Connections_SecureCore_Servers_Other">
-    <value>Secure Core servers</value>
-  </data>
-  <data name="Connections_SeeCities_Other">
-    <value>查看城市 ({0})</value>
-  </data>
-  <data name="Connections_SeeServers_Other">
-    <value>查看服务器 ({0})</value>
-  </data>
-  <data name="Connections_SeeStates_Other">
-    <value>查看州 ({0})</value>
-  </data>
-  <data name="Connections_Server">
-    <value>服务器</value>
+    <value>Secure Core 服务器</value>
   </data>
   <data name="Connections_Server_Restricted">
     <value>VPN Plus 提供的服务器</value>
@@ -566,7 +534,7 @@ Error code: {0}</value>
     <value>该服务器正在维护中</value>
   </data>
   <data name="Connections_Servers_Other">
-    <value>Servers</value>
+    <value>服务器</value>
   </data>
   <data name="Connections_State">
     <value>省份/地区</value>
@@ -583,52 +551,22 @@ Error code: {0}</value>
     <value>州 ({0})</value>
   </data>
   <data name="Connections_Tor_Countries_Other">
-    <value>Tor 国家/地区（{0}）</value>
+    <value>Tor 国家/地区 ({0})</value>
   </data>
   <data name="Connections_Tor_Servers_Other">
-    <value>Tor servers</value>
+    <value>Tor 服务器</value>
   </data>
   <data name="Countries">
-    <value>国家</value>
+    <value>国家/地区</value>
   </data>
   <data name="Countries_All">
     <value>全部</value>
   </data>
-  <data name="Countries_City_Other">
-    <value>{0} 个城市</value>
-  </data>
-  <data name="Countries_Connect">
-    <value>连接</value>
-    <comment>Connect button label on a country row in the countries tab</comment>
-  </data>
-  <data name="Countries_Fastest">
-    <value>最快的地域</value>
-  </data>
-  <data name="Countries_NoSearchResults">
-    <value>您要的没找到</value>
-  </data>
-  <data name="Countries_NumberOfServers">
-    <value>服务器 ({0})</value>
-    <comment>{0} represents a number of servers</comment>
-  </data>
   <data name="Countries_P2P">
     <value>P2P</value>
   </data>
-  <data name="Countries_P2P_Cities">
-    <value>P2P 城市 ({0})</value>
-    <comment>{0} represents a number of P2P cities in the country</comment>
-  </data>
   <data name="Countries_P2P_Description">
     <value>通过 P2P (点对点) 网络下载文件，增强您的在线游戏和视频通话体验。</value>
-  </data>
-  <data name="Countries_Page_FreeUser_Description">
-    <value>升级为VPN Plus以选择国家或地区</value>
-  </data>
-  <data name="Countries_SearchPlaceholder">
-    <value>我想要浏览...</value>
-  </data>
-  <data name="Countries_Section_Header">
-    <value>VPN 连接数</value>
   </data>
   <data name="Countries_SecureCore">
     <value>Secure Core</value>
@@ -642,30 +580,27 @@ Error code: {0}</value>
   <data name="Countries_SmartRouting">
     <value>智能路由</value>
   </data>
+  <data name="Countries_SmartRouting_RoutedThrough">
+    <value>通过 {0} 智能路由</value>
+    <comment>Label used when server is virtual. {0} is a place holder for the name of the country the server is routed through.</comment>
+  </data>
   <data name="Countries_Tor">
     <value>Tor</value>
-  </data>
-  <data name="Countries_TorServers">
-    <value>Tor 服务器（{0}）</value>
-    <comment>{0} represents a number of tor servers in the country</comment>
   </data>
   <data name="Countries_Tor_Description">
     <value>经 Tor 网络，连接 VPN，更强隐私.</value>
   </data>
-  <data name="Countries_TryDifferentKeyword">
-    <value>换个关键词试试</value>
-  </data>
   <data name="Country_Fastest">
-    <value>最快的地域</value>
+    <value>最快的国家/地区</value>
   </data>
   <data name="Country_Fastest_ExcludingMyCountry">
-    <value>最快 (不包括我国)</value>
+    <value>最快 (排除当前位置)</value>
   </data>
   <data name="Country_Random">
-    <value>随机国家</value>
+    <value>随机国家/地区</value>
   </data>
   <data name="Country_Random_ExcludingMyCountry">
-    <value>随机 (不包括我国)</value>
+    <value>随机 (排除当前位置)</value>
   </data>
   <data name="Country_val_AD">
     <value>安道尔</value>
@@ -1647,6 +1582,10 @@ Error code: {0}</value>
     <value>萨摩亚</value>
     <comment>The name of WS country</comment>
   </data>
+  <data name="Country_val_XK">
+    <value>科索沃</value>
+    <comment>The name of XK country</comment>
+  </data>
   <data name="Country_val_YE">
     <value>也门</value>
     <comment>The name of YE country</comment>
@@ -1702,39 +1641,13 @@ Error code: {0}</value>
     <value>启用 Windows 服务以继续</value>
   </data>
   <data name="Dialogs_FreeConnections_Description_Other">
-    <value>Proton Free 会自动将您连接到 {0} 个免费国家中最快的可用免费服务器。这通常是离您最近的服务器。</value>
+    <value>Proton Free 会从我们提供的 {0} 个免费国家/地区中，自动将您连接到可用的最快免费服务器。通常，这将是离您所在位置最近的服务器。</value>
   </data>
   <data name="Dialogs_FreeConnections_Header_Other">
-    <value>免费服务器所在的国家 ({0})</value>
+    <value>免费服务器国家/地区 ({0})</value>
   </data>
   <data name="Dialogs_FreeConnections_Title">
     <value>免费连接</value>
-  </data>
-  <data name="Dialogs_Latency_Description">
-    <value>延迟反映了服务器响应请求所需的时间。
-
-高延迟会导致网速变慢。</value>
-  </data>
-  <data name="Dialogs_Latency_HighRange_Description">
-    <value>VPN可能会导致网速比平常时候更慢</value>
-  </data>
-  <data name="Dialogs_Latency_HighRange_Title">
-    <value>高延迟（150毫秒以上）</value>
-  </data>
-  <data name="Dialogs_Latency_LowRange_Description">
-    <value>快如闪电</value>
-  </data>
-  <data name="Dialogs_Latency_LowRange_Title">
-    <value>低延迟（1毫秒~50毫秒间）</value>
-  </data>
-  <data name="Dialogs_Latency_MediumRange_Description">
-    <value>不大可能影响 VPN 的速度</value>
-  </data>
-  <data name="Dialogs_Latency_MediumRange_Title">
-    <value>中等延迟（50毫秒~150毫秒间）</value>
-  </data>
-  <data name="Dialogs_Latency_Title">
-    <value>延迟是什么？</value>
   </data>
   <data name="Dialogs_NpsSurvey_CommentLabel">
     <value>请告诉我们您为何给予这样的评价</value>
@@ -1770,56 +1683,16 @@ Error code: {0}</value>
     <value>请重试</value>
   </data>
   <data name="Dialogs_P2PDetection_Description">
-    <value>您的连接已被禁用，因为您使用的服务器不支持点对点 (P2P) 流量。免费服务器不支持 P2P。请使用其他服务器进行 P2P。</value>
+    <value>升级以解锁用于快速在线游戏和下载的 P2P（点对点）服务器，或结束您的 P2P 活动以恢复连接。</value>
   </data>
   <data name="Dialogs_P2PDetection_Title">
-    <value>检测到 P2P 流量</value>
+    <value>免费VPN服务器不支持P2P</value>
   </data>
-  <data name="Dialogs_P2P_HowToTorrentLink">
-    <value>如何通过P2P进行种子下载</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_Title">
-    <value>P2P</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsP2PServer">
-    <value>什么是 P2P 服务器？</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsP2PServer_Description">
-    <value>P2P (点对点) VPN 服务器可解锁种子网站。</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsTorrenting">
-    <value>什么是种子？</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsTorrenting_Description">
-    <value>通过点对点 (P2P) 网络快速共享和下载大文件。</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhyUse">
-    <value>为什么用 P2P 服务器进行种子下载？</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhyUse_Description">
-    <value>• 上传和下载速度更快
-• 无活动记录
-• 向服务提供商和种子用户隐藏你的 IP 地址</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_Protocol_Description">
-    <value>协议是设备同服务器连接、通讯的方法所按照的一系列规范。</value>
-  </data>
-  <data name="Dialogs_Protocol_SwitchHeader">
-    <value>切换VPN协议</value>
-  </data>
-  <data name="Dialogs_Protocol_Title">
-    <value>VPN协议是什么？</value>
+  <data name="Dialogs_P2PDetection_WindowTitle">
+    <value>探索 VPN Plus</value>
   </data>
   <data name="Dialogs_ReportIssue_ContactForm_Email">
-    <value>电子邮箱</value>
+    <value>邮箱</value>
     <comment>The label for user e-mail address in Report an issue window</comment>
   </data>
   <data name="Dialogs_ReportIssue_ContactForm_Email_Description">
@@ -1874,34 +1747,14 @@ Error code: {0}</value>
   <data name="Dialogs_ReportIssue_Title">
     <value>报告问题</value>
   </data>
-  <data name="Dialogs_ServerLoad_Description">
-    <value>服务器负载反映了某个服务器距离达到其可用资源上限还有多少。
-
-高服务器负载会导致您的网速变慢。</value>
+  <data name="Dialogs_StreamingDetection_WindowTitle">
+    <value>探索 VPN Plus</value>
   </data>
-  <data name="Dialogs_ServerLoad_HighRange_Description">
-    <value>VPN可能会导致网速比平常时候更慢</value>
+  <data name="Dialogs_StreamingWarning_Description">
+    <value>VPN Plus 服务器可让您畅享来自世界各地的您喜爱的电影和电视节目。</value>
   </data>
-  <data name="Dialogs_ServerLoad_HighRange_Title">
-    <value>高延迟（91-100%）</value>
-  </data>
-  <data name="Dialogs_ServerLoad_LowRange_Description">
-    <value>快如闪电</value>
-  </data>
-  <data name="Dialogs_ServerLoad_LowRange_Title">
-    <value>低延迟（1-75%）</value>
-  </data>
-  <data name="Dialogs_ServerLoad_MediumRange_Description">
-    <value>不大可能影响 VPN 的速度</value>
-  </data>
-  <data name="Dialogs_ServerLoad_MediumRange_Title">
-    <value>中延迟（76-90%）</value>
-  </data>
-  <data name="Dialogs_ServerLoad_Title">
-    <value>服务器负载是什么？</value>
-  </data>
-  <data name="Dialogs_SmartRouting_Title">
-    <value>Smart Routing</value>
+  <data name="Dialogs_StreamingWarning_Title">
+    <value>升级以绕过 VPN 阻止</value>
   </data>
   <data name="Dialogs_SubscriptionExpired_MaybeLater">
     <value>以后再说</value>
@@ -1909,20 +1762,8 @@ Error code: {0}</value>
   <data name="Dialogs_SystemProxy_Description">
     <value>您的设备似乎正在使用代理服务器。这可能会干扰您的 VPN 保护。</value>
   </data>
-  <data name="Dialogs_SystemProxy_Disable">
-    <value>停用代理</value>
-  </data>
   <data name="Dialogs_SystemProxy_Title">
     <value>检测到代理服务器</value>
-  </data>
-  <data name="Dialogs_Tor_Description">
-    <value>连接到 Tor 服务器，使用任何浏览器访问隐藏服务和洋葱站点。</value>
-  </data>
-  <data name="Dialogs_Tor_LearnMore">
-    <value>如何接入 Tor 网络</value>
-  </data>
-  <data name="Dialogs_Tor_Title">
-    <value>Tor</value>
   </data>
   <data name="Dialogs_Troubleshooting_Antivirus">
     <value>关闭杀毒软件或防火墙</value>
@@ -1946,7 +1787,7 @@ Error code: {0}</value>
     <value>尝试切换 Wi-Fi 网络，或改用移动数据。</value>
   </data>
   <data name="Dialogs_Troubleshooting_StatusPage">
-    <value>检查我们的状态页面</value>
+    <value>查看当前状态</value>
   </data>
   <data name="Dialogs_Troubleshooting_StatusPage_Description">
     <value>确保 Proton 的服务正常运行。</value>
@@ -1955,10 +1796,10 @@ Error code: {0}</value>
     <value>连接帮助</value>
   </data>
   <data name="Dialogs_UpdateConfirmation_Message_KillSwitchOff">
-    <value>这将断开您的 VPN 连接。任何活动的互联网连接都将暂时不受保护。</value>
+    <value>这将断开您的 VPN 连接。任何活动的网络连接都将暂时不受保护。</value>
   </data>
   <data name="Dialogs_UpdateConfirmation_Message_KillSwitchOn">
-    <value>这将断开你的 VPN 连接，并暂时禁用 Kill Switch。任何活动的互联网连接都将暂时不受保护。</value>
+    <value>此操作将使您断开 VPN 连接并暂时禁用终止开关，任何活动的网络连接将暂时不受保护。</value>
   </data>
   <data name="Dialogs_UpdateConfirmation_Title_Install">
     <value>安装更新？</value>
@@ -1994,7 +1835,7 @@ Error code: {0}</value>
     <value>随时随地自由浏览</value>
   </data>
   <data name="Dialogs_WelcomeToVpnPlus_BrowseFreely_Description_Other">
-    <value>隐藏您的虚拟位置，在 {0} 个可用国家体验互联网。</value>
+    <value>隐藏您的虚拟位置，并从我们提供的 {0} 个可用国家/地区中的任意一个访问互联网。</value>
   </data>
   <data name="Dialogs_WelcomeToVpnPlus_ProtectDevices">
     <value>可同时保护 10 台设备</value>
@@ -2011,26 +1852,12 @@ Error code: {0}</value>
   <data name="Dialogs_WelcomeToVpnPlus_Title">
     <value>欢迎使用 VPN Plus</value>
   </data>
-  <data name="Dialogs_WelcomeUnlimited_Description1">
-    <value>恭喜您！您已解锁 Proton 所有服务的高级安全和性能功能。</value>
-  </data>
-  <data name="Dialogs_WelcomeUnlimited_Description2">
-    <value>享受 Proton 隐私的最佳体验。</value>
+  <data name="Dialogs_WelcomeUnlimited_Description">
+    <value>您已解锁所有高级 Proton VPN、Mail、Calendar、Drive 和 Pass 功能！</value>
   </data>
   <data name="Dialogs_WelcomeUnlimited_Title">
-    <value>欢迎使用 Proton Unlimited</value>
-  </data>
-  <data name="Dialogs_Welcome_Message">
-    <value>我们正在为您准备新的 VPN 体验。只需稍等片刻。</value>
-  </data>
-  <data name="Dialogs_Welcome_Title">
-    <value>欢迎使用 Proton VPN</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Gateways_Description">
-    <value>您现在可以从主侧边栏访问您组织的专用服务器</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Gateways_Title">
-    <value>网关位置已变更</value>
+    <value>欢迎使用 {0}</value>
+    <comment>Title to welcome the user after an account upgrade. {0} is a placeholder for the name of the new plan (eg. Proton Unlimited, Proton Duo, Proton Family).</comment>
   </data>
   <data name="Dialogs_WhatsNew_LanConnections_Description">
     <value>现在，您可以绕过 VPN 通道，连接到本地网络 (LAN) 上的打印机、扬声器和其他设备。</value>
@@ -2038,29 +1865,11 @@ Error code: {0}</value>
   <data name="Dialogs_WhatsNew_LanConnections_Title">
     <value>LAN 连接</value>
   </data>
-  <data name="Dialogs_WhatsNew_NewLook_Description">
-    <value>我们更新了产品设计，并优化了功能布局，以提升应用的使用便捷性。</value>
-  </data>
-  <data name="Dialogs_WhatsNew_NewLook_Title">
-    <value>全新面貌，保护依旧</value>
-  </data>
   <data name="Dialogs_WhatsNew_PortNumber_Description">
     <value>启用端口转发后，您将在主屏幕上看到您的活动端口号。</value>
   </data>
   <data name="Dialogs_WhatsNew_PortNumber_Title">
     <value>使用中的端口号</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Profiles_Description">
-    <value>新增NetShield和端口转发等高级配置文件设置，或设置Connect and Go以便在连接时自动打开您指定的网站。</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Profiles_Title">
-    <value>更强大的配置文件</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Recents_Description">
-    <value>现在重新连接至您最爱的服务器变得更为便捷。您可在主屏幕上查看最近的连接记录，或将其置顶以便快速访问。</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Recents_Title">
-    <value>近期动态</value>
   </data>
   <data name="Dialogs_WhatsNew_TakeALook">
     <value>开始</value>
@@ -2074,11 +1883,35 @@ Error code: {0}</value>
   <data name="Dialogs_WhatsNew_TrayApp_Title">
     <value>全新系统托盘应用</value>
   </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_ExcludeLocations">
+    <value>排除位置</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Message">
+    <value>如果您不希望自动连接到某些位置，可以将其从“最快”和“随机”国家/地区中排除。</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Skip">
+    <value>跳过</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Title">
+    <value>需要连接到其他地方？</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_ActionButton">
+    <value>排除位置</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_CloseButton">
+    <value>以后再说</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_Subtitle">
+    <value>您现在可以从“最快”和“随机”连接中排除特定国家/地区或城市。</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_Title">
+    <value>避开不想连接的位置</value>
+  </data>
   <data name="Exit_Confirmation_Title">
     <value>退出 Proton VPN？</value>
   </data>
   <data name="Exit_Message">
-    <value>正在断开 VPN...</value>
+    <value>正在断开 VPN 连接...</value>
   </data>
   <data name="Exit_Title">
     <value>退出 Proton VPN</value>
@@ -2087,7 +1920,7 @@ Error code: {0}</value>
     <value>在没有 VPN 的情况下浏览，您很容易受到基于位置的互联网限制。</value>
   </data>
   <data name="Flyouts_Country_Description2">
-    <value>网站可以使用地理封锁来限制某些地区的内容。各国政府也可以指示 ISP（互联网服务提供商）屏蔽本国的某些网站。</value>
+    <value>网站可以利用地理封锁，将内容限制在特定位置。政府也可以指示 ISP（互联网服务提供商）在其国家/地区内屏蔽某些网站。</value>
   </data>
   <data name="Flyouts_Country_Description3">
     <value>VPN 可以让您看起来像是在其他地方浏览，保护您免受监视和审查。</value>
@@ -2117,10 +1950,10 @@ Error code: {0}</value>
     <value>VPN IP</value>
   </data>
   <data name="Flyouts_IpAddress_VpnIpv4">
-    <value>VPN IPv4</value>
+    <value>VPN IPv4 地址</value>
   </data>
   <data name="Flyouts_IpAddress_VpnIpv6">
-    <value>VPN IPv6</value>
+    <value>VPN IPv6 地址</value>
   </data>
   <data name="Flyouts_IpAddress_YourIp">
     <value>您的 IP</value>
@@ -2132,7 +1965,7 @@ Error code: {0}</value>
     <value>您的 ISP（互联网服务提供商）是为您连接互联网的公司。</value>
   </data>
   <data name="Flyouts_Isp_Description2">
-    <value>他们可以记录您的在线活动。在一些国家，他们可以将您的数据卖给广告商。在其他国家，他们可能被要求将数据交给政府。</value>
+    <value>他们可以记录您的在线活动。在某些国家/地区，他们可能会将您的数据出售给广告商；在另一些国家/地区，他们可能被要求将数据交给政府。</value>
   </data>
   <data name="Flyouts_Isp_Description3">
     <value>VPN 隐藏了您的 IP 地址，保护您不受互联网服务供应商的干扰。</value>
@@ -2153,28 +1986,31 @@ Error code: {0}</value>
     <value>如果 VPN 连接中断，您的 IP 地址可能会被暴露</value>
   </data>
   <data name="Flyouts_KillSwitch_Info_Disconnected">
-    <value>当您未连接到 Proton VPN 时，高级 Kill Switch 会关闭您的互联网，以保护您的 IP 地址不被泄露。</value>
+    <value>当您未连接到 Proton VPN 时，高级终止开关会断开您的互联网以保护您的 IP 地址。</value>
   </data>
   <data name="Flyouts_KillSwitch_Standard_Success">
     <value>如果 VPN 连接中断，在 VPN 恢复之前，您将无法上网</value>
   </data>
   <data name="Flyouts_KillSwitch_Warning_Connected">
-    <value>即使故意断开 VPN 连接，高级 Kill Switch 也会启动</value>
+    <value>即使您故意断开 VPN 连接，高级终止开关也会生效</value>
   </data>
   <data name="Flyouts_KillSwitch_Warning_Disconnected">
-    <value>要重新联网，请连接 VPN 或禁用高级 Kill Switch</value>
+    <value>若要恢复上网，请连接到 VPN 或禁用高级终止开关</value>
+  </data>
+  <data name="Flyouts_NetShield_AdsMalwareTrackersAdultContent_Success">
+    <value>您已免受广告、跟踪器、恶意软件及成人内容的侵扰。</value>
   </data>
   <data name="Flyouts_NetShield_AdsMalwareTrackers_Success">
-    <value>保护您免受广告、跟踪器和恶意软件的侵害</value>
+    <value>您已免受广告、跟踪器及恶意软件的侵扰。</value>
   </data>
   <data name="Flyouts_NetShield_Info">
-    <value>保护自己免受网站和应用程序上的广告、跟踪器和恶意软件的侵害</value>
+    <value>保护您在网站和应用中的浏览安全。</value>
   </data>
   <data name="Flyouts_NetShield_MalwareOnly_Success">
-    <value>只保护您免受恶意软件的侵害</value>
+    <value>您仅受到恶意软件防护。</value>
   </data>
   <data name="Flyouts_NetShield_Upsell_Description">
-    <value>使用 VPN Plus 阻止广告、跟踪器和恶意软件。</value>
+    <value>使用 VPN Plus 拦截广告、跟踪器、恶意软件及成人内容。</value>
   </data>
   <data name="Flyouts_NetShield_Upsell_Title">
     <value>享受无广告浏览</value>
@@ -2182,8 +2018,11 @@ Error code: {0}</value>
   <data name="Flyouts_PortForwarding_ActivePort">
     <value>使用中的端口号</value>
   </data>
+  <data name="Flyouts_PortForwarding_ActivePort_Error">
+    <value>无法获取活动端口号，请重启您的连接并重试。</value>
+  </data>
   <data name="Flyouts_PortForwarding_ActivePort_Info">
-    <value>将活动端口号输入到您的BitTorrent客户端中，以提升点对点（P2P）传输速度。</value>
+    <value>将活动端口号输入您的 BT 客户端或 P2P 应用程序以获得更佳性能！</value>
   </data>
   <data name="Flyouts_PortForwarding_Info">
     <value>提高点对点下载速度</value>
@@ -2195,7 +2034,7 @@ Error code: {0}</value>
     <value>提高 P2P 速度</value>
   </data>
   <data name="Flyouts_PortForwarding_Warning">
-    <value>连接到P2P伺服器以加快洪流速度</value>
+    <value>连接至 P2P 服务器以提升种子下载速度</value>
   </data>
   <data name="Flyouts_Protocol_Description">
     <value>VPN 协议决定流量如何加密并通过 VPN 传输。</value>
@@ -2207,7 +2046,7 @@ Error code: {0}</value>
     <value>协议</value>
   </data>
   <data name="Flyouts_ServerLoad_Description">
-    <value>服务器负载显示服务器有多接近满载。荷载高，网速会慢。</value>
+    <value>服务器负载表示服务器接近其最大容量的程度。负载过高可能会降低您的连接速度。</value>
   </data>
   <data name="Flyouts_ServerLoad_High">
     <value>高延迟（91-100%）</value>
@@ -2232,9 +2071,6 @@ Error code: {0}</value>
   </data>
   <data name="Flyouts_ServerLoad_Title">
     <value>服务器负载</value>
-  </data>
-  <data name="Flyouts_Speed_BoostedByVpnAccelerator">
-    <value>由 VPN Accelerator 助力</value>
   </data>
   <data name="Flyouts_Speed_Description1">
     <value>显示实时通过 VPN 隧道的数据量。</value>
@@ -2296,10 +2132,6 @@ Error code: {0}</value>
   <data name="Flyouts_Volume_Upload">
     <value>上传</value>
     <comment>Refers to the uploaded volume (e.g., Upload [new line] 250 MB).</comment>
-  </data>
-  <data name="Format_Milliseconds">
-    <value>{0}毫秒</value>
-    <comment>Format a number as a time in milliseconds. {0} is a place holder for the number of milliseconds (eg. 46ms)</comment>
   </data>
   <data name="Format_Size_Bytes">
     <value>{0}B</value>
@@ -2428,9 +2260,6 @@ Error code: {0}</value>
   <data name="Gateways_Page_Title">
     <value>网关</value>
   </data>
-  <data name="Gateways_Server">
-    <value>专用服务器</value>
-  </data>
   <data name="Home_Account_SignOut">
     <value>登出</value>
   </data>
@@ -2438,78 +2267,29 @@ Error code: {0}</value>
     <value>要从 {0} 退出吗？</value>
     <comment>{0} is a placeholder for the username</comment>
   </data>
-  <data name="Home_Account_Title">
-    <value>我的账户</value>
-  </data>
   <data name="Home_ConnectionCard_ChangeDefaultConnection">
     <value>更改默认连接</value>
   </data>
   <data name="Home_ConnectionCard_ChangeServer">
     <value>切换服务器</value>
   </data>
-  <data name="Home_ConnectionCard_Header_BrowseSafely">
-    <value>安全浏览</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_ConnectingTo">
-    <value>正在连接...</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_DefaultConnection">
-    <value>默认连接</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_FreeConnection">
-    <value>免费连接</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_LastConnectedTo">
-    <value>最后连接至</value>
-  </data>
-  <data name="Home_ConnectionCard_Landmark">
-    <value>连接信息</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
   <data name="Home_ConnectionDetails_AdvancedKillSwitchActivated">
-    <value>高级 Kill Switch 已开启</value>
-  </data>
-  <data name="Home_ConnectionDetails_City">
-    <value>城市 / 区县</value>
+    <value>高级终止开关已激活</value>
   </data>
   <data name="Home_ConnectionDetails_ConnectToRestoreConnection">
     <value>连接 VPN 以恢复网络连接。</value>
-  </data>
-  <data name="Home_ConnectionDetails_ConnectedFor">
-    <value>已连接</value>
-    <comment>Label for the time the session has been active. (eg. Connected for     1 h 25 min 2s)</comment>
   </data>
   <data name="Home_ConnectionDetails_Connecting">
     <value>正在连接</value>
   </data>
   <data name="Home_ConnectionDetails_ConnectingSubLabel">
-    <value>保护您的数字身份...</value>
+    <value>正在保护您的数字身份...</value>
   </data>
   <data name="Home_ConnectionDetails_Country">
     <value>国家/地区</value>
   </data>
-  <data name="Home_ConnectionDetails_Gateway">
-    <value>网关</value>
-  </data>
-  <data name="Home_ConnectionDetails_Hide">
-    <value>隐藏连接详情</value>
-  </data>
-  <data name="Home_ConnectionDetails_HideIP">
-    <value>隐藏</value>
-    <comment>Tooltip displayed when the user hover the button to hide the User IP Address</comment>
-  </data>
-  <data name="Home_ConnectionDetails_HideIP_Description">
-    <value>隐藏用户IP地址</value>
-  </data>
   <data name="Home_ConnectionDetails_Isp">
     <value>提供商</value>
-  </data>
-  <data name="Home_ConnectionDetails_Landmark">
-    <value>连接详情</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_ConnectionDetails_MyIp">
-    <value>我的 IP</value>
   </data>
   <data name="Home_ConnectionDetails_Protected">
     <value>已受到保护</value>
@@ -2517,33 +2297,14 @@ Error code: {0}</value>
   <data name="Home_ConnectionDetails_Protocol">
     <value>协议</value>
   </data>
-  <data name="Home_ConnectionDetails_Server">
-    <value>服务器</value>
-  </data>
   <data name="Home_ConnectionDetails_ServerLoad">
     <value>服务器负载</value>
   </data>
-  <data name="Home_ConnectionDetails_Show">
-    <value>显示连接详情</value>
-  </data>
-  <data name="Home_ConnectionDetails_ShowIP">
-    <value>显示</value>
-    <comment>Tooltip displayed when the user hover the button to show the User IP Address</comment>
-  </data>
-  <data name="Home_ConnectionDetails_ShowIP_Description">
-    <value>显示用户IP地址</value>
-  </data>
-  <data name="Home_ConnectionDetails_State">
-    <value>省份/地区</value>
-  </data>
-  <data name="Home_ConnectionDetails_Title">
-    <value>连接详情</value>
-  </data>
   <data name="Home_ConnectionDetails_TwoFactorRequired_Description">
-    <value>Re-authenticate in your organization's 2FA portal to continue.</value>
+    <value>请在您所在组织的 2FA 门户中重新认证以继续</value>
   </data>
   <data name="Home_ConnectionDetails_TwoFactorRequired_Title">
-    <value>2FA expired</value>
+    <value>2FA 已过期</value>
   </data>
   <data name="Home_ConnectionDetails_Unprotected">
     <value>未受保护</value>
@@ -2554,15 +2315,6 @@ Error code: {0}</value>
   <data name="Home_ConnectionDetails_Volume">
     <value>总流量</value>
   </data>
-  <data name="Home_ConnectionDetails_Volume_Download">
-    <value>下载流量</value>
-  </data>
-  <data name="Home_ConnectionDetails_Volume_Total">
-    <value>总流量</value>
-  </data>
-  <data name="Home_ConnectionDetails_Volume_Upload">
-    <value>上传流量</value>
-  </data>
   <data name="Home_ConnectionDetails_VpnIp">
     <value>VPN IP</value>
   </data>
@@ -2571,13 +2323,6 @@ Error code: {0}</value>
   </data>
   <data name="Home_FreeConnections_About">
     <value>有关免费连接的更多信息</value>
-  </data>
-  <data name="Home_Help_Title">
-    <value>帮助</value>
-  </data>
-  <data name="Home_Map_Landmark">
-    <value>地图</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
   </data>
   <data name="Home_NetShield_AdsBlocked_Other">
     <value>屏蔽广告</value>
@@ -2591,34 +2336,17 @@ Error code: {0}</value>
   <data name="Home_NetShield_DataSaved_Description">
     <value>通过拦截不需要的广告、跟踪器和恶意软件，估算节省的数据。</value>
   </data>
-  <data name="Home_NetShield_Landmark">
-    <value>NetShield 统计数据</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_NetShield_Title">
-    <value>NetShield 统计数据</value>
-  </data>
   <data name="Home_NetShield_TrackersStopped_Other">
     <value>屏蔽跟踪器</value>
   </data>
   <data name="Home_NetShield_TrackersStopped_Description">
     <value>跟踪器是收集、存储和出售有关你的网络活动信息的 cookie 和第三方网站。</value>
   </data>
-  <data name="Home_Page_Title">
-    <value>首页</value>
-  </data>
-  <data name="Home_Recents_Landmark">
-    <value>最近连接</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
   <data name="Home_Recents_Pin">
     <value>固定</value>
   </data>
   <data name="Home_Recents_Restricted">
     <value>VPN Plus 提供的服务器</value>
-  </data>
-  <data name="Home_Recents_SecondaryActions_ToolTip">
-    <value>操作</value>
   </data>
   <data name="Home_Recents_ServerUnderMaintenance">
     <value>服务器维护中</value>
@@ -2653,33 +2381,23 @@ Error code: {0}</value>
   <data name="Home_TitleBar_Menu_UpdateNow">
     <value>立即更新</value>
   </data>
-  <data name="Home_Update_UpdateAvailable">
-    <value>有可用更新</value>
-  </data>
-  <data name="Home_Update_UpdateReady">
-    <value>更新准备就绪</value>
-  </data>
-  <data name="Home_VpnStatus_Landmark">
-    <value>VPN 状态</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_VpnStatus_Subtitle_Connecting">
-    <value>保护您的数字身份...</value>
-  </data>
-  <data name="Home_VpnStatus_Subtitle_Disconnected">
-    <value>您不受保护</value>
-  </data>
-  <data name="Home_VpnStatus_Title_Connected">
-    <value>保护中</value>
-  </data>
   <data name="LoadingPage_Tip">
     <value>更美好的世界始于隐私和数字自由。</value>
   </data>
   <data name="Login_Error_GetSessionDetailsFailed">
     <value>获取会话详细信息时发生错误。请重试。</value>
   </data>
+  <data name="Login_Error_GuestHoleFailedDueToMobileHotspot">
+    <value>由于您设备上的网络设置，无法登录。这可能是由移动热点、另一个VPN应用程序或虚拟机软件引起的。请检查您的网络配置或联系支持部门寻求帮助。</value>
+  </data>
   <data name="Login_Error_IncorrectTwoFactorCode">
     <value>验证码错误，请重试。</value>
+  </data>
+  <data name="Login_Error_MissingSrpDll_Message">
+    <value>您的安装中缺少登录所需的一个文件，请重新安装 Proton VPN 以解决此问题。</value>
+  </data>
+  <data name="Login_Error_MissingSrpDll_Title">
+    <value>无法登录</value>
   </data>
   <data name="Login_Error_SessionExpired">
     <value>您的会话已过期。请重新登录。</value>
@@ -2688,21 +2406,18 @@ Error code: {0}</value>
   <data name="Login_Error_SsoAuthFailed">
     <value>SSO 身份验证失败。请重试。</value>
   </data>
-  <data name="Login_Error_TwoFactorAuthFailed">
-    <value>用户名或密码不正确，请重试。</value>
-  </data>
   <data name="Login_Error_TwoFactorFailed">
     <value>双因素验证失败。请重新登录。</value>
   </data>
   <data name="Login_Error_WebAuthnNotSupported">
-    <value>Security key authentication is not available for your device or remote desktop connection.</value>
+    <value>您的设备或远程桌面连接不支持安全密钥认证！</value>
   </data>
   <data name="Login_TwoFactorForm_Authenticate">
     <value>认证账户</value>
     <comment>Authenticate button inside two factor form during login</comment>
   </data>
   <data name="Login_TwoFactorForm_Subtitle">
-    <value>6位验证码</value>
+    <value>6 位数字验证码</value>
   </data>
   <data name="Login_TwoFactorForm_Title">
     <value>双因素身份验证 (2FA)</value>
@@ -2732,7 +2447,7 @@ Error code: {0}</value>
     <value>请输入您的代码</value>
   </data>
   <data name="Login_TwoFactor_NoMethodAvailable">
-    <value>未设定双因素身份验证。</value>
+    <value>未找到已知的 2FA 方法</value>
   </data>
   <data name="Login_TwoFactor_SecurityKey">
     <value>安全密钥</value>
@@ -2741,11 +2456,11 @@ Error code: {0}</value>
     <value>请插入与您 Proton 账户关联的 U2F 或 FIDO 密钥。</value>
   </data>
   <data name="Main_Loading">
-    <value>登录中，请稍候…</value>
+    <value>正在加载，请稍候...</value>
     <comment>Message in the loading screen when starting the app</comment>
   </data>
   <data name="Main_Loading_SigningIn">
-    <value>登录中，请稍候…</value>
+    <value>正在登录，请稍候...</value>
     <comment>Message in the loading screen when signing in</comment>
   </data>
   <data name="Main_Loading_SigningIn_Longer">
@@ -2753,7 +2468,7 @@ Error code: {0}</value>
     <comment>Message in the loading screen when sign in action takes longer than expected</comment>
   </data>
   <data name="Main_Loading_SigningOut">
-    <value>正在登出, 请稍候...</value>
+    <value>正在登出，请稍候...</value>
     <comment>Message in the loading screen when signing out</comment>
   </data>
   <data name="Map_ConnectTo">
@@ -2761,31 +2476,34 @@ Error code: {0}</value>
     <comment>A label inside a map pin tooltip. {0} is a placeholder for country, state or city. (eg. "Connect - United States", "Connect - New York")</comment>
   </data>
   <data name="NoServers_ContactUs">
-    <value>Contact us</value>
+    <value>联系我们</value>
   </data>
   <data name="NoServers_FailedToLoad">
-    <value>We couldn't load the server list.</value>
+    <value>我们无法加载服务器列表</value>
   </data>
   <data name="NoServers_NeedHelp">
-    <value>Need help?</value>
+    <value>需要帮助？</value>
   </data>
   <data name="NoServers_SignOut">
-    <value>Sign out</value>
+    <value>登出</value>
   </data>
   <data name="NoServers_Tip">
-    <value>Ask your administrator to enable VPN access for your account.</value>
+    <value>请要求您的管理员为您的账户启用 VPN 访问权限</value>
   </data>
   <data name="NoServers_Title">
-    <value>No VPN connections available</value>
+    <value>无可用 VPN 连接</value>
+  </data>
+  <data name="NoServers_UnderMaintenance_Tip">
+    <value>我们无法加载任何服务器，请点击刷新以更新服务器列表。</value>
   </data>
   <data name="Notifications_KillSwitch_Description">
-    <value>为了保护您的 IP 地址，Kill Switch 会阻止您的互联网连接。</value>
+    <value>为保护您的 IP 地址，终止开关正在阻断您的网络连接</value>
   </data>
   <data name="Notifications_PortForwarding_CopyPortNumber">
     <value>复制端口号</value>
   </data>
   <data name="Notifications_PortForwarding_Description">
-    <value>在 BitTorrent 程序中使用此端口号即可加速。</value>
+    <value>前往您的 BT 客户端或 P2P 应用程序并输入此号码</value>
   </data>
   <data name="Notifications_SessionLimit_Description">
     <value>您已达到最大设备限制。要重新连接 VPN，请从其他设备断开连接。</value>
@@ -2804,16 +2522,16 @@ Error code: {0}</value>
     <comment>The window title displayed at the top of the NPS (Net Promoter Score) survey</comment>
   </data>
   <data name="Overlay_Ipv6Disabled_Description">
-    <value>To include this address, you need to allow IPv6 connections through the VPN tunnel.</value>
+    <value>如需包含 IPv6 地址，您需要允许通过 VPN 隧道进行 IPv6 连接。</value>
   </data>
   <data name="Overlay_Ipv6Disabled_PrimaryButton">
-    <value>Enable IPv6</value>
+    <value>启用 IPv6</value>
   </data>
   <data name="Overlay_Ipv6Disabled_SecondaryButton">
-    <value>Not now</value>
+    <value>以后再说</value>
   </data>
   <data name="Overlay_Ipv6Disabled_Title">
-    <value>IPv6 is disabled</value>
+    <value>IPv6 已禁用</value>
   </data>
   <data name="Overlay_OutdatedClient_Action">
     <value>立即更新</value>
@@ -2831,15 +2549,15 @@ Error code: {0}</value>
     <value>什么是 P2P VPN？</value>
   </data>
   <data name="Overlay_P2P_Bullet2_Description">
-    <value>P2P 网络允许两台设备连接并传输数据，而无需通过中央服务器。</value>
+    <value>P2P 网络允许两台设备直接连接并传输数据，无需经过中央服务器。</value>
   </data>
   <data name="Overlay_P2P_Bullet2_Header">
     <value>什么是 P2P 网络？</value>
   </data>
   <data name="Overlay_P2P_Bullet3_Description">
-    <value> • 下载种子文件
- • 提高在线游戏和视频通话性能
- • 连接局域网（LAN）设备</value>
+    <value>  • 下载种子文件
+  • 提升在线游戏和视频通话性能
+  • 连接到局域网 (LAN) 设备</value>
   </data>
   <data name="Overlay_P2P_Bullet3_Header">
     <value>P2P 网络有什么用途？</value>
@@ -2895,9 +2613,9 @@ VPN 连接</value>
     <value>Secure Core</value>
   </data>
   <data name="Overlay_ServerLoad_Description">
-    <value>服务器负载反映了某个服务器距离达到其可用资源上限还有多少。
+    <value>服务器负载表示服务器接近其最大容量的程度。
 
-高服务器负载会导致您的网速变慢。</value>
+负载过高可能会降低您的连接速度。</value>
   </data>
   <data name="Overlay_ServerLoad_HighRange_Description">
     <value>VPN可能会导致网速比平常时候更慢</value>
@@ -2924,25 +2642,23 @@ VPN 连接</value>
     <value>服务器负载</value>
   </data>
   <data name="Overlay_SmartRouting_Description1">
-    <value>智能路由使用虚拟服务器在难以到达的国家提供 VPN 覆盖。</value>
+    <value>智能路由使我们能够在难以覆盖的国家/地区提供 VPN 服务。</value>
   </data>
   <data name="Overlay_SmartRouting_Description2">
-    <value>当您连接到智能路由服务器时，虽然物理服务器位于其他地方，但您似乎是在目的地国家浏览。</value>
+    <value>当您连接到智能路由服务器时，即使物理服务器位于其他位置，您也会显示为在目标国家/地区上网。</value>
   </data>
   <data name="Overlay_SmartRouting_Description3">
     <value>智能路由通常用于规避反隐私法和其他形式的审查。</value>
   </data>
   <data name="Overlay_SmartRouting_Header">
-    <value>服务器实际位于 {0}，但您似乎是从 {1} 浏览的</value>
-    <comment>{0} is a placeholder for the physical server location country. {1} is a placeholder for the destination country
-    Warning: country names are inserted in the nominative case. For INFLECTED languages, use alternative wording as follows:
-    Connects you to your destination country ({1}) through servers that are physically located somewhere else ({0})</comment>
+    <value>通过实际位于其他位置的服务器将您连接到目标国家/地区：{0}。</value>
+    <comment>{0} is a placeholder for the countries where the physical servers are. Can be either one country or multiple countries separated with comma.</comment>
   </data>
   <data name="Overlay_SmartRouting_LearnMore">
-    <value>什么是 Smart Routing？</value>
+    <value>什么是智能路由？</value>
   </data>
   <data name="Overlay_SmartRouting_Title">
-    <value>Smart Routing</value>
+    <value>智能路由</value>
   </data>
   <data name="Overlay_Tor_Description">
     <value>连接到 Tor 服务器，使用任何浏览器访问隐藏服务和洋葱站点。</value>
@@ -2972,25 +2688,22 @@ VPN 连接</value>
     <value>这将为此配置文件禁用自定义 DNS。</value>
   </data>
   <data name="Profile_Options_Application">
-    <value>App</value>
+    <value>应用</value>
   </data>
   <data name="Profile_Options_Application_Select">
-    <value>Select an app</value>
+    <value>选择应用</value>
   </data>
   <data name="Profile_Options_ConnectAndGo_Application">
-    <value>Open an app</value>
-  </data>
-  <data name="Profile_Options_ConnectAndGo_DefaultBrowser">
-    <value>Default browser</value>
+    <value>打开应用</value>
   </data>
   <data name="Profile_Options_ConnectAndGo_PrivateBrowsingMode">
-    <value>Use private browsing mode</value>
+    <value>使用隐私浏览模式</value>
   </data>
   <data name="Profile_Options_ConnectAndGo_Website">
-    <value>Open a website</value>
+    <value>打开网站</value>
   </data>
   <data name="Profile_Options_Description">
-    <value>Automatically open a website or an app of your choice when you connect to this profile.</value>
+    <value>当您连接到此配置文件时，自动打开您选择的网站或应用程序。</value>
   </data>
   <data name="Profile_Options_Header">
     <value>连接并开始</value>
@@ -3010,9 +2723,6 @@ VPN 连接</value>
   <data name="Profiles_Default_MaxSecurity">
     <value>最高安全</value>
   </data>
-  <data name="Profiles_Default_Office">
-    <value>办公</value>
-  </data>
   <data name="Profiles_Default_P2P">
     <value>P2P</value>
   </data>
@@ -3026,16 +2736,16 @@ VPN 连接</value>
     <value>工作/学校</value>
   </data>
   <data name="Profiles_Page_Description">
-    <value>配置您自己的 VPN 设定，并立刻点击链接。</value>
+    <value>配置您自己的 VPN 设置并一键连接</value>
   </data>
   <data name="Profiles_Page_Title">
     <value>收藏</value>
   </data>
   <data name="Search_InputBox_Placeholder">
-    <value>从...浏览</value>
+    <value>从以下位置浏览...</value>
   </data>
   <data name="Search_NoInput_CityOrState">
-    <value>城市或美国州县</value>
+    <value>城市或美国州份</value>
     <comment>The word used for one single city and one single United States state</comment>
   </data>
   <data name="Search_NoInput_Country">
@@ -3047,7 +2757,7 @@ VPN 连接</value>
     <comment>The word used for one single server</comment>
   </data>
   <data name="Search_NoInput_TrySearchingFor">
-    <value>寻找…</value>
+    <value>尝试搜索...</value>
   </data>
   <data name="Search_NoResults_Description">
     <value>尝试另一个关键字。</value>
@@ -3096,9 +2806,6 @@ VPN 连接</value>
   </data>
   <data name="Servers">
     <value>服务器</value>
-  </data>
-  <data name="Settings_About">
-    <value>关于</value>
   </data>
   <data name="Settings_About_Changelog">
     <value>更新记录</value>
@@ -3153,17 +2860,14 @@ VPN 连接</value>
     <comment>Apply action. Used to apply changes made on a settings page</comment>
   </data>
   <data name="Settings_Common_IpAddresses_AlreadyExists">
-    <value>Address already added</value>
+    <value>地址已添加</value>
   </data>
   <data name="Settings_Common_IpAddresses_Invalid">
-    <value>Enter a valid IPv4 or IPv6 address</value>
+    <value>请输入有效的 IPv4 或 IPv6 地址</value>
   </data>
   <data name="Settings_Common_IpAddresses_Watermark">
     <value>192.0.2.0</value>
     <comment>Watermark for the IP Address field in the Custom DNS servers settings page</comment>
-  </data>
-  <data name="Settings_Common_Ipv6WarningButton">
-    <value>Warning - learn more</value>
   </data>
   <data name="Settings_Connection">
     <value>连接</value>
@@ -3181,7 +2885,7 @@ VPN 连接</value>
     <value>自定义 DNS 服务器</value>
   </data>
   <data name="Settings_Connection_Advanced_CustomDnsServers_AddNew">
-    <value>Add new DNS server</value>
+    <value>添加新的 DNS 服务器</value>
     <comment>Label above an input field where users can enter a new DNS server IP address.</comment>
   </data>
   <data name="Settings_Connection_Advanced_CustomDnsServers_Conflict_Description">
@@ -3191,29 +2895,32 @@ VPN 连接</value>
     <value>启用自定义 DNS 服务器？</value>
   </data>
   <data name="Settings_Connection_Advanced_CustomDnsServers_Description">
-    <value>使用您自己的或名系统 (DNS) 连接到 Proton VPN。请确保只使用您信任的 DNS 伺服器。</value>
+    <value>使用您自己的域名系统 (DNS) 连接至 Proton VPN，请确保只使用您信任的 DNS 服务器。</value>
   </data>
   <data name="Settings_Connection_Advanced_CustomDnsServers_Footer">
     <value>我们将按顺序尝试连接这些服务器。如果所有服务器均无法连接，则将使用默认的 Proton VPN DNS。</value>
   </data>
-  <data name="Settings_Connection_Advanced_CustomDnsServers_Header">
+  <data name="Settings_Connection_Advanced_CustomDnsServers_FormattedHeader">
     <value>DNS 服务器 ({0})</value>
     <comment>Header for the list of Custom DNS servers defined. {0} is a placeholder for the number of DNS servers in the list. (eg. "DNS servers (4)")</comment>
   </data>
-  <data name="Settings_Connection_Advanced_CustomDnsServers_IpAddress_Description">
-    <value>Enter the server's IPv4 or IPv6 address</value>
+  <data name="Settings_Connection_Advanced_CustomDnsServers_Header">
+    <value>DNS 服务器</value>
+  </data>
+  <data name="Settings_Connection_Advanced_CustomDnsServers_Select">
+    <value>选择 DNS 服务器</value>
   </data>
   <data name="Settings_Connection_Advanced_Ipv6">
-    <value>IPv6 support</value>
+    <value>IPv6 支持</value>
   </data>
   <data name="Settings_Connection_Advanced_Ipv6LeakProtection">
-    <value>IPv6 leak protection</value>
+    <value>IPv6 泄露保护</value>
   </data>
   <data name="Settings_Connection_Advanced_Ipv6LeakProtection_Description">
-    <value>Prevents data leaks by blocking IPv6 traffic that doesn't pass through the VPN tunnel.</value>
+    <value>通过阻止未通过 VPN 隧道的 IPv6 流量来防止数据泄露</value>
   </data>
   <data name="Settings_Connection_Advanced_Ipv6_Description">
-    <value>Allows IPv6 traffic to pass through the VPN tunnel. This improves compatibility with IPv6 websites and services.</value>
+    <value>允许 IPv6 流量通过 VPN 隧道，这提高了与 IPv6 网站和服务的兼容性。</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections">
     <value>允许 LAN 连接</value>
@@ -3222,10 +2929,10 @@ VPN 连接</value>
     <value>允许连至打印机、扬声器等局域网设备。</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections_LocalDns_Description">
-    <value>Connect to devices using names like 'My-Printer' or 'router.local' instead of IP addresses. Uses local DNS resolution. Disabled by default to maintain faster VPN speeds.</value>
+    <value>使用 mDNS 通过名称（如“我的打印机”或“router.local”）而非 IP 地址连接到设备。标准 DNS 流量将继续通过 VPN 隧道路由。默认禁用此功能以获得更快的 VPN 速度。</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections_LocalDns_Title">
-    <value>Access devices by name</value>
+    <value>通过名称访问设备</value>
   </data>
   <data name="Settings_Connection_Advanced_NatType">
     <value>NAT 类型</value>
@@ -3252,10 +2959,16 @@ VPN 连接</value>
     <value>阻止数据进入您的网络。该类型更为安全，但网络游戏建立 P2P 连接会更困难。</value>
   </data>
   <data name="Settings_Connection_Advanced_OpenVpnDriver_Tap">
-    <value>不同网络之间的路由流量。</value>
+    <value>桥接网络流量。速度慢于 TUN，但某些传统或特殊网络设置需要此模式。</value>
   </data>
   <data name="Settings_Connection_Advanced_OpenVpnDriver_Tun_Description">
-    <value>使用桥接技术连接网络。TUN 的速度比 TAP 快，但稳定性可能较差。</value>
+    <value>在不同网络之间路由流量。TUN 比 TAP 更快且更稳定。</value>
+  </data>
+  <data name="Settings_Connection_ConnectionPreferences">
+    <value>连接偏好设置</value>
+  </data>
+  <data name="Settings_Connection_ConnectionPreferences_Description">
+    <value>默认连接与排除的位置</value>
   </data>
   <data name="Settings_Connection_CustomDns_Conflict_Information_WhenDisabled">
     <value>自定义 DNS 无法打开，因为您连接的是已启用 NetShield 的配置文件。</value>
@@ -3267,7 +2980,7 @@ VPN 连接</value>
     <value>默认连接</value>
   </data>
   <data name="Settings_Connection_Default_Fastest">
-    <value>最快的地域</value>
+    <value>最快的国家/地区</value>
   </data>
   <data name="Settings_Connection_Default_Fastest_Description">
     <value>从所在位置来看最适合的服务器</value>
@@ -3287,26 +3000,38 @@ VPN 连接</value>
   <data name="Settings_Connection_Default_Recents">
     <value>最近的</value>
   </data>
+  <data name="Settings_Connection_ExcludedLocations">
+    <value>排除的位置</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Cities">
+    <value>城市</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Countries">
+    <value>国家/地区</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Description">
+    <value>当您连接到“最快”或“随机”时，永远不会使用所选位置！</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_NoLocations">
+    <value>没有可用的位置</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Search">
+    <value>选择...</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_States">
+    <value>州/省</value>
+  </data>
   <data name="Settings_Connection_KillSwitch">
-    <value>Kill Switch</value>
+    <value>终止开关</value>
   </data>
   <data name="Settings_Connection_KillSwitch_Advanced">
     <value>高级</value>
   </data>
   <data name="Settings_Connection_KillSwitch_Advanced_Description">
-    <value>只有连接到 Proton VPN 时才允许访问互联网。即使重新启动设备，高级 Kill Switch 也会保持激活状态。</value>
-  </data>
-  <data name="Settings_Connection_KillSwitch_Conflict_Description">
-    <value>这将禁用拆分隧道。</value>
-  </data>
-  <data name="Settings_Connection_KillSwitch_Conflict_Title">
-    <value>启用 Kill Switch ?</value>
+    <value>仅允许在连接到 Proton VPN 时访问互联网。即使重启设备，高级终止开关仍将保持启用状态。</value>
   </data>
   <data name="Settings_Connection_KillSwitch_Description">
     <value>如果失去 VPN 连接，会断开与互联网的连接，从而保护你的 IP 地址。</value>
-  </data>
-  <data name="Settings_Connection_KillSwitch_Footer">
-    <value>当 Kill Switch 开启时，您将无法通过分割隧道连接到网站和被排除在您的 VPN 连接之外的应用。</value>
   </data>
   <data name="Settings_Connection_KillSwitch_Standard">
     <value>普通</value>
@@ -3318,7 +3043,10 @@ VPN 连接</value>
     <value>NetShield</value>
   </data>
   <data name="Settings_Connection_NetShield_BlockAdsMalwareTrackers">
-    <value>拦截广告、恶意软件和跟踪器</value>
+    <value>拦截广告、跟踪器和恶意软件</value>
+  </data>
+  <data name="Settings_Connection_NetShield_BlockAdsMalwareTrackersAdultContent">
+    <value>拦截广告、跟踪器、恶意软件及成人内容</value>
   </data>
   <data name="Settings_Connection_NetShield_BlockMalwareOnly">
     <value>仅屏蔽恶意软件</value>
@@ -3333,7 +3061,7 @@ VPN 连接</value>
     <value>启用 NetShield？</value>
   </data>
   <data name="Settings_Connection_NetShield_Description">
-    <value>保护自己免受网站和应用程序上的广告、恶意软件和跟踪器的侵害。</value>
+    <value>保护您在网站和应用中的浏览安全。</value>
   </data>
   <data name="Settings_Connection_NetShield_Footer">
     <value>屏蔽了广告和跟踪器，某些网站可能加载不正常。</value>
@@ -3345,7 +3073,7 @@ VPN 连接</value>
     <value>端口转发</value>
   </data>
   <data name="Settings_Connection_PortForwarding_ActivePort">
-    <value>当前端口：</value>
+    <value>活动端口号：</value>
   </data>
   <data name="Settings_Connection_PortForwarding_ActivePort_Copy">
     <value>复制端口号</value>
@@ -3357,7 +3085,7 @@ VPN 连接</value>
     <value>启用端口转发？</value>
   </data>
   <data name="Settings_Connection_PortForwarding_Description">
-    <value>通过指定端口允许直接 P2P 连接，提升洪流下载与游戏速度。</value>
+    <value>通过指定端口允许直接 P2P 连接，以提升种子下载和游戏速度。</value>
   </data>
   <data name="Settings_Connection_PortForwarding_Footer">
     <value>要使用端口转发，请连接到支持 P2P 的服务器。</value>
@@ -3367,49 +3095,49 @@ VPN 连接</value>
     <comment>Indicates when the active port was changed for the last time. {0} is a placeholder for the time. (eg. "Last changed: 5 minutes ago" or "Last changed: May 20, at 14:32")</comment>
   </data>
   <data name="Settings_Connection_PortForwarding_Loading">
-    <value>正在载入…</value>
+    <value>正在加载...</value>
   </data>
   <data name="Settings_Connection_PortForwarding_Notifications">
     <value>通知</value>
   </data>
   <data name="Settings_Connection_PortForwarding_Notifications_Description">
-    <value>Get notified when your active port number changes.</value>
+    <value>在您的活动端口号变更时接收通知</value>
+  </data>
+  <data name="Settings_Connection_PortForwarding_Unavailable">
+    <value>不可用</value>
   </data>
   <data name="Settings_Connection_Protocol">
     <value>协议</value>
   </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Action">
-    <value>转到配置文件</value>
-  </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Message">
-    <value>您目前连接的是 VPN 配置文件。
-
-• 要更改此连接的协议，请断开连接，然后编辑您的配置文件。
-
-• 要为其他 VPN 连接更改协议，您需要先断开与配置文件的连接。</value>
-  </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Title">
-    <value>改变配置文件中的协议</value>
-  </data>
   <data name="Settings_Connection_SplitTunneling">
-    <value>线路分离</value>
+    <value>拆分隧道</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_Description">
+    <value>选择将从 VPN 连接中排除的应用</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_FormattedHeader">
+    <value>已排除的应用 ({0})</value>
+    <comment>Header for the list of apps to exclude for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Excluded apps (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_Header">
+    <value>已排除的应用</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Apps_FilesFilterName">
     <value>应用程序文件</value>
     <comment>Describe the name of the filter used to select executable files in the Open file dialog</comment>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Apps_Header">
-    <value>选定的应用 ({0})</value>
-    <comment>Header for the list of Apps defined for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Selected apps (2)")</comment>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_Description">
+    <value>选择将包含在 VPN 连接中的应用</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Apps_Remove">
-    <value>移除应用</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_FormattedHeader">
+    <value>已包含的应用 ({0})</value>
+    <comment>Header for the list of apps to include for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Included apps (2)")</comment>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Conflict_Description">
-    <value>这将禁用 Kill Switch 。</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_Header">
+    <value>已包含的应用</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Conflict_Title">
-    <value>启用拆分隧道？</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Select">
+    <value>选择应用</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Description">
     <value>选择哪些应用以及 IP 地址由 VPN 保护，自定义连接方式。</value>
@@ -3418,27 +3146,43 @@ VPN 连接</value>
     <value>包含模式</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Inverse_Description">
-    <value>Only selected apps and IP addresses connect through VPN, all other traffic is unprotected.</value>
+    <value>仅选定的应用程序和 IP 地址通过 VPN 连接，所有其他流量均不受保护。</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Inverse_Short">
     <value>包含</value>
     <comment>Shorter version (if possible) of "Include mode". To be used when available space is limited.</comment>
   </data>
   <data name="Settings_Connection_SplitTunneling_IpAddresses_AddNew">
-    <value>Add new IPv4 or IPv6 address</value>
+    <value>添加新的 IPv4 或 IPv6 地址</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_IpAddresses_Header">
-    <value>选定的 IP 地址 ({0})</value>
-    <comment>Header for the list of IP addresses defined for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Selected IP addresses (2)")</comment>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_Description">
+    <value>选择将从 VPN 连接中排除的 IP 地址</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_IpAddresses_Remove">
-    <value>删除 IP</value>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_FormattedHeader">
+    <value>已排除的 IP 地址 ({0})</value>
+    <comment>Header for the list of IP addresses to exclude for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Excluded IP addresses (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_Header">
+    <value>已排除的 IP 地址</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_Description">
+    <value>选择将包含在 VPN 连接中的 IP 地址</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_FormattedHeader">
+    <value>已包含的 IP 地址 ({0})</value>
+    <comment>Header for the list of IP addresses to include for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Included IP addresses (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_Header">
+    <value>已包含的 IP 地址</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Select">
+    <value>选择 IP 地址</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Standard">
     <value>排除模式</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Standard_Description">
-    <value>Selected apps and IP addresses are excluded from your VPN connection.</value>
+    <value>选定的应用程序和 IP 地址被排除在您的 VPN 连接之外</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Standard_Short">
     <value>排除</value>
@@ -3456,9 +3200,6 @@ VPN 连接</value>
   <data name="Settings_DiscardChanges_Confirmation_Title">
     <value>放弃未保存的更改？</value>
   </data>
-  <data name="Settings_Features">
-    <value>VPN 功能</value>
-  </data>
   <data name="Settings_General">
     <value>常规​​​​​</value>
   </data>
@@ -3470,12 +3211,6 @@ VPN 连接</value>
   </data>
   <data name="Settings_General_AutoStartup_AutoConnect_Description">
     <value>当 Proton VPN 打开时，自动连接到您的默认连接。</value>
-  </data>
-  <data name="Settings_General_AutoStartup_AutoConnect_Fastest">
-    <value>最佳线路</value>
-  </data>
-  <data name="Settings_General_AutoStartup_AutoConnect_Latest">
-    <value>上次连接</value>
   </data>
   <data name="Settings_General_AutoStartup_AutoLaunch">
     <value>自动开启</value>
@@ -3493,19 +3228,19 @@ VPN 连接</value>
     <value>最小化到任务栏</value>
   </data>
   <data name="Settings_General_AutoStartup_Description">
-    <value>规定应用程序自动启动或连接。</value>
+    <value>设置应用自动启动或连接</value>
   </data>
   <data name="Settings_General_AutomaticUpdates">
     <value>自动更新</value>
   </data>
   <data name="Settings_General_AutomaticUpdates_Description">
-    <value>Automatically check and install Proton VPN updates.</value>
+    <value>自动检查并安装 Proton VPN 更新</value>
   </data>
   <data name="Settings_General_BetaAccess">
     <value>测试版访问</value>
   </data>
   <data name="Settings_General_BetaAccess_Description">
-    <value>Get early access and help us test new versions of Proton VPN.</value>
+    <value>获取早期访问权限并帮助我们测试新版本的 Proton VPN</value>
   </data>
   <data name="Settings_General_Language">
     <value>语言</value>
@@ -3514,25 +3249,13 @@ VPN 连接</value>
     <value>通知</value>
   </data>
   <data name="Settings_General_Notifications_Description">
-    <value>Get notified about changes to your connection status.</value>
+    <value>在您的连接状态发生变更时接收通知</value>
   </data>
   <data name="Settings_General_OpenVpnNetworkDriver">
     <value>OpenVPN 网络驱动程序</value>
   </data>
-  <data name="Settings_General_OpenVpnNetworkDriver_Description">
-    <value>网络驱动程序会影响连接速度。新的 TUN 适配器能提供更高的速度，如果遇到任何连接问题，它还能依靠 TAP 适配器。</value>
-  </data>
   <data name="Settings_General_Theme">
     <value>主题</value>
-  </data>
-  <data name="Settings_General_Theme_Dark">
-    <value>深色</value>
-  </data>
-  <data name="Settings_General_Theme_Default">
-    <value>默认</value>
-  </data>
-  <data name="Settings_General_Theme_Light">
-    <value>浅色</value>
   </data>
   <data name="Settings_Improve">
     <value>帮 Proton 做得更好</value>
@@ -3574,6 +3297,30 @@ VPN 连接</value>
   </data>
   <data name="Settings_Protocols_OpenVpnUdp_Title">
     <value>OpenVPN</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTcp_Description">
+    <value>我们基于 WireGuard 的新框架，可提升稳定性、功能性及抗审查能力。</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTcp_Title">
+    <value>Proton WireGuard</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTls_Description">
+    <value>我们基于 WireGuard 的新框架，可提升稳定性、功能性及抗审查能力。</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTls_Title">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="Settings_Protocols_ProTunUdp_Description">
+    <value>我们基于 WireGuard 的新框架，可提升稳定性、功能性及抗审查能力。</value>
+  </data>
+  <data name="Settings_Protocols_ProTunUdp_Title">
+    <value>Proton WireGuard</value>
+  </data>
+  <data name="Settings_Protocols_ProtonProtocols_Description">
+    <value>使用 Proton VPN 自身的 WireGuard 实现。此为实验性功能，可能会遇到一些不稳定情况！</value>
+  </data>
+  <data name="Settings_Protocols_ProtonProtocols_Title">
+    <value>Proton 协议</value>
   </data>
   <data name="Settings_Protocols_Smart_Description">
     <value>自动为连接选择最佳协议。</value>
@@ -3630,6 +3377,15 @@ Stealth 具有抗 DPI（深度数据包检查）能力，但速度可能不如�
   <data name="Settings_SelectedProtocol_OpenVpnUdp">
     <value>OpenVPN (UDP)</value>
   </data>
+  <data name="Settings_SelectedProtocol_ProTunTcp">
+    <value>Proton WireGuard (TCP)</value>
+  </data>
+  <data name="Settings_SelectedProtocol_ProTunTls">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="Settings_SelectedProtocol_ProTunUdp">
+    <value>Proton WireGuard (UDP)</value>
+  </data>
   <data name="Settings_SelectedProtocol_Smart">
     <value>Smart</value>
   </data>
@@ -3675,11 +3431,8 @@ Stealth 具有抗 DPI（深度数据包检查）能力，但速度可能不如�
   <data name="Settings_VpnAccelerator_Description">
     <value>利用性能增强技术，连接速度提高达 400%。</value>
   </data>
-  <data name="SignIn_Form">
-    <value>登录表单</value>
-  </data>
   <data name="SignIn_Form_AdvancedKillSwitchDescription">
-    <value>高级 Kill Switch 正在阻止您的网络连接。</value>
+    <value>高级终止开关正在阻断您的网络连接。</value>
   </data>
   <data name="SignIn_Form_BestSecureVpnForSpeed">
     <value>速度最佳的安全 VPN</value>
@@ -3692,10 +3445,10 @@ Stealth 具有抗 DPI（深度数据包检查）能力，但速度可能不如�
     <value>请输入您的 Proton 账户详细信息</value>
   </data>
   <data name="SignIn_Form_DisableKillSwitch">
-    <value>禁用 Kill Switch</value>
+    <value>禁用终止开关</value>
   </data>
   <data name="SignIn_Form_Email">
-    <value>电子邮箱</value>
+    <value>邮箱</value>
   </data>
   <data name="SignIn_Form_ForgotUsername">
     <value>忘记用户名</value>
@@ -3731,7 +3484,7 @@ Stealth 具有抗 DPI（深度数据包检查）能力，但速度可能不如�
     <comment>A button inside sign in form</comment>
   </data>
   <data name="SignIn_Form_SignInWithSso">
-    <value>使用SSO登录</value>
+    <value>使用 SSO 登录</value>
   </data>
   <data name="SignIn_Form_SwissBased">
     <value>立足瑞士</value>
@@ -3747,11 +3500,11 @@ Stealth 具有抗 DPI（深度数据包检查）能力，但速度可能不如�
     <value>邮箱或用户名</value>
   </data>
   <data name="SignIn_Form_UsernameError">
-    <value>输入您的电子邮件或用户名</value>
+    <value>请输入您的邮箱或用户名</value>
     <comment>An error message is displayed when the user attempts to sign in without entering a username</comment>
   </data>
   <data name="SignIn_KillSwitch_Disabled">
-    <value>Kill Switch 已禁用</value>
+    <value>终止开关已禁用</value>
   </data>
   <data name="State_Fastest">
     <value>最快的州</value>
@@ -3765,18 +3518,43 @@ Stealth 具有抗 DPI（深度数据包检查）能力，但速度可能不如�
     <value>您现在受到保护</value>
   </data>
   <data name="SystemNotification_ConnectedTo">
-    <value>连接至 {0}.</value>
+    <value>连接至 {0}</value>
     <comment>{0} is a placeholder for a country and server name (eg. Connected to Netherlands #342342).</comment>
   </data>
   <data name="SystemNotification_Disconnected">
     <value>已断开</value>
+  </data>
+  <data name="SystemNotification_P2PWarning_Description">
+    <value>通过付费 VPN 服务器解锁基于 P2P（点对点）协议的 BT 下载和在线游戏。</value>
+  </data>
+  <data name="SystemNotification_P2PWarning_Title">
+    <value>VPN Free 不支持 P2P</value>
+  </data>
+  <data name="SystemNotification_StreamingWarning_Description">
+    <value>某些网站和流媒体服务会屏蔽免费 VPN 用户。升级到 Proton VPN Plus 以绕过这些屏蔽。</value>
+  </data>
+  <data name="SystemNotification_StreamingWarning_Title">
+    <value>已屏蔽的网站？</value>
+  </data>
+  <data name="System_Tray_Actions_Connect">
+    <value>连接</value>
+  </data>
+  <data name="System_Tray_Actions_Disconnect">
+    <value>断开连接</value>
+  </data>
+  <data name="System_Tray_Actions_ExitApplication">
+    <value>退出</value>
+  </data>
+  <data name="System_Tray_Actions_OpenApplication">
+    <value>打开 {0}</value>
+    <comment>Button displayed in the tray icon to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
   </data>
   <data name="Tray_Actions_ExitApplication">
     <value>退出</value>
   </data>
   <data name="Tray_Actions_OpenApplication">
     <value>打开 {0}</value>
-    <comment>Button displayed in the tray icon to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
+    <comment>Button displayed in the tray window to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
   </data>
   <data name="Tray_Actions_OpenApplicationToSignIn">
     <value>打开应用以登录</value>
@@ -3809,23 +3587,23 @@ Stealth 具有抗 DPI（深度数据包检查）能力，但速度可能不如�
     <value>TB/s</value>
     <comment>Unit for Terabytes per second</comment>
   </data>
-  <data name="UpsellBanner_NetShield_Description">
-    <value>屏蔽网站和应用中的广告、跟踪器和恶意软件</value>
+  <data name="UpsellBanner_P2P_Description">
+    <value>通过 BitTorrent 和其他文件共享协议下载文件。</value>
   </data>
-  <data name="UpsellBanner_NetShield_Title">
-    <value>NetShield</value>
+  <data name="UpsellBanner_P2P_Title">
+    <value>支持 P2P</value>
   </data>
   <data name="UpsellBanner_WrongCountry_Description">
     <value>升级套餐，任意选择服务器.</value>
   </data>
   <data name="UpsellBanner_WrongCountry_Title">
-    <value>想连到别的某个地方？</value>
+    <value>需要连接到其他地方？</value>
   </data>
   <data name="Upsell_Carousel_AdvancedSettings">
     <value>VPN 高级自定义</value>
   </data>
   <data name="Upsell_Carousel_AdvancedSettings_DNS">
-    <value>Connect to VPN with your custom Domain Name System (DNS)</value>
+    <value>使用您的自定义 DNS 连接到 VPN</value>
   </data>
   <data name="Upsell_Carousel_AdvancedSettings_LAN">
     <value>连接时访问局域网（LAN）上的设备</value>
@@ -3925,7 +3703,7 @@ Stealth 具有抗 DPI（深度数据包检查）能力，但速度可能不如�
     <value>两全其美</value>
   </data>
   <data name="Upsell_Carousel_SplitTunneling_Browsing">
-    <value>利用拆分隧道技术同时从两个地址浏览</value>
+    <value>利用拆分隧道同时从两个位置进行上网</value>
   </data>
   <data name="Upsell_Carousel_SplitTunneling_Configuration">
     <value>允许受信任的应用和IP地址直接连接到互联网，同时使用VPN保护其他所有内容。</value>
@@ -3944,9 +3722,6 @@ Stealth 具有抗 DPI（深度数据包检查）能力，但速度可能不如�
   </data>
   <data name="Upsell_Carousel_Streaming_Platforms_HBO">
     <value>HBO Max</value>
-  </data>
-  <data name="Upsell_Carousel_Streaming_Platforms_Hulu">
-    <value>Hulu</value>
   </data>
   <data name="Upsell_Carousel_Streaming_Platforms_Netflix">
     <value>Netflix</value>
@@ -4002,6 +3777,24 @@ Stealth 具有抗 DPI（深度数据包检查）能力，但速度可能不如�
   </data>
   <data name="VpnProtocol_OpenVPN_Udp_Description">
     <value>成熟、久经考验且安全可靠</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tcp">
+    <value>Proton WireGuard (TCP)</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tcp_Description">
+    <value>兼顾安全性与性能的先进协议</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tls">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tls_Description">
+    <value>隐藏您的连接以绕过审查，从而突破 VPN 封锁</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Udp">
+    <value>Proton WireGuard (UDP)</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Udp_Description">
+    <value>兼顾安全性与性能的先进协议</value>
   </data>
   <data name="VpnProtocol_Smart">
     <value>Smart</value>

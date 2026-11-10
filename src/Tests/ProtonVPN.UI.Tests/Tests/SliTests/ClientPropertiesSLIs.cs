@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -20,10 +20,10 @@
 using System;
 using Microsoft.Win32;
 using NUnit.Framework;
-using ProtonVPN.UI.Tests.Annotations;
-using ProtonVPN.UI.Tests.ApiClient.TestEnv;
 using ProtonVPN.UI.Tests.TestBase;
 using ProtonVPN.UI.Tests.TestsHelper;
+using ProtonVPN.UI.Tests.Annotations;
+using ProtonVPN.UI.Tests.ApiClient.TestEnv;
 
 namespace ProtonVPN.UI.Tests.Tests.SliTests;
 
@@ -48,7 +48,7 @@ public class ClientPropertiesSLIs : BaseTest
     [Duration]
     public void ClientFreshLaunchTimeSli()
     {
-        LaunchApp();
+        LaunchClient();
 
         SliHelper.MeasureTime(() =>
         {
@@ -67,14 +67,14 @@ public class ClientPropertiesSLIs : BaseTest
 
     private double GetClientSizeMegabytes()
     {
-        using RegistryKey key = Registry.LocalMachine.OpenSubKey(REGISTRY_PATH);
+        using RegistryKey? key = Registry.LocalMachine.OpenSubKey(REGISTRY_PATH);
 
-        foreach (string subKeyName in key.GetSubKeyNames())
+        foreach (string subKeyName in key?.GetSubKeyNames() ?? [])
         {
-            using RegistryKey subKey = key.OpenSubKey(subKeyName);
-            if (subKey?.GetValue("DisplayName")?.ToString().Contains(CLIENT_NAME) == true)
+            using RegistryKey? subKey = key?.OpenSubKey(subKeyName);
+            if (subKey?.GetValue("DisplayName")?.ToString()?.Contains(CLIENT_NAME) == true)
             {
-                object sizeInKilobytes = subKey.GetValue("EstimatedSize");
+                object? sizeInKilobytes = subKey.GetValue("EstimatedSize");
                 if (sizeInKilobytes != null)
                 {
                     return Convert.ToInt64(sizeInKilobytes) / 1024.0;

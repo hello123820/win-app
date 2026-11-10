@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -39,6 +39,9 @@ public interface IGlobalSettings
     string? UnauthUniqueSessionId { get; set; }
     bool IsAutoLaunchEnabled { get; set; }
     AutoLaunchMode AutoLaunchMode { get; set; }
+    int[] ProTunUdpPorts { get; set; }
+    int[] ProTunTcpPorts { get; set; }
+    int[] ProTunTlsPorts { get; set; }
     int[] WireGuardUdpPorts { get; set; }
     int[] WireGuardTcpPorts { get; set; }
     int[] WireGuardTlsPorts { get; set; }
@@ -52,8 +55,6 @@ public interface IGlobalSettings
     bool IsGlobalSettingsMigrationDone { get; set; }
     KillSwitchMode KillSwitchMode { get; set; }
     List<FeatureFlag> FeatureFlags { get; set; }
-    bool IsFeatureConnectedServerCheckEnabled { get; set; }
-    TimeSpan ConnectedServerCheckInterval { get; set; }
     ChangeServerSettings ChangeServerSettings { get; set; }
     bool IsShareCrashReportsEnabled { get; set; }
     string? ActiveAlternativeApiBaseUrl { get; set; }
@@ -64,6 +65,7 @@ public interface IGlobalSettings
     DateTimeOffset? LastProcessVersionMismatchRestartUtcDate { get; set; }
     TimeSpan WireGuardConnectionTimeout { get; set; }
     bool IsEfficiencyModeAllowed { get; set; }
+    WindowLocation WindowLocation { get; set; }
 
     Dictionary<string, Dictionary<string, string?>>? LegacySettingsByUsername { get; set; }
 }

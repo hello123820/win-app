@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
@@ -36,14 +36,14 @@ public partial class ProminentBannerViewModel : BannerViewModelBase
 
     protected override AnnouncementType AnnouncementType { get; } = AnnouncementType.ProminentBanner;
 
-    protected override ModalSource ModalSource { get; } = ModalSource.Account;
+    protected override UpsellModalContext ModalContext { get; } = new(ModalSource.Account, ModalTrigger.Home);
 
     public ProminentBannerViewModel(
         IAnnouncementActivator announcementActivator,
         IAnnouncementsProvider announcementsProvider,
-        IUpsellDisplayStatisticalEventSender upsellDisplayStatisticalEventSender,
+        IUpsellDisplayReporter upsellDisplayReporter,
         IViewModelHelper viewModelHelper)
-        : base(announcementActivator, announcementsProvider, upsellDisplayStatisticalEventSender, viewModelHelper)
+        : base(announcementActivator, announcementsProvider, upsellDisplayReporter, viewModelHelper)
     { }
 
     protected override void AfterAnnouncementChange()

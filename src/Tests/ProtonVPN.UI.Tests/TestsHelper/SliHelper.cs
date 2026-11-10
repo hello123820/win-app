@@ -17,20 +17,22 @@
  * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using FlaUI.Core.Tools;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace ProtonVPN.UI.Tests.TestsHelper;
+
 public class SliHelper
 {
-    public static string SliName { get; set; }
-    public static string Workflow { get; set; }
-    public static string RunId { get; set; }
+    public static string? SliName { get; set; }
+    public static string? Workflow { get; set; }
+    public static string? RunId { get; set; }
     public static readonly Stopwatch Timer = new();
     public static List<JProperty> MetricsList = [];
     private static bool IsMonitoring { get; set; }
@@ -65,10 +67,16 @@ public class SliHelper
 
     public static void AddDuration()
     {
-        if(Duration != 0)
+        if (Duration != 0)
         {
             AddMetric("duration", Duration.ToString());
         }
+    }
+
+    public static void StartCustomRun(string sliName)
+    {
+        RunId = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+        SliName = sliName;
     }
 
     public static void AddTestStatusMetric()
@@ -86,63 +94,99 @@ public class SliHelper
 
     public static void AddNetworkSpeedToMetrics(string downloadSpeedLabel, string uploadSpeedLabel)
     {
-        NetworkUtils.FlushDns();
-        Dictionary<string, double> networkSpeedConnected = null;
+        KillLingeringSpeedtestProcesses();
+        DnsHelper.FlushDns();
+        Dictionary<string, double>? networkSpeedConnected = null;
         RetryResult<bool> retry = Retry.WhileException(
             () =>
             {
-                networkSpeedConnected = GetNetworkSpeed();
+                networkSpeedConnected = GetNetworkSpeed(TestConstants.TwoMinutesTimeout);
             },
-            TestConstants.ThirtySecondsTimeout, TestConstants.ApiRetryInterval);
+            TestConstants.FourMinutesTimeout, TestConstants.TenSecondsTimeout);
 
         if (!retry.Success)
         {
-            throw new Exception(retry.LastException.Message);
+            KillLingeringSpeedtestProcesses();
+            throw new Exception($"Could not measure network speed: {retry.LastException?.Message}", retry.LastException);
         }
-        
-        AddMetric(downloadSpeedLabel, networkSpeedConnected["downloadSpeed"].ToString());
-        AddMetric(uploadSpeedLabel, networkSpeedConnected["uploadSpeed"].ToString());
+
+        AddMetric(downloadSpeedLabel, networkSpeedConnected?["downloadSpeed"].ToString() ?? string.Empty);
+        AddMetric(uploadSpeedLabel, networkSpeedConnected?["uploadSpeed"].ToString() ?? string.Empty);
     }
 
-    public static Dictionary<string, double> GetNetworkSpeed()
+    private static void KillLingeringSpeedtestProcesses()
     {
-        Dictionary<string, double> networkStats = new();
-        string speedTestPath = "speedtest.exe";
-
-        // Arguments for speedtest.exe to output in JSON format
-        string arguments = "--accept-gdpr --accept-license -f json ";
-
-        // Start the process
-        ProcessStartInfo startInfo = new ProcessStartInfo
+        foreach (Process process in Process.GetProcessesByName("speedtest"))
         {
-            FileName = speedTestPath,
-            Arguments = arguments,
+            try
+            {
+                process.Kill(entireProcessTree: true);
+                process.WaitForExit(TestConstants.FiveSecondsTimeout);
+            }
+            catch { }
+            finally
+            {
+                process.Dispose();
+            }
+        }
+    }
+
+    public static Dictionary<string, double> GetNetworkSpeed(TimeSpan? timeout = null)
+    {
+        TimeSpan effectiveTimeout = timeout ?? TestConstants.ThirtySecondsTimeout;
+
+        Dictionary<string, double> networkStats = new();
+
+        ProcessStartInfo startInfo = new()
+        {
+            FileName = "speedtest.exe",
+            Arguments = "--accept-gdpr --accept-license --progress=no -f json",
             RedirectStandardOutput = true,
+            RedirectStandardError = true,
             UseShellExecute = false,
             CreateNoWindow = true
         };
 
-        using (Process process = Process.Start(startInfo))
+        using Process process = new();
+        process.StartInfo = startInfo;
+        process.Start();
+
+        Task<string> outputTask = process.StandardOutput.ReadToEndAsync();
+        Task<string> errorTask = process.StandardError.ReadToEndAsync();
+
+        bool exited = process.WaitForExit(effectiveTimeout);
+
+        if (!exited)
         {
-            if (process != null)
+            TestContext.WriteLine($"speedtest.exe did not exit within {effectiveTimeout.TotalSeconds}s. Killing the process tree.");
+            try
             {
-                string output = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
-                JObject result = JObject.Parse(output);
-
-                double downloadSpeedInBytes = (double)result["download"]["bandwidth"];
-                double downloadSpeedInMbps = ConvertBytesToMbps(downloadSpeedInBytes);
-                double uploadSpeedInBytes = (double)result["upload"]["bandwidth"];
-                double uploadSpeedInMbps = ConvertBytesToMbps(uploadSpeedInBytes);
-
-                networkStats.Add("downloadSpeed", downloadSpeedInMbps);
-                networkStats.Add("uploadSpeed", uploadSpeedInMbps);
+                process.Kill(entireProcessTree: true);
             }
-            else
-            {
-                Console.WriteLine("Failed to start speedtest.exe process.");
-            }
+            catch { }
+            process.WaitForExit(TestConstants.FiveSecondsTimeout);
         }
+
+        string output = outputTask.Wait(TestConstants.FiveSecondsTimeout) ? outputTask.Result : string.Empty;
+        string error = errorTask.Wait(TestConstants.FiveSecondsTimeout) ? errorTask.Result : string.Empty;
+
+        JObject result = JObject.Parse(output);
+        JToken? downloadToken = result["download"]?["bandwidth"];
+        JToken? uploadToken = result["upload"]?["bandwidth"];
+
+        if (downloadToken is null || uploadToken is null)
+        {
+            throw new InvalidOperationException(
+                $"Speedtest output missing required bandwidth fields (exit code {process.ExitCode}).\n" +
+                $"OUTPUT: {output}\nERROR: {error}");
+        }
+
+        double downloadSpeedInMbps = ConvertBytesToMbps((double)downloadToken);
+        double uploadSpeedInMbps = ConvertBytesToMbps((double)uploadToken);
+
+        networkStats.Add("downloadSpeed", downloadSpeedInMbps);
+        networkStats.Add("uploadSpeed", uploadSpeedInMbps);
+
         return networkStats;
     }
 

@@ -28,6 +28,7 @@ along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:tkui="using:CommunityToolkit.WinUI"
              xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
+             x:DefaultBindMode="OneWay"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -99,13 +100,35 @@ along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
                             Style="{StaticResource PrimaryButtonStyle}" />
                 </toolkit:SettingsCard>
 
-                <toolkit:SettingsCard Header="Intentional client crash"
-                                      IsTabStop="False"
-                                      Style="{StaticResource DefaultSettingsCardStyle}">
-                    <Button Command="{x:Bind ViewModel.TriggerClientCrashCommand, Mode=OneTime}"
-                            Content="Trigger Crash"
-                            Style="{StaticResource PrimaryButtonStyle}" />
-                </toolkit:SettingsCard>
+                <toolkit:SettingsExpander Header="Intentional error events"
+                                          IsExpanded="False"
+                                          IsTabStop="False"
+                                          Style="{StaticResource SettingsExpanderStyle}">
+                    <StackPanel HorizontalAlignment="Right"
+                                Orientation="Vertical"
+                                Spacing="8">
+
+                        <Button HorizontalAlignment="Right"
+                                Command="{x:Bind ViewModel.TriggerUiUnhandledExceptionCommand, Mode=OneTime}"
+                                Content="UI unhandled exception"
+                                Style="{StaticResource PrimaryButtonStyle}" />
+
+                        <Button HorizontalAlignment="Right"
+                                Command="{x:Bind ViewModel.TriggerAppDomainUnhandledExceptionCommand, Mode=OneTime}"
+                                Content="AppDomain unhandled exception CRASH"
+                                Style="{StaticResource PrimaryButtonStyle}" />
+
+                        <Button HorizontalAlignment="Right"
+                                Command="{x:Bind ViewModel.TriggerUnobservedTaskExceptionCommand, Mode=OneTime}"
+                                Content="Unobserved task exception"
+                                Style="{StaticResource PrimaryButtonStyle}" />
+
+                        <Button HorizontalAlignment="Right"
+                                Command="{x:Bind ViewModel.TriggerFireAndForgetTaskExceptionCommand, Mode=OneTime}"
+                                Content="Fire and forget task exception"
+                                Style="{StaticResource PrimaryButtonStyle}" />
+                    </StackPanel>
+                </toolkit:SettingsExpander>
 
                 <toolkit:SettingsCard Header="Trigger Connection Error"
                                       IsTabStop="False"
@@ -123,12 +146,19 @@ along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
                 </toolkit:SettingsCard>
 
-                <toolkit:SettingsCard Header="Refresh logicals"
+                <toolkit:SettingsCard Header="Servers"
                                       IsTabStop="False"
                                       Style="{StaticResource DefaultSettingsCardStyle}">
-                    <Button Command="{x:Bind ViewModel.TriggerLogicalsRefreshCommand, Mode=OneTime}"
-                            Content="Trigger refresh"
-                            Style="{StaticResource PrimaryButtonStyle}" />
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="8">
+                        <Button Command="{x:Bind ViewModel.ForceUpdateLoadsCommand, Mode=OneTime}"
+                                Content="Force Loads" />
+                        <Button Command="{x:Bind ViewModel.ForceUpdateLogicalsCommand, Mode=OneTime}"
+                                Content="Force Logicals" />
+                        <Button Command="{x:Bind ViewModel.UpdateLogicalsCommand, Mode=OneTime}"
+                                Content="Update"
+                                Style="{StaticResource PrimaryButtonStyle}" />
+                    </StackPanel>
                 </toolkit:SettingsCard>
 
                 <toolkit:SettingsCard Header="Logout user with client outdated reason"
@@ -150,6 +180,23 @@ along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
                                   SelectedItem="{x:Bind ViewModel.SelectedOverlay, Mode=TwoWay}" />
 
                         <Button Command="{x:Bind ViewModel.ShowOverlayCommand, Mode=OneTime}"
+                                Content="Trigger"
+                                Style="{StaticResource PrimaryButtonStyle}" />
+                    </StackPanel>
+
+                </toolkit:SettingsCard>
+
+                <toolkit:SettingsCard Header="Show dialog"
+                                      IsTabStop="False"
+                                      Style="{StaticResource DefaultSettingsCardStyle}">
+
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="8">
+                        <ComboBox DisplayMemberPath="Name"
+                                  ItemsSource="{x:Bind ViewModel.DialogsList, Mode=OneTime}"
+                                  SelectedItem="{x:Bind ViewModel.SelectedDialog, Mode=TwoWay}" />
+
+                        <Button Command="{x:Bind ViewModel.ShowDialogCommand, Mode=OneTime}"
                                 Content="Trigger"
                                 Style="{StaticResource PrimaryButtonStyle}" />
                     </StackPanel>
@@ -183,31 +230,97 @@ along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
                 <toolkit:SettingsCard Header="Disconnect with session limit reached error"
                                       IsTabStop="False"
                                       Style="{StaticResource DefaultSettingsCardStyle}">
-
-                    <StackPanel Orientation="Horizontal"
-                                Spacing="8">
-                        <Button Command="{x:Bind ViewModel.DisconnectWithSessionLimitReachedErrorCommand, Mode=OneTime}"
-                                Content="Session limit reached for plus user"
-                                Style="{StaticResource PrimaryButtonStyle}" />
-                    </StackPanel>
-
+                    <Button Command="{x:Bind ViewModel.DisconnectWithSessionLimitReachedErrorCommand, Mode=OneTime}"
+                            Content="Session limit reached for plus user"
+                            Style="{StaticResource PrimaryButtonStyle}" />
                 </toolkit:SettingsCard>
 
                 <toolkit:SettingsCard Header="Show NPS survey"
                                       IsTabStop="False"
                                       Style="{StaticResource DefaultSettingsCardStyle}">
 
+                    <Button Command="{x:Bind ViewModel.ShowNpsSurveyCommand, Mode=OneTime}"
+                            Content="Show"
+                            Style="{StaticResource PrimaryButtonStyle}" />
+                </toolkit:SettingsCard>
+
+                <toolkit:SettingsCard Header="Settings telemetry heartbeat"
+                                      IsTabStop="False"
+                                      Style="{StaticResource DefaultSettingsCardStyle}">
+                    <Button Command="{x:Bind ViewModel.TriggerSettingsTelemetryHeartbeatCommand, Mode=OneTime}"
+                            Content="Trigger"
+                            Style="{StaticResource PrimaryButtonStyle}" />
+                </toolkit:SettingsCard>
+
+                <toolkit:SettingsCard Header="VPN Plan update"
+                                      IsTabStop="False"
+                                      Style="{StaticResource DefaultSettingsCardStyle}">
+                    <Button Command="{x:Bind ViewModel.TriggerVpnPlanUpdateCommand, Mode=OneTime}"
+                            Content="Trigger"
+                            Style="{StaticResource PrimaryButtonStyle}" />
+                </toolkit:SettingsCard>
+
+                <toolkit:SettingsCard Header="Device Location"
+                                      IsTabStop="False"
+                                      Style="{StaticResource DefaultSettingsCardStyle}">
+
                     <StackPanel Orientation="Horizontal"
                                 Spacing="8">
-                        <Button Command="{x:Bind ViewModel.ShowNpsSurveyCommand, Mode=OneTime}"
-                                Content="Show"
+                        
+                        <TextBox MaxLength="2"
+                                 x:Name="tbCountryCode"/>
+
+                        <Button Command="{x:Bind ViewModel.OverrideDeviceLocationCommand, Mode=OneTime}"
+                                CommandParameter="{x:Bind tbCountryCode.Text}"
+                                Content="Override"
                                 Style="{StaticResource PrimaryButtonStyle}" />
+                        
                     </StackPanel>
 
+                </toolkit:SettingsCard>
+                
+                <toolkit:SettingsCard Header="Locations exclusion"
+                                      IsTabStop="False"
+                                      Style="{StaticResource DefaultSettingsCardStyle}">
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="8">
+                        <Button Command="{x:Bind ViewModel.IncludeAllLocationsCommand, Mode=OneTime}"
+                                Content="Include All" />
+                        <Button Command="{x:Bind ViewModel.ExcludeAllLocationsCommand, Mode=OneTime}"
+                                Content="Exclude All"
+                                Style="{StaticResource PrimaryButtonStyle}" />
+                    </StackPanel>
+                </toolkit:SettingsCard>
+
+                <toolkit:SettingsCard Header="Connection certificate update"
+                                      IsTabStop="False"
+                                      Style="{StaticResource DefaultSettingsCardStyle}">
+                    <Button Command="{x:Bind ViewModel.TriggerConnectionCertificateUpdateCommand, Mode=OneTime}"
+                            Content="Trigger"
+                            Style="{StaticResource PrimaryButtonStyle}" />
+                </toolkit:SettingsCard>
+
+                <toolkit:SettingsCard Header="Guest hole operation"
+                                      IsTabStop="False"
+                                      Style="{StaticResource DefaultSettingsCardStyle}">
+                    <Button Command="{x:Bind ViewModel.CreateAccountViaGuestHoleCommand, Mode=OneTime}"
+                            Content="Create account"
+                            Style="{StaticResource PrimaryButtonStyle}" />
+                </toolkit:SettingsCard>
+
+                <toolkit:SettingsCard Header="Simulate Restrictions"
+                                      IsTabStop="False"
+                                      Style="{StaticResource DefaultSettingsCardStyle}">
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="8">
+                        <Button Command="{x:Bind ViewModel.SimulateP2PRestrictionCommand, Mode=OneTime}"
+                                Content="P2P" />
+                        <Button Command="{x:Bind ViewModel.SimulateStreamingRestrictionCommand, Mode=OneTime}"
+                                Content="Streaming" />
+                    </StackPanel>
                 </toolkit:SettingsCard>
 
             </StackPanel>
         </ScrollViewer>
-
     </Grid>
 </UserControl>

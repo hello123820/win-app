@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -20,10 +20,14 @@
 using System.Collections.Specialized;
 using ProtonVPN.Client.EventMessaging.Contracts;
 using ProtonVPN.Client.Logic.Auth.Contracts.Messages;
+using ProtonVPN.Client.Logic.Connection.Contracts.Models.Intents.Locations.Servers;
 using ProtonVPN.Client.Logic.Profiles.Contracts;
 using ProtonVPN.Client.Logic.Profiles.Contracts.Messages;
 using ProtonVPN.Client.Logic.Profiles.Contracts.Models;
 using ProtonVPN.Client.Logic.Profiles.Files;
+using ProtonVPN.Client.Logic.Servers.Contracts;
+using ProtonVPN.Logging.Contracts;
+using ProtonVPN.Logging.Contracts.Events.AppLogs;
 
 namespace ProtonVPN.Client.Logic.Profiles;
 
@@ -32,20 +36,26 @@ public class ProfilesManager : IProfilesManager,
 {
     private readonly IEventMessageSender _eventMessageSender;
     private readonly IProfilesFileReaderWriter _profilesFileReaderWriter;
+    private readonly IFavoriteServersStorage _favoriteServersStorage;
     private readonly IDefaultProfilesProvider _defaultProfilesProvider;
+    private readonly ILogger _logger;
 
     private readonly object _lock = new();
 
     private List<IConnectionProfile> _profiles = new();
 
     public ProfilesManager(
+        ILogger logger,
         IEventMessageSender eventMessageSender,
         IProfilesFileReaderWriter profilesFileReaderWriter,
-        IDefaultProfilesProvider defaultProfilesProvider)
+        IDefaultProfilesProvider defaultProfilesProvider,
+        IFavoriteServersStorage favoriteServersStorage)
     {
+        _logger = logger;
         _eventMessageSender = eventMessageSender;
         _profilesFileReaderWriter = profilesFileReaderWriter;
         _defaultProfilesProvider = defaultProfilesProvider;
+        _favoriteServersStorage = favoriteServersStorage;
     }
 
     public IOrderedEnumerable<IConnectionProfile> GetAll()
@@ -62,6 +72,8 @@ public class ProfilesManager : IProfilesManager,
     {
         lock (_lock)
         {
+            _logger.Info<AppLog>($"Overriding {_profiles.Count} connection profiles with default profiles and {profiles.Count()} profiles");
+
             _profiles.Clear();
 
             _profiles.AddRange(_defaultProfilesProvider.GetDefaultProfiles());
@@ -85,6 +97,8 @@ public class ProfilesManager : IProfilesManager,
                 action = NotifyCollectionChangedAction.Replace;
             }
 
+            _logger.Info<AppLog>($"{(action == NotifyCollectionChangedAction.Add ? "Adding" : "Editing")} connection profile {profile.Name} with Id {profile.Id}");
+
             profile.UpdateDateTimeUtc = DateTime.UtcNow;
 
             _profiles.Add(profile);
@@ -102,6 +116,8 @@ public class ProfilesManager : IProfilesManager,
             {
                 foreach (IConnectionProfile profile in profiles)
                 {
+                    _logger.Info<AppLog>($"Deleting connection profile {profile.Name} with Id {profile.Id}");
+
                     _profiles.Remove(profile);
                 }
 
@@ -112,35 +128,53 @@ public class ProfilesManager : IProfilesManager,
 
     public void Receive(LoggedInMessage message)
     {
-        lock (_lock)
-        {
-            LoadProfiles();
-        }
-
         BroadcastProfileChanges(NotifyCollectionChangedAction.Reset);
     }
 
     private void SaveAndBroadcastProfileChanges(NotifyCollectionChangedAction action, Guid? changedProfileId = null)
     {
+        SetFavoriteServers();
         SaveProfiles();
         BroadcastProfileChanges(action, changedProfileId);
     }
 
-    private void LoadProfiles()
+    private void SetFavoriteServers()
     {
-        _profiles = _profilesFileReaderWriter.Read(out bool doesFileExists);
+        List<string> serverIds = _profiles
+            .Where(p => p.Location is SingleServerLocationIntent)
+            .OrderByDescending(p => p.CreationDateTimeUtc)
+            .Select(p => ((SingleServerLocationIntent)p.Location).Server.Id)
+            .ToList();
 
-        // No profiles found and profile file does not exist, create list of default profiles
-        if (!_profiles.Any() && !doesFileExists)
+        _favoriteServersStorage.SetProfileServerIds(serverIds);
+    }
+
+    public void LoadProfiles()
+    {
+        lock (_lock)
         {
-            _profiles.AddRange(_defaultProfilesProvider.GetDefaultProfiles());
+            _profiles = _profilesFileReaderWriter.Read(out bool doesFileExists);
 
-            SaveProfiles();
+            _logger.Info<AppLog>($"Loaded {_profiles.Count} connection profiles from file");
+
+            SetFavoriteServers();
+
+            // No profiles found and profile file does not exist, create list of default profiles
+            if (!_profiles.Any() && !doesFileExists)
+            {
+                _logger.Info<AppLog>($"No connection profiles found, creating default profiles");
+
+                _profiles.AddRange(_defaultProfilesProvider.GetDefaultProfiles());
+
+                SaveProfiles();
+            }
         }
     }
 
     private void SaveProfiles()
     {
+        _logger.Info<AppLog>($"Saving {_profiles.Count} connection profiles", stackTraceDepth: 2);
+
         _profilesFileReaderWriter.Save(_profiles.ToList());
     }
 

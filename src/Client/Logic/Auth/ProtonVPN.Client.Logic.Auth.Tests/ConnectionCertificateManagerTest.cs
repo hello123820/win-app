@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -30,7 +30,8 @@ using ProtonVPN.Api.Contracts.Certificates;
 using ProtonVPN.Client.EventMessaging.Contracts;
 using ProtonVPN.Client.Logic.Auth.Contracts.Models;
 using ProtonVPN.Client.Settings.Contracts;
-using ProtonVPN.Common.Legacy.Extensions;
+using ProtonVPN.Common.Core.Extensions;
+using ProtonVPN.Crypto.Contracts;
 using ProtonVPN.Logging.Contracts;
 
 namespace ProtonVPN.Client.Logic.Auth.Tests;
@@ -43,6 +44,7 @@ public class ConnectionCertificateManagerTest
     private ISettings _appSettings;
     private ILogger _logger;
     private IEventMessageSender _eventMessageSender;
+    private ICertificateParser _certificateParser;
     private ConnectionCertificateManager _certificateManager;
 
     private DateTimeOffset? _certificateExpirationTime;
@@ -66,7 +68,9 @@ public class ConnectionCertificateManagerTest
         _appSettings = Substitute.For<ISettings>();
         _logger = Substitute.For<ILogger>();
         _eventMessageSender = Substitute.For<IEventMessageSender>();
-        _certificateManager = new ConnectionCertificateManager(_appSettings, _connectionKeyManager, _apiClient, _logger, _eventMessageSender);
+        _certificateParser = Substitute.For<ICertificateParser>();
+        _certificateParser.GetExtensionStrings(Arg.Any<string>(), Arg.Any<string>()).Returns([]);
+        _certificateManager = new ConnectionCertificateManager(_appSettings, _connectionKeyManager, _apiClient, _logger, _eventMessageSender, _certificateParser);
     }
 
     private Task<ApiResponseResult<CertificateResponse>> MockOfRequestCertificateAsync(CertificateRequest arg)
@@ -96,7 +100,7 @@ public class ConnectionCertificateManagerTest
     {
         return new CertificateResponse
         {
-            Code = ResponseCodes.ClientPublicKeyConflict
+            Code = ResponseCodes.CLIENT_PUBLIC_KEY_CONFLICT
         };
     }
 

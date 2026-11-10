@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -17,14 +17,15 @@
  * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System.Collections.Generic;
+using System;
 using System.Threading;
 using NUnit.Framework;
 using ProtonVPN.UI.Tests.Enums;
 using ProtonVPN.UI.Tests.Robots;
 using ProtonVPN.UI.Tests.TestBase;
 using ProtonVPN.UI.Tests.TestsHelper;
-using static ProtonVPN.UI.Tests.TestsHelper.TestConstants;
+using ProtonVPN.UI.Tests.Enums.Locations;
+using ProtonVPN.UI.Tests.TestsHelper.UiFlows;
 
 namespace ProtonVPN.UI.Tests.Tests.E2ETests;
 
@@ -32,13 +33,14 @@ namespace ProtonVPN.UI.Tests.Tests.E2ETests;
 [Category("1")]
 public class ConnectionTests : FreshSessionSetUp
 {
-    private const string FAST_CONNECTION = "Fastest country";
+    private const Country COUNTRY_NAME_ONE = Country.Angola;
+    private const Country COUNTRY_NAME_TWO = Country.Austria;
+    private const Country SLOW_TOR_COUNTRY = Country.UnitedStates;
+    private const City CITY_NAME_ONE = City.Vienna;
 
-    private const string RANDOM_COUNTRY = "Random country";
+    private const Browser APP_TO_CHECK = Browser.GoogleChrome;
 
-    // These 4 countries are all available options in the All, Secure Core, P2P, and Tor tabs.
-    // Trying United States first as it has the most servers available and there are less chances for them to be all under maintenance at the same time
-    private static readonly List<string> _countries = ["United States", "France", "Germany", "Hong Kong"];
+    private static readonly string _fastestCountry = LanguageHelper.GetTranslatedString("Country_Fastest");
 
     [SetUp]
     public void TestInitialize()
@@ -47,9 +49,13 @@ public class ConnectionTests : FreshSessionSetUp
     }
 
     [Test]
+    [Property("TestCaseId", "602341,602342")]
     [Category("ARM")]
-    public void QuickConnect()
+    [Category("SMOKE_1")]
+    public void QuickConnectToServerAndDisconnect()
     {
+        CommonUiFlows.EnsureUserIsDisconnected();
+
         string ipAddressNotConnected = NetworkUtils.GetIpAddressWithRetry();
 
         NavigationRobot
@@ -58,13 +64,15 @@ public class ConnectionTests : FreshSessionSetUp
 
         HomeRobot
             .Verify.IsDisconnected()
+                   .ConnectionCardTitleEquals(_fastestCountry)
             .ConnectViaConnectionCard()
-            .Verify.IsConnecting()
-                   .IsConnected();
+            .Verify.IsConnected()
+                   .ConnectionCardTitleEquals(_fastestCountry);
 
         string ipAddressConnected = NetworkUtils.GetIpAddressWithRetry();
 
-        HomeRobot.Verify.AssertVpnConnectionEstablished(ipAddressNotConnected, ipAddressConnected);
+        HomeRobot
+            .Verify.AssertVpnConnectionEstablished(ipAddressNotConnected, ipAddressConnected);
 
         NavigationRobot
             .Verify.IsOnConnectionDetailsPage();
@@ -75,120 +83,76 @@ public class ConnectionTests : FreshSessionSetUp
 
         NavigationRobot
             .Verify.IsOnLocationDetailsPage();
+
+        NetworkUtils.VerifyIpAddressMatchesWithRetry(ipAddressNotConnected);
     }
 
     [Test]
-    [Category("ARM")]
-    public void ConnectToFastestCountry()
-    {
-        NavigationRobot
-            .Verify.IsOnHomePage()
-                   .IsOnConnectionsPage()
-                   .IsOnLocationDetailsPage();
-
-        HomeRobot
-            .Verify.IsDisconnected();
-
-        SidebarRobot
-            .ConnectToFastest();
-
-        HomeRobot
-            .Verify.IsConnecting()
-                   .IsConnected();
-
-        NavigationRobot
-            .Verify.IsOnConnectionDetailsPage();
-
-        HomeRobot
-            .Disconnect()
-            .Verify.IsDisconnected();
-
-        NavigationRobot
-            .Verify.IsOnLocationDetailsPage();
-    }
-
-    [Test]
+    [Property("TestCaseId", "602346")]
     [Retry(3)]
     [Category("ARM")]
     public void ConnectAndCancel()
     {
-        HomeRobot.ConnectViaConnectionCard()
-            .Verify.IsConnecting();
-        // Imitate user's delay
-        Thread.Sleep(500);
-        HomeRobot.CancelConnection()
+        CommonUiFlows.EnsureUserIsDisconnected();
+
+        SidebarRobot
+            .NavigateToTorCountriesTab()
+            .ConnectToCountry(SLOW_TOR_COUNTRY);
+        HomeRobot
+            .Verify.IsConnecting()
+            .CancelConnection(TestConstants.MoreFrequentRetryInterval)
             .Verify.IsDisconnected();
     }
 
     [Test]
+    [Property("TestCaseId", "602363")]
+    [Category("SMOKE_1")]
     public void LocalNetworkingIsReachableWhileConnected()
     {
+        SettingRobot
+            .OpenSettings()
+            .OpenAdvancedSettings();
+        AdvancedSettingsRobot
+            .Verify.IsLanEnabled();
+        SettingRobot
+            .CloseSettings();
+
         HomeRobot
             .Verify.IsDisconnected()
             .ConnectViaConnectionCard()
-            .Verify.IsConnecting()
-                   .IsConnected();
+            .Verify.IsConnected();
 
-        NetworkUtils.VerifyIfLocalNetworkingWorks();
-    }
+        NetworkUtils.VerifyLocalNetworking(isLanEnabled: true);
 
-    [Test]
-    public void AutoConnectionOn()
-    {
         SettingRobot
             .OpenSettings()
-            .OpenAutoStartupSettings()
-            .Verify.IsAutoConnectEnabled()
-            .ToggleAutoLaunchSetting()
-            .ApplySettings();
-
-        App.Close();
-        App.Dispose();
-
-        LaunchApp(isFreshStart: false);
-
-        NavigationRobot
-            .Verify.IsOnMainPage();
+            .OpenAdvancedSettings();
+        AdvancedSettingsRobot
+            .DisableLanToggle();
+        SettingRobot
+            .ApplySettings()
+            .CloseSettings();
 
         HomeRobot
             .Verify.IsConnected();
+
+        NetworkUtils.VerifyLocalNetworking(isLanEnabled: false);
     }
 
     [Test]
-    public void AutoConnectionOff()
-    {
-        SettingRobot
-            .OpenSettings()
-            .OpenAutoStartupSettings()
-            .Verify.IsAutoConnectEnabled()
-            .ToggleAutoLaunchSetting()
-            .ToggleAutoConnectionSetting()
-            .ApplySettings();
-
-        App.Close();
-        App.Dispose();
-
-        LaunchApp(isFreshStart: false);
-
-        NavigationRobot
-            .Verify.IsOnMainPage();
-
-        HomeRobot
-            .Verify.IsDisconnected();
-    }
-
-    [Test]
+    [Property("TestCaseId", "602340")]
     public void ClientKillDoesNotStopVpnConnection()
     {
         SettingRobot
            .OpenSettings()
            .OpenAutoStartupSettings()
-           .ToggleAutoLaunchSetting()
-           .ToggleAutoConnectionSetting()
+           .DisableAutoLaunchSetting()
+           .DisableAutoConnectionSetting()
            .ApplySettings()
            .CloseSettings();
 
-        HomeRobot.ConnectViaConnectionCard()
+        HomeRobot
+            .ConnectViaConnectionCard()
             .Verify.IsConnected();
 
         string ipAddressBeforeClientKill = NetworkUtils.GetIpAddressWithRetry();
@@ -196,7 +160,7 @@ public class ConnectionTests : FreshSessionSetUp
         // Allow some time for the app to settle down to imitate user's delay
         Thread.Sleep(TestConstants.FiveSecondsTimeout);
 
-        App.Kill();
+        App?.Kill();
         // Delay to make sure that connection is not lost even after brief delay.
         Thread.Sleep(TestConstants.FiveSecondsTimeout);
 
@@ -204,7 +168,8 @@ public class ConnectionTests : FreshSessionSetUp
 
         HomeRobot.Verify.AssertVpnConnectionAfterKill(ipAddressBeforeClientKill, ipAddressAfterClientKill);
 
-        LaunchApp(isFreshStart: false);
+        LaunchClient(ClientLaunchParams.StartWithNoOnboarding);
+
         HomeRobot.Verify.IsConnected();
 
         string ipAddressAfterClientIsRestored = NetworkUtils.GetIpAddressWithRetry();
@@ -212,114 +177,288 @@ public class ConnectionTests : FreshSessionSetUp
     }
 
     [Test]
-    public void ClosingTheAppDoesNotStopVpnConnection()
+    [Property("TestCaseId", "789177")]
+    [Retry(3)]
+    public void AppExitStopsVpnConnection()
     {
-        string ipAddressConnected = NetworkUtils.GetIpAddressWithRetry();
+        string ipAddressBeforeConnected = NetworkUtils.GetIpAddressWithRetry();
 
-        HomeRobot.ConnectViaConnectionCard()
+        HomeRobot
+            .ConnectViaConnectionCard()
+            .Verify.IsConnected()
+            .ExpandKebabMenuButton()
+            .ExitViaKebabMenuWithConfirmation();
+
+        // Delay to make sure that connection is not lost even after brief delay.
+        Thread.Sleep(TestConstants.FiveSecondsTimeout);
+        NetworkUtils.VerifyIpAddressMatchesWithRetry(ipAddressBeforeConnected);
+    }
+
+    [Test]
+    [Property("TestCaseId", "602378")]
+    public void AppWindowCloseDoesNotStopVpnConnection()
+    {
+        HomeRobot
+            .ConnectViaConnectionCard()
             .Verify.IsConnected()
             .CloseClientViaCloseButton();
 
-        NetworkUtils.VerifyIpAddressMatchesWithRetry(ipAddressConnected);
+        string ipAddressAfterConnected = NetworkUtils.GetIpAddressWithRetry();
+
+        // Delay to make sure that connection is not lost even after brief delay.
+        Thread.Sleep(TestConstants.FiveSecondsTimeout);
+        NetworkUtils.VerifyIpAddressMatchesWithRetry(ipAddressAfterConnected);
+
+        TrayRobot.DoubleClickTrayApp();
     }
 
     [Test]
-    public void ConnectToVpnFastestCountryAndRandomCountry()
+    [Property("TestCaseId", "602343")]
+    public void ConnectToServerFromCountriesList()
     {
-        NavigationRobot
-           .Verify.IsOnHomePage()
-                  .IsOnConnectionsPage();
+        SidebarRobot
+            .NavigateToAllCountriesTab();
+        ConnectToCountryAndVerify(COUNTRY_NAME_ONE);
+
+        NetworkUtils.VerifyUserIsConnectedToExpectedCountry(COUNTRY_NAME_ONE);
+
+        SidebarRobot
+            .ExpandCities(COUNTRY_NAME_TWO)
+            .ConnectToCity(CITY_NAME_ONE);
         HomeRobot
-            .Verify.IsDisconnected()
-            .SelectVpnConnectionOption(VpnConnectionOptions.Fast)
-            .ConnectViaConnectionCard()
-            .Verify.DoesConnectionCardTitleEqual(FAST_CONNECTION)
-            .Disconnect();
+            .Verify.IsConnected();
 
+        NetworkUtils.VerifyUserIsConnectedToExpectedCountry(COUNTRY_NAME_TWO);
+
+        SidebarRobot
+            .ExpandSpecificServerList()
+            .ConnectToServer();
         HomeRobot
-            .Verify.IsDisconnected()
-            .SelectVpnConnectionOption(VpnConnectionOptions.Random)
-            .ConnectViaConnectionCard()
-            .Verify.DoesConnectionCardTitleEqual(RANDOM_COUNTRY)
-            .Disconnect();
+            .Verify.IsConnected();
+
+        NetworkUtils.VerifyUserIsConnectedToExpectedCountry(COUNTRY_NAME_TWO);
     }
 
     [Test]
-    public void ConnectToSecureCoreServerCountriesListAndDisconnectViaCountry()
+    [Property("TestCaseId", "602344")]
+    [Retry(3)]
+    public void DisconnectFromCountriesList()
     {
-        ConnectAndDisconnectViaSearchCountry(CountriesTab.SecureCore);
-    }
+        string ipAddressNotConnected = NetworkUtils.GetIpAddressWithRetry();
 
-    [Test]
-    public void ConnectToP2PServerCountriesListAndDisconnectViaCountry()
-    {
-        ConnectAndDisconnectViaSearchCountry(CountriesTab.P2P);
-    }
+        SidebarRobot
+            .NavigateToAllCountriesTab();
 
-    [Test]
-    public void ConnectToTorServerCountriesListAndDisconnectViaCountry()
-    {
-        ConnectAndDisconnectViaSearchCountry(CountriesTab.Tor);
-    }
-
-    private void ConnectAndDisconnectViaSearchCountry(CountriesTab tab)
-    {
-        string ipBeforeConnection = NetworkUtils.GetIpAddressWithRetry();
-
-        NavigationRobot
-            .Verify.IsOnHomePage()
-                   .IsOnConnectionsPage();
-
-        SearchAndConnectToCountry(tab, out string countryCode);
-
-        string ipAfterConnection = NetworkUtils.GetIpAddressWithRetry();
-
-        HomeRobot
-            .Verify.AssertVpnConnectionEstablished(ipBeforeConnection, ipAfterConnection);
-
-        NavigationRobot
-            .Verify.IsOnConnectionDetailsPage();
-
-        SidebarRobot.DisconnectViaCountry(countryCode);
-
+        ConnectToCountryAndVerify();
+        SidebarRobot
+            .DisconnectViaCountry(COUNTRY_NAME_TWO);
         HomeRobot
             .Verify.IsDisconnected();
-        NavigationRobot
-            .Verify.IsOnLocationDetailsPage();
 
-        NetworkUtils.VerifyIpAddressMatchesWithRetry(ipBeforeConnection);
+        NetworkUtils.VerifyIpAddressMatchesWithRetry(ipAddressNotConnected);
+
+        ConnectToCountryAndVerify();
+        SidebarRobot
+            .ExpandCities(COUNTRY_NAME_TWO)
+            .DisconnectViaCity(CITY_NAME_ONE);
+        HomeRobot
+            .Verify.IsDisconnected();
+
+        NetworkUtils.VerifyIpAddressMatchesWithRetry(ipAddressNotConnected);
+
+        SidebarRobot
+            .ExpandSpecificServerList()
+            .ConnectToServer();
+        HomeRobot
+            .Verify.IsConnected();
+        SidebarRobot
+            .ExpandSpecificServerList()
+            .DisconnectViaServer();
+        HomeRobot
+            .Verify.IsDisconnected();
+
+        NetworkUtils.VerifyIpAddressMatchesWithRetry(ipAddressNotConnected);
     }
 
-    private void SearchAndConnectToCountry(CountriesTab tab, out string countryCode)
+    [Test]
+    [Property("TestCaseId", "602347")]
+    public void CorrectIpIsShown()
     {
-        countryCode = string.Empty;
-        string failureMessages = string.Empty;
+        HomeRobot
+            .Verify.IsDisconnected()
+            .ConnectViaConnectionCard()
+            .Verify.IsConnected();
 
-        foreach (string country in _countries)
+        string ipAddressConnected = NetworkUtils.GetIpAddressWithRetry();
+        string vpnServerIp = HomeRobot.GetVpnServerIp()!;
+
+        HomeRobot
+            .Verify.AssertVPNIpAndExternalIpMatch(vpnServerIp, ipAddressConnected)
+            .Disconnect()
+            .Verify.IsDisconnected();
+    }
+
+    [Test]
+    [Property("TestCaseId", "602424")]
+    [Retry(3)]
+    public void FreshSignInWhileConnectedToWireGuard()
+    {
+        try
         {
-            try
-            {
-                countryCode = CountryCodes.GetCode(country);
+            LoginFreshWithWireGuardOn();
 
-                SidebarRobot
-                    .SearchFor(country)
-                    .NavigateToCountriesTabAfterSearch(tab)
-                    .ConnectToCountry(countryCode);
-
-                HomeRobot
-                    .Verify.IsConnecting()
-                           .IsConnected();
-
-                Thread.Sleep(1000);
-
-                return;
-            }
-            catch (AssertionException e)
-            {
-                failureMessages += $"Failed to connect to {countryCode} ({tab}): {e.Message}\n";
-            }
+            HomeRobot
+                .Verify.IsLocationDetailsPanelEmpty();
+        }
+        finally
+        {
+            ScriptHelper.DisconnectFromWireGuard();
+            Thread.Sleep(TestConstants.TenSecondsTimeout);
         }
 
-        Assert.Fail(failureMessages);
+        HomeRobot
+            .ConnectViaConnectionCard()
+            .Verify.IsConnected();
+    }
+
+    [Test]
+    [Property("TestCaseId", "609951")]
+    [Category("5")]
+    public void FirewallRulesAreNotIgnored()
+    {
+        CommonUiFlows.EnsureUserIsDisconnected();
+
+        ScriptHelper.AddChromeFirewallRule();
+
+        try
+        {
+            EnableKillSwitch(KillSwitchMode.Advanced);
+            HomeRobot
+                .ConnectViaConnectionCard()
+                .Verify.IsConnected();
+
+            BrowserUtils.AssertBrowserInternetAvailability(APP_TO_CHECK, shouldBeAvailable: false);
+            BrowserUtils.KillAllBrowsers();
+
+            EnableKillSwitch(KillSwitchMode.Standard);
+            HomeRobot
+                .Verify.IsConnected();
+
+            BrowserUtils.AssertBrowserInternetAvailability(APP_TO_CHECK, shouldBeAvailable: false);
+            BrowserUtils.KillAllBrowsers();
+        }
+        finally
+        {
+            DisableKillSwitch();
+            ScriptHelper.RemoveChromeFirewallRule();
+        }
+    }
+
+    [Test]
+    [Property("TestCaseId", "602422")]
+    [Retry(3)]
+    public void ConnectionRestoresAfterStoppingVpnService()
+    {
+        HomeRobot
+            .ConnectViaConnectionCard()
+            .Verify.IsConnected();
+
+        KillVpnService();
+
+        try
+        {
+            HomeRobot.Verify.IsConnecting();
+        }
+        catch (TimeoutException)
+        {
+            //do nothing
+        }
+
+        HomeRobot.Verify.IsConnected();
+
+        //Give it time to properly restore internet
+        Thread.Sleep(TestConstants.TenSecondsTimeout);
+
+        //Note: DNS leaks are expected in this scenario, unless Kill Switch is set to "Advanced"
+        BrowserUtils.AssertBrowserInternetAvailability(APP_TO_CHECK, shouldBeAvailable: true);
+
+        BrowserUtils.KillAllBrowsers();
+    }
+
+    [Test]
+    [Property("TestCaseId", "602345")]
+    [Retry(3)]
+    public void ConnectWithoutInternet()
+    {
+        try
+        {
+            ScriptHelper.DisableInternet();
+            NetworkUtils.AssertInternetAvailability(false);
+
+            HomeRobot
+                .ConnectViaConnectionCard()
+                .Verify.IsConnecting();
+
+            Thread.Sleep(TestConstants.ThirtySecondsTimeout);
+
+            ScriptHelper.EnableInternet();
+            NetworkUtils.AssertInternetAvailability(true);
+
+            HomeRobot
+                .Verify.IsConnected();
+        }
+        finally
+        {
+            ScriptHelper.EnableInternet();
+            NetworkUtils.AssertInternetAvailability(true);
+        }
+    }
+
+    private void ConnectToCountryAndVerify(Country countryName = COUNTRY_NAME_TWO)
+    {
+        SidebarRobot
+            .ConnectToCountry(countryName);
+        HomeRobot
+            .Verify.IsConnected();
+    }
+
+    private void LoginFreshWithWireGuardOn()
+    {
+        Cleanup();
+        Thread.Sleep(TestConstants.FiveSecondsTimeout);
+
+        ScriptHelper.ConnectToWireGuard();
+        Thread.Sleep(TestConstants.TenSecondsTimeout);
+        LaunchClient(ClientLaunchParams.StartWithoutDisconnectingFromWireGuard);
+        NetworkUtils.AssertInternetAvailability(true);
+        CommonUiFlows.FullLogin(TestUserData.VisionaryUser);
+    }
+
+    private void EnableKillSwitch(KillSwitchMode mode)
+    {
+        SettingRobot
+            .OpenSettings()
+            .OpenKillSwitchSettings()
+            .EnableKillSwitchToggle()
+            .SelectKillSwitchMode(mode)
+            .ApplySettings()
+            .CloseSettings();
+    }
+
+    private void DisableKillSwitch()
+    {
+        SettingRobot
+            .OpenSettings()
+            .OpenKillSwitchSettings()
+            .DisableKillSwitchToggle()
+            .ApplySettings()
+            .CloseSettings();
+    }
+
+    [OneTimeTearDown]
+    public void TearDown()
+    {
+        ScriptHelper.RemoveChromeFirewallRule();
+        ScriptHelper.EnableInternet();
     }
 }

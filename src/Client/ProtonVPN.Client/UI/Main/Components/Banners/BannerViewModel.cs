@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
@@ -48,16 +48,16 @@ public partial class BannerViewModel : BannerViewModelBase, IEventMessageReceive
 
     protected override AnnouncementType AnnouncementType { get; } = AnnouncementType.Banner;
 
-    protected override ModalSource ModalSource { get; } = ModalSource.PromoOffer;
+    protected override UpsellModalContext ModalContext { get; } = new(ModalSource.PromoOffer, ModalTrigger.PromoOfferBanner);
 
     public BannerViewModel(
         IUIThreadDispatcher uiThreadDispatcher,
         IAnnouncementActivator announcementActivator,
         IAnnouncementsProvider announcementsProvider,
-        IUpsellDisplayStatisticalEventSender upsellDisplayStatisticalEventSender,
+        IUpsellDisplayReporter upsellDisplayReporter,
         IViewModelHelper viewModelHelper,
         IApplicationThemeSelector themeSelector)
-        : base(announcementActivator, announcementsProvider, upsellDisplayStatisticalEventSender, viewModelHelper)
+        : base(announcementActivator, announcementsProvider, upsellDisplayReporter, viewModelHelper)
     {
         _countdownTimer = uiThreadDispatcher.GetTimer(TimeSpan.FromSeconds(1));
         _countdownTimer.Tick += OnCountdownTimerTick;

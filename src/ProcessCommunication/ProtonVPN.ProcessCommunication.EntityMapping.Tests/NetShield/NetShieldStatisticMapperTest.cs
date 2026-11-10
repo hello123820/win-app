@@ -17,10 +17,9 @@
  * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProtonVPN.Common.Legacy.NetShield;
 using ProtonVPN.ProcessCommunication.Contracts.Entities.NetShield;
-using ProtonVPN.ProcessCommunication.EntityMapping.NetShield;
+using ProtonVPN.ProcessCommunication.EntityMapping.Common.Legacy.NetShield;
 
 namespace ProtonVPN.ProcessCommunication.EntityMapping.Tests.NetShield;
 
@@ -58,7 +57,8 @@ public class NetShieldStatisticMapperTest
         {
             NumOfMaliciousUrlsBlocked = DateTime.UtcNow.Millisecond,
             NumOfAdvertisementUrlsBlocked = DateTime.UtcNow.Ticks,
-            NumOfTrackingUrlsBlocked = DateTime.UtcNow.Year
+            NumOfTrackingUrlsBlocked = DateTime.UtcNow.Year,
+            NumOfAdultContentUrlsBlocked = DateTime.UtcNow.Month,
         };
         Assert.IsNotNull(entityToTest.TimestampUtc);
 
@@ -68,6 +68,7 @@ public class NetShieldStatisticMapperTest
         Assert.AreEqual(entityToTest.NumOfMaliciousUrlsBlocked, result.NumOfMaliciousUrlsBlocked);
         Assert.AreEqual(entityToTest.NumOfAdvertisementUrlsBlocked, result.NumOfAdvertisementUrlsBlocked);
         Assert.AreEqual(entityToTest.NumOfTrackingUrlsBlocked, result.NumOfTrackingUrlsBlocked);
+        Assert.AreEqual(entityToTest.NumOfAdultContentUrlsBlocked, result.NumOfAdultContentUrlsBlocked);
         Assert.IsNotNull(result.TimestampUtc);
         Assert.AreEqual(entityToTest.TimestampUtc, result.TimestampUtc);
     }
@@ -90,6 +91,7 @@ public class NetShieldStatisticMapperTest
             NumOfMaliciousUrlsBlocked = DateTime.UtcNow.Millisecond,
             NumOfAdvertisementUrlsBlocked = DateTime.UtcNow.Ticks,
             NumOfTrackingUrlsBlocked = DateTime.UtcNow.Year,
+            NumOfAdultContentUrlsBlocked = DateTime.UtcNow.Month,
             TimestampUtc = DateTime.UtcNow,
         };
 
@@ -99,6 +101,7 @@ public class NetShieldStatisticMapperTest
         Assert.AreEqual(entityToTest.NumOfMaliciousUrlsBlocked, result.NumOfMaliciousUrlsBlocked);
         Assert.AreEqual(entityToTest.NumOfAdvertisementUrlsBlocked, result.NumOfAdvertisementUrlsBlocked);
         Assert.AreEqual(entityToTest.NumOfTrackingUrlsBlocked, result.NumOfTrackingUrlsBlocked);
+        Assert.AreEqual(entityToTest.NumOfAdultContentUrlsBlocked, result.NumOfAdultContentUrlsBlocked);
         Assert.IsNotNull(result.TimestampUtc);
         Assert.AreEqual(entityToTest.TimestampUtc, result.TimestampUtc);
     }

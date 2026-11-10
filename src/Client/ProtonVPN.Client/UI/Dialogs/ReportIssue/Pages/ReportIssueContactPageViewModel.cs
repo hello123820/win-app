@@ -29,6 +29,7 @@ using ProtonVPN.Client.Core.Services.Navigation;
 using ProtonVPN.Client.Logic.Feedback.Contracts;
 using ProtonVPN.Client.Mappers;
 using ProtonVPN.Client.UI.Dialogs.ReportIssue.Bases;
+using ProtonVPN.Common.Core.Extensions;
 using ProtonVPN.Common.Legacy.Abstract;
 using ProtonVPN.Logging.Contracts.Events.AppLogs;
 
@@ -111,6 +112,12 @@ public partial class ReportIssueContactPageViewModel : ReportIssuePageViewModelB
                 IsSendingReport = false;
                 await ParentViewNavigator.NavigateToResultViewAsync(isReportSent);
             }
+
+            if (isReportSent)
+            {
+                // Reset input fields after sending the report so that the user can send another report if they want to
+                InvalidateInputFields();
+            }
         }
     }
 
@@ -121,11 +128,11 @@ public partial class ReportIssueContactPageViewModel : ReportIssuePageViewModelB
             && InputFields.All(f => !f.HasErrors);
     }
 
-    protected override async void OnLanguageChanged()
+    protected override void OnLanguageChanged()
     {
         base.OnLanguageChanged();
 
-        await InvalidateCategoryAsync();
+        InvalidateCategoryAsync().FireAndForget();
     }
 
     private void OnInputFieldsItemErrorsChanged(object? sender, DataErrorsChangedEventArgs e)
@@ -142,7 +149,12 @@ public partial class ReportIssueContactPageViewModel : ReportIssuePageViewModelB
 
         List<IssueCategoryResponse> categories = await _dataProvider.GetCategoriesAsync();
 
-        Category = ReportIssueMapper.Map(categories.First(c => c.SubmitLabel == Category.Key));
+        // The category may be missing if the list switched between the API and the fallback form
+        IssueCategoryResponse? category = categories.FirstOrDefault(c => c.SubmitLabel == Category.Key);
+        if (category != null)
+        {
+            Category = ReportIssueMapper.Map(category);
+        }
     }
 
     private void InvalidateInputFields()
@@ -154,7 +166,7 @@ public partial class ReportIssueContactPageViewModel : ReportIssuePageViewModelB
             throw new ArgumentException(nameof(Category), "Cannot load contact form with no category");
         }
 
-        InputFields.Add(new EmailInputField(true)
+        InputFields.Add(new EmailInputField()
         {
             Key = "Email",
             Name = Localizer.Get("Dialogs_ReportIssue_ContactForm_Email"),
@@ -163,8 +175,22 @@ public partial class ReportIssueContactPageViewModel : ReportIssuePageViewModelB
 
         foreach (IssueInputField field in Category.InputFields)
         {
+            field.Reset();
+
+            if (field is TextInputFieldBase textField)
+            {
+                textField.LengthHint = GetLengthHint(textField);
+            }
+
             InputFields.Add(field);
         }
+    }
+
+    private string GetLengthHint(TextInputFieldBase field)
+    {
+        return field.HasMinimumLength
+            ? Localizer.GetFormat("Dialogs_ReportIssue_ContactForm_Field_MinLength", field.EffectiveMinimumLength)
+            : string.Empty;
     }
 
     partial void OnCategoryChanged(IssueCategory? value)

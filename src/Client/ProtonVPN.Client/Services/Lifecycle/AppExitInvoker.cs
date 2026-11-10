@@ -26,7 +26,6 @@ using ProtonVPN.Client.Core.Services.Activation;
 using ProtonVPN.Client.Localization.Contracts;
 using ProtonVPN.Client.Localization.Extensions;
 using ProtonVPN.Client.Logic.Connection.Contracts;
-using ProtonVPN.Client.Logic.Services.Contracts;
 using ProtonVPN.Client.Settings.Contracts;
 using ProtonVPN.Client.Settings.Contracts.Extensions;
 using ProtonVPN.Configurations.Contracts;
@@ -76,16 +75,22 @@ public class AppExitInvoker : IAppExitInvoker
         _uiThreadDispatcher = uiThreadDispatcher;
     }
 
-    public async Task RestartAsync()
+    public async Task RestartAsync(bool isToOpenOnDesktop)
     {
-        await ForceExitAsync();
-        Program.ReleaseMutex();
-        StartNewAppProcess();
+        await _uiThreadDispatcher.TryEnqueueAsync(() => InternalRestartAsync(isToOpenOnDesktop));
     }
 
-    private void StartNewAppProcess()
+    private async Task InternalRestartAsync(bool isToOpenOnDesktop)
     {
-        string cmd = $"/c start \"\" \"{_config.ClientLauncherExePath}\"";
+        await InternalExitAsync(isToAskForExitConfirmation: false);
+        Program.ReleaseMutex();
+        StartNewAppProcess(isToOpenOnDesktop);
+    }
+
+    private void StartNewAppProcess(bool isToOpenOnDesktop = false)
+    {
+        string args = isToOpenOnDesktop ? " -OpenOnDesktop" : "";
+        string cmd = $"/c start \"\" \"{_config.ClientLauncherExePath}\"{args}";
         _commandLineCaller.Execute(cmd);
     }
 

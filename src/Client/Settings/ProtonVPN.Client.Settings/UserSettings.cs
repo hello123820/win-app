@@ -23,7 +23,6 @@ using ProtonVPN.Client.Settings.Contracts;
 using ProtonVPN.Client.Settings.Contracts.Enums;
 using ProtonVPN.Client.Settings.Contracts.Models;
 using ProtonVPN.Client.Settings.Repositories.Contracts;
-using ProtonVPN.Common.Core.Dns;
 using ProtonVPN.Common.Core.Extensions;
 using ProtonVPN.Common.Core.Networking;
 
@@ -45,6 +44,12 @@ public class UserSettings : GlobalSettings, IUserSettings
         set => _userCache.SetReferenceType(value, SettingEncryption.Encrypted);
     }
 
+    public string? UserEmail
+    {
+        get => _userCache.GetReferenceType<string>(SettingEncryption.Encrypted);
+        set => _userCache.SetReferenceType(value, SettingEncryption.Encrypted);
+    }
+
     public DateTimeOffset? UserCreationDateUtc
     {
         get => _userCache.GetValueType<DateTimeOffset>(SettingEncryption.Encrypted);
@@ -55,36 +60,6 @@ public class UserSettings : GlobalSettings, IUserSettings
     {
         get => _userCache.GetReferenceType<string>(SettingEncryption.Unencrypted) ?? DefaultSettings.Theme;
         set => _userCache.SetReferenceType(value, SettingEncryption.Unencrypted);
-    }
-
-    public int WindowWidth
-    {
-        get => _userCache.GetValueType<int>(SettingEncryption.Unencrypted) ?? DefaultSettings.WindowWidth;
-        set => _userCache.SetValueType<int>(value, SettingEncryption.Unencrypted);
-    }
-
-    public int WindowHeight
-    {
-        get => _userCache.GetValueType<int>(SettingEncryption.Unencrypted) ?? DefaultSettings.WindowHeight;
-        set => _userCache.SetValueType<int>(value, SettingEncryption.Unencrypted);
-    }
-
-    public int? WindowXPosition
-    {
-        get => _userCache.GetValueType<int>(SettingEncryption.Unencrypted);
-        set => _userCache.SetValueType<int>(value, SettingEncryption.Unencrypted);
-    }
-
-    public int? WindowYPosition
-    {
-        get => _userCache.GetValueType<int>(SettingEncryption.Unencrypted);
-        set => _userCache.SetValueType<int>(value, SettingEncryption.Unencrypted);
-    }
-
-    public bool IsWindowMaximized
-    {
-        get => _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.IsWindowMaximized;
-        set => _userCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
     }
 
     public bool IsNavigationPaneOpened
@@ -108,6 +83,12 @@ public class UserSettings : GlobalSettings, IUserSettings
     public bool IsConnectionDetailsPaneOpened
     {
         get => _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.IsConnectionDetailsPaneOpened;
+        set => _userCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
+    }
+
+    public bool AreProtonProtocolsEnabled
+    {
+        get => _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.AreProtonProtocolsEnabled;
         set => _userCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
     }
 
@@ -181,29 +162,17 @@ public class UserSettings : GlobalSettings, IUserSettings
         {
             if (VpnPlan.IsPaid)
             {
-                return _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.IsLocalAreaNetworkAccessAllowed(true);
+                return _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.IsLocalAreaNetworkAccessAllowed(isPaidUser: true);
             }
 
-            // Free users can't use this feature
-            return false;
+            return DefaultSettings.IsLocalAreaNetworkAccessAllowed(isPaidUser: false);
         }
         set => _userCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
     }
 
     public bool IsLocalDnsEnabled
-    {
-        // Get the value from cache if it exists, otherwise set it based on the DnsBlockMode. To be removed in future versions.
-        get
-        {
-            bool? isLocalDnsEnabled = _userCache.GetValueType<bool>(SettingEncryption.Unencrypted);
-            if (isLocalDnsEnabled is null)
-            {
-                isLocalDnsEnabled = DnsBlockMode == DnsBlockMode.Callout;
-                _userCache.SetValueType<bool>(isLocalDnsEnabled, SettingEncryption.Unencrypted);
-            }
-            return isLocalDnsEnabled.Value;
-        }        
-        // get => _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.IsLocalDnsEnabled;
+    {   
+        get => _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.IsLocalDnsEnabled;
         set => _userCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
     }
 
@@ -263,10 +232,10 @@ public class UserSettings : GlobalSettings, IUserSettings
         {
             if (VpnPlan.IsPaid)
             {
-                return _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.IsNetShieldEnabled(true);
+                return _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.IsNetShieldEnabled(isPaidUser: true);
             }
 
-            return DefaultSettings.IsNetShieldEnabled(false);
+            return DefaultSettings.IsNetShieldEnabled(isPaidUser: false);
         }
         set => _userCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
     }
@@ -359,6 +328,12 @@ public class UserSettings : GlobalSettings, IUserSettings
         set => _userCache.SetListReferenceType<string>(value, SettingEncryption.Unencrypted);
     }
 
+    public string? LastLogicalsStatusId
+    {
+        get => _userCache.GetReferenceType<string>(SettingEncryption.Unencrypted);
+        set => _userCache.SetReferenceType(value, SettingEncryption.Unencrypted);
+    }
+
     public ChangeServerAttempts ChangeServerAttempts
     {
         get => _userCache.GetValueType<ChangeServerAttempts>(SettingEncryption.Encrypted) ?? DefaultSettings.ChangeServerAttempts;
@@ -381,25 +356,25 @@ public class UserSettings : GlobalSettings, IUserSettings
 
     public bool WasWelcomeOverlayDisplayed
     {
-        get => _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? false;
+        get => SkipOnboarding || (_userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? false);
         set => _userCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
     }
 
     public bool WasWelcomePlusOverlayDisplayed
     {
-        get => _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? false;
+        get => SkipOnboarding || (_userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? false);
         set => _userCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
     }
 
     public bool WasWelcomeUnlimitedOverlayDisplayed
     {
-        get => _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? false;
+        get => SkipOnboarding || (_userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? false);
         set => _userCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
     }
 
     public bool WasWelcomeB2BOverlayDisplayed
     {
-        get => _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? false;
+        get => SkipOnboarding || (_userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? false);
         set => _userCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
     }
 
@@ -411,25 +386,25 @@ public class UserSettings : GlobalSettings, IUserSettings
 
     public bool IsP2PInfoBannerDismissed
     {
-        get => _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.IsP2PInfoBannerDismissed;
+        get => SkipOnboarding || (_userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.IsP2PInfoBannerDismissed);
         set => _userCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
     }
 
     public bool IsSecureCoreInfoBannerDismissed
     {
-        get => _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.IsSecureCoreInfoBannerDismissed;
+        get => SkipOnboarding || (_userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.IsSecureCoreInfoBannerDismissed);
         set => _userCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
     }
 
     public bool IsTorInfoBannerDismissed
     {
-        get => _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.IsTorInfoBannerDismissed;
+        get => SkipOnboarding || (_userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.IsTorInfoBannerDismissed);
         set => _userCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
     }
 
     public bool IsGatewayInfoBannerDismissed
     {
-        get => _userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.IsGatewayInfoBannerDismissed;
+        get => SkipOnboarding || (_userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? DefaultSettings.IsGatewayInfoBannerDismissed);
         set => _userCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
     }
 
@@ -437,6 +412,11 @@ public class UserSettings : GlobalSettings, IUserSettings
     {
         get
         {
+            if (SkipOnboarding)
+            {
+                return DefaultSettings.WhatsNewOverlayVersion;
+            }
+
             int? version = _userCache.GetValueType<int>(SettingEncryption.Unencrypted);
             if (version is null)
             {
@@ -448,16 +428,65 @@ public class UserSettings : GlobalSettings, IUserSettings
         set => _userCache.SetValueType<int>(value, SettingEncryption.Unencrypted);
     }
 
-    [Obsolete("Use IsLocalDnsEnabled instead. DnsBlockMode is maintained in order to migrate the value for existing users.")]
-    public DnsBlockMode DnsBlockMode
+    public DateTimeOffset? LastSettingsHeartbeatTimeUtc
     {
-        get => _userCache.GetValueType<DnsBlockMode>(SettingEncryption.Unencrypted) ?? DefaultSettings.DnsBlockMode;
-        set => _userCache.SetValueType<DnsBlockMode>(value, SettingEncryption.Unencrypted);
+        get => _userCache.GetValueType<DateTimeOffset>(SettingEncryption.Unencrypted) ?? DefaultSettings.LastSettingsHeartbeatTimeUtc;
+        set => _userCache.SetValueType<DateTimeOffset>(value, SettingEncryption.Unencrypted);
+    }
+
+    public DateTimeOffset LastP2PWarningNotificationUtcDate
+    {
+        get => _userCache.GetValueType<DateTimeOffset>(SettingEncryption.Unencrypted) ?? DefaultSettings.LastP2PTrafficNotificationUtcDate;
+        set => _userCache.SetValueType<DateTimeOffset>(value, SettingEncryption.Unencrypted);
+    }
+
+    public DateTimeOffset LastStreamingWarningNotificationUtcDate
+    {
+        get => _userCache.GetValueType<DateTimeOffset>(SettingEncryption.Unencrypted) ?? DefaultSettings.LastStreamingNotificationUtcDate;
+        set => _userCache.SetValueType<DateTimeOffset>(value, SettingEncryption.Unencrypted);
+    }
+
+    public List<ExcludedLocation> ExcludedLocationsList
+    {
+        get => _userCache.GetListValueType<ExcludedLocation>(SettingEncryption.Unencrypted) ?? DefaultSettings.ExcludedLocationsList;
+        set => _userCache.SetListValueType<ExcludedLocation>(value, SettingEncryption.Unencrypted);
+    }
+
+    public bool WasExcludedLocationsSmartDiscoveryPromptDisplayed
+    {
+        get => SkipOnboarding || (_userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? false);
+        set => _userCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
+    }
+
+    public bool WasExcludedLocationsTeachingTipDisplayed
+    {
+        get => SkipOnboarding || (_userCache.GetValueType<bool>(SettingEncryption.Unencrypted) ?? false);
+        set => _userCache.SetValueType<bool>(value, SettingEncryption.Unencrypted);
     }
 
     public UserSettings(IGlobalSettingsCache globalSettingsCache, IUserSettingsCache userSettingsCache)
-            : base(globalSettingsCache)
+        : base(globalSettingsCache)
     {
         _userCache = userSettingsCache;
+    }
+
+    // TODO: Remove once fully rolled out to stable
+    protected override WindowLocation? GetWindowLocationFromUserSettings()
+    {
+        // No user logged in yet
+        if (UserId is null) 
+        {
+            return null;
+        }
+
+        // Get the window location from the legacy user settings values
+        return new()
+        {
+            Width = _userCache.GetValueType<int>(SettingEncryption.Unencrypted, "WindowWidth") ?? DefaultSettings.WindowLocation.Width,
+            Height = _userCache.GetValueType<int>(SettingEncryption.Unencrypted, "WindowHeight") ?? DefaultSettings.WindowLocation.Height,
+            XPosition = _userCache.GetValueType<int>(SettingEncryption.Unencrypted, "WindowXPosition") ?? DefaultSettings.WindowLocation.XPosition,
+            YPosition = _userCache.GetValueType<int>(SettingEncryption.Unencrypted, "WindowYPosition") ?? DefaultSettings.WindowLocation.YPosition,
+            IsMaximized = _userCache.GetValueType<bool>(SettingEncryption.Unencrypted, "IsWindowMaximized") ?? DefaultSettings.WindowLocation.IsMaximized,
+        };
     }
 }

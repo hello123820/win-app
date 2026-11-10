@@ -18,8 +18,8 @@
  */
 
 using System;
-using ProtonVPN.UI.Tests.TestsHelper;
 using ProtonVPN.UI.Tests.UiTools;
+using ProtonVPN.UI.Tests.TestsHelper;
 
 namespace ProtonVPN.UI.Tests.Robots;
 
@@ -30,6 +30,7 @@ public class NavigationRobot
     protected Element LoginPage => Element.ByAutomationId("LoginPage");
     protected Element SignInPage => Element.ByAutomationId("SignInPage");
     protected Element LoadingPage => Element.ByAutomationId("LoadingPage");
+    protected Element NoServersPage => Element.ByAutomationId("NoServersPage");
     protected Element TwoFactorPage => Element.ByAutomationId("TwoFactorPage");
     protected Element MainPage => Element.ByAutomationId("MainPage");
     protected Element SettingsPage => Element.ByAutomationId("SettingsPage");
@@ -48,6 +49,22 @@ public class NavigationRobot
     protected Element AdvancedSettingsPage => Element.ByAutomationId("AdvancedSettingsPage");
     protected Element LocationDetailsPage => Element.ByAutomationId("LocationDetailsPage");
     protected Element ConnectionDetailsPage => Element.ByAutomationId("ConnectionDetailsPage");
+    protected Element ConnectionPreferencesPage => Element.ByAutomationId("ConnectionPreferencesPage");
+
+    protected Element NoServerRefreshButton => Element.ByAutomationId("RefreshButton");
+    protected Element NoServerSignOutButton => Element.ByAutomationId("SignOutButton");
+
+    public NavigationRobot ClickRefreshButtonOnNoServersPage()
+    {
+        NoServerRefreshButton.Invoke();
+        return this;
+    }
+
+    public NavigationRobot ClickSignOutButtonOnNoServersPage()
+    {
+        NoServerSignOutButton.Invoke();
+        return this;
+    }
 
     public class Verifications : NavigationRobot
     {
@@ -57,7 +74,15 @@ public class NavigationRobot
             return this;
         }
 
-        public Verifications IsOnLoginPage() => IsOnPage(LoginPage);
+        public Verifications IsMessageDisplayed(string message)
+        {
+            Element.ByName(message).WaitUntilDisplayed();
+            return this;
+        }
+
+        public Verifications IsOnLoginPage() => IsOnPage(LoginPage, TestConstants.TwoMinutesTimeout);
+
+        public Verifications IsOnNoServersPage() => IsOnPage(NoServersPage, TestConstants.TwoMinutesTimeout);
 
         public Verifications IsOnSignInPage() => IsOnPage(SignInPage);
 
@@ -65,7 +90,7 @@ public class NavigationRobot
 
         public Verifications IsOnLoadingPage() => IsOnPage(LoadingPage);
 
-        public Verifications IsOnMainPage() => IsOnPage(MainPage, TestConstants.TwoMinutesTimeout);
+        public Verifications IsOnMainPage() => IsOnPage(MainPage, TestConstants.FourMinutesTimeout);
 
         public Verifications IsOnHomePage()
         {
@@ -74,6 +99,14 @@ public class NavigationRobot
         }
 
         public Verifications IsOnSettingsPage() => IsOnPage(SettingsPage);
+
+        public Verifications IsOnNetShieldPage() => IsOnPage(NetShieldPage);
+
+        public Verifications IsOnKillSwitchPage() => IsOnPage(KillSwitchPage);
+
+        public Verifications IsOnPortForwardingPage() => IsOnPage(PortForwardingPage);
+
+        public Verifications IsOnSplitTunnelingPage() => IsOnPage(SplitTunnelingPage);
 
         public Verifications IsOnConnectionsPage() => IsOnPage(ConnectionsPage);
 
@@ -91,6 +124,6 @@ public class NavigationRobot
 
         public Verifications IsOnConnectionDetailsPage() => IsOnPage(ConnectionDetailsPage);
 
-        public Verifications IsOnKillSwitchPage() => IsOnPage(KillSwitchPage);
+        public Verifications IsOnConnectionPreferencesPage() => IsOnPage(ConnectionPreferencesPage);
     }
 }

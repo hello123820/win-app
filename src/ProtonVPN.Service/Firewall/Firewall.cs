@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -38,14 +38,17 @@ internal class Firewall : IFirewall, IStartable
     private const int LOCAL_TRAFFIC_WEIGHT = 2;
 
     private readonly ILogger _logger;
-    private readonly IDriver _calloutDriver;
+    private readonly ICalloutDriver _calloutDriver;
     private readonly IStaticConfiguration _staticConfig;
     private readonly IpLayer _ipLayer;
     private readonly IpFilter _ipFilter;
     private readonly INrptWrapper _nrptWrapper;
 
+    private readonly object _lock = new();
+
     private FirewallParams _lastParams = FirewallParams.Empty;
     private bool _dnsCalloutFiltersAdded;
+    private bool _isNrptRuleCreated;
 
     private readonly List<ServerAddressFilterCollection> _serverAddressFilterCollection = [];
     private readonly List<FirewallItem> _firewallItems = [];
@@ -55,7 +58,7 @@ internal class Firewall : IFirewall, IStartable
 
     public Firewall(
         ILogger logger,
-        IDriver calloutDriver,
+        ICalloutDriver calloutDriver,
         IStaticConfiguration staticConfig,
         IpLayer ipLayer,
         IpFilter ipFilter,
@@ -96,39 +99,46 @@ internal class Firewall : IFirewall, IStartable
 
     public void EnableLeakProtection(FirewallParams firewallParams)
     {
-        if (LeakProtectionEnabled)
+        lock (_lock)
         {
-            ApplyChange(firewallParams);
-            return;
-        }
+            if (LeakProtectionEnabled)
+            {
+                ApplyChange(firewallParams);
+                return;
+            }
 
-        _calloutDriver.Start();
-        PermitServerAddress(firewallParams);
-        ApplyFilters(firewallParams);
-        SetLastParams(firewallParams);
+            _calloutDriver.Start();
+            PermitServerAddress(firewallParams);
+            ApplyFilters(firewallParams);
+            SetLastParams(firewallParams);
+        }
     }
 
     public void DisableLeakProtection()
     {
-        try
+        lock (_lock)
         {
-            _logger.Info<FirewallLog>("Restoring internet");
+            try
+            {
+                _logger.Info<FirewallLog>("Restoring internet");
 
-            _nrptWrapper.DeleteRule();
-            _ipFilter.DynamicSublayer.DestroyAllFilters();
-            _ipFilter.PermanentSublayer.DestroyAllFilters();
-            _serverAddressFilterCollection.Clear();
-            _firewallItems.Clear();
-            LeakProtectionEnabled = false;
-            _dnsCalloutFiltersAdded = false;
-            _calloutDriver.Stop();
-            _lastParams = FirewallParams.Empty;
+                _nrptWrapper.DeleteRule();
+                _ipFilter.DynamicSublayer.DestroyAllFilters();
+                _ipFilter.PermanentSublayer.DestroyAllFilters();
+                _serverAddressFilterCollection.Clear();
+                _firewallItems.Clear();
+                LeakProtectionEnabled = false;
+                _dnsCalloutFiltersAdded = false;
+                _isNrptRuleCreated = false;
+                _calloutDriver.Stop();
+                _lastParams = FirewallParams.Empty;
 
-            _logger.Info<FirewallLog>("Internet restored");
-        }
-        catch (NetworkFilterException ex)
-        {
-            _logger.Error<FirewallLog>("An error occurred when deleting the network filters.", ex);
+                _logger.Info<FirewallLog>("Internet restored");
+            }
+            catch (NetworkFilterException ex)
+            {
+                _logger.Error<FirewallLog>("An error occurred when deleting the network filters.", ex);
+            }
         }
     }
 
@@ -139,6 +149,7 @@ internal class Firewall : IFirewall, IStartable
             _logger.Info<FirewallLog>("Blocking internet");
 
             EnableDnsLeakProtection(firewallParams);
+            PermitFromNetworkInterface(4, firewallParams);
 
             if (!firewallParams.DnsLeakOnly)
             {
@@ -175,16 +186,29 @@ internal class Firewall : IFirewall, IStartable
             RemoveItems(previousInterfaceFilters, _lastParams.SessionType);
         }
 
-        bool wasDnsBlockModeRecreated = false;
-        if (firewallParams.AddInterfaceFilters && (firewallParams.InterfaceIndex != _lastParams.InterfaceIndex || firewallParams.DnsBlockMode != _lastParams.DnsBlockMode))
+        if (_lastParams.SessionType == SessionType.Permanent &&
+            firewallParams.SessionType == SessionType.Dynamic)
+        {
+            // When downgrading from persistent (advanced kill switch) to dynamic filters, wipe any
+            // leftover permanent rules that might have been created in a previous session and are
+            // not tracked in-memory (e.g., after an app restart).
+            _ipFilter.PermanentSublayer.DestroyAllFilters();
+        }
+
+        if (firewallParams.AddInterfaceFilters && firewallParams.InterfaceIndex != _lastParams.InterfaceIndex)
         {
             List<Guid> previousGuids = GetFirewallGuidsByTypes(FirewallItemType.PermitInterfaceFilter);
             PermitFromNetworkInterface(4, firewallParams);
             RemoveItems(previousGuids, _lastParams.SessionType);
+        }
 
-            previousGuids = GetFirewallGuidsByTypes(FirewallItemType.DnsCalloutFilter);
+        bool wasDnsBlockModeRecreated = false;
+        if (firewallParams.DnsBlockMode != _lastParams.DnsBlockMode || firewallParams.ForceRecreateDnsBlock)
+        {
+            List<Guid> previousGuids = GetFirewallGuidsByTypes(FirewallItemType.DnsCalloutFilter, FirewallItemType.DnsFilter);
             _dnsCalloutFiltersAdded = false;
             _nrptWrapper.DeleteRule();
+            _isNrptRuleCreated = false;
             CreateDnsBlock(firewallParams);
             RemoveItems(previousGuids, _lastParams.SessionType);
             wasDnsBlockModeRecreated = true;
@@ -194,8 +218,37 @@ internal class Firewall : IFirewall, IStartable
         {
             if (firewallParams.DnsLeakOnly)
             {
-                RemoveItems(GetFirewallGuidsByTypes(FirewallItemType.VariableFilter, FirewallItemType.LocalNetworkFilter), _lastParams.SessionType);
-                RemoveItems(GetFirewallGuidsByTypes(FirewallItemType.BlockOutsideOpenVpnFilter), _lastParams.SessionType);
+                List<Guid> blockOutsideOpenVpnGuids = [];
+                List<Guid> baseLeakProtectionGuids = [];
+                List<Guid> permanentFilters = [];
+
+                // When the service starts with advanced kill switch enabled,
+                // we don't have in-memory guids for existing permanent filters,
+                // so we need to collect them directly from WFP
+                if (_lastParams.SessionType == SessionType.Permanent)
+                {
+                    permanentFilters = _ipFilter.PermanentSublayer.GetFilters();
+                }
+                else
+                {
+                    blockOutsideOpenVpnGuids = GetFirewallGuidsByTypes(FirewallItemType.BlockOutsideOpenVpnFilter);
+                    baseLeakProtectionGuids = GetFirewallGuidsByTypes(
+                        FirewallItemType.VariableFilter,
+                        FirewallItemType.LocalNetworkFilter);
+                }
+
+                EnableDnsLeakProtection(firewallParams);
+
+                // Always drop the OpenVPN server block before tearing down the process permits
+                // to avoid a window where Proton processes are still blocked but no longer whitelisted.
+                RemoveItems(blockOutsideOpenVpnGuids, _lastParams.SessionType);
+                RemoveItems(baseLeakProtectionGuids, _lastParams.SessionType);
+
+                if (permanentFilters.Count > 0)
+                {
+                    RemoveItems(permanentFilters, _lastParams.SessionType);
+                    PermitFromNetworkInterface(4, firewallParams);
+                }
             }
             else
             {
@@ -278,18 +331,19 @@ internal class Firewall : IFirewall, IStartable
 
     private void EnableBaseLeakProtection(FirewallParams firewallParams)
     {
+        // Add blocks first so that during cleanup (which follows insertion order) the block filters
+        // disappear before any exceptions, ensuring Proton processes always retain their bypass rules.
+        BlockAllIpv4Network(1, firewallParams);
+        BlockAllIpv6Network(1, firewallParams);
+        BlockOutsideOpenVpnTraffic(firewallParams);
+
         PermitDhcp(4, firewallParams);
-        PermitFromNetworkInterface(4, firewallParams);
         PermitFromProcesses(4, firewallParams);
         PermitNetworkDiscoveryProtocol(4, firewallParams);
 
         PermitIpv4Loopback(LOCAL_TRAFFIC_WEIGHT, firewallParams);
         PermitIpv6Loopback(LOCAL_TRAFFIC_WEIGHT, firewallParams);
         PermitPrivateNetwork(LOCAL_TRAFFIC_WEIGHT, firewallParams);
-
-        BlockAllIpv4Network(1, firewallParams);
-        BlockAllIpv6Network(1, firewallParams);
-        BlockOutsideOpenVpnTraffic(firewallParams);
     }
 
     private void BlockOutsideOpenVpnTraffic(FirewallParams firewallParams)
@@ -377,12 +431,12 @@ internal class Firewall : IFirewall, IStartable
         switch (dnsBlockMode)
         {
             case DnsBlockMode.Nrpt:
-                bool isNrptRuleCreated = _nrptWrapper.CreateRule();
-                if (!isNrptRuleCreated)
+                if (_isNrptRuleCreated)
                 {
-                    _logger.Warn<FirewallLog>("NRPT rule failed to be created. Creating DNS callout filter.");
-                    CreateDnsCalloutFilter(firewallParams);
+                    _nrptWrapper.DeleteRule();
                 }
+
+                _isNrptRuleCreated = _nrptWrapper.CreateRule();
                 break;
             case DnsBlockMode.Callout:
                 _logger.Info<FirewallLog>("DNS block mode is Callout. Creating DNS callout filter.");
@@ -737,14 +791,21 @@ internal class Firewall : IFirewall, IStartable
 
     private void PermitPrivateNetworkAddress(FirewallParams firewallParams, NetworkAddress networkAddress, Layer layer, uint weight)
     {
-        Guid guid = _ipFilter.GetSublayer(firewallParams.SessionType).CreateRemoteNetworkIPFilter(
-            new DisplayData("ProtonVPN permit private network", ""),
-            Action.HardPermit,
-            layer,
-            weight,
-            networkAddress,
-            firewallParams.Persistent);
-        _firewallItems.Add(new FirewallItem(FirewallItemType.LocalNetworkFilter, guid));
+        try
+        {
+            Guid guid = _ipFilter.GetSublayer(firewallParams.SessionType).CreateRemoteNetworkIPFilter(
+                new DisplayData("ProtonVPN permit private network", ""),
+                Action.HardPermit,
+                layer,
+                weight,
+                networkAddress,
+                firewallParams.Persistent);
+            _firewallItems.Add(new FirewallItem(FirewallItemType.LocalNetworkFilter, guid));
+        }
+        catch (InvalidArgumentException)
+        {
+            _logger.Error<FirewallLog>($"Failed to create private network filter for address {networkAddress} due to invalid argument.");
+        }
     }
 
     private void PermitFromProcesses(uint weight, FirewallParams firewallParams)
@@ -758,17 +819,25 @@ internal class Firewall : IFirewall, IStartable
 
         foreach (string processPath in processes)
         {
-            _ipLayer.ApplyToIpv4(layer =>
+            try
             {
-                Guid guid = _ipFilter.GetSublayer(firewallParams.SessionType).CreateAppFilter(
-                    new DisplayData(PERMIT_APP_FILTER_NAME, "Permit ProtonVPN app to bypass VPN tunnel"),
-                    Action.HardPermit,
-                    layer,
-                    weight,
-                    processPath,
-                    firewallParams.Persistent);
-                _firewallItems.Add(new FirewallItem(FirewallItemType.VariableFilter, guid));
-            });
+                _ipLayer.ApplyToIpv4(layer =>
+                {
+                    Guid guid = _ipFilter.GetSublayer(firewallParams.SessionType).CreateAppFilter(
+                        new DisplayData(PERMIT_APP_FILTER_NAME, "Permit ProtonVPN app to bypass VPN tunnel"),
+                        Action.HardPermit,
+                        layer,
+                        weight,
+                        processPath,
+                        false,
+                        firewallParams.Persistent);
+                    _firewallItems.Add(new FirewallItem(FirewallItemType.VariableFilter, guid));
+                });
+            }
+            catch (InvalidArgumentException)
+            {
+                _logger.Error<FirewallLog>($"Failed to create app filter for path {processPath} due to invalid argument.");
+            }
         }
     }
 }

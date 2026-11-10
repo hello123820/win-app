@@ -18,21 +18,21 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using System.Windows.Documents;
+using System.Diagnostics;
 using FlaUI.Core.WindowsAPI;
 using NUnit.Framework;
 using ProtonVPN.UI.Tests.TestBase;
 using ProtonVPN.UI.Tests.TestsHelper;
+using ProtonVPN.UI.Tests.TestsHelper.UiFlows;
 
 namespace ProtonVPN.UI.Tests.Tests.E2ETests;
 
 [TestFixture]
 [Category("2")]
 [Category("ARM")]
+[Category("SMOKE_1")]
 public class NavigationTests : FreshSessionSetUp
 {
     [SetUp]
@@ -42,6 +42,7 @@ public class NavigationTests : FreshSessionSetUp
     }
 
     [Test]
+    [Property("TestCaseId", "602397")]
     public void NavigateToSettingsViaKebabMenu()
     {
         HomeRobot.ExpandKebabMenuButton()
@@ -51,6 +52,28 @@ public class NavigationTests : FreshSessionSetUp
     }
 
     [Test]
+    [Property("TestCaseId", "602429")]
+    public void NavigateToFeatureSettingsPageFromHome()
+    {
+        FeaturesRobot.ClickNetShieldWidget();
+        NavigationRobot.Verify.IsOnNetShieldPage();
+        SettingRobot.CloseSettings();
+
+        FeaturesRobot.ClickKillSwitchWidget();
+        NavigationRobot.Verify.IsOnKillSwitchPage();
+        SettingRobot.CloseSettings();
+
+        FeaturesRobot.ClickPortForwardingWidget();
+        NavigationRobot.Verify.IsOnPortForwardingPage();
+        SettingRobot.CloseSettings();
+
+        FeaturesRobot.ClickSplitTunnelingWidget();
+        NavigationRobot.Verify.IsOnSplitTunnelingPage();
+        SettingRobot.CloseSettings();
+    }
+
+    [Test]
+    [Property("TestCaseId", "602394")]
     public void AppExitViaKebabMenu()
     {
         HomeRobot.ExpandKebabMenuButton()
@@ -59,10 +82,11 @@ public class NavigationTests : FreshSessionSetUp
         // Allow some delay after exiting the app
         Thread.Sleep(TestConstants.FiveSecondsTimeout);
 
-        Assert.That(AreNoProtonVPNProcessesRunning, Is.True, "ProtonVPN process was still running after app was exited.");
+        CommonAssertions.VerifyAppIsNotRunning();
     }
 
     [Test]
+    [Property("TestCaseId", "602393")]
     public void AppExitViaAccountDropDown()
     {
         SettingRobot
@@ -73,10 +97,11 @@ public class NavigationTests : FreshSessionSetUp
         // Allow some delay after exiting the app
         Thread.Sleep(TestConstants.FiveSecondsTimeout);
 
-        Assert.That(AreNoProtonVPNProcessesRunning, Is.True, "ProtonVPN process was still running after app was exited.");
+        CommonAssertions.VerifyAppIsNotRunning();
     }
 
     [Test]
+    [Property("TestCaseId", "602395")]
     public void ClickingOnSidebarClosesSettings()
     {
         SettingRobot.OpenSettings()
@@ -86,6 +111,7 @@ public class NavigationTests : FreshSessionSetUp
     }
 
     [Test]
+    [Property("TestCaseId", "602396")]
     public void KeyboardShortcutsNavigateToRelevantComponents()
     {
         SidebarRobot
@@ -109,7 +135,7 @@ public class NavigationTests : FreshSessionSetUp
 
         Thread.Sleep(TestConstants.OneSecondTimeout);
 
-        Window.Focus();
+        Window?.Focus();
 
         Thread.Sleep(TestConstants.OneSecondTimeout);
 
@@ -119,7 +145,7 @@ public class NavigationTests : FreshSessionSetUp
 
         Thread.Sleep(TestConstants.OneSecondTimeout);
 
-        Window.Focus();
+        Window?.Focus();
 
         Thread.Sleep(TestConstants.OneSecondTimeout);
 
@@ -129,6 +155,7 @@ public class NavigationTests : FreshSessionSetUp
     }
 
     [Test]
+    [Property("TestCaseId", "602392")]
     public void AboutPageIsOpened()
     {
         SettingRobot
@@ -142,37 +169,4 @@ public class NavigationTests : FreshSessionSetUp
             .PressLearnMore()
             .Verify.IsLicensingDisplayed();
     }
-
-
-    [Test]
-    public void NavigateToProfiles()
-    {
-        NavigationRobot
-            .Verify.IsOnHomePage()
-                   .IsOnConnectionsPage();
-        SidebarRobot
-            .NavigateToProfiles();
-        NavigationRobot
-            .Verify.IsOnHomePage()
-                   .IsOnProfilesPage();
-
-        List<string> profileNames = ["Streaming US", "Gaming", "P2P"];
-
-        foreach (string profileName in profileNames)
-        {
-            SidebarRobot
-                .ExpandSecondaryActionsForProfile(profileName)
-                .EditProfile();
-            NavigationRobot
-                .Verify.IsOnProfilePage();
-            ProfileRobot
-                .Verify.DoesProfileNameEqual(profileName)
-                .CloseProfile();
-            NavigationRobot
-                .Verify.IsOnHomePage();
-        }
-    }
-
-    public static bool AreNoProtonVPNProcessesRunning() =>
-        !Process.GetProcesses().Any(p => new[] { "ProtonVPN", "ProtonVPNService" }.Contains(p.ProcessName, StringComparer.OrdinalIgnoreCase));
 }

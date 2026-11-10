@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -33,6 +33,7 @@ public interface IStaticConfiguration
     string InstallActionsPath { get; }
     string ClientExePath { get; }
     string ServiceExePath { get; }
+    string NrptWatchdogExePath { get; }
 
     string ProtocolActivationScheme { get; }
     string LegacyProtocolActivationScheme { get; }
@@ -52,15 +53,18 @@ public interface IStaticConfiguration
     string DiagnosticLogsZipFilePath { get; }
     string GuestHoleServersJsonFilePath { get; }
     string ServiceSettingsFilePath { get; }
+    string WireGuardServerRoutesFilePath { get; }
     string LegacyAppLocalData { get; }
     string IPv6PrefixTreeFilePath { get; }
     string IPv6PersistedDataFilePath { get; }
 
-    IOpenVpnConfigurations OpenVpn { get; }
+    IProTunConfigurations ProTun { get; }
     IWireGuardConfigurations WireGuard { get; }
+    IOpenVpnConfigurations OpenVpn { get; }
 
     string WintunDriverPath { get; }
     string WintunAdapterName { get; }
 
-    string GetHardwareId(OpenVpnAdapter openVpnAdapter);
+    string GetHardwareId(VpnProtocol vpnProtocol, OpenVpnAdapter openVpnAdapter);
+    string GetWireGuardHardwareId();
 }

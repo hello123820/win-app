@@ -160,8 +160,9 @@ public class IpFilter : IStartable
             action();
             session.CommitTransaction();
         }
-        catch (NetworkFilterException)
+        catch (NetworkFilterException e)
         {
+            _logger.Error<FirewallLog>("Transaction failed, aborting.", e);
             session.AbortTransaction();
             throw;
         }

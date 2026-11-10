@@ -21,7 +21,6 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Navigation;
 using ProtonVPN.Client.Commands;
 using ProtonVPN.Client.Common.Collections;
-using ProtonVPN.Client.Contracts.Services.Activation;
 using ProtonVPN.Client.Contracts.Services.Browsing;
 using ProtonVPN.Client.Contracts.Services.Lifecycle;
 using ProtonVPN.Client.Core.Bases;
@@ -37,6 +36,7 @@ using ProtonVPN.Client.Logic.Updates.Contracts;
 using ProtonVPN.Client.Mappers;
 using ProtonVPN.Client.Services.SignoutHandling;
 using ProtonVPN.Client.Settings.Contracts;
+using ProtonVPN.Common.Core.Extensions;
 
 namespace ProtonVPN.Client.UI.Main.Components;
 
@@ -125,18 +125,18 @@ public partial class TitleBarMenuViewModel : ActivatableViewModelBase,
         ExecuteOnUIThread(() => OnPropertyChanged(nameof(IsUpdateAvailable)));
     }
 
-    protected override async void OnActivated()
+    protected override void OnActivated()
     {
         base.OnActivated();
 
-        await InvalidateReportIssueCategoriesAsync();
+        InvalidateReportIssueCategoriesAsync().FireAndForget();
     }
 
-    protected override async void OnLanguageChanged()
+    protected override void OnLanguageChanged()
     {
         base.OnLanguageChanged();
 
-        await InvalidateReportIssueCategoriesAsync();
+        InvalidateReportIssueCategoriesAsync().FireAndForget();
     }
 
     private async Task InvalidateReportIssueCategoriesAsync()
@@ -160,9 +160,10 @@ public partial class TitleBarMenuViewModel : ActivatableViewModelBase,
     }
 
     [RelayCommand]
-    private Task NavigateToSettingsAsync()
+    private async Task NavigateToSettingsAsync()
     {
-        return _mainViewNavigator.NavigateToSettingsViewAsync();
+        await _mainViewNavigator.NavigateToSettingsViewAsync();
+        await _settingsViewNavigator.NavigateToCommonSettingsViewAsync();
     }
 
     [RelayCommand]

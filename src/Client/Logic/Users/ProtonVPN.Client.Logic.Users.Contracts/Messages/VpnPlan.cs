@@ -21,34 +21,30 @@ namespace ProtonVPN.Client.Logic.Users.Contracts.Messages;
 
 public readonly struct VpnPlan
 {
-    public static VpnPlan Default => new(null, null, 0);
+    public static VpnPlan Default => new(string.Empty, string.Empty, 0, false);
 
-    public string? Title { get; }
-    public string? Name { get; }
-    public bool IsPaid { get; }
+    public string Title { get; }
+    public string Name { get; }
     public sbyte MaxTier { get; }
+    public bool IsB2B { get; }
 
-    public VpnPlan(string? title, string? name, sbyte maxTier)
+    public VpnPlan(string title, string name, sbyte maxTier, bool isB2B)
     {
-        Title = title;
-        Name = name;
-        IsPaid = maxTier > 0;
+        Title = title ?? string.Empty;
+        Name = name ?? string.Empty;
         MaxTier = maxTier;
+        IsB2B = isB2B;
     }
 
-    public bool IsPlus => Name is "vpnplus" or "vpn2022" or "vpnpass2023" or "vpn2024";
+    public bool IsPaid => MaxTier > 0;
 
-    public bool IsUnlimited => Name == "bundle2022";
+    public bool IsDefaultPlan => string.IsNullOrEmpty(Title) && string.IsNullOrEmpty(Name) && MaxTier == 0;
 
-    public bool IsVisionary => Name == "visionary2022";
+    public bool IsFreePlan => !IsDefaultPlan && !IsPaid;
 
-    public bool IsB2B => Name is "vpnpro2023" or "vpnbiz2023" or "bundlepro2022";
+    public bool IsVpnPlan => !IsDefaultPlan && IsPaid && Name.Contains("vpn", StringComparison.OrdinalIgnoreCase);
 
-    public bool IsDuo => Name is "duo2024";
+    public bool IsProtonPlan => !IsDefaultPlan && IsPaid && !IsVpnPlan;
 
-    public bool IsDefault => Title is null && Name is null && MaxTier == 0;
-
-    public bool IsVpnPlan => IsPlus || IsB2B;
-
-    public bool IsProtonPlan => IsUnlimited || IsDuo || IsVisionary;
+    public bool IsPaidB2CPlan => !IsDefaultPlan && IsPaid && !IsB2B;
 }

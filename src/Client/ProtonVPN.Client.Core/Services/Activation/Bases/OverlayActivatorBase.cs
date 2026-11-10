@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -25,15 +26,16 @@ using ProtonVPN.Client.Common.Dispatching;
 using ProtonVPN.Client.Common.Models;
 using ProtonVPN.Client.Common.UI.Controls.Custom;
 using ProtonVPN.Client.Common.UI.Helpers;
-using ProtonVPN.Client.Settings.Contracts;
-using ProtonVPN.Logging.Contracts;
-using ProtonVPN.Logging.Contracts.Events.AppLogs;
 using ProtonVPN.Client.Core.Bases;
 using ProtonVPN.Client.Core.Bases.ViewModels;
 using ProtonVPN.Client.Core.Extensions;
 using ProtonVPN.Client.Core.Services.Mapping;
 using ProtonVPN.Client.Core.Services.Selection;
-using System.Threading;
+using ProtonVPN.Client.Settings.Contracts;
+using ProtonVPN.Common.Core.Threading;
+using ProtonVPN.Logging.Contracts;
+using ProtonVPN.Logging.Contracts.Events.AppLogs;
+using ProtonVPN.Client.Localization.Contracts;
 
 namespace ProtonVPN.Client.Core.Services.Activation.Bases;
 
@@ -42,7 +44,8 @@ public abstract class OverlayActivatorBase<TWindow> : WindowHostActivatorBase<TW
 {
     protected readonly IOverlayViewMapper OverlayViewMapper;
 
-    private SemaphoreSlim _overlaySemaphore = new(0, 1);
+    private readonly SemaphoreSlim _overlaySemaphore = new(1, 1);
+    private readonly AsyncManualResetEventSlim _isLoadedGate = new();
 
     private ContentDialog? _currentOverlay;
 
@@ -53,8 +56,13 @@ public abstract class OverlayActivatorBase<TWindow> : WindowHostActivatorBase<TW
         IUIThreadDispatcher uiThreadDispatcher,
         IApplicationThemeSelector themeSelector,
         ISettings settings,
+        ILocalizationService localizationService,
         IOverlayViewMapper overlayViewMapper)
-        : base(logger, uiThreadDispatcher, themeSelector, settings)
+        : base(logger,
+               uiThreadDispatcher,
+               themeSelector,
+               settings,
+               localizationService)
     {
         OverlayViewMapper = overlayViewMapper;
     }
@@ -114,10 +122,18 @@ public abstract class OverlayActivatorBase<TWindow> : WindowHostActivatorBase<TW
 
     protected override void OnWindowLoaded()
     {
-        base.OnWindowLoaded();        
-        
+        base.OnWindowLoaded();
+
         // Host ready, release the semaphore to allow showing overlays
-        _overlaySemaphore.Release();
+        _isLoadedGate.Set();
+    }
+
+    protected override void OnReset()
+    {
+        base.OnReset();
+
+        // Host has been reset, reset the semaphore to prevent showing overlays
+        _isLoadedGate.Reset();
     }
 
     protected override void RegisterToHostEvents()
@@ -185,6 +201,7 @@ public abstract class OverlayActivatorBase<TWindow> : WindowHostActivatorBase<TW
         // Close current overlayViewModel if any, then register the new one. Cannot have two overlays at the same time
         CloseCurrentOverlay();
 
+        await _isLoadedGate.WaitAsync();
         await _overlaySemaphore.WaitAsync();
 
         try

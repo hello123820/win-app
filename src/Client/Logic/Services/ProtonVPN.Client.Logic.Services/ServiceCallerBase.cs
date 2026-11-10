@@ -20,8 +20,8 @@
 using System.Runtime.CompilerServices;
 using ProtonVPN.Client.Contracts.ProcessCommunication;
 using ProtonVPN.Client.Logic.Services.Contracts;
+using ProtonVPN.Common.Core.Extensions;
 using ProtonVPN.Common.Legacy.Abstract;
-using ProtonVPN.Common.Legacy.Extensions;
 using ProtonVPN.Logging.Contracts;
 using ProtonVPN.Logging.Contracts.Events.AppServiceLogs;
 using ProtonVPN.Logging.Contracts.Events.ProcessCommunicationLogs;
@@ -60,8 +60,8 @@ public abstract class ServiceCallerBase<TController> : IServiceCaller
             {
                 TController serviceController =
                     await _grpcClient.GetServiceControllerOrThrowAsync<TController>(TimeSpan.FromSeconds(1));
-                CancellationTokenSource cancellationTokenSource = new(_callTimeout);
-                T result = await serviceCall(serviceController, cancellationTokenSource.Token);
+                //CancellationTokenSource cancellationTokenSource = new(_callTimeout);
+                T result = await serviceCall(serviceController, _cancellationTokenSource.Token);
                 if (result is Task task)
                 {
                     await task;

@@ -130,6 +130,14 @@ along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
                 <GradientStop Color="#547AEC" Offset="0" />
                 <GradientStop Color="#A95DF4" Offset="1" />
             </LinearGradientBrush>
+            <LinearGradientBrush x:Key="GradientDownloadSpeedChartColorBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Offset="0" Color="{StaticResource SignalSuccessColor}" />
+                <GradientStop Offset="1" Color="{StaticResource BackgroundNormColor}" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="GradientUploadSpeedChartColorBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Offset="0" Color="{StaticResource SignalDangerColor}" />
+                <GradientStop Offset="1" Color="{StaticResource BackgroundNormColor}" />
+            </LinearGradientBrush>
 
             <!--  Composite Brushes  -->
 
@@ -187,6 +195,12 @@ along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
                           TintColor="{StaticResource BackgroundNormColor}"
                           TintOpacity="0.6" />
             <SolidColorBrush x:Key="FlyoutOverlayBorderColorBrush" Opacity="0.82" Color="{StaticResource BorderWeakColor}" />
+
+            <AcrylicBrush x:Key="TeachingTipBackgroundColorBrush"
+                          FallbackColor="{StaticResource BackgroundNormColor}"
+                          TintColor="{StaticResource BackgroundNormColor}"
+                          TintOpacity="0.6" />
+            <SolidColorBrush x:Key="TeachingTipBorderColorBrush" Opacity="0.82" Color="{StaticResource BorderWeakColor}" />
 
         </ResourceDictionary>
 
@@ -297,6 +311,14 @@ along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
                 <GradientStop Color="#547AEC" Offset="0" />
                 <GradientStop Color="#A95DF4" Offset="1" />
             </LinearGradientBrush>
+            <LinearGradientBrush x:Key="GradientDownloadSpeedChartColorBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Offset="0" Color="{StaticResource GradientDownloadSpeedChartStartColor}" />
+                <GradientStop Offset="1" Color="{StaticResource GradientDownloadSpeedChartEndColor}" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="GradientUploadSpeedChartColorBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Offset="0" Color="{StaticResource GradientUploadSpeedChartStartColor}" />
+                <GradientStop Offset="1" Color="{StaticResource GradientUploadSpeedChartEndColor}" />
+            </LinearGradientBrush>
 
             <!--  Composite Brushes  -->
 
@@ -354,6 +376,12 @@ along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
                           TintColor="{StaticResource BackgroundNormColor}"
                           TintOpacity="0.6" />
             <SolidColorBrush x:Key="FlyoutOverlayBorderColorBrush" Opacity="0.82" Color="{StaticResource BorderWeakColor}" />
+
+            <AcrylicBrush x:Key="TeachingTipBackgroundColorBrush"
+                          FallbackColor="{StaticResource BackgroundNormColor}"
+                          TintColor="{StaticResource BackgroundNormColor}"
+                          TintOpacity="0.6" />
+            <SolidColorBrush x:Key="TeachingTipBorderColorBrush" Opacity="0.82" Color="{StaticResource BorderWeakColor}" />
 
         </ResourceDictionary>
         

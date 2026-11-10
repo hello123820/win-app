@@ -22,10 +22,8 @@ using ProtonVPN.Common.Core.Extensions;
 using ProtonVPN.Common.Core.Networking;
 using ProtonVPN.Configurations.Contracts;
 using ProtonVPN.Configurations.Contracts.WireGuard;
-using ProtonVPN.IssueReporting.Contracts;
-using ProtonVPN.Logging.Contracts;
-using ProtonVPN.Logging.Contracts.Events.OperatingSystemLogs;
 using ProtonVPN.OperatingSystems.NRPT.Contracts;
+using ProtonVPN.ProTun.Contracts.Dns;
 using ProtonVPN.Vpn.OpenVpn.DnsServers;
 
 namespace ProtonVPN.Vpn.NRPT;
@@ -33,8 +31,7 @@ namespace ProtonVPN.Vpn.NRPT;
 public class NrptWrapper : INrptWrapper
 {
     private readonly INrptInvoker _nrptInvoker;
-    private readonly ILogger _logger;
-    private readonly IIssueReporter _issueReporter;
+    private readonly IProTunDnsServersCreator _proTunDnsServersCreator;
     private readonly IWireGuardDnsServersCreator _wireGuardDnsServersCreator;
     private readonly IOpenVpnDnsServersCreator _openVpnDnsServersCreator;
 
@@ -43,14 +40,12 @@ public class NrptWrapper : INrptWrapper
     private bool _isIpv6Supported;
 
     public NrptWrapper(INrptInvoker nrptInvoker,
-        ILogger logger,
-        IIssueReporter issueReporter,
+        IProTunDnsServersCreator proTunDnsServersCreator,
         IWireGuardDnsServersCreator wireGuardDnsServersCreator,
         IOpenVpnDnsServersCreator openVpnDnsServersCreator)
     {
         _nrptInvoker = nrptInvoker;
-        _logger = logger;
-        _issueReporter = issueReporter;
+        _proTunDnsServersCreator = proTunDnsServersCreator;
         _wireGuardDnsServersCreator = wireGuardDnsServersCreator;
         _openVpnDnsServersCreator = openVpnDnsServersCreator;
     }
@@ -67,23 +62,24 @@ public class NrptWrapper : INrptWrapper
     public bool CreateRule()
     {
         IDnsServersCreator dnsServersCreator = GetDnsServersCreator();
-        string nameServers = dnsServersCreator.GetDnsServers(_customDns, _isIpv6Supported);
+        IReadOnlyList<string> nameServers = dnsServersCreator.GetDnsServers(_customDns, _isIpv6Supported);
+        string nameServersString = string.Join(";", nameServers);
 
-        if (string.IsNullOrWhiteSpace(nameServers))
+        if (string.IsNullOrWhiteSpace(nameServersString))
         {
-            const string title = "No DNS servers when creating NRPT rule. No NRPT rule will be created.";
-            string details = $"[{dnsServersCreator.GetType().Name}] IPv6: {_isIpv6Supported}, Custom DNS servers: {_customDns.Count}";
-            _logger.Error<OperatingSystemNrptLog>($"{title} {details}");
-            _issueReporter.CaptureError(title, details);
             return false;
         }
 
-        return _nrptInvoker.CreateRule(nameServers);
+        return _nrptInvoker.CreateRule(nameServersString);
     }
 
     private IDnsServersCreator GetDnsServersCreator()
     {
-        return _vpnProtocol.IsOpenVpn() ? _openVpnDnsServersCreator : _wireGuardDnsServersCreator;
+        return _vpnProtocol.IsWireGuard()
+            ? _wireGuardDnsServersCreator
+            : _vpnProtocol.IsOpenVpn()
+                ? _openVpnDnsServersCreator
+                : _proTunDnsServersCreator;
     }
 
     /// <returns>If the NRPT rule was removed successfully</returns>

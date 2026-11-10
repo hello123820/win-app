@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -18,7 +18,6 @@
  */
 
 using System.Diagnostics;
-using System.Linq;
 using NUnit.Framework;
 using ProtonVPN.UI.Tests.TestsHelper;
 
@@ -42,13 +41,18 @@ class SetUpFixture
 
     private static void KillProtonVPNClient()
     {
-        Process.GetProcesses()
-            .Where(process => process.ProcessName.StartsWith("ProtonVPN"))
-            .ToList()
-            .ForEach(process =>
+        foreach (Process process in Process.GetProcessesByName("ProtonVPN.Client"))
+        {
+            try
             {
                 process.Kill();
+                process.WaitForExit(TestConstants.ThirtySecondsTimeout);
+            }
+            catch { }
+            finally
+            {
                 process.Dispose();
-            });
+            }
+        }
     }
 }

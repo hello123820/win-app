@@ -77,13 +77,13 @@ public class TokenClient : BaseApiClient, ITokenClient
 
         try
         {
-            HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Post, "auth/refresh");
+            HttpRequestMessage request = GetAuthorizedRequest(HttpMethod.Post, "auth/v4/refresh");
             ValidateRequestHeaders(request);
             request.Content = GetJsonContent(refreshTokenRequest);
             LogRefreshToken(refreshTokenRequest);
 
             using HttpResponseMessage response = await _client.SendAsync(request, token);
-            return await GetApiResponseResult<RefreshTokenResponse>(response);
+            return await GetApiResponseResultAsync<RefreshTokenResponse>(response);
         }
         catch (Exception e)
         {

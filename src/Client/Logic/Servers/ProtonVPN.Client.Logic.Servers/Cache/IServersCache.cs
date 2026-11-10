@@ -17,6 +17,8 @@
  * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using ProtonVPN.Api.Contracts;
+using ProtonVPN.Api.Contracts.Servers;
 using ProtonVPN.Client.Logic.Servers.Contracts.Models;
 
 namespace ProtonVPN.Client.Logic.Servers.Cache;
@@ -31,15 +33,24 @@ public interface IServersCache
     IReadOnlyList<Gateway> Gateways { get; }
     IReadOnlyList<SecureCoreCountryPair> SecureCoreCountryPairs { get; }
 
-    bool IsEmpty();
+    bool IsEmpty(); 
+    bool AreAllServersUnderMaintenance();
     bool IsStale();
+    bool IsLoadStale();
     bool IsOutdated();
     bool IsLoadOutdated();
+    bool IsLoadOverdue();
     bool HasServersRequestFailed();
+    bool HasNoServers();
 
     void Clear();
     void LoadFromFileIfEmpty();
+    void ReprocessServers();
+    void RecomputeLoads();
 
     Task UpdateAsync(CancellationToken cancellationToken);
     Task UpdateLoadsAsync(CancellationToken cancellationToken);
+    Task<ApiResponseResult<LookupServerResponse>?> LookupAsync(string input);
+
+    IEnumerable<KeyValuePair<string, dynamic?>> GetStats();
 }

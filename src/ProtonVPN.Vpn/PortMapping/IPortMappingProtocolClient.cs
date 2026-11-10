@@ -19,17 +19,18 @@
 
 using System;
 using System.Threading.Tasks;
+using ProtonVPN.Common.Core.Networking;
 using ProtonVPN.Common.Legacy;
 using ProtonVPN.Common.Legacy.PortForwarding;
 
-namespace ProtonVPN.Vpn.PortMapping
-{
-    public interface IPortMappingProtocolClient
-    {
-        event EventHandler<EventArgs<PortForwardingState>> StateChanged;
+namespace ProtonVPN.Vpn.PortMapping;
 
-        Task StartAsync();
-        Task StopAsync();
-        void RepeatState();
-    }
+public interface IPortMappingProtocolClient
+{
+    event EventHandler<EventArgs<PortForwardingState>> StateChanged;
+
+    Task StartAsync();
+    Task StopAsync();
+    void RepeatState();
+    void SetVpnState(VpnState state);
 }

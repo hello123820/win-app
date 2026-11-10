@@ -19,7 +19,7 @@
 
 using Windows.Foundation;
 using Microsoft.UI.Xaml;
-using ProtonVPN.Client.Contracts.Services.Activation.Bases;
+using ProtonVPN.Client.Core.Services.Activation.Bases;
 
 namespace ProtonVPN.Client.Core.Services.Activation;
 
@@ -30,4 +30,6 @@ public interface IMainWindowActivator : IWindowActivator
     Size CurrentWindowSize { get; }
 
     Window? Window { get; }
+
+    void SetWindowMovable(bool isMovable);
 }

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
@@ -42,7 +42,7 @@ public partial class OneTimeAnnouncementShellViewModel : ShellViewModelBase<IOne
 {
     private readonly IAnnouncementsProvider _announcementsProvider;
     private readonly IAnnouncementActivator _announcementActivator;
-    private readonly IUpsellDisplayStatisticalEventSender _upsellDisplayStatisticalEventSender;
+    private readonly IUpsellDisplayReporter _upsellDisplayReporter;
     private readonly IApplicationThemeSelector _themeSelector;
 
     [ObservableProperty]
@@ -57,18 +57,20 @@ public partial class OneTimeAnnouncementShellViewModel : ShellViewModelBase<IOne
     public ImageSource? ImageSource => ActiveAnnouncement?.Panel?.FullScreenImage
         .GetImageForTheme(_themeSelector.GetTheme())?.LocalPath?.ToImageSource();
 
+    private UpsellModalContext ModalContext => new(ModalSource.PromoOffer, ModalTrigger.PromoOfferPopup);
+
     public OneTimeAnnouncementShellViewModel(
         IAnnouncementsProvider announcementsProvider,
         IAnnouncementActivator announcementActivator,
         IOneTimeAnnouncementWindowActivator windowActivator,
         IViewModelHelper viewModelHelper,
-        IUpsellDisplayStatisticalEventSender upsellDisplayStatisticalEventSender,
+        IUpsellDisplayReporter upsellDisplayReporter,
         IApplicationThemeSelector themeSelector)
         : base(windowActivator, viewModelHelper)
     {
         _announcementsProvider = announcementsProvider;
         _announcementActivator = announcementActivator;
-        _upsellDisplayStatisticalEventSender = upsellDisplayStatisticalEventSender;
+        _upsellDisplayReporter = upsellDisplayReporter;
         _themeSelector = themeSelector;
     }
 
@@ -109,7 +111,7 @@ public partial class OneTimeAnnouncementShellViewModel : ShellViewModelBase<IOne
         if (ActiveAnnouncement is not null)
         {
             _announcementsProvider.MarkAsSeen(ActiveAnnouncement.Id);
-            _upsellDisplayStatisticalEventSender.Send(ModalSource.PromoOffer, ActiveAnnouncement.Reference);
+            _upsellDisplayReporter.Report(ModalContext, reference: ActiveAnnouncement.Reference);
         }
     }
 
@@ -122,7 +124,7 @@ public partial class OneTimeAnnouncementShellViewModel : ShellViewModelBase<IOne
     [RelayCommand]
     public async Task OpenAnnouncementAsync()
     {
-        await _announcementActivator.ActivateAsync(ActiveAnnouncement);
+        await _announcementActivator.ActivateAsync(ActiveAnnouncement, ModalContext);
 
         Exit();
     }

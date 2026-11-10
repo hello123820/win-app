@@ -21,27 +21,16 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using ProtonVPN.Client.Common.Models;
-using ProtonVPN.Client.Contracts.Services.Activation;
 using ProtonVPN.Client.Contracts.Services.Browsing;
 using ProtonVPN.Client.Core.Bases;
-using ProtonVPN.Client.Core.Messages;
 using ProtonVPN.Client.Core.Models;
 using ProtonVPN.Client.Core.Services.Activation;
 using ProtonVPN.Client.Core.Services.Activation.Bases;
 using ProtonVPN.Client.Core.Services.Navigation;
 using ProtonVPN.Client.Core.Services.Selection;
 using ProtonVPN.Client.Localization.Contracts;
-using ProtonVPN.Client.Localization.Extensions;
-using ProtonVPN.Client.Logic.Auth.Contracts.Messages;
 using ProtonVPN.Client.Logic.Connection.Contracts;
-using ProtonVPN.Client.Logic.Connection.Contracts.Models.Intents;
-using ProtonVPN.Client.Logic.Profiles.Contracts.Messages;
-using ProtonVPN.Client.Logic.Profiles.Contracts.Models;
-using ProtonVPN.Client.Logic.Recents.Contracts;
-using ProtonVPN.Client.Logic.Updates.Contracts;
-using ProtonVPN.Client.Logic.Users.Contracts.Messages;
 using ProtonVPN.Client.Settings.Contracts;
-using ProtonVPN.Client.Settings.Contracts.Enums;
 using ProtonVPN.Client.Settings.Contracts.RequiredReconnections;
 using ProtonVPN.Common.Core.Helpers;
 using ProtonVPN.StatisticalEvents.Contracts.Dimensions;
@@ -50,7 +39,6 @@ namespace ProtonVPN.Client.UI.Main.Settings.Pages;
 
 public partial class CommonSettingsPageViewModel : SettingsPageViewModelBase
 {
-    private readonly IUpdatesManager _updatesManager;
     private readonly IApplicationThemeSelector _themeSelector;
     private readonly ILocalizationService _localizationService;
     private readonly IOverlayActivator _mainWindowOverlayActivator;
@@ -61,7 +49,6 @@ public partial class CommonSettingsPageViewModel : SettingsPageViewModelBase
     private readonly IReportIssueWindowActivator _reportIssueWindowActivator;
     private readonly IDebugToolsWindowActivator _debugToolsWindowActivator;
     private readonly IConnectionManager _connectionManager;
-    private readonly IRecentConnectionsManager _recentConnectionsManager;
     private readonly Lazy<ObservableCollection<Language>> _languages;
 
     public bool IsPaidUser => _settings.VpnPlan.IsPaid;
@@ -84,24 +71,6 @@ public partial class CommonSettingsPageViewModel : SettingsPageViewModelBase
     {
         get => _localizationService.GetLanguage(_settings.Language);
         set => _settings.Language = value.Id;
-    }
-
-    public string DefaultConnectionState
-    {
-        get
-        {
-            if (_settings.DefaultConnection.Type == DefaultConnectionType.Recent)
-            {
-                IConnectionIntent? connectionIntent = _recentConnectionsManager.GetById(_settings.DefaultConnection.RecentId)?.ConnectionIntent;
-                return connectionIntent is not null
-                    ? connectionIntent is IConnectionProfile profile
-                        ? profile.Name
-                        : Localizer.GetConnectionIntentTitle(connectionIntent)
-                    : string.Empty;
-            }
-
-            return Localizer.Get($"Settings_Connection_Default_{_settings.DefaultConnection.Type}");
-        }
     }
 
     public bool IsNotificationEnabled
@@ -127,7 +96,6 @@ public partial class CommonSettingsPageViewModel : SettingsPageViewModelBase
     public ObservableCollection<Language> Languages => _languages.Value;
 
     public CommonSettingsPageViewModel(
-        IUpdatesManager updatesManager,
         IRequiredReconnectionSettings requiredReconnectionSettings,
         IMainViewNavigator mainViewNavigator,
         IApplicationThemeSelector themeSelector,
@@ -140,7 +108,6 @@ public partial class CommonSettingsPageViewModel : SettingsPageViewModelBase
         IDebugToolsWindowActivator debugToolsWindowActivator,
         ISettingsConflictResolver settingsConflictResolver,
         IConnectionManager connectionManager,
-        IRecentConnectionsManager recentConnectionsManager,
         ISettingsViewNavigator settingsViewNavigator,
         IViewModelHelper viewModelHelper)
         : base(requiredReconnectionSettings,
@@ -152,7 +119,6 @@ public partial class CommonSettingsPageViewModel : SettingsPageViewModelBase
                connectionManager,
                viewModelHelper)
     {
-        _updatesManager = updatesManager;
         _themeSelector = themeSelector;
         _localizationService = localizationService;
         _mainWindowOverlayActivator = mainWindowOverlayActivator;
@@ -162,7 +128,6 @@ public partial class CommonSettingsPageViewModel : SettingsPageViewModelBase
         _reportIssueWindowActivator = reportIssueWindowActivator;
         _debugToolsWindowActivator = debugToolsWindowActivator;
         _connectionManager = connectionManager;
-        _recentConnectionsManager = recentConnectionsManager;
 
         _languages = new Lazy<ObservableCollection<Language>>(
             () => new ObservableCollection<Language>(_localizationService.GetAvailableLanguages()));
@@ -211,12 +176,6 @@ public partial class CommonSettingsPageViewModel : SettingsPageViewModelBase
     }
 
     [RelayCommand]
-    private async Task NavigateToDefaultConnectionPageAsync()
-    {
-        await ParentViewNavigator.NavigateToDefaultConnectionSettingsViewAsync();
-    }
-
-    [RelayCommand]
     private async Task NavigateToAutoStartupPageAsync()
     {
         await ParentViewNavigator.NavigateToAutoStartupSettingsViewAsync();
@@ -246,31 +205,10 @@ public partial class CommonSettingsPageViewModel : SettingsPageViewModelBase
         await ParentViewNavigator.NavigateToCensorshipViewAsync();
     }
 
-    public void Receive(ThemeChangedMessage message)
-    {
-        ExecuteOnUIThread(() => OnPropertyChanged(nameof(SelectedTheme)));
-    }
-
-    public void Receive(LoggedInMessage message)
-    {
-        ExecuteOnUIThread(InvalidateAllProperties);
-    }
-
-    public void Receive(VpnPlanChangedMessage message)
-    {
-        ExecuteOnUIThread(InvalidateAllProperties);
-    }
-
-    public void Receive(ProfilesChangedMessage message)
-    {
-        ExecuteOnUIThread(() => OnPropertyChanged(nameof(DefaultConnectionState)));
-    }
-
     protected override void OnLanguageChanged()
     {
         base.OnLanguageChanged();
 
-        OnPropertyChanged(nameof(DefaultConnectionState));
         OnPropertyChanged(nameof(SelectedLanguage));
         OnPropertyChanged(nameof(ClientVersionDescription));
 
@@ -286,10 +224,6 @@ public partial class CommonSettingsPageViewModel : SettingsPageViewModelBase
 
         switch (propertyName)
         {
-            case nameof(ISettings.DefaultConnection):
-                OnPropertyChanged(nameof(DefaultConnectionState));
-                break;
-
             case nameof(ISettings.IsNotificationEnabled):
                 OnPropertyChanged(nameof(IsNotificationEnabled));
                 break;

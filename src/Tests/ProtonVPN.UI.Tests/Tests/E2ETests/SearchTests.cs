@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -20,17 +20,23 @@
 using NUnit.Framework;
 using ProtonVPN.UI.Tests.TestBase;
 using ProtonVPN.UI.Tests.TestsHelper;
+using ProtonVPN.UI.Tests.Enums.Locations;
+using ProtonVPN.UI.Tests.TestsHelper.UiFlows;
 
 namespace ProtonVPN.UI.Tests.Tests.E2ETests;
 
 [TestFixture]
 [Category("1")]
 [Category("ARM")]
+[Category("SMOKE_1")]
 public class SearchTests : FreshSessionSetUp
 {
-    private const string COUNTRY_TO_SEARCH = "United States";
-    private const string STATE = "Arizona";
-    private const string COUNTRY_CODE = "US";
+    private const Country COUNTRY_TO_SEARCH = Country.UnitedStates;
+    private const State STATE = State.Arizona;
+    private const City CITY = City.Berlin;
+    private const string SERVER = "FR#223";
+
+    private static readonly string _trySearchingForText = LanguageHelper.GetTranslatedString("Search_NoInput_TrySearchingFor");
 
     [SetUp]
     public void SetUp()
@@ -39,49 +45,135 @@ public class SearchTests : FreshSessionSetUp
     }
 
     [Test]
+    [Property("TestCaseId", "602383")]
     public void SearchForCountryConnectAndDisconnect()
     {
         SidebarRobot
-            .SearchFor(COUNTRY_TO_SEARCH)
-            .ConnectToCountry(COUNTRY_CODE);
+            .SearchFor(COUNTRY_TO_SEARCH.GetName())
+            .ConnectToCountry(COUNTRY_TO_SEARCH);
 
-        HomeRobot.Verify.IsConnected();
+        HomeRobot
+            .Verify.IsConnected();
 
-        SidebarRobot.DisconnectViaCountry(COUNTRY_CODE);
+        SidebarRobot
+            .DisconnectViaCountry(COUNTRY_TO_SEARCH);
 
-        HomeRobot.Verify.IsDisconnected();
+        HomeRobot
+            .Verify.IsDisconnected();
     }
 
     [Test]
+    [Property("TestCaseId", "602382")]
     public void SearchForCountryAndConnectDisconnectToCity()
     {
         SidebarRobot
-            .SearchFor(COUNTRY_TO_SEARCH)
-            .ExpandCities()
-            .ConnectToCity(STATE);
+            .SearchFor(COUNTRY_TO_SEARCH.GetName())
+            .ExpandCities(COUNTRY_TO_SEARCH)
+            .ConnectToState(STATE);
 
-        HomeRobot.Verify.IsConnected();
+        HomeRobot
+            .Verify.IsConnected();
 
-        SidebarRobot.DisconnectViaCity(STATE);
+        SidebarRobot
+            .DisconnectViaState(STATE);
 
-        HomeRobot.Verify.IsDisconnected();
+        HomeRobot
+            .Verify.IsDisconnected();
     }
 
     [Test]
+    [Property("TestCaseId", "602381")]
     public void SearchCountryAndConnectDisconnectToSpecificServer()
     {
         SidebarRobot
-            .SearchFor(COUNTRY_TO_SEARCH)
-            .ExpandCities()
+            .SearchFor(COUNTRY_TO_SEARCH.GetName())
+            .ExpandCities(COUNTRY_TO_SEARCH)
             .ExpandSpecificServerList()
-            .ConnectToFirstSpecificServer();
+            .ConnectToServer();
 
-        HomeRobot.Verify.IsConnected();
+        HomeRobot
+            .Verify.IsConnected();
 
         SidebarRobot
             .ExpandSpecificServerList()
-            .DisconnectViaSpecificServer();
+            .DisconnectViaServer();
 
-        HomeRobot.Verify.IsDisconnected();
+        HomeRobot
+            .Verify.IsDisconnected();
+    }
+
+    [Test]
+    [Property("TestCaseId", "610985")]
+    public void SearchForCityAndConnectDisconnect()
+    {
+        SidebarRobot
+            .SearchFor(CITY.GetEnumValue())
+            .ConnectToCity(CITY);
+
+        HomeRobot
+            .Verify.IsConnected();
+
+        SidebarRobot
+            .DisconnectViaCity(CITY);
+
+        HomeRobot
+            .Verify.IsDisconnected();
+    }
+
+    [Test]
+    [Property("TestCaseId", "610986")]
+    public void SearchForServerAndConnectDisconnect()
+    {
+        SidebarRobot
+            .SearchFor(SERVER)
+            .ConnectToServer(SERVER);
+
+        HomeRobot
+            .Verify.IsConnected();
+
+        SidebarRobot
+            .DisconnectViaServer(SERVER);
+
+        HomeRobot
+            .Verify.IsDisconnected();
+    }
+
+    [Test]
+    [Property("TestCaseId", "610987")]
+    public void SearchBehaviorAfterRemovingFocus()
+    {
+        SidebarRobot
+            .ClickSearchBox()
+            .Verify.IsSearchBoxFocused()
+                   .SidebarSearchResultContains(_trySearchingForText);
+
+        HomeRobot
+            .ClickOnConnectionCardTitle();
+
+        SidebarRobot
+            .Verify.IsSidebarConnectionsDisplayed()
+            .SearchFor(COUNTRY_TO_SEARCH.GetName())
+            .Verify.SidebarSearchResultContains(COUNTRY_TO_SEARCH.GetName());
+
+        HomeRobot
+            .ClickOnConnectionCardTitle();
+
+        SidebarRobot
+            .Verify.SidebarSearchResultContains(COUNTRY_TO_SEARCH.GetName());
+    }
+
+    [Test]
+    [Property("TestCaseId", "610988")]
+    public void SearchBehaviorAfterRemovingText()
+    {
+        SidebarRobot
+            .SearchFor(COUNTRY_TO_SEARCH.GetName())
+            .Verify.IsBackButtonInSearchBoxDisplayed()
+            .ClickXButtonInSearchBox()
+            .Verify.SidebarSearchResultContains(_trySearchingForText)
+            .SearchFor(CITY.GetEnumValue())
+            .Verify.IsBackButtonInSearchBoxDisplayed()
+            .ClickBackButtonInSearchBox()
+            .Verify.IsSidebarConnectionsDisplayed();
     }
 }

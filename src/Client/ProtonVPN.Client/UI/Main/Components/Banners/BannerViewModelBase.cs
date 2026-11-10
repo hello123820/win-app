@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
@@ -35,20 +35,20 @@ public abstract partial class BannerViewModelBase : ViewModelBase,
 {
     private readonly IAnnouncementsProvider _announcementsProvider;
     private readonly IAnnouncementActivator _announcementActivator;
-    private readonly IUpsellDisplayStatisticalEventSender _upsellDisplayStatisticalEventSender;
+    private readonly IUpsellDisplayReporter _upsellDisplayReporter;
 
-    protected abstract ModalSource ModalSource { get; }
+    protected abstract UpsellModalContext ModalContext { get; }
 
     protected BannerViewModelBase(
         IAnnouncementActivator announcementActivator,
         IAnnouncementsProvider announcementsProvider,
-        IUpsellDisplayStatisticalEventSender upsellDisplayStatisticalEventSender,
+        IUpsellDisplayReporter upsellDisplayReporter,
         IViewModelHelper viewModelHelper)
         : base(viewModelHelper)
     {
         _announcementsProvider = announcementsProvider;
         _announcementActivator = announcementActivator;
-        _upsellDisplayStatisticalEventSender = upsellDisplayStatisticalEventSender;
+        _upsellDisplayReporter = upsellDisplayReporter;
     }
 
     [ObservableProperty]
@@ -81,7 +81,7 @@ public abstract partial class BannerViewModelBase : ViewModelBase,
 
             if (ActiveAnnouncement?.Id != announcement.Id)
             {
-                _upsellDisplayStatisticalEventSender.Send(ModalSource, announcement.Reference);
+                _upsellDisplayReporter.Report(ModalContext, reference: announcement.Reference);
             }
 
             BeforeAnnouncementChange();
@@ -99,7 +99,7 @@ public abstract partial class BannerViewModelBase : ViewModelBase,
     [RelayCommand(CanExecute = nameof(CanOpenAnnouncement))]
     private async Task OpenAnnouncementAsync()
     {
-        await _announcementActivator.ActivateAsync(ActiveAnnouncement);
+        await _announcementActivator.ActivateAsync(ActiveAnnouncement, ModalContext);
     }
 
     private bool CanOpenAnnouncement()

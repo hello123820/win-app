@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -17,15 +17,16 @@
  * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using ProtonVPN.Common.Core.LocalAgent;
 using ProtonVPN.Common.Legacy.Vpn;
 using ProtonVPN.Crypto.Contracts;
 using ProtonVPN.EntityMapping.Contracts;
-using ProtonVPN.ProcessCommunication.Contracts.Entities.Auth;
 using ProtonVPN.ProcessCommunication.Contracts.Entities.Crypto;
+using ProtonVPN.ProcessCommunication.Contracts.Entities.LocalAgent;
 using ProtonVPN.ProcessCommunication.Contracts.Entities.Vpn;
-using ProtonVPN.ProcessCommunication.EntityMapping.Vpn;
+using ProtonVPN.ProcessCommunication.EntityMapping.Common.Legacy.Vpn;
+using PublicKey = ProtonVPN.Crypto.Contracts.PublicKey;
 
 namespace ProtonVPN.ProcessCommunication.EntityMapping.Tests.Vpn;
 
@@ -37,12 +38,17 @@ public class VpnCredentialsMapperTest
 
     private AsymmetricKeyPairIpcEntity _expectedAsymmetricKeyPairIpcEntity;
     private AsymmetricKeyPair _expectedAsymmetricKeyPair;
+    private ConnectionCertificate _expectedConnectionCertificate;
 
     [TestInitialize]
     public void Initialize()
     {
         _entityMapper = Substitute.For<IEntityMapper>();
         _mapper = new(_entityMapper);
+
+        _expectedConnectionCertificate = new ConnectionCertificate("MAPPED CERT", DateTime.UtcNow.AddDays(1));
+        _entityMapper.Map<ConnectionCertificateIpcEntity, ConnectionCertificate>(Arg.Any<ConnectionCertificateIpcEntity>())
+            .Returns(_expectedConnectionCertificate);
 
         _expectedAsymmetricKeyPairIpcEntity = new AsymmetricKeyPairIpcEntity();
         _entityMapper.Map<AsymmetricKeyPair, AsymmetricKeyPairIpcEntity>(Arg.Any<AsymmetricKeyPair>())
@@ -62,6 +68,7 @@ public class VpnCredentialsMapperTest
 
         _expectedAsymmetricKeyPairIpcEntity = null;
         _expectedAsymmetricKeyPair = null;
+        _expectedConnectionCertificate = null;
     }
 
     [TestMethod]
@@ -85,12 +92,18 @@ public class VpnCredentialsMapperTest
         Assert.AreEqual(entityToTest.Password, result.Password);
     }
 
+    // The certificate PEM is sanitized by ConnectionCertificateMapper, so this only asserts the delegation.
+    // See ConnectionCertificateMapperTest for the sanitization cases.
     [TestMethod]
     public void TestMapRightToLeft_WithCertificate()
     {
         VpnCredentialsIpcEntity entityToTest = new()
         {
-            Certificate = CreateCertificate(),
+            Certificate = new ConnectionCertificateIpcEntity()
+            {
+                Pem = "UNMAPPED CERT",
+                ExpirationDateUtc = DateTime.UtcNow.AddDays(2),
+            },
             ClientKeyPair = new AsymmetricKeyPairIpcEntity(),
             Username = "username",
             Password = "password",
@@ -98,20 +111,10 @@ public class VpnCredentialsMapperTest
 
         VpnCredentials result = _mapper.Map(entityToTest);
 
-        Assert.IsNotNull(result);
-        Assert.AreEqual(entityToTest.Certificate.Pem, result.ClientCertPem);
-        Assert.AreEqual(entityToTest.Certificate.ExpirationDateUtc, result.ClientCertificateExpirationDateUtc);
+        Assert.AreEqual(_expectedConnectionCertificate.Pem, result.ClientCertPem);
+        Assert.AreEqual(_expectedConnectionCertificate.ExpirationDateUtc, result.ClientCertificateExpirationDateUtc);
         Assert.AreEqual(_expectedAsymmetricKeyPair, result.ClientKeyPair);
         Assert.AreEqual(entityToTest.Username, result.Username);
         Assert.AreEqual(entityToTest.Password, result.Password);
-    }
-
-    private ConnectionCertificateIpcEntity CreateCertificate()
-    {
-        return new()
-        {
-            Pem = DateTime.UtcNow.Ticks.ToString(),
-            ExpirationDateUtc = DateTime.UtcNow.AddDays(1),
-        };
     }
 }

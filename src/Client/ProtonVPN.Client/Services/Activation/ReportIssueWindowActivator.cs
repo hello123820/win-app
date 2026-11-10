@@ -18,7 +18,6 @@
  */
 
 using ProtonVPN.Client.Common.Dispatching;
-using ProtonVPN.Client.Contracts.Services.Activation;
 using ProtonVPN.Client.Core.Services.Activation;
 using ProtonVPN.Client.Core.Services.Activation.Bases;
 using ProtonVPN.Client.Core.Services.Navigation;
@@ -41,6 +40,7 @@ public class ReportIssueWindowActivator : DialogActivatorBase<ReportIssueWindow>
         IUIThreadDispatcher uiThreadDispatcher,
         IApplicationThemeSelector themeSelector,
         ISettings settings,
+        ILocalizationService localizationService,
         ILocalizationProvider localizer,
         IApplicationIconSelector iconSelector,
         IMainWindowActivator mainWindowActivator,
@@ -49,6 +49,7 @@ public class ReportIssueWindowActivator : DialogActivatorBase<ReportIssueWindow>
                uiThreadDispatcher,
                themeSelector,
                settings,
+               localizationService,
                localizer,
                iconSelector,
                mainWindowActivator)

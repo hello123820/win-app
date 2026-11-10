@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -27,6 +27,7 @@ using ProtonVPN.Logging.Contracts.Events.ProcessCommunicationLogs;
 using ProtonVPN.ProcessCommunication.Contracts;
 using ProtonVPN.ProcessCommunication.Contracts.Entities.NetShield;
 using ProtonVPN.ProcessCommunication.Contracts.Entities.PortForwarding;
+using ProtonVPN.ProcessCommunication.Contracts.Entities.Restrictions;
 using ProtonVPN.ProcessCommunication.Contracts.Entities.Update;
 using ProtonVPN.ProcessCommunication.Contracts.Entities.Vpn;
 
@@ -64,6 +65,7 @@ public class ClientControllerListener : IClientControllerListener
         Task.Run(async () => await KeepAliveAsync(StartConnectionDetailsListenerAsync)).FireAndForget();
         Task.Run(async () => await KeepAliveAsync(StartUpdateStateListenerAsync)).FireAndForget();
         Task.Run(async () => await KeepAliveAsync(StartNetShieldStatisticListenerAsync)).FireAndForget();
+        Task.Run(async () => await KeepAliveAsync(StartRestrictionsListenerAsync)).FireAndForget();
     }
 
     private async Task KeepAliveAsync(Func<Task> listener)
@@ -155,9 +157,21 @@ public class ClientControllerListener : IClientControllerListener
                 $"Received NetShield statistic change with timestamp '{netShieldStatistic.TimestampUtc}' " +
                 $"[Ads: '{netShieldStatistic.NumOfAdvertisementUrlsBlocked}']" +
                 $"[Malware: '{netShieldStatistic.NumOfMaliciousUrlsBlocked}']" +
-                $"[Trackers: '{netShieldStatistic.NumOfTrackingUrlsBlocked}']");
+                $"[Trackers: '{netShieldStatistic.NumOfTrackingUrlsBlocked}']" +
+                $"[Adult content: '{netShieldStatistic.NumOfAdultContentUrlsBlocked}']");
 
             _eventMessageSender.Send(netShieldStatistic);
+        }
+    }
+
+    private async Task StartRestrictionsListenerAsync()
+    {
+        await foreach (RestrictionListIpcEntity restrictions in
+            _grpcClient.ClientController.StreamRestrictionsChangeAsync(_cancellationTokenSource.Token))
+        {
+            _logger.Info<ProcessCommunicationLog>($"Received restrictions change {string.Join(',', restrictions.Restrictions)}");
+
+            _eventMessageSender.Send(restrictions);
         }
     }
 }

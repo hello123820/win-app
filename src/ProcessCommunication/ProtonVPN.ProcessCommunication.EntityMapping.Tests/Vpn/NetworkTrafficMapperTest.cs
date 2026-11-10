@@ -17,10 +17,9 @@
  * along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProtonVPN.Common.Core.Networking;
 using ProtonVPN.ProcessCommunication.Contracts.Entities.Vpn;
-using ProtonVPN.ProcessCommunication.EntityMapping.Vpn;
+using ProtonVPN.ProcessCommunication.EntityMapping.Common.Core.Networking;
 
 namespace ProtonVPN.ProcessCommunication.EntityMapping.Tests.Vpn;
 
@@ -72,7 +71,6 @@ public class NetworkTrafficMapperTest
 
         NetworkTraffic result = _mapper.Map(entityToTest);
 
-        Assert.IsNotNull(result);
         Assert.AreEqual(0u, result.BytesDownloaded);
         Assert.AreEqual(0u, result.BytesUploaded);
     }
@@ -88,7 +86,6 @@ public class NetworkTrafficMapperTest
 
         NetworkTraffic result = _mapper.Map(entityToTest);
 
-        Assert.IsNotNull(result);
         Assert.AreEqual(entityToTest.BytesDownloaded, result.BytesDownloaded);
         Assert.AreEqual(entityToTest.BytesUploaded, result.BytesUploaded);
     }

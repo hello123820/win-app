@@ -25,8 +25,10 @@ using ProtonVPN.Client.Core.Bases;
 using ProtonVPN.Client.Core.Helpers;
 using ProtonVPN.Client.Core.Services.Activation;
 using ProtonVPN.Client.Core.Services.Navigation;
+using ProtonVPN.Client.EventMessaging.Contracts;
 using ProtonVPN.Client.Logic.Connection.Contracts;
 using ProtonVPN.Client.Logic.Connection.Contracts.Enums;
+using ProtonVPN.Client.Logic.Users.Contracts.Messages;
 using ProtonVPN.Client.Settings.Contracts;
 using ProtonVPN.Client.Settings.Contracts.Enums;
 using ProtonVPN.Client.Settings.Contracts.RequiredReconnections;
@@ -34,7 +36,8 @@ using ProtonVPN.Client.UI.Main.Settings.Bases;
 
 namespace ProtonVPN.Client.UI.Main.Settings.Connection;
 
-public partial class NetShieldPageViewModel : SettingsPageViewModelBase
+public partial class NetShieldPageViewModel : SettingsPageViewModelBase,
+    IEventMessageReceiver<VpnPlanChangedMessage>
 {
     private readonly IUrlsBrowser _urlsBrowser;
 
@@ -47,6 +50,7 @@ public partial class NetShieldPageViewModel : SettingsPageViewModelBase
     [property: SettingName(nameof(ISettings.NetShieldMode))]
     [NotifyPropertyChangedFor(nameof(IsNetShieldLevelOne))]
     [NotifyPropertyChangedFor(nameof(IsNetShieldLevelTwo))]
+    [NotifyPropertyChangedFor(nameof(IsNetShieldLevelThree))]
     [NotifyPropertyChangedFor(nameof(NetShieldFeatureIconSource))]
     [NotifyPropertyChangedFor(nameof(IsNetShieldStatsPanelVisible))]
     private NetShieldMode _currentNetShieldMode;
@@ -59,15 +63,23 @@ public partial class NetShieldPageViewModel : SettingsPageViewModelBase
 
     public bool IsNetShieldLevelTwo
     {
-        get => IsNetShieldMode(NetShieldMode.BlockAdsMalwareTrackers);
+        get => IsNetShieldMode(NetShieldMode.BlockAdsMalwareTrackers) || (!IsNetShieldLevelThreeAvailable && IsNetShieldMode(NetShieldMode.BlockAdsMalwareTrackersAdultContent));
         set => SetNetShieldMode(value, NetShieldMode.BlockAdsMalwareTrackers);
     }
+
+    public bool IsNetShieldLevelThree
+    {
+        get => IsNetShieldLevelThreeAvailable && IsNetShieldMode(NetShieldMode.BlockAdsMalwareTrackersAdultContent);
+        set => SetNetShieldMode(value, NetShieldMode.BlockAdsMalwareTrackersAdultContent);
+    }
+
+    public bool IsNetShieldLevelThreeAvailable => !Settings.VpnPlan.IsB2B;
 
     public bool IsNetShieldStatsPanelVisible => ConnectionManager.IsConnected
                                              && IsNetShieldEnabled
                                              && Settings.IsNetShieldEnabled
-                                             && CurrentNetShieldMode == NetShieldMode.BlockAdsMalwareTrackers
-                                             && Settings.NetShieldMode == NetShieldMode.BlockAdsMalwareTrackers;
+                                             && CurrentNetShieldMode >= NetShieldMode.BlockAdsMalwareTrackers
+                                             && Settings.NetShieldMode >= NetShieldMode.BlockAdsMalwareTrackers;
 
     public override string Title => Localizer.Get("Settings_Connection_NetShield");
 
@@ -108,6 +120,16 @@ public partial class NetShieldPageViewModel : SettingsPageViewModelBase
         return isEnabled
             ? ResourceHelper.GetIllustration("NetShieldOnLevel1IllustrationSource")
             : ResourceHelper.GetIllustration("NetShieldOffIllustrationSource");
+    }
+
+    public void Receive(VpnPlanChangedMessage message)
+    {
+        ExecuteOnUIThread(() =>
+        {
+            OnPropertyChanged(nameof(IsNetShieldLevelThreeAvailable));
+            OnPropertyChanged(nameof(IsNetShieldLevelTwo));
+            OnPropertyChanged(nameof(IsNetShieldLevelThree));
+        });
     }
 
     protected override void OnActivated()

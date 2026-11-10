@@ -35,7 +35,7 @@ public abstract class CityLocationItemBase : HostLocationItemBase<City>
 {
     public City City { get; }
 
-    public override string Header => City.Name;
+    public override string Header => Localizer.GetCityName(City.Name, City.CountryCode);
 
     public override string Description =>
         string.IsNullOrEmpty(City.StateName)
@@ -99,6 +99,6 @@ public abstract class CityLocationItemBase : HostLocationItemBase<City>
             && City.CountryCode == currentConnectionDetails.ExitCountryCode
             && City.StateName == currentConnectionDetails.State
             && City.Name == currentConnectionDetails.City
-            && (FeatureIntent?.GetType().IsAssignableTo(currentConnectionDetails.OriginalConnectionIntent.Feature?.GetType()) ?? true);
+            && (FeatureIntent?.IsSupported(currentConnectionDetails.Server) ?? true);
     }
 }

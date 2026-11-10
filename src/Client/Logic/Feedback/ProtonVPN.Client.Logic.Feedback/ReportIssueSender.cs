@@ -24,10 +24,10 @@ using ProtonVPN.Client.Logic.Feedback.Attachments;
 using ProtonVPN.Client.Logic.Feedback.Contracts;
 using ProtonVPN.Client.Logic.Feedback.Diagnostics;
 using ProtonVPN.Client.Settings.Contracts;
+using ProtonVPN.Common.Core.Extensions;
 using ProtonVPN.Common.Core.Geographical;
 using ProtonVPN.Common.Core.Helpers;
 using ProtonVPN.Common.Legacy.Abstract;
-using ProtonVPN.Common.Legacy.Extensions;
 using ProtonVPN.Common.Legacy.OS.DeviceIds;
 using ProtonVPN.Common.Legacy.OS.Systems;
 using ProtonVPN.OperatingSystems.WebAuthn.Contracts;
@@ -137,7 +137,7 @@ public class ReportIssueSender : IReportIssueSender
     {
         if (_userAuthenticator.IsLoggedIn)
         {
-            string? vpnPlanTitle = _settings.VpnPlan.Title;
+            string vpnPlanTitle = _settings.VpnPlan.Title;
             return !string.IsNullOrEmpty(vpnPlanTitle)
                 ? vpnPlanTitle
                 : FREE_VPN_PLAN_FIELD_VALUE;

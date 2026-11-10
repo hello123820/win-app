@@ -18,8 +18,9 @@
  */
 
 using NUnit.Framework;
-using ProtonVPN.UI.Tests.ApiClient.TestEnv;
 using ProtonVPN.UI.Tests.TestsHelper;
+using ProtonVPN.UI.Tests.ApiClient.TestEnv;
+using NUnit.Framework.Interfaces;
 
 namespace ProtonVPN.UI.Tests.TestBase;
 
@@ -38,8 +39,16 @@ public class SliSetUp : BaseTest
     public void TestCleanup()
     {
         Cleanup();
-        _lokiPusher.PushMetrics();
-        _lokiPusher.PushAllLogs();
+
+        TestStatus status = TestContext.CurrentContext.Result.Outcome.Status;
+        bool hasOutcomeWorthPushing = status is TestStatus.Passed or TestStatus.Failed;
+
+        if (hasOutcomeWorthPushing && SliHelper.MetricsList.Count > 0)
+        {
+            _lokiPusher.PushMetrics();
+            _lokiPusher.PushAllLogs();
+        }
+
         SliHelper.Reset();
     }
 }

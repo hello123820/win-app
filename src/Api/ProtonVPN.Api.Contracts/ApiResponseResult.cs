@@ -26,18 +26,17 @@ using ProtonVPN.Common.Legacy.Abstract;
 namespace ProtonVPN.Api.Contracts;
 
 public class ApiResponseResult<T> : Result<T>
-    where T : BaseResponse
 {
     public HttpResponseMessage ResponseMessage { get; }
     public IList<BaseResponseDetailAction> Actions { get; }
     public DateTimeOffset? LastModified { get; }
     public bool IsNotModified { get; }
 
-    protected ApiResponseResult(HttpResponseMessage responseMessage, bool success, string error, bool isNotModified, T value)
+    public ApiResponseResult(HttpResponseMessage responseMessage, bool success, string error, bool isNotModified, T value)
         : base(value, success, error)
     {
         ResponseMessage = responseMessage;
-        Actions = value?.Details?.Actions;
+        Actions = value is BaseResponse baseResponse ? baseResponse?.Details?.Actions : null;
         LastModified = responseMessage?.Content?.Headers?.LastModified;
         IsNotModified = isNotModified;
     }

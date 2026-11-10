@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -22,6 +22,7 @@ using NSubstitute;
 using ProtonVPN.Client.Contracts.Profiles;
 using ProtonVPN.Client.Contracts.Services.Activation;
 using ProtonVPN.Client.Contracts.Services.Browsing;
+using ProtonVPN.Client.Contracts.Services.Navigation;
 using ProtonVPN.Client.Localization.Contracts;
 using ProtonVPN.Client.Logic.Connection.ConnectionErrors;
 using ProtonVPN.Client.Logic.Connection.Contracts;
@@ -39,6 +40,7 @@ public class ConnectionErrorFactoryTest
     {
         { VpnError.None, typeof(NoConnectionError) },
         { VpnError.NoneKeepEnabledKillSwitch, typeof(NoConnectionError) },
+        { VpnError.AllServersExcluded, typeof(AllServersExcludedConnectionError) },
         { VpnError.NoServers, typeof(NoServersConnectionError) },
         { VpnError.WireGuardAdapterInUseError, typeof(WireGuardAdapterInUseConnectionError) },
         { VpnError.MissingConnectionCertificate, typeof(MissingConnectionCertificateError) },
@@ -53,6 +55,8 @@ public class ConnectionErrorFactoryTest
         { VpnError.SessionLimitReachedPro, typeof(SessionLimitReachedConnectionError) },
         { VpnError.SessionLimitReachedVisionary, typeof(SessionLimitReachedConnectionError) },
         { VpnError.SessionLimitReachedUnknown, typeof(SessionLimitReachedConnectionError) },
+        { VpnError.InterfaceHasForwardingEnabled, typeof(MobileHotspotConnectionError) },
+        { VpnError.ServerValidationError, typeof(ServerValidationConnectionError) },
     };
 
     private ISettings? _settings;
@@ -60,7 +64,8 @@ public class ConnectionErrorFactoryTest
     private ILocalizationProvider? _localizer;
     private IProfileEditor? _profileEditor;
     private IUrlsBrowser? _urlsBrowser;
-    private IReportIssueWindowActivator? _reportIssueWindowActivator;
+    private IClientWindowsActivator? _clientWindowsActivator;
+    private IClientViewsNavigator? _clientViewsNavigator;
 
     [TestInitialize]
     public void TestInitialize()
@@ -70,7 +75,8 @@ public class ConnectionErrorFactoryTest
         _localizer = Substitute.For<ILocalizationProvider>();
         _profileEditor = Substitute.For<IProfileEditor>();
         _urlsBrowser = Substitute.For<IUrlsBrowser>();
-        _reportIssueWindowActivator = Substitute.For<IReportIssueWindowActivator>();
+        _clientWindowsActivator = Substitute.For<IClientWindowsActivator>();
+        _clientViewsNavigator = Substitute.For<IClientViewsNavigator>();
     }
 
     [TestCleanup]
@@ -81,7 +87,8 @@ public class ConnectionErrorFactoryTest
         _localizer = null;
         _profileEditor = null;
         _urlsBrowser = null;
-        _reportIssueWindowActivator = null;
+        _clientWindowsActivator = null;
+        _clientViewsNavigator = null;
     }
 
     [TestMethod]
@@ -125,16 +132,19 @@ public class ConnectionErrorFactoryTest
             new TapRequiresUpdateConnectionError(_localizer!, _urlsBrowser!),
             new RpcServerUnavailableConnectionError(_localizer!, _urlsBrowser!),
             new NoServersForProfileConnectionError(_localizer!, _profileEditor!, _connectionManager!),
-            new NoServersConnectionError(_localizer!, _reportIssueWindowActivator!),
+            new NoServersConnectionError(_localizer!, _clientWindowsActivator!),
+            new AllServersExcludedConnectionError(_localizer!, _clientViewsNavigator!),
             new WireGuardAdapterInUseConnectionError(_localizer!, _connectionManager!),
-            new MissingConnectionCertificateError(_localizer!, _reportIssueWindowActivator!),
-            new TlsCertificateConnectionError(_localizer!, _reportIssueWindowActivator!),
-            new SessionLimitReachedConnectionError(_localizer!, _settings!, _reportIssueWindowActivator!),
+            new MissingConnectionCertificateError(_localizer!, _clientWindowsActivator!),
+            new TlsCertificateConnectionError(_localizer!, _clientWindowsActivator!),
+            new SessionLimitReachedConnectionError(_localizer!, _settings!, _clientWindowsActivator!),
+            new MobileHotspotConnectionError(_localizer!, _clientWindowsActivator!),
+            new ServerValidationConnectionError(_localizer!, _clientWindowsActivator!),
         ]);
     }
 
     private Lazy<UnknownConnectionError> GetUnknownConnectionError()
     {
-        return new(() => new UnknownConnectionError(_localizer!, _reportIssueWindowActivator!));
+        return new(() => new UnknownConnectionError(_localizer!, _clientWindowsActivator!));
     }
 }

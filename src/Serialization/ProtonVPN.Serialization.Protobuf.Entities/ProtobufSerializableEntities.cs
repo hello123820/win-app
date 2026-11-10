@@ -43,6 +43,8 @@ public class ProtobufSerializableEntities : IProtobufSerializableEntities
         yield return typeof(ServersFile);
         yield return typeof(PhysicalServer);
         yield return typeof(Server);
+        yield return typeof(StatusReference);
+        yield return typeof(GeoLocation);
         yield return typeof(ServerFeatures);
         yield return typeof(ServerTiers);
         yield return typeof(VpnProtocol);
@@ -50,6 +52,9 @@ public class ProtobufSerializableEntities : IProtobufSerializableEntities
         yield return typeof(SelectionStrategy);
         yield return typeof(ServerInfo);
         yield return typeof(GatewayServerInfo);
+
+        yield return typeof(LocationNamesFile);
+        yield return typeof(LocationNamesCache);
 
         yield return typeof(SerializableConnectionIntent);
         yield return typeof(SerializableFeatureIntent);

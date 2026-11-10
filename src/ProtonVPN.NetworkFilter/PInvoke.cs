@@ -222,13 +222,20 @@ internal class PInvoke
 
     [DllImport(
         BINARY_NAME,
-        EntryPoint = "IPFilterGetSublayerFilterCount",
+        EntryPoint = "IPFilterGetSublayerFilters",
         CallingConvention = CallingConvention.Cdecl)]
-    public static extern uint GetSublayerFilterCount(
+    public static extern uint GetSublayerFilters(
         IntPtr sessionHandle,
         [In] ref Guid providerId,
         [In] ref Guid sublayerId,
-        [In, Out] ref uint result);
+        out IntPtr filters,
+        [In, Out] ref uint filterCount);
+
+    [DllImport(
+        BINARY_NAME,
+        EntryPoint = "IPFilterFreeMemory",
+        CallingConvention = CallingConvention.Cdecl)]
+    public static extern void FreeMemory(IntPtr ptr);
 
     [DllImport(
         BINARY_NAME,
@@ -293,7 +300,8 @@ internal class PInvoke
         uint weight,
         [In] ref Guid calloutKey,
         [In] ref Guid providerContextKey,
-        [MarshalAs(UnmanagedType.LPWStr)] string appPath,
+        [MarshalAs(UnmanagedType.LPWStr)] string appIdentifier,
+        uint isDnsPortExcluded,
         uint persistent,
         [In, Out] ref Guid filterKey);
 

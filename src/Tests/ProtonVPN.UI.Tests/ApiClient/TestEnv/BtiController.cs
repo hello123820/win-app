@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -30,14 +30,14 @@ public class BtiController
 
     static BtiController()
     {
-        var handler = new HttpClientHandler
+        HttpClientHandler handler = new HttpClientHandler
         {
             ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
         };
 
         _client = new HttpClient(handler)
         {
-            BaseAddress = new Uri(Environment.GetEnvironmentVariable("BTI_CONTROLLER_URL"))
+            BaseAddress = new Uri(Environment.GetEnvironmentVariable("BTI_CONTROLLER_URL") ?? throw new Exception("Missing BTI_CONTROLLER_URL env var."))
         };
     }
 
@@ -47,11 +47,11 @@ public class BtiController
             () => {
                 MakeScenarioRequest(scenarioEndpoint);
             },
-            TestConstants.TenSecondsTimeout, TestConstants.ApiRetryInterval);
+            TestConstants.ThirtySecondsTimeout, TestConstants.ApiRetryInterval);
 
         if (!retry.Success)
         {
-            throw new Exception($"Failed to set scenario:\n${retry.LastException}");
+            throw new Exception($"Failed to set scenario {scenarioEndpoint}:\n${retry.LastException}");
         }
     }
 

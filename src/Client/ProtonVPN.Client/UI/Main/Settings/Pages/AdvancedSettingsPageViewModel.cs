@@ -23,7 +23,6 @@ using ProtonVPN.Client.Common.Attributes;
 using ProtonVPN.Client.Contracts.Profiles;
 using ProtonVPN.Client.Contracts.Services.Browsing;
 using ProtonVPN.Client.Core.Bases;
-using ProtonVPN.Client.Core.Enums;
 using ProtonVPN.Client.Core.Services.Activation;
 using ProtonVPN.Client.Core.Services.Navigation;
 using ProtonVPN.Client.EventMessaging.Contracts;
@@ -36,10 +35,10 @@ using ProtonVPN.Client.Logic.Profiles.Contracts.Models;
 using ProtonVPN.Client.Logic.Users.Contracts.Messages;
 using ProtonVPN.Client.Settings.Contracts;
 using ProtonVPN.Client.Settings.Contracts.Enums;
-using ProtonVPN.Client.Settings.Contracts.Observers;
 using ProtonVPN.Client.Settings.Contracts.RequiredReconnections;
 using ProtonVPN.Client.UI.Main.Settings.Bases;
 using ProtonVPN.Common.Core.Networking;
+using ProtonVPN.StatisticalEvents.Contracts;
 
 namespace ProtonVPN.Client.UI.Main.Settings.Pages;
 
@@ -49,7 +48,6 @@ public partial class AdvancedSettingsPageViewModel : SettingsPageViewModelBase,
     IEventMessageReceiver<ProfilesChangedMessage>
 {
     private readonly IUrlsBrowser _urlsBrowser;
-    private readonly IFeatureFlagsObserver _featureFlagsObserver;
 
     private readonly IUpsellCarouselWindowActivator _upsellCarouselWindowActivator;
     private readonly IProfileEditor _profileEditor;
@@ -114,10 +112,6 @@ public partial class AdvancedSettingsPageViewModel : SettingsPageViewModelBase,
 
     public string LocalDnsLearnMoreUrl => _urlsBrowser.LocalDnsLearnMore;
 
-    public bool IsLocalAreaNetworkSettingVisible => _featureFlagsObserver.IsLocalAreaNetworkAllowedForPaidUsersOnly;
-
-    public bool IsIpv6SettingVisible => _featureFlagsObserver.IsIpv6SupportEnabled;
-
     public bool IsStrictNatType
     {
         get => IsNatType(NatType.Strict);
@@ -154,7 +148,6 @@ public partial class AdvancedSettingsPageViewModel : SettingsPageViewModelBase,
 
     public AdvancedSettingsPageViewModel(
         IUrlsBrowser urlsBrowser,
-        IFeatureFlagsObserver featureFlagsObserver,
         IUpsellCarouselWindowActivator upsellCarouselWindowActivator,
         IRequiredReconnectionSettings requiredReconnectionSettings,
         IMainViewNavigator mainViewNavigator,
@@ -175,7 +168,6 @@ public partial class AdvancedSettingsPageViewModel : SettingsPageViewModelBase,
                viewModelHelper)
     {
         _urlsBrowser = urlsBrowser;
-        _featureFlagsObserver = featureFlagsObserver;
         _upsellCarouselWindowActivator = upsellCarouselWindowActivator;
         _profileEditor = profileEditor;
 
@@ -268,19 +260,19 @@ public partial class AdvancedSettingsPageViewModel : SettingsPageViewModelBase,
             ? IsCustomDnsServersOverridden
                 ? _profileEditor.TryRedirectToProfileAsync(Localizer.Get("Settings_Connection_Advanced_CustomDnsServers"), CurrentProfile!)
                 : ParentViewNavigator.NavigateToCustomDnsSettingsViewAsync()
-            : TriggerAdvancedSettingsUpsellProcessAsync(UpsellFeatureType.CustomDns);
+            : TriggerAdvancedSettingsUpsellProcessAsync(ModalSource.CustomDns);
     }
 
     [RelayCommand]
-    private Task TriggerLanConnectonsUpsellProcessAsync()
+    private Task TriggerLanConnectionsUpsellProcessAsync()
     {
-        return TriggerAdvancedSettingsUpsellProcessAsync(UpsellFeatureType.AllowLanConnections);
+        return TriggerAdvancedSettingsUpsellProcessAsync(ModalSource.AllowLanConnections);
     }
 
     [RelayCommand]
     private Task TriggerNatTypeUpsellProcessAsync()
     {
-        return TriggerAdvancedSettingsUpsellProcessAsync(UpsellFeatureType.ModerateNat);
+        return TriggerAdvancedSettingsUpsellProcessAsync(ModalSource.ModerateNat);
     }
 
     [RelayCommand]
@@ -289,15 +281,9 @@ public partial class AdvancedSettingsPageViewModel : SettingsPageViewModelBase,
         return _profileEditor.TryRedirectToProfileAsync(Localizer.Get("Settings_Connection_Advanced_NatType"), CurrentProfile!);
     }
 
-    [RelayCommand]
-    private Task TriggerDnsBlockModeUpsellProcessAsync()
+    private Task TriggerAdvancedSettingsUpsellProcessAsync(ModalSource modalSource)
     {
-        return TriggerAdvancedSettingsUpsellProcessAsync(UpsellFeatureType.AllowLanConnections);
-    }
-
-    private Task TriggerAdvancedSettingsUpsellProcessAsync(UpsellFeatureType upsellFeatureType)
-    {
-        return _upsellCarouselWindowActivator.ActivateAsync(upsellFeatureType);
+        return _upsellCarouselWindowActivator.ActivateAsync(new UpsellModalContext(modalSource, ModalTrigger.Settings));
     }
 
     private bool IsNatType(NatType natType)

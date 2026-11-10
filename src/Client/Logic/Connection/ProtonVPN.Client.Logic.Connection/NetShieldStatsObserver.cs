@@ -102,6 +102,7 @@ public class NetShieldStatsObserver : PollingObserverBase,
             NumOfMaliciousUrlsBlocked = message.NumOfMaliciousUrlsBlocked,
             NumOfAdvertisementUrlsBlocked = message.NumOfAdvertisementUrlsBlocked,
             NumOfTrackingUrlsBlocked = message.NumOfTrackingUrlsBlocked,
+            NumOfAdultContentUrlsBlocked = message.NumOfAdultContentUrlsBlocked,
         });
     }
 
@@ -151,7 +152,7 @@ public class NetShieldStatsObserver : PollingObserverBase,
         {
             if (CanRequestNetShieldStats())
             {
-                StartTimerAndTriggerOnStart();
+                TriggerAndStartTimer();
             }
             else
             {

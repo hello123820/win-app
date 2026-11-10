@@ -123,14 +123,11 @@
   <data name="Automation_Properties_ConnectionDetails_Page">
     <value>Halaman rincian koneksi</value>
   </data>
+  <data name="Automation_Properties_ConnectionPreferences_Page">
+    <value>Connection preferences page</value>
+  </data>
   <data name="Automation_Properties_Connection_Card_Component">
     <value>Kartu koneksi</value>
-  </data>
-  <data name="Automation_Properties_Features_Bar">
-    <value>Bilah fitur</value>
-  </data>
-  <data name="Automation_Properties_Home_Page">
-    <value>Beranda</value>
   </data>
   <data name="Automation_Properties_KillSwitch_Page">
     <value>Halaman kill switch</value>
@@ -189,18 +186,11 @@
   <data name="Automation_Properties_SplitTunneling_Page">
     <value>Halaman split tunneling</value>
   </data>
-  <data name="Cities">
-    <value>Kota</value>
-  </data>
   <data name="City_Fastest">
     <value>Kota tercepat</value>
   </data>
   <data name="City_Random">
     <value>Kota acak</value>
-  </data>
-  <data name="Common_Actions_ActionsFor">
-    <value>Tindakan untuk {0}</value>
-    <comment>Used for accessibility purposes (Narrator) in the recents list to open the alternate actions menu (pin, unpin...). {0} is a place holder which can be a country, a city, a server...</comment>
   </data>
   <data name="Common_Actions_Add">
     <value>Tambahkan</value>
@@ -220,25 +210,14 @@
   <data name="Common_Actions_Connect">
     <value>Hubungkan</value>
   </data>
-  <data name="Common_Actions_ConnectTo">
-    <value>Hubungkan ke {0}</value>
-    <comment>Used for accessibility purposes (Narrator) to describe the action to Connect to something. {0} is a place holder which can be a country, a city, a server...</comment>
-  </data>
   <data name="Common_Actions_ContactUs">
     <value>Hubungi kami</value>
-  </data>
-  <data name="Common_Actions_Customize">
-    <value>Sesuaikan</value>
   </data>
   <data name="Common_Actions_Delete">
     <value>Hapus</value>
   </data>
   <data name="Common_Actions_Disconnect">
     <value>Putuskan</value>
-  </data>
-  <data name="Common_Actions_DisconnectFrom">
-    <value>Putuskan dari {0}</value>
-    <comment>Used for accessibility purposes (Narrator) to describe the action to disconnect from something. {0} is a place holder which can be a country, a city, a server...</comment>
   </data>
   <data name="Common_Actions_Duplicate">
     <value>Gandakan</value>
@@ -256,7 +235,7 @@
     <value>Dimengerti</value>
   </data>
   <data name="Common_Actions_Install">
-    <value>Pasang</value>
+    <value>Instal</value>
   </data>
   <data name="Common_Actions_MoveDown">
     <value>Turunkan</value>
@@ -289,10 +268,10 @@
     <value>Tingkatkan</value>
   </data>
   <data name="Common_Confirmation_KillSwitch_Message">
-    <value>Kill switch lanjutan diaktifkan. Untuk menggunakan internet tanpa VPN, nonaktifkan kill switch lanjutan ini.</value>
+    <value>Kill switch tingkat lanjut diaktifkan. Untuk menggunakan internet tanpa VPN, nonaktifkan kill switch tingkat lanjut ini.</value>
   </data>
   <data name="Common_Confirmation_YouWillBeDisconnectedWithKillSwitch_Message">
-    <value>Kill switch lanjutkan diaktifkan. Apabila Anda melanjutkan, Anda akan terputus dari internet.</value>
+    <value>Kill switch tingkat lanjut diaktifkan. Apabila Anda melanjutkan, koneksi Anda akan terputus dari internet.</value>
   </data>
   <data name="Common_Confirmation_YouWillBeDisconnected_Message">
     <value>Anda akan terputus dari VPN.</value>
@@ -300,17 +279,14 @@
   <data name="Common_Links_LearnMore">
     <value>Pelajari lebih lanjut</value>
   </data>
-  <data name="Common_Message_Loading">
-    <value>Memuat...</value>
+  <data name="Common_Message_AppNotFound">
+    <value>Application not found</value>
   </data>
   <data name="Common_States_Off">
     <value>Nonaktif</value>
   </data>
   <data name="Common_States_On">
     <value>Aktif</value>
-  </data>
-  <data name="Common_States_Updating">
-    <value>Memperbarui...</value>
   </data>
   <data name="Common_Tags_Beta">
     <value>BETA</value>
@@ -328,7 +304,7 @@
     <value>Dapatkan yang terbaik dari VPN Anda dengan memperbarui aplikasi ke versi terbaru.</value>
   </data>
   <data name="Components_Update_MoreLikelyIssues">
-    <value>Anda akan cenderung lebih rentan terhadap masalah apabila Anda menggunakan Proton VPN versi lawas.</value>
+    <value>Anda akan cenderung lebih rentan terhadap berbagai isu apabila Anda menggunakan Proton VPN versi lama.</value>
   </data>
   <data name="Components_Update_UpdateAvailable">
     <value>Pembaruan tersedia</value>
@@ -336,11 +312,26 @@
   <data name="Components_Update_UpdateProtonVpn">
     <value>Perbarui Proton VPN</value>
   </data>
+  <data name="Connection_Error_AllServersExcluded">
+    <value>Your preferences exclude all available servers. Adjust exclusions to connect.</value>
+  </data>
+  <data name="Connection_Error_AllServersExcluded_Action">
+    <value>Excluded locations</value>
+  </data>
+  <data name="Connection_Error_ConflictingAdapter_Description">
+    <value>To fix it, close or uninstall the app associated with:</value>
+  </data>
+  <data name="Connection_Error_ConflictingAdapter_Title">
+    <value>Another app might be preventing Proton VPN from connecting</value>
+  </data>
   <data name="Connection_Error_EditProfile">
     <value>Sunting profil</value>
   </data>
   <data name="Connection_Error_MissingConnectionCertificate">
-    <value>Proton VPN gagal mengambil sertifikat autentikasi karena masalah jaringan.</value>
+    <value>Proton VPN gagal mengambil sertifikat autentikasi karena isu jaringan.</value>
+  </data>
+  <data name="Connection_Error_MobileHotspotEnabled">
+    <value>The connection was blocked by network settings on your device. This may be caused by a mobile hotspot, another VPN application, or virtual machine software. Please review your network configuration or contact support for assistance.</value>
   </data>
   <data name="Connection_Error_NoServers">
     <value>Seluruh server dalam rentang pilihan Anda sedang tidak tersedia. Silakan perluas pilihan Anda atau coba lagi nanti.</value>
@@ -358,11 +349,14 @@
   <data name="Connection_Error_RpcServerUnavailable">
     <value>Proton VPN tidak dapat terhubung karena server RPC tidak tersedia pada sistem Anda.</value>
   </data>
+  <data name="Connection_Error_ServerValidation">
+    <value>The server details couldn't be verified. Try another server, or report the issue to our Customer Support team.</value>
+  </data>
   <data name="Connection_Error_SessionLimitReachedFreeUser">
-    <value>Anda telah mencapai batas maksimum perangkat Anda. Putuskan perangkat lain untuk menghubungkan perangkat ini atau tingkatkan ke PLUS untuk menyambungkan hingga 10 perangkat sekaligus.</value>
+    <value>Anda telah mencapai batas jumlah maksimum perangkat Anda. Putuskan koneksi perangkat lain untuk menghubungkan perangkat ini atau tingkatkan ke PLUS untuk menghubungkan hingga 10 perangkat sekaligus.</value>
   </data>
   <data name="Connection_Error_SessionLimitReachedPaidUser">
-    <value>Anda telah mencapai batas jumlah perangkat Anda. Silakan putuskan perangkat lain untuk menyambungkan perangkat ini.</value>
+    <value>Anda telah mencapai batas jumlah maksimum perangkat Anda. Silakan putuskan koneksi perangkat lain untuk menghubungkan perangkat ini.</value>
   </data>
   <data name="Connection_Error_TapAdapterInUse">
     <value>Adaptor jaringan Anda sedang digunakan.</value>
@@ -374,16 +368,16 @@
     <value>Koneksi gagal</value>
   </data>
   <data name="Connection_Error_TlsCertificate">
-    <value>Terdapat masalah dalam memvalidasi sertifikat server VPN, yang dapat menandakan bahwa koneksi jaringan yang ada sedang disusupi atau server yang Anda coba sambungkan memiliki masalah konfigurasi. Dapatkan bantuan dari tim layanan dukungan kami dengan mengirimkan Laporan Masalah.</value>
+    <value>Ada masalah saat memvalidasi sertifikat server VPN, yang dapat menandakan bahwa koneksi jaringan yang ada sedang dimanipulasi atau server yang Anda coba hubungkan memiliki masalah konfigurasi. Dapatkan bantuan dari tim dukungan pelanggan kami dengan mengirimkan Laporan Isu.</value>
   </data>
   <data name="Connection_Error_TwoFactorRequired_Description">
-    <value>Untuk terhubung ke VPN, tuju portal 2FA milik organisasi Anda dan ketuk kunci keamanan Anda.</value>
+    <value>Untuk terhubung ke VPN, buka portal 2FA milik organisasi Anda lalu ketuk kunci keamanan Anda.</value>
   </data>
   <data name="Connection_Error_TwoFactorRequired_Title">
-    <value>Autentikasi dua-faktor (2FA) dibutuhkan</value>
+    <value>Autentikasi dua faktor (2FA) dibutuhkan</value>
   </data>
   <data name="Connection_Error_Unknown">
-    <value>Periksa koneksi internet Anda dan coba lagi. Apabila hal ini tidak berhasil, hubungi tim layanan dukungan kami.
+    <value>Periksa koneksi internet Anda dan coba lagi. Apabila hal ini tidak berhasil, hubungi tim dukungan pelanggan kami.
 
 Kode kesalahan: {0}</value>
   </data>
@@ -391,19 +385,14 @@ Kode kesalahan: {0}</value>
     <value>Lihat solusi</value>
   </data>
   <data name="Connection_Error_WireGuardAdapterInUse">
-    <value>Adapter WIreGuard milik perangkat Anda sedang digunakan. Putuskan adapter ini dari VPN lainnya yang berjalan pada perangkat Anda, lalu coba lagi.</value>
+    <value>Adaptor WireGuard milik perangkat Anda sedang digunakan. Putuskan adaptor ini dari VPN lainnya yang berjalan di perangkat Anda, lalu coba lagi.</value>
+  </data>
+  <data name="Connection_Feedback_Question">
+    <value>How is your connection?</value>
   </data>
   <data name="Connection_Intent_AutoSelected">
     <value>Terpilih secara otomatis dari</value>
     <comment>Appears in the connection card for free users. A set of flags is displayed after the text (eg. Auto-selected from [us-flag] [jp-flag]...)</comment>
-  </data>
-  <data name="Connection_Intent_City_Server">
-    <value>{0} #{1}</value>
-    <comment>Name of the server including city name. {0} is a placeholder for the city name. {1} is a placeholder for the number associated to the server (eg. Zurich #20)</comment>
-  </data>
-  <data name="Connection_Intent_Country_Server">
-    <value>{0} #{1}</value>
-    <comment>Name of the server including country name. {0} is a placeholder for the country name. {1} is a placeholder for the number associated to the server (eg. Switzerland #20)</comment>
   </data>
   <data name="Connection_Via_SecureCore">
     <value>via {0}</value>
@@ -449,13 +438,13 @@ Kode kesalahan: {0}</value>
     <value>Gateway</value>
   </data>
   <data name="Connections_Gateway_Restricted">
-    <value>Server di gerbang ini tersedia dengan VPN Plus</value>
+    <value>Server di gateway ini tersedia dengan VPN Plus</value>
   </data>
   <data name="Connections_Gateway_UnderMaintenance">
-    <value>Seluruh server di gerbang ini sedang dalam pemeliharaan</value>
+    <value>Seluruh server di gateway ini sedang dalam pemeliharaan</value>
   </data>
   <data name="Connections_Gateways_Other">
-    <value>Gerbang ({0})</value>
+    <value>Gateway ({0})</value>
   </data>
   <data name="Connections_Gateways_Server">
     <value>Server khusus</value>
@@ -493,13 +482,13 @@ Kode kesalahan: {0}</value>
     <value>Hapus profil?</value>
   </data>
   <data name="Connections_Profiles_Empty_Description">
-    <value>Profil merupakan koneksi yang tersimpan dengan lokasi, server, dan protokol pilihan Anda.</value>
+    <value>Profil merupakan koneksi yang disimpan dengan lokasi, server, dan protokol pilihan Anda.</value>
   </data>
   <data name="Connections_Profiles_Empty_Title">
     <value>Buat profil pertama Anda</value>
   </data>
   <data name="Connections_Profiles_Location_Header">
-    <value>Pilih jenis dan lokasi koneksi</value>
+    <value>Pilih tipe dan lokasi koneksi</value>
   </data>
   <data name="Connections_Profiles_Name">
     <value>Beri nama profil Anda</value>
@@ -520,15 +509,6 @@ Kode kesalahan: {0}</value>
     <value>Profil tersedia dengan VPN Plus</value>
     <comment>The text in the tooltip when hovering a profile and the user has a free plan</comment>
   </data>
-  <data name="Connections_Profiles_Settings_Description">
-    <value>Pengaturan profil akan menimpa pengaturan VPN Anda pada saat terhubung.</value>
-  </data>
-  <data name="Connections_Profiles_Settings_Header">
-    <value>Tambah pengaturan khusus</value>
-  </data>
-  <data name="Connections_Random">
-    <value>Acak</value>
-  </data>
   <data name="Connections_Recents_Other">
     <value>Terkini ({0})</value>
   </data>
@@ -546,18 +526,6 @@ Kode kesalahan: {0}</value>
   </data>
   <data name="Connections_SecureCore_Servers_Other">
     <value>Server Secure Core</value>
-  </data>
-  <data name="Connections_SeeCities_Other">
-    <value>Lihat kota ({0})</value>
-  </data>
-  <data name="Connections_SeeServers_Other">
-    <value>Lihat server ({0})</value>
-  </data>
-  <data name="Connections_SeeStates_Other">
-    <value>Lihat negara bagian ({0})</value>
-  </data>
-  <data name="Connections_Server">
-    <value>Server</value>
   </data>
   <data name="Connections_Server_Restricted">
     <value>Server tersedia dengan VPN Plus</value>
@@ -594,78 +562,45 @@ Kode kesalahan: {0}</value>
   <data name="Countries_All">
     <value>Semua</value>
   </data>
-  <data name="Countries_City_Other">
-    <value>{0} kota</value>
-  </data>
-  <data name="Countries_Connect">
-    <value>Hubungkan</value>
-    <comment>Connect button label on a country row in the countries tab</comment>
-  </data>
-  <data name="Countries_Fastest">
-    <value>Negara tercepat</value>
-  </data>
-  <data name="Countries_NoSearchResults">
-    <value>Tidak ada hasil yang ditemukan</value>
-  </data>
-  <data name="Countries_NumberOfServers">
-    <value>Server ({0})</value>
-    <comment>{0} represents a number of servers</comment>
-  </data>
   <data name="Countries_P2P">
     <value>P2P</value>
   </data>
-  <data name="Countries_P2P_Cities">
-    <value>Kota P2P ({0})</value>
-    <comment>{0} represents a number of P2P cities in the country</comment>
-  </data>
   <data name="Countries_P2P_Description">
-    <value>Unduh berkas melalui jaringan P2P (peer-to-peer) serta tingkatkan pengalaman bermain game online dan panggilan video Anda.</value>
-  </data>
-  <data name="Countries_Page_FreeUser_Description">
-    <value>Akses fitur pemilihan negara dengan VPN Plus</value>
-  </data>
-  <data name="Countries_SearchPlaceholder">
-    <value>Saya ingin menelusuri dari…</value>
-  </data>
-  <data name="Countries_Section_Header">
-    <value>Koneksi VPN</value>
+    <value>Unduh file melalui jaringan P2P (peer-to-peer) serta tingkatkan pengalaman bermain game daring dan panggilan video Anda.</value>
   </data>
   <data name="Countries_SecureCore">
     <value>Secure Core</value>
   </data>
   <data name="Countries_SecureCore_Description">
-    <value>Terapkan lapisan enkripsi tambahan ke koneksi VPN Anda.</value>
+    <value>Tambahkan lapisan enkripsi lain ke koneksi VPN Anda.</value>
   </data>
   <data name="Countries_ServerLoad">
-    <value>Muatan server</value>
+    <value>Beban server</value>
   </data>
   <data name="Countries_SmartRouting">
-    <value>Perutean cerdas</value>
+    <value>Smart Routing</value>
+  </data>
+  <data name="Countries_SmartRouting_RoutedThrough">
+    <value>Smart routed through {0}</value>
+    <comment>Label used when server is virtual. {0} is a place holder for the name of the country the server is routed through.</comment>
   </data>
   <data name="Countries_Tor">
     <value>Tor</value>
   </data>
-  <data name="Countries_TorServers">
-    <value>Server Tor ({0})</value>
-    <comment>{0} represents a number of tor servers in the country</comment>
-  </data>
   <data name="Countries_Tor_Description">
-    <value>Gunakan jaringan Tor melalui koneksi VPN Anda untuk privasi ekstra.</value>
-  </data>
-  <data name="Countries_TryDifferentKeyword">
-    <value>Silakan coba kata kunci lain</value>
+    <value>Gunakan jaringan Tor melalui koneksi VPN Anda untuk privasi tambahan.</value>
   </data>
   <data name="Country_Fastest">
     <value>Negara tercepat</value>
   </data>
   <data name="Country_Fastest_ExcludingMyCountry">
-    <value>Tercepat (selain dari negara saya)</value>
+    <value>Tercepat (selain negara saya)</value>
   </data>
   <data name="Country_Random">
     <value>Negara acak</value>
   </data>
   <data name="Country_Random_ExcludingMyCountry">
-    <value>Acak (selain dari negara saya)</value>
+    <value>Acak (selain negara saya)</value>
   </data>
   <data name="Country_val_AD">
     <value>Andorra</value>
@@ -788,7 +723,7 @@ Kode kesalahan: {0}</value>
     <comment>The name of BQ country</comment>
   </data>
   <data name="Country_val_BR">
-    <value>Brazil</value>
+    <value>Brasil</value>
     <comment>The name of BR country</comment>
   </data>
   <data name="Country_val_BS">
@@ -1647,6 +1582,10 @@ Kode kesalahan: {0}</value>
     <value>Samoa</value>
     <comment>The name of WS country</comment>
   </data>
+  <data name="Country_val_XK">
+    <value>Kosovo</value>
+    <comment>The name of XK country</comment>
+  </data>
   <data name="Country_val_YE">
     <value>Yaman</value>
     <comment>The name of YE country</comment>
@@ -1672,7 +1611,7 @@ Kode kesalahan: {0}</value>
     <comment>The name of ZZ (unknown or not specified) country</comment>
   </data>
   <data name="Dialogs_BaseFilteringEngine_Description">
-    <value>Layanan Base Filtering Engine (BFE) pada perangkat Windows Anda sedang dinonaktifkan. Layanan ini dibutuhkan bagi Proton VPN untuk dapat bekerja sebagaimana mestinya.</value>
+    <value>Layanan Base Filtering Engine (BFE) pada perangkat Windows Anda sedang dinonaktifkan. Layanan ini dibutuhkan oleh Proton VPN untuk dapat bekerja sebagaimana mestinya.</value>
   </data>
   <data name="Dialogs_BaseFilteringEngine_HowToEnable">
     <value>Cara mengaktifkan Base Filtering Engine</value>
@@ -1681,28 +1620,28 @@ Kode kesalahan: {0}</value>
     <value>Aktifkan Base Filtering Engine untuk melanjutkan</value>
   </data>
   <data name="Dialogs_ChangeServer_GetUnlimitedServerChanges">
-    <value>Dapatkan penggantian server tanpa batas dengan VPN Plus.</value>
+    <value>Dapatkan perubahan server tak terbatas dengan VPN Plus.</value>
   </data>
   <data name="Dialogs_ChangeServer_MaximumServerChangesReached">
-    <value>Anda telah mencapai jumlah maksimum penggantian server gratis untuk saat ini</value>
+    <value>Anda telah mencapai batas jumlah maksimum perubahan server Free untuk saat ini</value>
   </data>
   <data name="Dialogs_Common_GetStarted">
     <value>Mulai</value>
   </data>
   <data name="Dialogs_Common_SubscriptionExpired">
-    <value>Langganan berakhir</value>
+    <value>Langganan kedaluwarsa</value>
   </data>
   <data name="Dialogs_Common_UpgradeToGetPlusFeatures">
     <value>Tingkatkan untuk kembali memperoleh akses ke berbagai server dan fitur Plus.</value>
   </data>
   <data name="Dialogs_DisabledService_Description">
-    <value>Sepertinya layanan Proton VPN sedang dinonaktifkan. Anda akan perlu untuk mengaktifkan ulang layanan ini untuk dapat terhubung.</value>
+    <value>Sepertinya layanan Proton VPN sedang dinonaktifkan. Anda perlu mengaktifkan ulang layanan ini untuk dapat terhubung.</value>
   </data>
   <data name="Dialogs_DisabledService_Title">
     <value>Aktifkan Layanan Windows untuk melanjutkan</value>
   </data>
   <data name="Dialogs_FreeConnections_Description_Other">
-    <value>Proton Free akan menghubungkan Anda secara otomatis ke server tercepat yang tersedia dari {0} negara gratis kami. Pada umumnya, server ini adalah server yang terletak paling dekat dengan lokasi Anda.</value>
+    <value>Proton Free akan menghubungkan Anda secara otomatis ke server tercepat yang tersedia dari {0} negara Free kami. Pada umumnya, server ini adalah server yang terletak paling dekat dengan lokasi Anda.</value>
   </data>
   <data name="Dialogs_FreeConnections_Header_Other">
     <value>Negara server Free ({0})</value>
@@ -1710,40 +1649,14 @@ Kode kesalahan: {0}</value>
   <data name="Dialogs_FreeConnections_Title">
     <value>Koneksi Free</value>
   </data>
-  <data name="Dialogs_Latency_Description">
-    <value>Latensi menunjukkan seberapa lama waktu yang dibutuhkan oleh suatu server untuk membalas permintaan.
-
-Latensi yang tinggi dapat memperlambat koneksi Anda.</value>
-  </data>
-  <data name="Dialogs_Latency_HighRange_Description">
-    <value>VPN dapat berjalan lebih lambat dari biasanya</value>
-  </data>
-  <data name="Dialogs_Latency_HighRange_Title">
-    <value>Tinggi (150+ ms)</value>
-  </data>
-  <data name="Dialogs_Latency_LowRange_Description">
-    <value>Kecepatan kilat</value>
-  </data>
-  <data name="Dialogs_Latency_LowRange_Title">
-    <value>Rendah (1–50 ms)</value>
-  </data>
-  <data name="Dialogs_Latency_MediumRange_Description">
-    <value>Tidak berpotensi untuk memengaruhi kecepatan VPN</value>
-  </data>
-  <data name="Dialogs_Latency_MediumRange_Title">
-    <value>Sedang (50–150 ms)</value>
-  </data>
-  <data name="Dialogs_Latency_Title">
-    <value>Apa itu latensi?</value>
-  </data>
   <data name="Dialogs_NpsSurvey_CommentLabel">
-    <value>Mohon beri tahu kami mengapa Anda memberikan penilaian ini</value>
+    <value>Beri tahu kami mengapa Anda memberikan rating tersebut</value>
   </data>
   <data name="Dialogs_NpsSurvey_ErrorSubtitle">
-    <value>Kami tidak dapat mengirimkan tanggapan Anda. Silakan periksa koneksi Anda dan coba lagi.</value>
+    <value>Kami tidak dapat mengirimkan masukan Anda. Harap periksa koneksi Anda dan coba lagi.</value>
   </data>
   <data name="Dialogs_NpsSurvey_ErrorTitle">
-    <value>Ada yang salah</value>
+    <value>Terjadi kesalahan</value>
   </data>
   <data name="Dialogs_NpsSurvey_HighRateDescription">
     <value>10 adalah sangat mungkin</value>
@@ -1758,65 +1671,25 @@ Latensi yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Bagikan secara anonim</value>
   </data>
   <data name="Dialogs_NpsSurvey_SuccessSubtitle">
-    <value>Tanggapan Anda membantu kami meningkatkan Proton VPN.</value>
+    <value>Masukan Anda membantu kami meningkatkan Proton VPN.</value>
   </data>
   <data name="Dialogs_NpsSurvey_SuccessTitle">
-    <value>Terima kasih atas tanggapan Anda</value>
+    <value>Terima kasih atas masukan Anda</value>
   </data>
   <data name="Dialogs_NpsSurvey_Title">
-    <value>Seberapa terdorongkah Anda untuk menyarankan Proton VPN kepada teman Anda?</value>
+    <value>Seberapa mungkin Anda merekomendasikan Proton VPN kepada teman?</value>
   </data>
   <data name="Dialogs_NpsSurvey_TryAgain">
     <value>Coba lagi</value>
   </data>
   <data name="Dialogs_P2PDetection_Description">
-    <value>Koneksi Anda telah dinonaktifkan karena Anda menggunakan server yang tidak mendukung lalu lintas peer-to-peer (P2P). Layanan P2P tidak didukung pada server gratis. Silakan gunakan server lain yang mendukung P2P.</value>
+    <value>Tingkatkan untuk mengakses server P2P (peer-to-peer) untuk bermain game daring dan torrent yang cepat, atau akhiri aktivitas P2P untuk memulihkan koneksi Anda.</value>
   </data>
   <data name="Dialogs_P2PDetection_Title">
-    <value>Lalu lintas P2P terdeteksi</value>
+    <value>P2P tidak diizinkan di server VPN gratis</value>
   </data>
-  <data name="Dialogs_P2P_HowToTorrentLink">
-    <value>Cara mengambil torrent dengan P2P</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_Title">
-    <value>P2P</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsP2PServer">
-    <value>Apa itu server P2P?</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsP2PServer_Description">
-    <value>Server VPN P2P (peer-to-peer) membuka pemblokiran situs torrent.</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsTorrenting">
-    <value>Apa itu torrenting?</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhatIsTorrenting_Description">
-    <value>Torrent merupakan proses pembagian dan pengunduhan berkas besar melalui jaringan peer-to-peer (P2P).</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhyUse">
-    <value>Mengapa saya sebaiknya menggunakan server P2P pada saat mengambil torrent?</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_P2P_WhyUse_Description">
-    <value>• Kecepatan unggahan dan unduhan yang lebih lesat
-• Tanpa log aktivitas
-• Sembunyikan alamat IP Anda dari penyedia layanan internet dan komputer lain pada jaringan Anda</value>
-    <comment>obsolete</comment>
-  </data>
-  <data name="Dialogs_Protocol_Description">
-    <value>Protokol merupakan serangkaian instruksi yang diikuti oleh perangkat Anda untuk dapat terhubung dan berkomunikasi dengan server.</value>
-  </data>
-  <data name="Dialogs_Protocol_SwitchHeader">
-    <value>Ubah Protokol VPN</value>
-  </data>
-  <data name="Dialogs_Protocol_Title">
-    <value>Apa itu protokol VPN?</value>
+  <data name="Dialogs_P2PDetection_WindowTitle">
+    <value>Telusuri VPN Plus</value>
   </data>
   <data name="Dialogs_ReportIssue_ContactForm_Email">
     <value>Email</value>
@@ -1831,20 +1704,20 @@ Latensi yang tinggi dapat memperlambat koneksi Anda.</value>
     <comment>The label for the Send error logs checkbox in Report an issue window</comment>
   </data>
   <data name="Dialogs_ReportIssue_ContactForm_IncludeLogs_Description">
-    <value>Log error menampilkan kepada kami apa yang salah dan tindakan apa saja yang menyebabkan masalah Anda. Kami hanya akan menggunakan log ini untuk membantu para insinyur kami dalam memperbaiki bug yang ada.</value>
+    <value>Log kesalahan menampilkan kepada kami apa yang salah dan tindakan apa saja yang memicu isu Anda. Kami hanya akan menggunakan log ini untuk membantu para teknisi kami memperbaiki bug.</value>
     <comment>The tooltip displayed on the Send error logs checkbox in Report an issue window</comment>
   </data>
   <data name="Dialogs_ReportIssue_Header">
-    <value>Masalah apa yang Anda hadapi?</value>
+    <value>Isu apa yang Anda hadapi?</value>
   </data>
   <data name="Dialogs_ReportIssue_NoLogsWarning">
-    <value>Log error membantu kami dalam menumpas masalah Anda hingga ke akar-akarnya. Apabila Anda tidak menyertakan log ini, kami mungkin tidak akan dapat menganalisa masalah Anda secara menyeluruh.</value>
+    <value>Log kesalahan membantu kami mengetahui akar isu Anda. Apabila Anda tidak menyertakannya, kami mungkin tidak akan dapat menyelidiki masalah Anda secara menyeluruh.</value>
   </data>
   <data name="Dialogs_ReportIssue_QuickFixes">
-    <value>Solusi kilat</value>
+    <value>Solusi cepat</value>
   </data>
   <data name="Dialogs_ReportIssue_QuickFixes_Footer">
-    <value>Tidak membantu?</value>
+    <value>Tidak berhasil?</value>
   </data>
   <data name="Dialogs_ReportIssue_QuickFixes_Header">
     <value>Tips berikut dapat membantu menyelesaikan masalah Anda dengan lebih cepat.</value>
@@ -1853,7 +1726,7 @@ Latensi yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Selesai</value>
   </data>
   <data name="Dialogs_ReportIssue_Result_Fail">
-    <value>Terdapat suatu kesalahan</value>
+    <value>Terjadi kesalahan</value>
   </data>
   <data name="Dialogs_ReportIssue_Result_Fail_Description">
     <value>Kami tidak dapat mengirimkan laporan Anda. Silakan periksa koneksi Anda dan coba lagi.</value>
@@ -1874,34 +1747,14 @@ Latensi yang tinggi dapat memperlambat koneksi Anda.</value>
   <data name="Dialogs_ReportIssue_Title">
     <value>Laporkan masalah</value>
   </data>
-  <data name="Dialogs_ServerLoad_Description">
-    <value>Muatan server menunjukkan seberapa sibuk suatu server relatif terhadap kapasitas maksimumnya. 
-
-Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
+  <data name="Dialogs_StreamingDetection_WindowTitle">
+    <value>Telusuri VPN Plus</value>
   </data>
-  <data name="Dialogs_ServerLoad_HighRange_Description">
-    <value>VPN dapat berjalan lebih lambat dari biasanya</value>
+  <data name="Dialogs_StreamingWarning_Description">
+    <value>Server VPN Plus memungkinkan Anda menikmati film dan acara TV favorit dari seluruh dunia.</value>
   </data>
-  <data name="Dialogs_ServerLoad_HighRange_Title">
-    <value>Tinggi (91-100%)</value>
-  </data>
-  <data name="Dialogs_ServerLoad_LowRange_Description">
-    <value>Kecepatan kilat</value>
-  </data>
-  <data name="Dialogs_ServerLoad_LowRange_Title">
-    <value>Rendah (1-75%)</value>
-  </data>
-  <data name="Dialogs_ServerLoad_MediumRange_Description">
-    <value>Tidak berpotensi untuk memengaruhi kecepatan VPN</value>
-  </data>
-  <data name="Dialogs_ServerLoad_MediumRange_Title">
-    <value>Sedang (76-90%)</value>
-  </data>
-  <data name="Dialogs_ServerLoad_Title">
-    <value>Apa itu muatan server?</value>
-  </data>
-  <data name="Dialogs_SmartRouting_Title">
-    <value>Smart Routing</value>
+  <data name="Dialogs_StreamingWarning_Title">
+    <value>Tingkatkan untuk melewati pemblokiran VPN</value>
   </data>
   <data name="Dialogs_SubscriptionExpired_MaybeLater">
     <value>Mungkin nanti</value>
@@ -1909,23 +1762,11 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   <data name="Dialogs_SystemProxy_Description">
     <value>Sepertinya perangkat Anda sedang menggunakan server proxy. Hal ini dapat mengganggu perlindungan VPN Anda.</value>
   </data>
-  <data name="Dialogs_SystemProxy_Disable">
-    <value>Nonaktifkan proxy</value>
-  </data>
   <data name="Dialogs_SystemProxy_Title">
     <value>Server proxy terdeteksi</value>
   </data>
-  <data name="Dialogs_Tor_Description">
-    <value>Hubungkan VPN ke server Tor untuk mengakses layanan tersembunyi dan situs onion menggunakan browser mana pun.</value>
-  </data>
-  <data name="Dialogs_Tor_LearnMore">
-    <value>Cara mengakses jaringan Tor</value>
-  </data>
-  <data name="Dialogs_Tor_Title">
-    <value>Tor</value>
-  </data>
   <data name="Dialogs_Troubleshooting_Antivirus">
-    <value>Matikan perangkat lunak antivirus atau tembok api</value>
+    <value>Nonaktifkan perangkat lunak antivirus atau firewall</value>
   </data>
   <data name="Dialogs_Troubleshooting_Antivirus_Description">
     <value>Program-program ini dapat mengganggu koneksi VPN.</value>
@@ -1934,10 +1775,10 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Periksa koneksi internet Anda</value>
   </data>
   <data name="Dialogs_Troubleshooting_CheckInternet_Description">
-    <value>Pastikan Anda sedang online dan koneksi Anda stabil.</value>
+    <value>Pastikan Anda sedang daring dan koneksi Anda stabil.</value>
   </data>
   <data name="Dialogs_Troubleshooting_Description">
-    <value>Solusi kilat berikut ini dapat membantu Anda terhubung ke Proton.</value>
+    <value>Solusi cepat berikut ini dapat membantu Anda terhubung ke Proton.</value>
   </data>
   <data name="Dialogs_Troubleshooting_DifferentNetwork">
     <value>Gunakan jaringan yang berbeda</value>
@@ -1955,28 +1796,28 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Bantuan koneksi</value>
   </data>
   <data name="Dialogs_UpdateConfirmation_Message_KillSwitchOff">
-    <value>Tindakan ini akan memutus Anda dari VPN. Segala konensi internet yang aktif akan tidak terlindung untuk sementara.</value>
+    <value>Tindakan ini akan memutuskan koneksi Anda dari VPN. Semua koneksi internet yang aktif akan tidak terlindungi untuk sementara waktu.</value>
   </data>
   <data name="Dialogs_UpdateConfirmation_Message_KillSwitchOn">
-    <value>Tindakan ini akan memutus Anda dari VPN dan menonaktifkan kill switch secara sementara. Segala konensi internet yang aktif akan tidak terlindung untuk sementara.</value>
+    <value>Tindakan ini akan memutuskan koneksi Anda dari VPN dan menonaktifkan kill switchuntuk sementara waktu. Semua koneksi internet yang aktif akan tidak terlindungi untuk sementara waktu.</value>
   </data>
   <data name="Dialogs_UpdateConfirmation_Title_Install">
-    <value>Pasang pembaruan?</value>
+    <value>Instal pembaruan?</value>
   </data>
   <data name="Dialogs_UpdateConfirmation_Title_Restart">
     <value>Mulai ulang Proton VPN untuk menyelesaikan pembaruan</value>
   </data>
   <data name="Dialogs_UpdateSystemClock_Description">
-    <value>Sepertinya jam sistem Anda tidak sesuai dengan jam saat ini. Hal ini dapat menyebabkan masalah pada saat aplikasi mencoba terhubung ke VPN.</value>
+    <value>Sepertinya jam sistem Anda belum disinkronkan. Hal ini dapat menimbulkan isu pada saat menghubungkan ke VPN.</value>
   </data>
   <data name="Dialogs_UpdateSystemClock_PrimaryButton">
-    <value>Cara memperbarui jam sistem Anda</value>
+    <value>Cara memperbarui jam sistem</value>
   </data>
   <data name="Dialogs_UpdateSystemClock_Title">
     <value>Perbarui jam sistem</value>
   </data>
   <data name="Dialogs_WelcomeB2B_Description">
-    <value>Sederhana. Terpadu. Aman. Lindungi diri Anda secara online dan akses berbagai situs, perangkat lunak, dan berkas milik organisasi Anda secara aman.</value>
+    <value>Simpel. Lancar. Aman. Lindungi diri Anda secara daring dan akses berbagai situs, perangkat lunak, dan file milik organisasi Anda secara aman.</value>
   </data>
   <data name="Dialogs_WelcomeToProton_Title">
     <value>Selamat datang di Proton VPN</value>
@@ -1988,7 +1829,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>VPN yang tersertifikasi tanpa log</value>
   </data>
   <data name="Dialogs_WelcomeToVpnFree_NoLogs_Description">
-    <value>Aktivitas Anda dilindungi oleh undang-undang privasi Swiss. Kami tidak akan pernah melacak Anda secara online atau membagikan informasi pribadi Anda dengan pihak ketiga.</value>
+    <value>Aktivitas Anda dilindungi oleh undang-undang privasi Swiss. Kami tidak akan pernah melacak Anda secara daring atau membagikan informasi Anda kepada pihak ketiga.</value>
   </data>
   <data name="Dialogs_WelcomeToVpnPlus_BrowseFreely">
     <value>Jelajahi internet secara bebas dari mana saja</value>
@@ -2011,86 +1852,78 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   <data name="Dialogs_WelcomeToVpnPlus_Title">
     <value>Selamat datang di VPN Plus</value>
   </data>
-  <data name="Dialogs_WelcomeUnlimited_Description1">
-    <value>Selamat! Anda telah membuka akses ke berbagai fitur keamanan dan performa premium pada seluruh layanan Proton.</value>
-  </data>
-  <data name="Dialogs_WelcomeUnlimited_Description2">
-    <value>Nikmati yang terbaik dari privasi Proton.</value>
+  <data name="Dialogs_WelcomeUnlimited_Description">
+    <value>You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features.</value>
   </data>
   <data name="Dialogs_WelcomeUnlimited_Title">
-    <value>Selamat datang di Proton Unlimited</value>
-  </data>
-  <data name="Dialogs_Welcome_Message">
-    <value>Kami sedang mempersiapkan pengalaman VPN Anda yang baru. Proses ini hanya akan memakan waktu sejenak.</value>
-  </data>
-  <data name="Dialogs_Welcome_Title">
-    <value>Selamat datang di Proton VPN</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Gateways_Description">
-    <value>Anda kini dapat mengakses server khusus milik organisasi Anda dari bilah samping.</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Gateways_Title">
-    <value>Gateway telah berpindah</value>
+    <value>Welcome to {0}</value>
+    <comment>Title to welcome the user after an account upgrade. {0} is a placeholder for the name of the new plan (eg. Proton Unlimited, Proton Duo, Proton Family).</comment>
   </data>
   <data name="Dialogs_WhatsNew_LanConnections_Description">
-    <value>Anda kini dapat tersambung ke printer, speaker, dan perangkat lainnya pada jaringan lokal (LAN) Anda tanpa melalui terowongan VPN.</value>
+    <value>Anda kini dapat terhubung ke printer, speaker, dan perangkat lainnya pada jaringan lokal (LAN) Anda tanpa melalui terowongan VPN.</value>
   </data>
   <data name="Dialogs_WhatsNew_LanConnections_Title">
     <value>Koneksi LAN</value>
   </data>
-  <data name="Dialogs_WhatsNew_NewLook_Description">
-    <value>Kami telah memperbarui tata letak kami dan memindahkan sebagian fitur agar aplikasi kami lebih mudah untuk digunakan.</value>
-  </data>
-  <data name="Dialogs_WhatsNew_NewLook_Title">
-    <value>Tampilan baru, perlindungan yang sama</value>
-  </data>
   <data name="Dialogs_WhatsNew_PortNumber_Description">
-    <value>Ketika port forwarding diaktifkan, Anda sekarang akan melihat nomor port aktif Anda di layar beranda.</value>
+    <value>Ketika penerusan port diaktifkan, Anda sekarang akan melihat nomor port aktif Anda di layar beranda.</value>
   </data>
   <data name="Dialogs_WhatsNew_PortNumber_Title">
     <value>Nomor port yang aktif</value>
   </data>
-  <data name="Dialogs_WhatsNew_Profiles_Description">
-    <value>Tambahkan berbagai pengaturan profil lanjutan seperti NetShield dan penerusan port, atau atur fitur Sambung dan Luncurkan untuk membuka situs pilihan Anda setiap kali Anda terhubung.</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Profiles_Title">
-    <value>Profil yang lebih berdaya</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Recents_Description">
-    <value>Kini Anda dapat terhubung ulang ke server favorit Anda secara lebih mudah. Anda dapat melihat koneksi terkini Anda di layar beranda, atau menyematkan koneksi tertentu untuk akses yang cepat.</value>
-  </data>
-  <data name="Dialogs_WhatsNew_Recents_Title">
-    <value>Memperkenalkan fitur Terkini</value>
-  </data>
   <data name="Dialogs_WhatsNew_TakeALook">
-    <value>Lihat apa yang baru</value>
+    <value>Lihat selengkapnya</value>
   </data>
   <data name="Dialogs_WhatsNew_Title">
     <value>Apa yang baru</value>
   </data>
   <data name="Dialogs_WhatsNew_TrayApp_Description">
-    <value>Anda kini dapat menyambungkan, memutuskan, dan mengubah koneksi bawaan Anda dari bilah sistem.</value>
+    <value>Anda kini dapat menghubungkan, memutuskan koneksi, dan mengubah koneksi bawaan Anda dari baki sistem.</value>
   </data>
   <data name="Dialogs_WhatsNew_TrayApp_Title">
-    <value>Aplikasi bilah sistem baru</value>
+    <value>Aplikasi baki sistem baru</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_ExcludeLocations">
+    <value>Exclude locations</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Message">
+    <value>If there are locations you don't want to be automatically connected to, you can exclude them from Fastest and Random country.</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Skip">
+    <value>Skip</value>
+  </data>
+  <data name="ExcludedLocations_SmartDiscovery_Prompt_Title">
+    <value>Not the country you wanted?</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_ActionButton">
+    <value>Exclude locations</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_CloseButton">
+    <value>Maybe later</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_Subtitle">
+    <value>You can now exclude countries or cities from Fastest and Random connections.</value>
+  </data>
+  <data name="ExcludedLocations_TeachingTip_Title">
+    <value>Avoid unwanted locations</value>
   </data>
   <data name="Exit_Confirmation_Title">
     <value>Keluar dari Proton VPN?</value>
   </data>
   <data name="Exit_Message">
-    <value>Memutuskan dari VPN...</value>
+    <value>Memutuskan koneksi dari VPN...</value>
   </data>
   <data name="Exit_Title">
     <value>Keluar dari Proton VPN</value>
   </data>
   <data name="Flyouts_Country_Description1">
-    <value>Berselancar tanpa VPN membuat Anda rentan terhadap pembatasan internet berbasis lokasi.</value>
+    <value>Menjelajah tanpa VPN membuat Anda rentan terhadap pembatasan internet berbasis lokasi.</value>
   </data>
   <data name="Flyouts_Country_Description2">
-    <value>Situs web dapat menggunakan pemblokiran wilayah (geoblock) untuk membatasi konten mereka pada lokasi tertentu. Lembaga pemerintahan juga dapat memerintahkan ISP (Internet Service Provider) untuk memblokir situs web tertentu pada negara mereka.</value>
+    <value>Situs web dapat menggunakan pemblokiran wilayah (geoblock) untuk membatasi konten mereka di lokasi tertentu. Lembaga pemerintahan juga dapat memerintahkan ISP (Internet Service Provider) untuk memblokir situs web tertentu di negara mereka.</value>
   </data>
   <data name="Flyouts_Country_Description3">
-    <value>Aplikasi VPN menjadikan Anda seolah-olah sedang berselancar dari lokasi lain, yang melindungi Anda dari pemantauan dan sensor.</value>
+    <value>Aplikasi VPN menjadikan Anda seolah-olah sedang menjelajah dari lokasi lain, yang melindungi Anda dari pengawasan dan sensor.</value>
   </data>
   <data name="Flyouts_Country_Title">
     <value>Negara</value>
@@ -2099,13 +1932,13 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Hubungkan ke VPN untuk mengubah lokasi virtual Anda</value>
   </data>
   <data name="Flyouts_IpAddress_Description_Connected">
-    <value>IP VPN Anda sedang menyamarkan alamat IP asli Anda. Hal ini membuat Anda seolah-olah sedang berselancar dari lokasi VPN Anda, sehingga aktivitas online Anda tidak dapat dihubungkan ke perangkat Anda.</value>
+    <value>IP VPN Anda menyamarkan alamat IP asli Anda. Hal ini membuat Anda seolah-olah sedang menjelajah dari lokasi VPN Anda, sehingga aktivitas daring Anda tidak dapat dikaitkan ke perangkat Anda.</value>
   </data>
   <data name="Flyouts_IpAddress_Description_Disconnected1">
-    <value>Kode unik ini dapat digunakan oleh situs web dan Internet Service Provider (ISP) untuk menautkan lokasi dan riwayat penjelajahan Anda ke perangkat Anda.</value>
+    <value>Kode unik ini dapat digunakan oleh situs web dan Internet Service Provider (ISP) untuk mengaitkan lokasi dan riwayat penjelajahan Anda ke perangkat Anda.</value>
   </data>
   <data name="Flyouts_IpAddress_Description_Disconnected2">
-    <value>Aplikasi VPN menyamarkan alamat IP Anda, yang mempersulit aktivitas Anda untuk dapat dilacak kembali ke diri Anda.</value>
+    <value>Aplikasi VPN menyamarkan alamat IP Anda, yang membuat aktivitas Anda lebih sulit untuk dapat dilacak kembali ke diri Anda.</value>
   </data>
   <data name="Flyouts_IpAddress_KnowledgeBaseLinkTitle">
     <value>Apa itu alamat IP?</value>
@@ -2117,10 +1950,10 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>IP VPN</value>
   </data>
   <data name="Flyouts_IpAddress_VpnIpv4">
-    <value>VPN IPv4</value>
+    <value>IPv4 VPN</value>
   </data>
   <data name="Flyouts_IpAddress_VpnIpv6">
-    <value>VPN IPv4</value>
+    <value>IPv6 VPN</value>
   </data>
   <data name="Flyouts_IpAddress_YourIp">
     <value>IP Anda</value>
@@ -2132,10 +1965,10 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Internet Service Provider (ISP) merupakan perusahaan yang menghubungkan Anda ke internet.</value>
   </data>
   <data name="Flyouts_Isp_Description2">
-    <value>Mereka dapat merekam aktivitas online Anda. Pada negara tertentu, mereka dapat menjual data Anda kepada pengiklan. Pada sebagian negara lainnya, mereka dapat diwajibkan untuk menyerahkan data yang mereka miliki kepada pemerintah.</value>
+    <value>Mereka dapat merekam log aktivitas daring Anda. Di negara tertentu, mereka dapat menjual data Anda kepada pengiklan. Di sebagian negara lainnya, mereka dapat diwajibkan untuk menyerahkan data yang mereka miliki kepada pemerintah.</value>
   </data>
   <data name="Flyouts_Isp_Description3">
-    <value>Aplikasi VPN melindungi alamat IP Anda, yang melindungi Anda dari campur tangan ISP.</value>
+    <value>Aplikasi VPN menyembunyikan alamat IP Anda, yang melindungi Anda dari gangguan ISP.</value>
   </data>
   <data name="Flyouts_Isp_KnowledgeBaseLinkTitle">
     <value>Apa itu Internet Service Provider (ISP)?</value>
@@ -2153,28 +1986,31 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Alamat IP Anda dapat terpapar apabila koneksi VPN Anda terputus</value>
   </data>
   <data name="Flyouts_KillSwitch_Info_Disconnected">
-    <value>Kill switch lanjutan menonaktifkan internet Anda untuk melindungi alamat IP Anda saat Anda tidak tersambung ke Proton VPN.</value>
+    <value>Kill switch tingkat lanjut menonaktifkan internet Anda untuk melindungi alamat IP Anda saat Anda tidak terhubung ke Proton VPN.</value>
   </data>
   <data name="Flyouts_KillSwitch_Standard_Success">
-    <value>Apabila koneksi VPN Anda terputus, Anda akan diputuskan dari internet hingga koneksi VPN ini kembali pulih</value>
+    <value>Apabila koneksi VPN Anda terputus, koneksi Anda akan diputuskan dari internet hingga koneksi VPN ini kembali pulih</value>
   </data>
   <data name="Flyouts_KillSwitch_Warning_Connected">
-    <value>Kill switch lanjutan akan berlaku bahkan apabila Anda memutuskan diri dari VPN dengan sengaja sekalipun</value>
+    <value>Kill switch tingkat lanjut akan diterapkan bahkan sekalipun Anda memutuskan koneksi dari VPN dengan sengaja</value>
   </data>
   <data name="Flyouts_KillSwitch_Warning_Disconnected">
-    <value>Untuk kembali online, hubungkan diri Anda ke VPN atau nonaktifkan kill switch lanjutan</value>
+    <value>Untuk kembali daring, hubungkan ke VPN atau nonaktifkan kill switch tingkat lanjut</value>
+  </data>
+  <data name="Flyouts_NetShield_AdsMalwareTrackersAdultContent_Success">
+    <value>You're protected from ads, trackers, malware, and adult content.</value>
   </data>
   <data name="Flyouts_NetShield_AdsMalwareTrackers_Success">
-    <value>Anda terlindung dari iklan, pelacak, dan malware</value>
+    <value>You're protected from ads, trackers, and malware.</value>
   </data>
   <data name="Flyouts_NetShield_Info">
-    <value>Lindungi diri Anda dari iklan, pelacak, dan malware pada berbagai situs web dan aplikasi</value>
+    <value>Protect your browsing on websites and apps.</value>
   </data>
   <data name="Flyouts_NetShield_MalwareOnly_Success">
-    <value>Anda hanya terlindung dari malware</value>
+    <value>You're protected from malware only.</value>
   </data>
   <data name="Flyouts_NetShield_Upsell_Description">
-    <value>Blokir iklan, pelacak, dan malware dengan VPN Plus.</value>
+    <value>Block ads, trackers, malware, and adult content with VPN Plus.</value>
   </data>
   <data name="Flyouts_NetShield_Upsell_Title">
     <value>Nikmati penjelajahan tanpa iklan</value>
@@ -2182,14 +2018,17 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   <data name="Flyouts_PortForwarding_ActivePort">
     <value>Nomor port yang aktif</value>
   </data>
+  <data name="Flyouts_PortForwarding_ActivePort_Error">
+    <value>Nomor port yang aktif tidak dapat diambil. Mulai ulang koneksi Anda dan coba lagi.</value>
+  </data>
   <data name="Flyouts_PortForwarding_ActivePort_Info">
-    <value>Masukkan nomor port yang aktif ini ke aplikasi BitTorrent Anda untuk meningkatkan kecepatan P2P Anda</value>
+    <value>Masukkan nomor port yang aktif ke klien torrent atau aplikasi P2P Anda untuk performa yang lebih baik.</value>
   </data>
   <data name="Flyouts_PortForwarding_Info">
     <value>Meningkatkan kecepatan unduhan peer-to-peer</value>
   </data>
   <data name="Flyouts_PortForwarding_Upsell_Description">
-    <value>Jadikan performa pembagian berkas peer-to-peer (P2P) secepat kilat dengan VPN Plus.</value>
+    <value>Tingkatkan performa berbagi file peer-to-peer (P2P) dengan VPN Plus.</value>
   </data>
   <data name="Flyouts_PortForwarding_Upsell_Title">
     <value>Tingkatkan kecepatan P2P</value>
@@ -2198,7 +2037,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Hubungkan ke jaringan P2P untuk meningkatkan kecepatan torrent</value>
   </data>
   <data name="Flyouts_Protocol_Description">
-    <value>Protokol VPN menentukan bagaimana lalu lintas data akan dienkripsi dan disalurkan melalui VPN.</value>
+    <value>Protokol VPN menentukan cara lalu lintas data akan dienkripsi dan ditransmisikan melalui VPN.</value>
   </data>
   <data name="Flyouts_Protocol_KnowledgeBaseLinkTitle">
     <value>Protokol VPN manakah yang paling baik?</value>
@@ -2207,7 +2046,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Protokol</value>
   </data>
   <data name="Flyouts_ServerLoad_Description">
-    <value>Muatan server menunjukkan seberapa sibuk suatu server relatif terhadap kapasitas maksimumnya. Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
+    <value>Beban server menunjukkan seberapa banyak sisa kapasitas maksimum suatu server. Beban server yang tinggi dapat memperlambat koneksi Anda.</value>
   </data>
   <data name="Flyouts_ServerLoad_High">
     <value>Tinggi (91-100%)</value>
@@ -2216,7 +2055,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>VPN dapat berjalan lebih lambat dari biasanya</value>
   </data>
   <data name="Flyouts_ServerLoad_KnowledgeBaseLinkTitle">
-    <value>Apa itu muatan server?</value>
+    <value>Apa itu beban server?</value>
   </data>
   <data name="Flyouts_ServerLoad_Low">
     <value>Rendah (1-75%)</value>
@@ -2228,16 +2067,13 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Sedang (76-90%)</value>
   </data>
   <data name="Flyouts_ServerLoad_Medium_Description">
-    <value>Tidak berpotensi untuk memengaruhi kecepatan koneksi</value>
+    <value>Kecil kemungkinannya berpengaruh pada kecepatan koneksi</value>
   </data>
   <data name="Flyouts_ServerLoad_Title">
-    <value>Muatan server</value>
-  </data>
-  <data name="Flyouts_Speed_BoostedByVpnAccelerator">
-    <value>Diperkuat oleh VPN Accelerator</value>
+    <value>Beban server</value>
   </data>
   <data name="Flyouts_Speed_Description1">
-    <value>Menunjukkan berapa banyak data yang melewati terowongan VPN secara real time.</value>
+    <value>Menampilkan berapa banyak data yang melewati terowongan VPN secara real-time.</value>
   </data>
   <data name="Flyouts_Speed_Description2">
     <value>Angka ini didasarkan pada aktivitas perangkat Anda saat ini. Dalam sebagian besar kasus, nilai yang tertera tidak menggambarkan kecepatan maksimum VPN.</value>
@@ -2266,7 +2102,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Memungkinkan aplikasi dan alamat IP yang dipercaya untuk terhubung tanpa perlindungan VPN</value>
   </data>
   <data name="Flyouts_SplitTunneling_Inverse_Info">
-    <value>Hanya aplikasi dan alamat IP ini yang akan terhubung melalui VPN. Segala lalu lintas lainnya tidak akan terlindungi.</value>
+    <value>Hanya aplikasi dan alamat IP ini yang terhubung melalui VPN. Semua lalu lintas lainnya tidak terlindungi.</value>
   </data>
   <data name="Flyouts_SplitTunneling_Protected_Apps_Other">
     <value>Aplikasi yang dilindungi ({0})</value>
@@ -2275,16 +2111,16 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Alamat IP yang dilindungi ({0})</value>
   </data>
   <data name="Flyouts_SplitTunneling_Standard_Info">
-    <value>Aplikasi dan alamat IP ini akan terhubung tanpa perlindungan VPN. Segala lalu lintas lainnya akan terlindungi.</value>
+    <value>Aplikasi dan alamat IP ini terhubung tanpa perlindungan VPN. Semua lalu lintas lainnya terlindungi.</value>
   </data>
   <data name="Flyouts_SplitTunneling_Upsell_Description">
-    <value>Pisahkan lalu lintas jaringan Anda ke dalam tunnel VPN dan non-VPN dengan VPN Plus.</value>
+    <value>Pisahkan lalu lintas jaringan Anda ke dalam terowongan VPN dan non-VPN dengan VPN Plus.</value>
   </data>
   <data name="Flyouts_SplitTunneling_Upsell_Title">
-    <value>Dapatkan yang terbaik dari koneksi VPN dan non-VPN</value>
+    <value>Dapatkan yang terbaik dari keduanya</value>
   </data>
   <data name="Flyouts_Volume_Description">
-    <value>Menampilkan jumlah data yang dilewatkan melalui terowongan VPN sejak Anda terhubung.</value>
+    <value>Menampilkan jumlah total data yang dilewatkan melalui terowongan VPN sejak Anda terhubung.</value>
   </data>
   <data name="Flyouts_Volume_Download">
     <value>Unduh</value>
@@ -2296,10 +2132,6 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   <data name="Flyouts_Volume_Upload">
     <value>Unggah</value>
     <comment>Refers to the uploaded volume (e.g., Upload [new line] 250 MB).</comment>
-  </data>
-  <data name="Format_Milliseconds">
-    <value>{0}ms</value>
-    <comment>Format a number as a time in milliseconds. {0} is a place holder for the number of milliseconds (eg. 46ms)</comment>
   </data>
   <data name="Format_Size_Bytes">
     <value>{0} B</value>
@@ -2405,16 +2237,16 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>{0} detik yang lalu</value>
   </data>
   <data name="FreeConnections_P2PUpsell">
-    <value>Unduh berkas melalui BitTorrent dan protokol berbagi berkas lainnya</value>
+    <value>Unduh file melalui BitTorrent dan protokol berbagi file lainnya</value>
   </data>
   <data name="FreeConnections_SecureCoreUpsell">
-    <value>Terapkan lapisan enkripsi tambahan ke koneksi VPN Anda</value>
+    <value>Tambahkan lapisan enkripsi lain ke koneksi VPN Anda</value>
   </data>
   <data name="FreeConnections_TorUpsell">
     <value>Gunakan jaringan Tor melalui koneksi VPN Anda untuk privasi tambahan</value>
   </data>
   <data name="FreeConnections_WorldwideCoverageUpsell">
-    <value>Dapatkan cakupan server di seluruh dunia dengan VPN Plus</value>
+    <value>Dapatkan cakupan global dengan VPN Plus</value>
   </data>
   <data name="Gateway_Fastest">
     <value>Gateway tercepat</value>
@@ -2423,13 +2255,10 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Gateway acak</value>
   </data>
   <data name="Gateways_Page_Description">
-    <value>Sambungkan ke Gateway untuk mengakses VPN organisasi Anda.</value>
+    <value>Hubungkan ke Gateway untuk mengakses VPN organisasi Anda.</value>
   </data>
   <data name="Gateways_Page_Title">
     <value>Gateway</value>
-  </data>
-  <data name="Gateways_Server">
-    <value>Server khusus</value>
   </data>
   <data name="Home_Account_SignOut">
     <value>Keluar</value>
@@ -2438,46 +2267,17 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Keluar dari {0}?</value>
     <comment>{0} is a placeholder for the username</comment>
   </data>
-  <data name="Home_Account_Title">
-    <value>Akun saya</value>
-  </data>
   <data name="Home_ConnectionCard_ChangeDefaultConnection">
     <value>Ubah koneksi bawaan</value>
   </data>
   <data name="Home_ConnectionCard_ChangeServer">
     <value>Ubah server</value>
   </data>
-  <data name="Home_ConnectionCard_Header_BrowseSafely">
-    <value>Menjelajah internet secara aman dari</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_ConnectingTo">
-    <value>Menghubungkan ke...</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_DefaultConnection">
-    <value>Koneksi bawaan</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_FreeConnection">
-    <value>Koneksi Free</value>
-  </data>
-  <data name="Home_ConnectionCard_Header_LastConnectedTo">
-    <value>Terakhir terhubung ke</value>
-  </data>
-  <data name="Home_ConnectionCard_Landmark">
-    <value>Kartu koneksi</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
   <data name="Home_ConnectionDetails_AdvancedKillSwitchActivated">
     <value>Kill switch lanjutan diaktifkan</value>
   </data>
-  <data name="Home_ConnectionDetails_City">
-    <value>Kota</value>
-  </data>
   <data name="Home_ConnectionDetails_ConnectToRestoreConnection">
-    <value>Sambungkan ke VPN untuk memulihkan koneksi internet Anda.</value>
-  </data>
-  <data name="Home_ConnectionDetails_ConnectedFor">
-    <value>Terhubung selama</value>
-    <comment>Label for the time the session has been active. (eg. Connected for     1 h 25 min 2s)</comment>
+    <value>Hubungkan ke VPN untuk memulihkan koneksi internet Anda.</value>
   </data>
   <data name="Home_ConnectionDetails_Connecting">
     <value>Menghubungkan</value>
@@ -2488,80 +2288,32 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   <data name="Home_ConnectionDetails_Country">
     <value>Negara</value>
   </data>
-  <data name="Home_ConnectionDetails_Gateway">
-    <value>Gateway</value>
-  </data>
-  <data name="Home_ConnectionDetails_Hide">
-    <value>Sembunyikan rincian koneksi</value>
-  </data>
-  <data name="Home_ConnectionDetails_HideIP">
-    <value>Sembunyikan</value>
-    <comment>Tooltip displayed when the user hover the button to hide the User IP Address</comment>
-  </data>
-  <data name="Home_ConnectionDetails_HideIP_Description">
-    <value>Sembunyikan alamat IP pengguna</value>
-  </data>
   <data name="Home_ConnectionDetails_Isp">
-    <value>Penyedia Internet</value>
-  </data>
-  <data name="Home_ConnectionDetails_Landmark">
-    <value>Rincian koneksi</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_ConnectionDetails_MyIp">
-    <value>IP saya</value>
+    <value>Penyedia</value>
   </data>
   <data name="Home_ConnectionDetails_Protected">
-    <value>Terlindung</value>
+    <value>Terlindungi</value>
   </data>
   <data name="Home_ConnectionDetails_Protocol">
     <value>Protokol</value>
   </data>
-  <data name="Home_ConnectionDetails_Server">
-    <value>Server</value>
-  </data>
   <data name="Home_ConnectionDetails_ServerLoad">
-    <value>Muatan server</value>
-  </data>
-  <data name="Home_ConnectionDetails_Show">
-    <value>Tampilkan rincian koneksi</value>
-  </data>
-  <data name="Home_ConnectionDetails_ShowIP">
-    <value>Tampilkan</value>
-    <comment>Tooltip displayed when the user hover the button to show the User IP Address</comment>
-  </data>
-  <data name="Home_ConnectionDetails_ShowIP_Description">
-    <value>Tampilkan alamat IP pengguna</value>
-  </data>
-  <data name="Home_ConnectionDetails_State">
-    <value>Negara bagian</value>
-  </data>
-  <data name="Home_ConnectionDetails_Title">
-    <value>Rincian koneksi</value>
+    <value>Beban server</value>
   </data>
   <data name="Home_ConnectionDetails_TwoFactorRequired_Description">
-    <value>Autentikasi ulang faktor ini pada portal 2FA miilk organisasi Anda untuk melanjutkan.</value>
+    <value>Autentikasi ulang di portal 2FA milik organisasi Anda untuk melanjutkan.</value>
   </data>
   <data name="Home_ConnectionDetails_TwoFactorRequired_Title">
     <value>2FA kedaluwarsa</value>
   </data>
   <data name="Home_ConnectionDetails_Unprotected">
-    <value>Tidak terlindung</value>
+    <value>Tidak terlindungi</value>
   </data>
   <data name="Home_ConnectionDetails_UnprotectedSubLabel">
-    <value>Buat aktivitas online Anda terenkripsi dengan menghubungkan ke VPN.</value>
+    <value>Buat aktivitas daring Anda terenkripsi dengan menghubungkan ke VPN.</value>
   </data>
   <data name="Home_ConnectionDetails_Volume">
     <value>Total lalu lintas</value>
-  </data>
-  <data name="Home_ConnectionDetails_Volume_Download">
-    <value>Volume unduh</value>
-  </data>
-  <data name="Home_ConnectionDetails_Volume_Total">
-    <value>Volume total</value>
-  </data>
-  <data name="Home_ConnectionDetails_Volume_Upload">
-    <value>Volume unggah</value>
   </data>
   <data name="Home_ConnectionDetails_VpnIp">
     <value>IP VPN</value>
@@ -2572,53 +2324,29 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   <data name="Home_FreeConnections_About">
     <value>Informasi lebih lanjut mengenai koneksi Free</value>
   </data>
-  <data name="Home_Help_Title">
-    <value>Bantuan</value>
-  </data>
-  <data name="Home_Map_Landmark">
-    <value>Peta</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
   <data name="Home_NetShield_AdsBlocked_Other">
     <value>Iklan yang diblokir</value>
   </data>
   <data name="Home_NetShield_AdsBlocked_Description">
-    <value>Iklan merupakan spanduk atau pop-up promosi yang muncul pada berbagai situs web dan aplikasi.</value>
+    <value>Iklan merupakan banner atau pop-up promosi yang muncul di berbagai situs web dan aplikasi.</value>
   </data>
   <data name="Home_NetShield_DataSaved">
-    <value>Data yang tersimpan</value>
+    <value>Data yang dihemat</value>
   </data>
   <data name="Home_NetShield_DataSaved_Description">
-    <value>Perkiraan volume data yang tersimpan dengan memblokir iklan, pelacak, dan malware yang tidak diinginkan</value>
-  </data>
-  <data name="Home_NetShield_Landmark">
-    <value>Statistik NetShield</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_NetShield_Title">
-    <value>Statistik NetShield</value>
+    <value>Perkiraan volume data yang dihemat dengan memblokir iklan, pelacak, dan malware yang tidak diinginkan</value>
   </data>
   <data name="Home_NetShield_TrackersStopped_Other">
     <value>Pelacak yang dihentikan</value>
   </data>
   <data name="Home_NetShield_TrackersStopped_Description">
-    <value>Pelacak adalah kuki dan situs web pihak ketiga yang mengumpulkan, menyimpan, dan menjual informasi tentang aktivitas web Anda.</value>
-  </data>
-  <data name="Home_Page_Title">
-    <value>Beranda</value>
-  </data>
-  <data name="Home_Recents_Landmark">
-    <value>Koneksi terkini</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
+    <value>Pelacak adalah kuki dan situs web pihak ketiga yang mengumpulkan, menyimpan, dan menjual informasi tentang aktivitas internet Anda.</value>
   </data>
   <data name="Home_Recents_Pin">
     <value>Sematkan</value>
   </data>
   <data name="Home_Recents_Restricted">
     <value>Server tersedia dengan VPN Plus</value>
-  </data>
-  <data name="Home_Recents_SecondaryActions_ToolTip">
-    <value>Tindakan</value>
   </data>
   <data name="Home_Recents_ServerUnderMaintenance">
     <value>Server sedang dalam pemeliharaan</value>
@@ -2642,7 +2370,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Bantuan</value>
   </data>
   <data name="Home_TitleBar_Menu_Help_WhatsTheIssue">
-    <value>Masalah apa yang Anda hadapi?</value>
+    <value>Isu apa yang Anda hadapi?</value>
   </data>
   <data name="Home_TitleBar_Menu_Settings">
     <value>Pengaturan</value>
@@ -2653,33 +2381,23 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   <data name="Home_TitleBar_Menu_UpdateNow">
     <value>Perbarui sekarang</value>
   </data>
-  <data name="Home_Update_UpdateAvailable">
-    <value>Pembaruan tersedia</value>
-  </data>
-  <data name="Home_Update_UpdateReady">
-    <value>Pembaruan siap dipasang</value>
-  </data>
-  <data name="Home_VpnStatus_Landmark">
-    <value>Status VPN</value>
-    <comment>Landmarks are not displayed on screen but read by a screen reader to identify a group of components for accessibility purposes.</comment>
-  </data>
-  <data name="Home_VpnStatus_Subtitle_Connecting">
-    <value>Melindungi identitas digital Anda...</value>
-  </data>
-  <data name="Home_VpnStatus_Subtitle_Disconnected">
-    <value>Anda tidak terlindung</value>
-  </data>
-  <data name="Home_VpnStatus_Title_Connected">
-    <value>Terlindungi</value>
-  </data>
   <data name="LoadingPage_Tip">
-    <value>Dunia yang lebih baik dimulai dengan privasi dan kemerdekaan digital.</value>
+    <value>Dunia yang lebih baik dimulai dengan privasi dan kebebasan digital.</value>
   </data>
   <data name="Login_Error_GetSessionDetailsFailed">
-    <value>Terjadi kesalahan saat menerima detail sesi. Silakan coba lagi.</value>
+    <value>Terjadi kesalahan saat mengambil rincian sesi. Silakan coba lagi.</value>
+  </data>
+  <data name="Login_Error_GuestHoleFailedDueToMobileHotspot">
+    <value>Unable to sign in due to network settings on your device. This may be caused by a mobile hotspot, another VPN application, or virtual machine software. Please review your network configuration or contact support for assistance.</value>
   </data>
   <data name="Login_Error_IncorrectTwoFactorCode">
     <value>Kode salah. Silakan coba lagi.</value>
+  </data>
+  <data name="Login_Error_MissingSrpDll_Message">
+    <value>A file required for sign-in is missing from your installation. Please reinstall Proton VPN to fix this issue.</value>
+  </data>
+  <data name="Login_Error_MissingSrpDll_Title">
+    <value>Unable to sign in</value>
   </data>
   <data name="Login_Error_SessionExpired">
     <value>Masa berlaku sesi Anda telah berakhir. Silakan masuk kembali.</value>
@@ -2688,14 +2406,11 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   <data name="Login_Error_SsoAuthFailed">
     <value>Autentikasi SSO gagal. Silakan coba lagi.</value>
   </data>
-  <data name="Login_Error_TwoFactorAuthFailed">
-    <value>Nama pengguna atau kata sandi salah. Silakan coba lagi.</value>
-  </data>
   <data name="Login_Error_TwoFactorFailed">
     <value>Autentikasi dua faktor gagal. Silakan masuk lagi.</value>
   </data>
   <data name="Login_Error_WebAuthnNotSupported">
-    <value>Autentikasi kunci keamanan tidak tersedia untuk perangkat atau koneksi jarak jauh Anda.</value>
+    <value>Autentikasi kunci keamanan tidak tersedia untuk koneksi desktop jarak jauh atau perangkat Anda.</value>
   </data>
   <data name="Login_TwoFactorForm_Authenticate">
     <value>Autentikasi</value>
@@ -2732,7 +2447,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Masukkan kode Anda</value>
   </data>
   <data name="Login_TwoFactor_NoMethodAvailable">
-    <value>Tidak ada metode autentikasi dua-faktor yang dikenal yang ditemukan.</value>
+    <value>Tidak ada metode autentikasi dua faktor yang dikenal yang ditemukan.</value>
   </data>
   <data name="Login_TwoFactor_SecurityKey">
     <value>Kunci keamanan</value>
@@ -2749,7 +2464,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <comment>Message in the loading screen when signing in</comment>
   </data>
   <data name="Main_Loading_SigningIn_Longer">
-    <value>Proses ini memakan waktu lebih lama dari biasanya, namun kami masih berupaya untuk memasukkan Anda ke akun.</value>
+    <value>Proses ini memakan waktu lebih lama dari biasanya, tetapi kami masih mencobanya.</value>
     <comment>Message in the loading screen when sign in action takes longer than expected</comment>
   </data>
   <data name="Main_Loading_SigningOut">
@@ -2778,6 +2493,9 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   <data name="NoServers_Title">
     <value>Tidak ada koneksi VPN yang tersedia</value>
   </data>
+  <data name="NoServers_UnderMaintenance_Tip">
+    <value>We couldn't load any servers. Click Refresh to update the server list.</value>
+  </data>
   <data name="Notifications_KillSwitch_Description">
     <value>Untuk melindungi alamat IP Anda, kill switch memblokir koneksi internet Anda.</value>
   </data>
@@ -2785,10 +2503,10 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Salin nomor port</value>
   </data>
   <data name="Notifications_PortForwarding_Description">
-    <value>Tentukan nomor port ini pada aplikasi BitTorrent Anda untuk memperoleh kecepatan yang lebih.</value>
+    <value>Buka klien torrent atau aplikasi P2P Anda dan masukkan nomor ini.</value>
   </data>
   <data name="Notifications_SessionLimit_Description">
-    <value>Anda telah mencapai batas jumlah perangkat Anda. Untuk menghubungkan ulang ke VPN, silakan putuskan koneksi dari perangkat lain.</value>
+    <value>Anda telah mencapai batas jumlah maksimum perangkat Anda. Untuk menghubungkan ulang ke VPN, silakan putuskan koneksi dari perangkat lain.</value>
   </data>
   <data name="Notifications_SubscriptionExpired_Description_Connected">
     <value>Paket Anda telah diturunkan ke Proton Free, dan kami akan menghubungkan ulang Anda ke server gratis tercepat.</value>
@@ -2797,14 +2515,14 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Jaringan Wi-Fi publik lebih rentan terhadap ancaman keamanan. Hubungkan diri Anda ke VPN untuk menjelajah internet secara aman.</value>
   </data>
   <data name="Notifications_UnsecureWifi_Title">
-    <value>Sambungan Wi-Fi yang tidak aman terdeteksi</value>
+    <value>Koneksi Wi-Fi yang tidak aman terdeteksi</value>
   </data>
   <data name="NpsSurvey_Title">
     <value>Proton VPN - Survei</value>
     <comment>The window title displayed at the top of the NPS (Net Promoter Score) survey</comment>
   </data>
   <data name="Overlay_Ipv6Disabled_Description">
-    <value>Untuk menyertakan alamat ini, Anda perlu memberikan izin kepada koneksi IPv6 untuk melewati terowongan VPN.</value>
+    <value>To include IPv6 addresses, you need to allow IPv6 connections through the VPN tunnel.</value>
   </data>
   <data name="Overlay_Ipv6Disabled_PrimaryButton">
     <value>Aktifkan IPv6</value>
@@ -2819,13 +2537,13 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Perbarui sekarang</value>
   </data>
   <data name="Overlay_OutdatedClient_Message">
-    <value>Versi aplikasi ini telah usang. Anda harus memperbarui aplikasi untuk lanjut menggunakan Proton VPN.</value>
+    <value>Versi aplikasi ini telah usang. Anda harus memperbarui aplikasi untuk terus menggunakan Proton VPN.</value>
   </data>
   <data name="Overlay_OutdatedClient_Title">
     <value>Perbarui Proton VPN untuk melanjutkan</value>
   </data>
   <data name="Overlay_P2P_Bullet1_Description">
-    <value>Server P2P (peer-to-peer) kami memungkinkan Anda untuk mengakses jaringan P2P sambil tetap melindungi alamat IP dan aktivitas online Anda.</value>
+    <value>Server P2P (peer-to-peer) kami memungkinkan Anda untuk mengakses jaringan P2P sambil tetap melindungi alamat IP dan aktivitas daring Anda.</value>
   </data>
   <data name="Overlay_P2P_Bullet1_Header">
     <value>Apa itu VPN P2P?</value>
@@ -2837,7 +2555,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Apa itu jaringan P2P?</value>
   </data>
   <data name="Overlay_P2P_Bullet3_Description">
-    <value>  •  Mengunduh berkas torrent
+    <value>  •  Mengunduh file torrent
   •  Meningkatkan performa game online dan panggilan video
   •  Menghubungkan ke perangkat dalam jaringan area lokal (LAN)</value>
   </data>
@@ -2851,10 +2569,10 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>P2P</value>
   </data>
   <data name="Overlay_Profile_Description1">
-    <value>Profil merupakan koneksi VPN khusus yang dapat diatur sesuai dengan kebutuhan Anda dan disimpan untuk akses yang cepat.</value>
+    <value>Profil merupakan koneksi VPN khusus yang dapat diatur sesuai dengan kebutuhan Anda dan disimpan untuk akses cepat.</value>
   </data>
   <data name="Overlay_Profile_Description2">
-    <value>Tentukan lokasi yang Anda kehendaki dan optimalkan pengaturan Anda untuk keamanan, performa, gaming, atau skenario lainnya</value>
+    <value>Tentukan lokasi yang Anda kehendaki dan optimalkan pengaturan Anda untuk keamanan, performa, bermain game, atau skenario lainnya</value>
   </data>
   <data name="Overlay_Profile_LearnMore">
     <value>Apa itu profil VPN?</value>
@@ -2863,7 +2581,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Profil</value>
   </data>
   <data name="Overlay_SecureCore_Description1">
-    <value>Secure Core menghubungkan Anda ke server tujuan Anda melalui server VPN kedua yang berkeamanan maksimal.</value>
+    <value>Secure Core menghubungkan Anda ke server tujuan Anda melalui server VPN kedua dengan keamanan maksimal.</value>
   </data>
   <data name="Overlay_SecureCore_Description2">
     <value>Tingkat perlindungan yang lebih ini dapat menyebabkan latensi yang lebih tinggi dan kecepatan yang lebih lambat.</value>
@@ -2872,14 +2590,14 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Apa itu Secure Core?</value>
   </data>
   <data name="Overlay_SecureCore_SecureCoreConnection">
-    <value>Secure Core
-Koneksi VPN</value>
+    <value>Koneksi VPN
+Secure Core</value>
   </data>
   <data name="Overlay_SecureCore_SecureCoreConnection_Latency">
     <value>Latensi lebih tinggi</value>
   </data>
   <data name="Overlay_SecureCore_SecureCoreConnection_Privacy">
-    <value>Privasi lanjutan</value>
+    <value>Privasi tingkat lanjut</value>
   </data>
   <data name="Overlay_SecureCore_StandardConnection">
     <value>Koneksi VPN
@@ -2895,9 +2613,9 @@ Standar</value>
     <value>Secure Core</value>
   </data>
   <data name="Overlay_ServerLoad_Description">
-    <value>Muatan server menunjukkan seberapa sibuk suatu server relatif terhadap kapasitas maksimumnya. 
+    <value>Beban server menunjukkan seberapa banyak sisa kapasitas maksimum suatu server. 
 
-Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
+Beban server yang tinggi dapat memperlambat koneksi Anda.</value>
   </data>
   <data name="Overlay_ServerLoad_HighRange_Description">
     <value>VPN dapat berjalan lebih lambat dari biasanya</value>
@@ -2906,7 +2624,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Tinggi (91-100%)</value>
   </data>
   <data name="Overlay_ServerLoad_LearnMore">
-    <value>Apa itu muatan server?</value>
+    <value>Apa itu beban server?</value>
   </data>
   <data name="Overlay_ServerLoad_LowRange_Description">
     <value>Kecepatan kilat</value>
@@ -2915,7 +2633,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Rendah (1-75%)</value>
   </data>
   <data name="Overlay_ServerLoad_MediumRange_Description">
-    <value>Tidak berpotensi untuk memengaruhi kecepatan VPN</value>
+    <value>Kecil kemungkinannya berpengaruh pada kecepatan VPN</value>
   </data>
   <data name="Overlay_ServerLoad_MediumRange_Title">
     <value>Sedang (76-90%)</value>
@@ -2924,19 +2642,17 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Beban Server</value>
   </data>
   <data name="Overlay_SmartRouting_Description1">
-    <value>Smart Routing menggunakan server virtual untuk menyediakan cakupan VPN pada berbagai negara dengan pembatasan internet yang ketat.</value>
+    <value>Smart Routing allows us to provide VPN coverage in hard-to-reach countries.</value>
   </data>
   <data name="Overlay_SmartRouting_Description2">
-    <value>Pada saat Anda terhubung ke server Smart Routing, Anda akan terlihat seolah-olah Anda sedang berselancar dari negara tujuan Anda, walaupun server yang melayani Anda secara fisik terletak di tempat lain.</value>
+    <value>Pada saat Anda terhubung ke server Smart Routing, Anda akan terlihat seolah-olah sedang menjelajah dari negara tujuan Anda, meskipun server yang melayani Anda secara fisik terletak di tempat lain.</value>
   </data>
   <data name="Overlay_SmartRouting_Description3">
     <value>Smart Routing pada umumnya digunakan untuk menangkal undang-undang anti-privasi dan berbagai bentuk penyensoran lainnya.</value>
   </data>
   <data name="Overlay_SmartRouting_Header">
-    <value>Server yang melayani Anda secara fisik terletak di {0}, namun Anda akan terlihat seolah-olah Anda sedang menjelajah dari {1}</value>
-    <comment>{0} is a placeholder for the physical server location country. {1} is a placeholder for the destination country
-    Warning: country names are inserted in the nominative case. For INFLECTED languages, use alternative wording as follows:
-    Connects you to your destination country ({1}) through servers that are physically located somewhere else ({0})</comment>
+    <value>Connects you to your destination country through servers physically located elsewhere: {0}.</value>
+    <comment>{0} is a placeholder for the countries where the physical servers are. Can be either one country or multiple countries separated with comma.</comment>
   </data>
   <data name="Overlay_SmartRouting_LearnMore">
     <value>Apa itu Smart Routing?</value>
@@ -2945,7 +2661,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Smart Routing</value>
   </data>
   <data name="Overlay_Tor_Description">
-    <value>Hubungkan VPN ke server Tor untuk mengakses layanan tersembunyi dan situs onion melalui browser mana pun.</value>
+    <value>Hubungkan ke server Tor untuk mengakses layanan tersembunyi dan situs onion menggunakan peramban apa pun.</value>
   </data>
   <data name="Overlay_Tor_LearnMore">
     <value>Cara mengakses jaringan Tor</value>
@@ -2957,7 +2673,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Pengaturan profil akan menimpa pengaturan VPN Anda pada saat terhubung.</value>
   </data>
   <data name="Profile_CustomSettings_Header">
-    <value>Tambah pengaturan khusus</value>
+    <value>Tambahkan pengaturan khusus</value>
   </data>
   <data name="Profile_CustomSettings_Hide">
     <value>Sembunyikan pengaturan</value>
@@ -2980,9 +2696,6 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   <data name="Profile_Options_ConnectAndGo_Application">
     <value>Buka aplikasi</value>
   </data>
-  <data name="Profile_Options_ConnectAndGo_DefaultBrowser">
-    <value>Browser bawaan</value>
-  </data>
   <data name="Profile_Options_ConnectAndGo_PrivateBrowsingMode">
     <value>Gunakan mode penjelajahan pribadi</value>
   </data>
@@ -2990,10 +2703,10 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Buka situs web</value>
   </data>
   <data name="Profile_Options_Description">
-    <value>Membuka situs web atau aplikasi yang Anda tentukan secara otomatis pada saat Anda terhubung ke profil ini.</value>
+    <value>Membuka situs web atau aplikasi yang Anda pilih secara otomatis pada saat Anda terhubung ke profil ini.</value>
   </data>
   <data name="Profile_Options_Header">
-    <value>Sambung dan Luncurkan</value>
+    <value>Hubungkan dan Luncurkan</value>
   </data>
   <data name="Profile_Options_Url">
     <value>URL situs web</value>
@@ -3005,13 +2718,10 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Tindakan ini akan mengubah tipe NAT untuk profil ini ke Ketat (tipe 3).</value>
   </data>
   <data name="Profiles_Default_Gaming">
-    <value>Permainan</value>
+    <value>Bermain Game</value>
   </data>
   <data name="Profiles_Default_MaxSecurity">
     <value>Keamanan maksimum</value>
-  </data>
-  <data name="Profiles_Default_Office">
-    <value>Kantor</value>
   </data>
   <data name="Profiles_Default_P2P">
     <value>P2P</value>
@@ -3026,13 +2736,13 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Kantor/Sekolah</value>
   </data>
   <data name="Profiles_Page_Description">
-    <value>Sesuaikan pengaturan VPN Anda dan hubungkan dalam satu klik</value>
+    <value>Konfigurasikan pengaturan VPN Anda dan hubungkan dengan satu klik</value>
   </data>
   <data name="Profiles_Page_Title">
     <value>Profil</value>
   </data>
   <data name="Search_InputBox_Placeholder">
-    <value>Jelajahi internet dari...</value>
+    <value>Jelajahi dari...</value>
   </data>
   <data name="Search_NoInput_CityOrState">
     <value>Kota atau neg. bagian AS</value>
@@ -3050,7 +2760,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Coba cari...</value>
   </data>
   <data name="Search_NoResults_Description">
-    <value>Coba kata kunci pencarian yang berbeda.</value>
+    <value>Coba kata kunci yang berbeda.</value>
   </data>
   <data name="Search_NoResults_Title">
     <value>Tidak ada hasil yang ditemukan</value>
@@ -3083,7 +2793,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Secure Core</value>
   </data>
   <data name="Server_Feature_SecureCore_Description">
-    <value>Perlindungan berganda</value>
+    <value>Perlindungan ganda</value>
   </data>
   <data name="Server_Feature_Tor">
     <value>Tor</value>
@@ -3096,9 +2806,6 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   </data>
   <data name="Servers">
     <value>Server</value>
-  </data>
-  <data name="Settings_About">
-    <value>Tentang</value>
   </data>
   <data name="Settings_About_Changelog">
     <value>Riwayat perubahan</value>
@@ -3125,7 +2832,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Akun</value>
   </data>
   <data name="Settings_Account_Exit">
-    <value>Keluar aplikasi</value>
+    <value>Keluar dari aplikasi</value>
   </data>
   <data name="Settings_Account_SignOut">
     <value>Keluar</value>
@@ -3134,36 +2841,33 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Versi aplikasi</value>
   </data>
   <data name="Settings_Censorship_Footer">
-    <value>Statistik ini tidak mengandung alamat IP Anda dan tidak dapat digunakan untuk mengenali diri Anda. Kami tidak akan pernah membagikan statistik ini kepada pihak ketiga.</value>
+    <value>Statistik ini tidak berisi alamat IP Anda dan tidak dapat digunakan untuk mengenali diri Anda. Kami tidak akan pernah membagikan statistik ini kepada pihak ketiga mana pun.</value>
   </data>
   <data name="Settings_Censorship_ShareCrashReports">
     <value>Bagikan laporan crash anonim</value>
   </data>
   <data name="Settings_Censorship_ShareCrashReports_Description">
-    <value>Laporan crash membantu kami dalam memperbaiki bug, mendeteksi firewall, dan menghindari pemblokiran VPN.</value>
+    <value>Laporan kerusakan membantu kami memperbaiki bug, mendeteksi firewall, dan menghindari pemblokiran VPN.</value>
   </data>
   <data name="Settings_Censorship_ShareStatistics">
     <value>Bagikan statistik pemakaian anonim</value>
   </data>
   <data name="Settings_Censorship_ShareStatistics_Description">
-    <value>Statistik pemakaian membantu kami untuk menangkal pemblokiran VPN dan meningkatkan performa aplikasi.</value>
+    <value>Statistik pemakaian membantu kami menangkal pemblokiran VPN dan meningkatkan performa aplikasi.</value>
   </data>
   <data name="Settings_Common_Apply">
     <value>Terapkan</value>
     <comment>Apply action. Used to apply changes made on a settings page</comment>
   </data>
   <data name="Settings_Common_IpAddresses_AlreadyExists">
-    <value>Alamat telah ditambahkan</value>
+    <value>Alamat sudah ditambahkan</value>
   </data>
   <data name="Settings_Common_IpAddresses_Invalid">
-    <value>Masukkan alamat IPv4 aatau IPv6 yang valid</value>
+    <value>Masukkan alamat IPv4 atau IPv6 yang valid</value>
   </data>
   <data name="Settings_Common_IpAddresses_Watermark">
     <value>192.0.2.0</value>
     <comment>Watermark for the IP Address field in the Custom DNS servers settings page</comment>
-  </data>
-  <data name="Settings_Common_Ipv6WarningButton">
-    <value>Peringatan - pelajari lebih lanjut</value>
   </data>
   <data name="Settings_Connection">
     <value>Koneksi</value>
@@ -3172,16 +2876,16 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Pengaturan lanjutan</value>
   </data>
   <data name="Settings_Connection_Advanced_AlternativeRouting">
-    <value>Pengalihan lalu lintas alternatif</value>
+    <value>Perutean alternatif</value>
   </data>
   <data name="Settings_Connection_Advanced_AlternativeRouting_Description">
-    <value>Apabila layanan Proton diblokir akibat pembatasan jaringan, kami akan mencoba untuk menggunakan rute jaringan alternatif demi menghubungkan Anda ke situs kami.</value>
+    <value>Apabila layanan Proton diblokir akibat pembatasan jaringan, kami akan mencoba untuk menggunakan perutean jaringan alternatif demi menghubungkan Anda ke situs kami.</value>
   </data>
   <data name="Settings_Connection_Advanced_CustomDnsServers">
     <value>Server DNS khusus</value>
   </data>
   <data name="Settings_Connection_Advanced_CustomDnsServers_AddNew">
-    <value>Tambah server DNS baru</value>
+    <value>Tambahkan server DNS baru</value>
     <comment>Label above an input field where users can enter a new DNS server IP address.</comment>
   </data>
   <data name="Settings_Connection_Advanced_CustomDnsServers_Conflict_Description">
@@ -3191,17 +2895,20 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Aktifkan server DNS khusus?</value>
   </data>
   <data name="Settings_Connection_Advanced_CustomDnsServers_Description">
-    <value>Hubungkan ke Proton VPN menggunakan nama domain (DNS) milik Anda. Mohon untuk hanya menggunakan server DNS yang Anda percayai.</value>
+    <value>Hubungkan ke Proton VPN menggunakan Sistem Nama Domain (DNS) milik Anda. Mohon untuk hanya menggunakan server DNS yang Anda percayai.</value>
   </data>
   <data name="Settings_Connection_Advanced_CustomDnsServers_Footer">
     <value>Kami akan berusaha untuk terhubung ke server ini sesuai urutan. Apabila tidak ada satu pun dari server ini yang dapat digunakan, DNS bawaan milik Proton VPN akan digunakan.</value>
   </data>
-  <data name="Settings_Connection_Advanced_CustomDnsServers_Header">
-    <value>Server DNS ({0})</value>
+  <data name="Settings_Connection_Advanced_CustomDnsServers_FormattedHeader">
+    <value>DNS servers ({0})</value>
     <comment>Header for the list of Custom DNS servers defined. {0} is a placeholder for the number of DNS servers in the list. (eg. "DNS servers (4)")</comment>
   </data>
-  <data name="Settings_Connection_Advanced_CustomDnsServers_IpAddress_Description">
-    <value>Masukkan alamat IPv4 atau IPv6 server</value>
+  <data name="Settings_Connection_Advanced_CustomDnsServers_Header">
+    <value>DNS servers</value>
+  </data>
+  <data name="Settings_Connection_Advanced_CustomDnsServers_Select">
+    <value>Select DNS servers</value>
   </data>
   <data name="Settings_Connection_Advanced_Ipv6">
     <value>Dukungan IPv6</value>
@@ -3216,13 +2923,13 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Memungkinkan lalu lintas IPv6 untuk melewati terowongan VPN. Hal ini akan meningkatkan kompatibilitas antara aplikasi VPN dengan situs web dan layanan IPv6.</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections">
-    <value>Izinkan sambungan LAN</value>
+    <value>Izinkan koneksi LAN</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections_Description">
     <value>Memungkinkan koneksi ke printer, speaker, dan perangkat lainnya di jaringan lokal Anda.</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections_LocalDns_Description">
-    <value>Menghubungkan Anda ke perangkat eksternal dengan menggunakan nama seperti "My.Printer" atau "router.local" alih-alih alamat IP milik perangkat. Fitur ini menggunakan resolusi DNS lokal, dan dinonaktifkan secara bawaan untuk menjaga kecepatan VPN yang lebih cepat.</value>
+    <value>Gunakan mDNS untuk dapat terhubung ke perangkat lain dengan menggunakan nama khusus seperti 'Printer-Saya' atau 'router.local' alih-alih alamat IP Anda. DNS standar akan tetap dirutekan melalui terowongan VPN. Dinonaktifkan secara bawaan untuk kecepatan VPN yang lebih tinggi.</value>
   </data>
   <data name="Settings_Connection_Advanced_LanConnections_LocalDns_Title">
     <value>Akses perangkat berdasarkan nama</value>
@@ -3243,19 +2950,25 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Moderat (tipe 2)</value>
   </data>
   <data name="Settings_Connection_Advanced_NatType_Moderate_Description">
-    <value>Menerapkan beberapa pembatasan bagi data yang memasuki jaringan Anda. Opsi ini merupakan opsi terbaik untuk permainan online.</value>
+    <value>Menerapkan beberapa pembatasan bagi data yang memasuki jaringan Anda. Opsi ini merupakan opsi terbaik untuk game video daring.</value>
   </data>
   <data name="Settings_Connection_Advanced_NatType_Strict">
     <value>Ketat (tipe 3)</value>
   </data>
   <data name="Settings_Connection_Advanced_NatType_Strict_Description">
-    <value>Membatasi data yang memasuki jaringan Anda. Opsi ini lebih aman, namun dapat mempersulit koneksi peer-to-peer antar aplikasi permainan.</value>
+    <value>Membatasi data yang memasuki jaringan Anda. Opsi ini lebih aman, tetapi dapat mempersulit koneksi game peer-to-peer.</value>
   </data>
   <data name="Settings_Connection_Advanced_OpenVpnDriver_Tap">
-    <value>Mengalihkan lalu lintas data melalui berbagai jaringan yang berbeda.</value>
+    <value>Bridges network traffic. Slower than TUN, but needed for some legacy or special network setups.</value>
   </data>
   <data name="Settings_Connection_Advanced_OpenVpnDriver_Tun_Description">
-    <value>Menggunakan teknologi penjembatanan (bridging) untuk menghubungkan jaringan. TUN memberikan kecepatan yang lebih tinggi dari TAP, namun dapat berfungsi secara lebih tidak stabil.</value>
+    <value>Routes traffic between different networks. TUN can be faster and more stable than TAP.</value>
+  </data>
+  <data name="Settings_Connection_ConnectionPreferences">
+    <value>Connection preferences</value>
+  </data>
+  <data name="Settings_Connection_ConnectionPreferences_Description">
+    <value>Default connection and excluded locations</value>
   </data>
   <data name="Settings_Connection_CustomDns_Conflict_Information_WhenDisabled">
     <value>DNS khusus tidak dapat diaktifkan karena Anda sedang terhubung ke profil dengan NetShield yang aktif.</value>
@@ -3287,6 +3000,27 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   <data name="Settings_Connection_Default_Recents">
     <value>Terkini</value>
   </data>
+  <data name="Settings_Connection_ExcludedLocations">
+    <value>Excluded locations</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Cities">
+    <value>Cities</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Countries">
+    <value>Countries</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Description">
+    <value>The selected locations will never be used when you connect to Fastest or Random</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_NoLocations">
+    <value>No locations available</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_Search">
+    <value>Select...</value>
+  </data>
+  <data name="Settings_Connection_ExcludedLocations_States">
+    <value>States</value>
+  </data>
   <data name="Settings_Connection_KillSwitch">
     <value>Kill switch</value>
   </data>
@@ -3294,31 +3028,25 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Lanjutan</value>
   </data>
   <data name="Settings_Connection_KillSwitch_Advanced_Description">
-    <value>Membatasi agar akses internet hanya tersedia pada saat Anda terhubung ke Proton VPN. Kill switch lanjutan akan tetap aktif bahkan ketika Anda memulai ulang perangkat Anda.</value>
-  </data>
-  <data name="Settings_Connection_KillSwitch_Conflict_Description">
-    <value>Tindakan ini akan menonaktifkan split tunneling.</value>
-  </data>
-  <data name="Settings_Connection_KillSwitch_Conflict_Title">
-    <value>Aktifkan kill switch?</value>
+    <value>Izinkan akses internet hanya ketika terhubung ke Proton VPN. Kill switch tingkat lanjut akan tetap aktif bahkan ketika Anda memulai ulang perangkat Anda.</value>
   </data>
   <data name="Settings_Connection_KillSwitch_Description">
-    <value>Melindungi alamat IP Anda dengan memutuskan Anda dari internet apabila koneksi VPN hilang.</value>
-  </data>
-  <data name="Settings_Connection_KillSwitch_Footer">
-    <value>Pada saat kill switch sedang aktif, Anda tidak akan dapat terhubung ke situs web dan aplikasi yang dikecualikan dari koneksi VPN Anda melalui split tunneling.</value>
+    <value>Melindungi alamat IP Anda dengan memutuskan koneksi Anda dari internet apabila koneksi VPN hilang.</value>
   </data>
   <data name="Settings_Connection_KillSwitch_Standard">
     <value>Standar</value>
   </data>
   <data name="Settings_Connection_KillSwitch_Standard_Description">
-    <value>Memutuskan Anda dari internet secara otomatis apabila koneksi VPN hilang.</value>
+    <value>Memutuskan koneksi Anda dari internet secara otomatis apabila koneksi VPN hilang.</value>
   </data>
   <data name="Settings_Connection_NetShield">
     <value>NetShield</value>
   </data>
   <data name="Settings_Connection_NetShield_BlockAdsMalwareTrackers">
-    <value>Blokir iklan, malware, dan pelacak</value>
+    <value>Block ads, trackers, and malware</value>
+  </data>
+  <data name="Settings_Connection_NetShield_BlockAdsMalwareTrackersAdultContent">
+    <value>Block ads, trackers, malware, and adult content</value>
   </data>
   <data name="Settings_Connection_NetShield_BlockMalwareOnly">
     <value>Blokir malware saja</value>
@@ -3333,7 +3061,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Aktifkan NetShield?</value>
   </data>
   <data name="Settings_Connection_NetShield_Description">
-    <value>Lindungi diri Anda dari iklan, malware, dan pelacak pada berbagai situs web dan aplikasi.</value>
+    <value>Protect your browsing on websites and apps.</value>
   </data>
   <data name="Settings_Connection_NetShield_Footer">
     <value>Beberapa situs web mungkin tidak akan dapat termuat dengan benar pada saat iklan dan pelacak diblokir.</value>
@@ -3345,7 +3073,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Penerusan port</value>
   </data>
   <data name="Settings_Connection_PortForwarding_ActivePort">
-    <value>Port yang aktif:</value>
+    <value>Nomor port yang aktif:</value>
   </data>
   <data name="Settings_Connection_PortForwarding_ActivePort_Copy">
     <value>Salin nomor port</value>
@@ -3357,7 +3085,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Aktifkan penerusan port?</value>
   </data>
   <data name="Settings_Connection_PortForwarding_Description">
-    <value>Meningkatkan keecepatan torrent dan gaming dengan mengizinkan koneksi P2P secara langsung melalui port yang ditentukan.</value>
+    <value>Meningkatkan kecepatan torrent dan game dengan mengizinkan koneksi P2P secara langsung melalui port yang ditentukan.</value>
   </data>
   <data name="Settings_Connection_PortForwarding_Footer">
     <value>Untuk menggunakan penerusan port, silakan hubungkan diri Anda ke server yang mendukung P2P.</value>
@@ -3375,44 +3103,44 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   <data name="Settings_Connection_PortForwarding_Notifications_Description">
     <value>Dapatkan notifikasi pada saat nomor port aktif yang Anda gunakan berubah.</value>
   </data>
+  <data name="Settings_Connection_PortForwarding_Unavailable">
+    <value>Tidak tersedia</value>
+  </data>
   <data name="Settings_Connection_Protocol">
     <value>Protokol</value>
-  </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Action">
-    <value>Pergi ke profil</value>
-  </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Message">
-    <value>Anda sedang terhubung ke profil VPN. 
-
-• Untuk mengubah protokol bagi koneksi ini, putuskan koneksi lalu sunting profil Anda.
-
-• Untuk mengubah protokol bagi untuk koneksi VPN lainnya, Anda akan perlu memutuskan diri Anda dari profil ini terlebih dahulu.</value>
-  </data>
-  <data name="Settings_Connection_Protocol_NavigationFailed_Title">
-    <value>Ubah protokol dalam profil</value>
   </data>
   <data name="Settings_Connection_SplitTunneling">
     <value>Split tunneling</value>
   </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_Description">
+    <value>Select apps which will be excluded from the VPN connection</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_FormattedHeader">
+    <value>Excluded apps ({0})</value>
+    <comment>Header for the list of apps to exclude for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Excluded apps (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_Apps_Excluded_Header">
+    <value>Excluded apps</value>
+  </data>
   <data name="Settings_Connection_SplitTunneling_Apps_FilesFilterName">
-    <value>Berkas aplikasi</value>
+    <value>File aplikasi</value>
     <comment>Describe the name of the filter used to select executable files in the Open file dialog</comment>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Apps_Header">
-    <value>Aplikasi terpilih ({0})</value>
-    <comment>Header for the list of Apps defined for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Selected apps (2)")</comment>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_Description">
+    <value>Select apps which will be included in the VPN connection</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Apps_Remove">
-    <value>Hapus aplikasi</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_FormattedHeader">
+    <value>Included apps ({0})</value>
+    <comment>Header for the list of apps to include for Split Tunneling. {0} is a placeholder for the number of selected apps in the list. (eg. "Included apps (2)")</comment>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Conflict_Description">
-    <value>Tindakan ini akan menonaktifkan kill switch.</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Included_Header">
+    <value>Included apps</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_Conflict_Title">
-    <value>Aktifkan split tunneling?</value>
+  <data name="Settings_Connection_SplitTunneling_Apps_Select">
+    <value>Select apps</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Description">
-    <value>Sesuaikan koneksi Anda dengan menentukan aplikasi dan alamat IP mana saja yang akan terlindung oleh VPN.</value>
+    <value>Sesuaikan koneksi Anda dengan menentukan aplikasi dan alamat IP mana saja yang akan terlindungi oleh VPN.</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Inverse">
     <value>Mode penyertaan</value>
@@ -3425,20 +3153,36 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <comment>Shorter version (if possible) of "Include mode". To be used when available space is limited.</comment>
   </data>
   <data name="Settings_Connection_SplitTunneling_IpAddresses_AddNew">
-    <value>Tambah alamat IPv4 atau IPv6 baru</value>
+    <value>Tambahkan alamat IPv4 atau IPv6 baru</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_IpAddresses_Header">
-    <value>Alamat IP yang dipilih ({0})</value>
-    <comment>Header for the list of IP addresses defined for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Selected IP addresses (2)")</comment>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_Description">
+    <value>Select IP addresses which will be excluded from the VPN connection</value>
   </data>
-  <data name="Settings_Connection_SplitTunneling_IpAddresses_Remove">
-    <value>Hapus IP</value>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_FormattedHeader">
+    <value>Excluded IP addresses ({0})</value>
+    <comment>Header for the list of IP addresses to exclude for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Excluded IP addresses (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Excluded_Header">
+    <value>Excluded IP addresses</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_Description">
+    <value>Select IP addresses which will be included in the VPN connection</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_FormattedHeader">
+    <value>Included IP addresses ({0})</value>
+    <comment>Header for the list of IP addresses to include for Split Tunneling. {0} is a placeholder for the number of selected IP addresses in the list. (eg. "Included IP addresses (2)")</comment>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Included_Header">
+    <value>Included IP addresses</value>
+  </data>
+  <data name="Settings_Connection_SplitTunneling_IpAddresses_Select">
+    <value>Select IP addresses</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Standard">
     <value>Mode pengecualian</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Standard_Description">
-    <value>Aplikasi dan alamat IP yang terpilih dikecualikan dari koneksi VPN.</value>
+    <value>Aplikasi dan alamat IP yang dipilih dikecualikan dari koneksi VPN.</value>
   </data>
   <data name="Settings_Connection_SplitTunneling_Standard_Short">
     <value>Kecualikan</value>
@@ -3451,13 +3195,10 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Buang perubahan</value>
   </data>
   <data name="Settings_DiscardChanges_Confirmation_Cancel">
-    <value>Lanjut menyunting</value>
+    <value>Lanjut mengedit</value>
   </data>
   <data name="Settings_DiscardChanges_Confirmation_Title">
     <value>Buang perubahan yang belum disimpan?</value>
-  </data>
-  <data name="Settings_Features">
-    <value>Fitur-fitur VPN</value>
   </data>
   <data name="Settings_General">
     <value>Umum</value>
@@ -3466,16 +3207,10 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Mulai otomatis</value>
   </data>
   <data name="Settings_General_AutoStartup_AutoConnect">
-    <value>Penghubungan otomatis</value>
+    <value>Hubungkan otomatis</value>
   </data>
   <data name="Settings_General_AutoStartup_AutoConnect_Description">
-    <value>Menghubungkan Anda secara otomatis ke koneksi bawaan Anda ketika Proton VPN terbuka.</value>
-  </data>
-  <data name="Settings_General_AutoStartup_AutoConnect_Fastest">
-    <value>Koneksi tercepat</value>
-  </data>
-  <data name="Settings_General_AutoStartup_AutoConnect_Latest">
-    <value>Terakhir terhubung</value>
+    <value>Menghubungkan Anda secara otomatis ke koneksi bawaan Anda ketika Proton VPN dibuka.</value>
   </data>
   <data name="Settings_General_AutoStartup_AutoLaunch">
     <value>Peluncuran otomatis</value>
@@ -3487,10 +3222,10 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Buka di desktop</value>
   </data>
   <data name="Settings_General_AutoStartup_AutoLaunch_SystemTray">
-    <value>Kecilkan ke System Tray</value>
+    <value>Perkecil ke Baki Sistem</value>
   </data>
   <data name="Settings_General_AutoStartup_AutoLaunch_Taskbar">
-    <value>Kecilkan ke Taskbar</value>
+    <value>Perkecil ke Taskbar</value>
   </data>
   <data name="Settings_General_AutoStartup_Description">
     <value>Atur aplikasi agar dapat diluncurkan atau terhubung secara otomatis.</value>
@@ -3499,7 +3234,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Pembaruan otomatis</value>
   </data>
   <data name="Settings_General_AutomaticUpdates_Description">
-    <value>Periksa dan pasang pembaruan Proton VPN secara otomatis.</value>
+    <value>Periksa dan instal pembaruan Proton VPN secara otomatis.</value>
   </data>
   <data name="Settings_General_BetaAccess">
     <value>Akses Beta</value>
@@ -3514,25 +3249,13 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Notifikasi</value>
   </data>
   <data name="Settings_General_Notifications_Description">
-    <value>Dapatkan notifikasi seputar perubahan status sambungan Anda.</value>
+    <value>Dapatkan notifikasi seputar perubahan status koneksi Anda.</value>
   </data>
   <data name="Settings_General_OpenVpnNetworkDriver">
     <value>Driver jaringan OpenVPN</value>
   </data>
-  <data name="Settings_General_OpenVpnNetworkDriver_Description">
-    <value>Driver jaringan dapat memengaruhi kecepatan koneksi Anda. Adaptor TUN yang baru menyediakan kecepatan yang lebih tinggi dan akan secara otomatis berbalik ke adapter TAP apabila adapter ini menemui masalah konektivitas.</value>
-  </data>
   <data name="Settings_General_Theme">
     <value>Tema</value>
-  </data>
-  <data name="Settings_General_Theme_Dark">
-    <value>Gelap</value>
-  </data>
-  <data name="Settings_General_Theme_Default">
-    <value>Bawaan</value>
-  </data>
-  <data name="Settings_General_Theme_Light">
-    <value>Terang</value>
   </data>
   <data name="Settings_Improve">
     <value>Tingkatkan Proton</value>
@@ -3547,10 +3270,10 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Pengaturan ini terhubung ke profil Anda yang sedang aktif.</value>
   </data>
   <data name="Settings_OverriddenByProfile_Description2">
-    <value>Sunting profil Anda untuk menerapkan perubahan atau putuskan koneksi untuk mengubah pengaturan umum VPN Anda.</value>
+    <value>Edit profil Anda untuk menerapkan perubahan atau putuskan koneksi untuk mengubah pengaturan umum VPN Anda.</value>
   </data>
   <data name="Settings_OverriddenByProfile_Tagline">
-    <value>Pengaturan ini terhubung ke {0} dan hanya dapat dikelola pada Profil.</value>
+    <value>Pengaturan ini terhubung ke profil '{0}' dan hanya dapat dikelola di Profil.</value>
     <comment>{0} is a placeholder for the profile name</comment>
   </data>
   <data name="Settings_OverriddenByProfile_Title">
@@ -3564,7 +3287,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Protokol VPN menentukan bagaimana data antara server VPN dan perangkat Anda akan saling berpindah.</value>
   </data>
   <data name="Settings_Protocols_OpenVpnTcp_Description">
-    <value>Mapan, teruji, dan aman. OpenVPN dapat diandalkan dalam kondisi jaringan yang buruk, namun dapat tidak berfungsi secepat protokol lainnya.</value>
+    <value>Mapan, teruji, dan aman. OpenVPN dapat diandalkan dalam kondisi jaringan yang buruk, tetapi mungkin tidak secepat protokol lainnya.</value>
   </data>
   <data name="Settings_Protocols_OpenVpnTcp_Title">
     <value>OpenVPN</value>
@@ -3574,6 +3297,30 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   </data>
   <data name="Settings_Protocols_OpenVpnUdp_Title">
     <value>OpenVPN</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTcp_Description">
+    <value>Our new WireGuard-based framework for increased stability, functionality, and censorship resistance.</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTcp_Title">
+    <value>Proton WireGuard</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTls_Description">
+    <value>Our new WireGuard-based framework for increased stability, functionality, and censorship resistance.</value>
+  </data>
+  <data name="Settings_Protocols_ProTunTls_Title">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="Settings_Protocols_ProTunUdp_Description">
+    <value>Our new WireGuard-based framework for increased stability, functionality, and censorship resistance.</value>
+  </data>
+  <data name="Settings_Protocols_ProTunUdp_Title">
+    <value>Proton WireGuard</value>
+  </data>
+  <data name="Settings_Protocols_ProtonProtocols_Description">
+    <value>Use Proton VPN's own implementation of WireGuard. This is an experimental feature, so you may experience some instability.</value>
+  </data>
+  <data name="Settings_Protocols_ProtonProtocols_Title">
+    <value>Proton protocols</value>
   </data>
   <data name="Settings_Protocols_Smart_Description">
     <value>Memilih protokol terbaik secara otomatis untuk koneksi Anda.</value>
@@ -3594,7 +3341,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>WireGuard</value>
   </data>
   <data name="Settings_Protocols_WireGuardTls_Description">
-    <value>Menangkal pemblokiran VPN dengan menyembunyikan koneksi VPN Anda dari sensor. Protokol ini tahan terhadap pemeriksaan DPI (deep packet inspection), namun dapat tidak berfungsi secepat protokol lainnya.</value>
+    <value>Menangkal pemblokiran VPN dengan menyembunyikan koneksi VPN Anda dari sensor. Protokol ini tahan terhadap DPI (inspeksi paket mendalam/deep packet inspection), tetapi mungkin tidak secepat protokol lainnya.</value>
   </data>
   <data name="Settings_Protocols_WireGuardTls_Title">
     <value>Stealth</value>
@@ -3606,7 +3353,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>WireGuard</value>
   </data>
   <data name="Settings_Reconnection_Title">
-    <value>Hubungkan ulang VPN untuk menerapkan perubahan</value>
+    <value>Hubungkan ulang untuk menerapkan perubahan</value>
   </data>
   <data name="Settings_RestoreDefault">
     <value>Pulihkan pengaturan bawaan</value>
@@ -3628,6 +3375,15 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   </data>
   <data name="Settings_SelectedProtocol_OpenVpnUdp">
     <value>OpenVPN (UDP)</value>
+  </data>
+  <data name="Settings_SelectedProtocol_ProTunTcp">
+    <value>Proton WireGuard (TCP)</value>
+  </data>
+  <data name="Settings_SelectedProtocol_ProTunTls">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="Settings_SelectedProtocol_ProTunUdp">
+    <value>Proton WireGuard (UDP)</value>
   </data>
   <data name="Settings_SelectedProtocol_Smart">
     <value>Smart</value>
@@ -3672,13 +3428,10 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Terang</value>
   </data>
   <data name="Settings_VpnAccelerator_Description">
-    <value>Tingkatkan kecepatan koneksi Anda hingga 400% dengan teknologi pemicu performa.</value>
-  </data>
-  <data name="SignIn_Form">
-    <value>Formulir masuk</value>
+    <value>Tingkatkan kecepatan koneksi Anda hingga 400% dengan teknologi peningkat performa.</value>
   </data>
   <data name="SignIn_Form_AdvancedKillSwitchDescription">
-    <value>Kill switch lanjutan sedang memblokir koneksi internet Anda.</value>
+    <value>Kill switch tingkat lanjut sedang memblokir koneksi internet Anda.</value>
   </data>
   <data name="SignIn_Form_BestSecureVpnForSpeed">
     <value>VPN aman terbaik untuk penjelajahan yang cepat</value>
@@ -3750,7 +3503,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <comment>An error message is displayed when the user attempts to sign in without entering a username</comment>
   </data>
   <data name="SignIn_KillSwitch_Disabled">
-    <value>Kill switch sedang dinonaktifkan</value>
+    <value>Kill switch dinonaktifkan</value>
   </data>
   <data name="State_Fastest">
     <value>Negara bagian tercepat</value>
@@ -3770,12 +3523,37 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   <data name="SystemNotification_Disconnected">
     <value>Terputus</value>
   </data>
+  <data name="SystemNotification_P2PWarning_Description">
+    <value>Akses torrent dan game daring melalui protokol P2P (peer-to-peer) dengan server VPN berbayar.</value>
+  </data>
+  <data name="SystemNotification_P2PWarning_Title">
+    <value>P2P tidak tersedia dengan VPN Free</value>
+  </data>
+  <data name="SystemNotification_StreamingWarning_Description">
+    <value>Beberapa situs web dan layanan streaming memblokir pengguna VPN gratis. Tingkatkan ke Proton VPN Plus untuk melewati pemblokiran ini.</value>
+  </data>
+  <data name="SystemNotification_StreamingWarning_Title">
+    <value>Situs web diblokir?</value>
+  </data>
+  <data name="System_Tray_Actions_Connect">
+    <value>Connect</value>
+  </data>
+  <data name="System_Tray_Actions_Disconnect">
+    <value>Disconnect</value>
+  </data>
+  <data name="System_Tray_Actions_ExitApplication">
+    <value>Exit</value>
+  </data>
+  <data name="System_Tray_Actions_OpenApplication">
+    <value>Open {0}</value>
+    <comment>Button displayed in the tray icon to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
+  </data>
   <data name="Tray_Actions_ExitApplication">
     <value>Keluar</value>
   </data>
   <data name="Tray_Actions_OpenApplication">
     <value>Buka {0}</value>
-    <comment>Button displayed in the tray icon to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
+    <comment>Button displayed in the tray window to open the Proton VPN application. {0} is a placeholder for the name of the application (eg. "Open Proton VPN")</comment>
   </data>
   <data name="Tray_Actions_OpenApplicationToSignIn">
     <value>Buka aplikasi untuk masuk</value>
@@ -3808,11 +3586,11 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>TB/dtk</value>
     <comment>Unit for Terabytes per second</comment>
   </data>
-  <data name="UpsellBanner_NetShield_Description">
-    <value>Blokir iklan, pelacak, dan malware pada berbagai situs web dan aplikasi</value>
+  <data name="UpsellBanner_P2P_Description">
+    <value>Unduh file melalui BitTorrent dan protokol berbagi file lainnya.</value>
   </data>
-  <data name="UpsellBanner_NetShield_Title">
-    <value>NetShield</value>
+  <data name="UpsellBanner_P2P_Title">
+    <value>Dukungan P2P</value>
   </data>
   <data name="UpsellBanner_WrongCountry_Description">
     <value>Tingkatkan untuk bebas memilih server mana saja.</value>
@@ -3821,28 +3599,28 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Bukan negara yang Anda inginkan?</value>
   </data>
   <data name="Upsell_Carousel_AdvancedSettings">
-    <value>Akses opsi kustomisasi VPN lanjutan</value>
+    <value>Akses opsi kustomisasi VPN tingkat lanjut</value>
   </data>
   <data name="Upsell_Carousel_AdvancedSettings_DNS">
-    <value>Hubungkan ke VPN dengan nama domain (DNS) khusus milik Anda</value>
+    <value>Hubungkan ke VPN dengan Sistem Nama Domain (DNS) khusus milik Anda</value>
   </data>
   <data name="Upsell_Carousel_AdvancedSettings_LAN">
-    <value>Akses perangkat di jaringan area lokal (LAN) Anda pada saat terhubung ke VPN</value>
+    <value>Akses perangkat di jaringan area lokal (LAN) Anda pada saat terhubung</value>
   </data>
   <data name="Upsell_Carousel_AdvancedSettings_ModerateNAT">
-    <value>Bawa pengalaman gaming Anda ke level selanjutnya dengan beralih ke NAT tipe 2 (moderat)</value>
+    <value>Tingkatkan pengalaman bermain game Anda ke level berikutnya dengan beralih ke NAT tipe 2 (moderat)</value>
   </data>
   <data name="Upsell_Carousel_MultipleDevices">
-    <value>Hubungkan hingga 10 perangkat sekaligus</value>
+    <value>Hubungkan hingga 10 perangkat secara bersamaan</value>
   </data>
   <data name="Upsell_Carousel_MultipleDevices_Platforms">
-    <value>Gunakan Proton VPN pada berbagai platform berbeda</value>
+    <value>Gunakan Proton VPN di berbagai platform berbeda</value>
   </data>
   <data name="Upsell_Carousel_MultipleDevices_Platforms_Android">
     <value>Android dan Android TV</value>
   </data>
   <data name="Upsell_Carousel_MultipleDevices_Platforms_Browser">
-    <value>Browser</value>
+    <value>Peramban</value>
   </data>
   <data name="Upsell_Carousel_MultipleDevices_Platforms_Linux">
     <value>Linux</value>
@@ -3857,7 +3635,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>iOS</value>
   </data>
   <data name="Upsell_Carousel_MultipleDevices_Privacy">
-    <value>Keamanan dan privasi pada seluruh perangkat Anda</value>
+    <value>Keamanan dan privasi di seluruh perangkat Anda</value>
   </data>
   <data name="Upsell_Carousel_NetShield">
     <value>Nikmati penjelajahan tanpa iklan</value>
@@ -3869,13 +3647,13 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Lindungi perangkat Anda dari malware</value>
   </data>
   <data name="Upsell_Carousel_P2P">
-    <value>Akses unduhan dan pembagian berkas secara peer-to-peer (P2P)</value>
+    <value>Akses unduhan dan berbagi file secara peer-to-peer (P2P)</value>
   </data>
   <data name="Upsell_Carousel_P2P_Discretion">
-    <value>Sembunyikan alamat IP Anda dari penyedia layanan internet dan komputer lain pada jaringan Anda</value>
+    <value>Sembunyikan alamat IP Anda dari penyedia layanan internet dan komputer lain</value>
   </data>
   <data name="Upsell_Carousel_P2P_PortForwarding">
-    <value>Lesatkan kecepatan P2P dengan penerusan port</value>
+    <value>Tingkatkan kecepatan P2P dengan penerusan port</value>
   </data>
   <data name="Upsell_Carousel_P2P_Speed">
     <value>Kecepatan unggahan dan unduhan yang ditingkatkan</value>
@@ -3885,7 +3663,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <comment>This label indicates that there are more platforms available than the ones listed. The plus sign is important.</comment>
   </data>
   <data name="Upsell_Carousel_Profiles">
-    <value>Dapatkan akses kilat ke koneksi yang sering Anda gunakan</value>
+    <value>Dapatkan akses cepat ke koneksi yang sering digunakan</value>
   </data>
   <data name="Upsell_Carousel_Profiles_Convenience">
     <value>Tentukan salah satu profil sebagai koneksi bawaan Anda dan hubungkan dengan sekali klik</value>
@@ -3897,7 +3675,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Sesuaikan lokasi, protokol, dan pengaturan Anda</value>
   </data>
   <data name="Upsell_Carousel_SecureCore">
-    <value>Terapkan lapisan perlindungan tambahan ke koneksi Anda</value>
+    <value>Tambahkan lapisan perlindungan lain ke koneksi Anda</value>
   </data>
   <data name="Upsell_Carousel_SecureCore_Encryption">
     <value>Gandakan keamanan Anda dengan Secure Core</value>
@@ -3909,7 +3687,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Alihkan lalu lintas jaringan Anda melalui berbagai server ultra aman di Swiss, Swedia, dan Islandia</value>
   </data>
   <data name="Upsell_Carousel_Speed">
-    <value>Jelajahi internet pada kecepatan yang jauh lebih tinggi</value>
+    <value>Jelajahi internet dengan kecepatan yang jauh lebih tinggi</value>
   </data>
   <data name="Upsell_Carousel_Speed_Acceleration">
     <value>Jelajahi internet hingga 400% lebih cepat dengan VPN Accelerator</value>
@@ -3921,19 +3699,19 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Dapatkan kecepatan koneksi hingga 10 Gbps</value>
   </data>
   <data name="Upsell_Carousel_SplitTunneling">
-    <value>Dapatkan yang terbaik dari koneksi VPN dan non-VPN</value>
+    <value>Dapatkan yang terbaik dari keduanya</value>
   </data>
   <data name="Upsell_Carousel_SplitTunneling_Browsing">
     <value>Jelajahi internet dari dua lokasi sekaligus dengan split tunneling</value>
   </data>
   <data name="Upsell_Carousel_SplitTunneling_Configuration">
-    <value>Izinkan aplikasi dan alamat IP yang terpercaya untuk dapat terhubung langsung ke internet, selagi koneksi lainnya terhubung via VPN</value>
+    <value>Izinkan aplikasi dan alamat IP yang tepercaya untuk terhubung langsung ke internet, selagi melindungi yang lainnya dengan VPN Anda</value>
   </data>
   <data name="Upsell_Carousel_Streaming">
-    <value>Tonton berbagai film dan tayangan TV kesayangan Anda</value>
+    <value>Streaming berbagai film dan tayangan TV kesayangan Anda</value>
   </data>
   <data name="Upsell_Carousel_Streaming_Access">
-    <value>Akses TV dan film yang terbatas wilayah dari mana pun di seluruh dunia</value>
+    <value>Akses TV dan film yang terblokir wilayah dari mana pun di seluruh dunia</value>
   </data>
   <data name="Upsell_Carousel_Streaming_Platforms_BBC">
     <value>BBC iPlayer</value>
@@ -3944,9 +3722,6 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   <data name="Upsell_Carousel_Streaming_Platforms_HBO">
     <value>HBO Max</value>
   </data>
-  <data name="Upsell_Carousel_Streaming_Platforms_Hulu">
-    <value>Hulu</value>
-  </data>
   <data name="Upsell_Carousel_Streaming_Platforms_Netflix">
     <value>Netflix</value>
   </data>
@@ -3954,29 +3729,29 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Amazon Prime Video</value>
   </data>
   <data name="Upsell_Carousel_Streaming_Speed">
-    <value>Tonton tayangan streaming dalam kualitas 4K tanpa buffering, hambatan, atau batas kecepatan</value>
+    <value>Tonton dalam kualitas 4K tanpa buffering, perlambatan, atau batas kecepatan</value>
   </data>
   <data name="Upsell_Carousel_Title">
     <value>Telusuri VPN Plus</value>
   </data>
   <data name="Upsell_Carousel_Tor">
-    <value>Akses jaringan Tor untuk privasi ekstra</value>
+    <value>Akses jaringan Tor untuk privasi tambahan</value>
   </data>
   <data name="Upsell_Carousel_Tor_Access">
     <value>Akses situs tersembunyi dan situs onion</value>
   </data>
   <data name="Upsell_Carousel_Tor_Browsing">
-    <value>Jelajahi jaringan Tor dengan browser yang biasa Anda gunakan</value>
+    <value>Jelajahi jaringan Tor dengan peramban yang biasa Anda gunakan</value>
   </data>
   <data name="Upsell_Carousel_Tor_Protection">
-    <value>Lindungi data pribadi Anda saat menjelajah dunia maya</value>
+    <value>Lindungi data pribadi Anda saat menjelajah internet</value>
   </data>
   <data name="Upsell_Carousel_WorldwideCoverage">
     <value>Akses lebih dari {0} di {1}</value>
     <comment>Title for the worldwide coverage upsell feature page. {0} is a placeholder for the number of servers (eg. 100 secure servers) and {1} for the number of countries available (eg. 60 countries).</comment>
   </data>
   <data name="Upsell_Carousel_WorldwideCoverage_Censorship">
-    <value>Lewati sensor dengan berbagai fitur keamanan lanjutan</value>
+    <value>Lewati sensor dengan berbagai fitur keamanan tingkat lanjut</value>
   </data>
   <data name="Upsell_Carousel_WorldwideCoverage_Countries_Other">
     <value>{0} negara</value>
@@ -4002,6 +3777,24 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
   <data name="VpnProtocol_OpenVPN_Udp_Description">
     <value>Mapan, teruji, dan aman</value>
   </data>
+  <data name="VpnProtocol_ProTun_Tcp">
+    <value>Proton WireGuard (TCP)</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tcp_Description">
+    <value>State-of-the-art protocol for security and performance</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tls">
+    <value>Proton Stealth</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Tls_Description">
+    <value>Overcomes VPN blocks by hiding your connection from censors</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Udp">
+    <value>Proton WireGuard (UDP)</value>
+  </data>
+  <data name="VpnProtocol_ProTun_Udp_Description">
+    <value>State-of-the-art protocol for security and performance</value>
+  </data>
   <data name="VpnProtocol_Smart">
     <value>Smart</value>
   </data>
@@ -4015,7 +3808,7 @@ Muatan server yang tinggi dapat memperlambat koneksi Anda.</value>
     <value>Stealth</value>
   </data>
   <data name="VpnProtocol_WireGuard_Tls_Description">
-    <value>Melewati pemblokiran VPN dengan menyembunyikan koneksi Anda dari sensor</value>
+    <value>Menangkal pemblokiran VPN dengan menyembunyikan koneksi Anda dari sensor</value>
   </data>
   <data name="VpnProtocol_WireGuard_Udp">
     <value>WireGuard (UDP)</value>

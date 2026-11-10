@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2025 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -18,13 +18,15 @@
  */
 
 using ProtonVPN.Client.Common.Observers;
+using ProtonVPN.Client.Settings.Contracts.Models;
 
 namespace ProtonVPN.Client.Settings.Contracts.Observers;
 
 public interface IFeatureFlagsObserver : IObserver
 {
-    bool IsIpv6SupportEnabled { get; }
-    bool IsLocalAreaNetworkAllowedForPaidUsersOnly { get; }
+    string U2FGatewayPortalUrl { get; }
+    bool IsProTunEnabled { get; }
+    FeatureFlag ConnectionFeedback { get; }
 
     Task UpdateAsync(CancellationToken cancellationToken);
 }

@@ -24,7 +24,6 @@ using ProtonVPN.Client.Logic.Searches.Contracts;
 using ProtonVPN.Client.Logic.Servers.Contracts;
 using ProtonVPN.Client.Logic.Servers.Contracts.Enums;
 using ProtonVPN.Client.Logic.Servers.Contracts.Models;
-using ProtonVPN.Common.Core.Extensions;
 
 namespace ProtonVPN.Client.Logic.Searches;
 
@@ -36,42 +35,45 @@ public partial class GlobalSearch : IGlobalSearch
 
     private readonly IServersLoader _serversLoader;
     //private readonly IProfilesManager _profilesManager;
-    private readonly ILocalizationProvider _localizationProvider;
+    private readonly ILocalizationProvider _localizer;
 
     public GlobalSearch(IServersLoader serversLoader,
         //IProfilesManager profilesManager,
-        ILocalizationProvider localizationProvider)
+        ILocalizationProvider localizer)
     {
         _serversLoader = serversLoader;
         //_profilesManager = profilesManager;
-        _localizationProvider = localizationProvider;
+        _localizer = localizer;
     }
 
-    public async Task<List<ILocation>> SearchAsync(string? input, ServerFeatures? serverFeatures = null)
+    public async Task<List<ILocation>> SearchAsync(
+        string? input, 
+        ServerFeatures? serverFeatures = null,
+        SearchCategory categories = SearchCategory.All)
     {
-        input = input?.Trim();
+        input = input.NormalizeInput();
 
         if (string.IsNullOrWhiteSpace(input))
         {
             return [];
         }
 
-        input = input.RemoveDiacritics();
+        Task<IEnumerable<ILocation>> serversTask = categories.HasFlag(SearchCategory.Servers) && _serverSearchTriggerRegex.IsMatch(input)
+            ? Task.Run(() => SearchServers(input, serverFeatures))
+            : Task.FromResult<IEnumerable<ILocation>>([]);
 
-        Task<IEnumerable<ILocation>> serversTask;
-        if (_serverSearchTriggerRegex.IsMatch(input))
-        {
-            serversTask = Task.Run(() => SearchServers(input, serverFeatures));
-        }
-        else
-        {
-            serversTask = Task.FromResult<IEnumerable<ILocation>>([]);
-        }
+        Task<IEnumerable<ILocation>> countriesTask = categories.HasFlag(SearchCategory.Countries)
+            ? Task.Run(() => SearchCountries(input, serverFeatures))
+            : Task.FromResult<IEnumerable<ILocation>>([]);
 
-        Func<string, string, bool> searchFunc = GetSearchFunction(input);
-        Task<IEnumerable<ILocation>> citiesTask = Task.Run(() => SearchCities(input, serverFeatures, searchFunc));
-        Task<IEnumerable<ILocation>> statesTask = Task.Run(() => SearchStates(input, serverFeatures, searchFunc));
-        Task<IEnumerable<ILocation>> countriesTask = Task.Run(() => SearchCountries(input, serverFeatures, searchFunc));
+        Task<IEnumerable<ILocation>> statesTask = categories.HasFlag(SearchCategory.States)
+            ? Task.Run(() => SearchStates(input, serverFeatures))
+            : Task.FromResult<IEnumerable<ILocation>>([]);
+
+        Task<IEnumerable<ILocation>> citiesTask = categories.HasFlag(SearchCategory.Cities)
+            ? Task.Run(() => SearchCities(input, serverFeatures))
+            : Task.FromResult<IEnumerable<ILocation>>([]);
+
         //Task<IEnumerable<IConnectionIntent>> gatewaysTask = Task.Run(() => SearchGateways(input));
         //Task<IEnumerable<IConnectionIntent>> profilesTask = Task.Run(() => SearchProfiles(input));
 
@@ -85,7 +87,11 @@ public partial class GlobalSearch : IGlobalSearch
         //IEnumerable<IConnectionIntent> profiles = await profilesTask;
 
         //return profiles.Concat(gateways).Concat(countries).Concat(states).Concat(cities).Concat(servers).ToList();
-        return countries.Concat(states).Concat(cities).Concat(servers).ToList();
+        return countries
+            .Concat(states)
+            .Concat(cities)
+            .Concat(servers)
+            .ToList();
     }
 
     private IEnumerable<ILocation> SearchServers(string input, ServerFeatures? serverFeatures)
@@ -93,56 +99,57 @@ public partial class GlobalSearch : IGlobalSearch
         IEnumerable<Server> servers = serverFeatures is null
             ? _serversLoader.GetServers()
             : _serversLoader.GetServersByFeatures(serverFeatures.Value);
-        return servers.Where(s => StartsWith(s.Name, input) || StartsWith(s.Name.Replace("#", ""), input));
+        return servers.Where(s => SearchMatcher.MatchesServer(s, input));
     }
 
-    private static bool StartsWith(string name, string input)
-    {
-        return name?.RemoveDiacritics().StartsWith(input, StringComparison.InvariantCultureIgnoreCase) ?? false;
-    }
-
-    private Func<string, string, bool> GetSearchFunction(string input)
-    {
-        return input.Length < SearchConfiguration.MIN_CONTAINS_LENGTH
-            ? StartsWith
-            : Contains;
-    }
-
-    private static bool Contains(string name, string input)
-    {
-        return name?.RemoveDiacritics().Contains(input, StringComparison.InvariantCultureIgnoreCase) ?? false;
-    }
-
-    private IEnumerable<ILocation> SearchCities(string input, ServerFeatures? serverFeatures, Func<string, string, bool> searchFunc)
+    private IEnumerable<ILocation> SearchCities(string input, ServerFeatures? serverFeatures)
     {
         IEnumerable<City> cities = serverFeatures is null
             ? _serversLoader.GetCities()
             : _serversLoader.GetCitiesByFeatures(serverFeatures.Value);
-        return cities.Where(c => searchFunc(c.Name, input));
+
+        List<LocalizedLocation> localizedCities = cities.Select(city => new LocalizedLocation()
+        {
+            Location = city,
+            LocalizedName = _localizer.GetCityName(city.Name, city.CountryCode)
+        }).ToList();
+
+        return localizedCities
+            .Where(c => SearchMatcher.MatchesCity(c.LocalizedName, input))
+            .Select(c => c.Location);
     }
 
-    private IEnumerable<ILocation> SearchStates(string input, ServerFeatures? serverFeatures, Func<string, string, bool> searchFunc)
+    private IEnumerable<ILocation> SearchStates(string input, ServerFeatures? serverFeatures)
     {
         IEnumerable<State> states = serverFeatures is null
             ? _serversLoader.GetStates()
             : _serversLoader.GetStatesByFeatures(serverFeatures.Value);
-        return states.Where(s => searchFunc(s.Name, input));
+
+        List<LocalizedLocation> localizedStates = states.Select(state => new LocalizedLocation()
+        {
+            Location = state,
+            LocalizedName = _localizer.GetStateName(state.Name, state.CountryCode)
+        }).ToList();
+
+        return localizedStates
+            .Where(s => SearchMatcher.MatchesState(s.LocalizedName, input))
+            .Select(s => s.Location);
     }
 
-    private IEnumerable<ILocation> SearchCountries(string input, ServerFeatures? serverFeatures, Func<string, string, bool> searchFunc)
+    private IEnumerable<ILocation> SearchCountries(string input, ServerFeatures? serverFeatures)
     {
-        IEnumerable<ICountryLocation> countries = serverFeatures is null
+        IEnumerable<Country> countries = serverFeatures is null
             ? _serversLoader.GetCountries()
             : _serversLoader.GetCountriesByFeatures(serverFeatures.Value);
 
         List<LocalizedCountry> localizedCountries = countries.Select(c => new LocalizedCountry()
         {
             Country = c,
-            LocalizedName = _localizationProvider.GetCountryName(c.Code)
+            LocalizedName = _localizer.GetCountryName(c.Code)
         }).ToList();
 
         return localizedCountries
-            .Where(c => searchFunc(c.Country.Code, input) || searchFunc(c.LocalizedName, input))
+            .Where(c => SearchMatcher.MatchesCountry(c.Country, c.LocalizedName, input))
             .Select(c => c.Country);
     }
 

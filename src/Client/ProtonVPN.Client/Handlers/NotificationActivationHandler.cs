@@ -26,6 +26,7 @@ using ProtonVPN.Client.Notifications.Contracts;
 using ProtonVPN.Client.Notifications.Contracts.Arguments;
 using ProtonVPN.Client.Services.PortForwarding;
 using ProtonVPN.Client.Services.Upselling;
+using ProtonVPN.Common.Core.Extensions;
 using ProtonVPN.StatisticalEvents.Contracts;
 
 namespace ProtonVPN.Client.Handlers;
@@ -53,24 +54,21 @@ public class NotificationActivationHandler : IHandler,
 
     public void Receive(NotificationActivationMessage message)
     {
-        HandleCustomActivationActionAsync(message.Argument);
+        HandleCustomActivationActionAsync(message.Argument).FireAndForget();
     }
 
-    private async void HandleCustomActivationActionAsync(string argument)
+    private async Task HandleCustomActivationActionAsync(string argument)
     {
         switch (argument)
         {
             case NotificationArguments.UPGRADE:
-                await _accountUpgradeUrlLauncher.OpenAsync(ModalSource.Downgrade);
+                await _accountUpgradeUrlLauncher.OpenAsync(new UpsellModalContext(ModalSource.Downgrade, ModalTrigger.ErrorDialog));
                 break;
             case NotificationArguments.COPY_PORT_FORWARDING_PORT_TO_CLIPBOARD:
-                _uiThreadDispatcher.TryEnqueue(async () =>
-                {
-                    await _portForwardingClipboardService.CopyActivePortToClipboardAsync();
-                });
+                _uiThreadDispatcher.TryEnqueue(_portForwardingClipboardService.CopyActivePortToClipboardAsync);
                 break;
             default:
-                _uiThreadDispatcher.TryEnqueue(_mainWindowActivator.Activate);
+                _uiThreadDispatcher.TryEnqueue(() => _mainWindowActivator.Activate());
                 break;
         }
     }

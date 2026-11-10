@@ -18,7 +18,6 @@
  */
 
 using System.Diagnostics;
-using ProtonVPN.Client.Common.UI.Extensions;
 using ProtonVPN.Client.Contracts.Services.Browsing;
 using ProtonVPN.Client.Core.Models;
 using ProtonVPN.Client.Core.Services.Selection;
@@ -86,8 +85,6 @@ public class UrlsBrowser : IUrlsBrowser
     public string NoLogs => "https://protonvpn.com/blog/no-logs-audit";
 
     public string ProtonStatusPage => "https://protonstatus.com";
-
-    public string P2PStatusPage => "http://protonstatus.com/vpn_status";
 
     public string SupportForm => "https://protonvpn.com/support-form";
 

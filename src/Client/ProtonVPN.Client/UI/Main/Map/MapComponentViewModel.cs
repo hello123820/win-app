@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2026 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -23,7 +23,6 @@ using ProtonVPN.Client.Common.UI.Controls.Map;
 using ProtonVPN.Client.Contracts.Messages;
 using ProtonVPN.Client.Core.Bases;
 using ProtonVPN.Client.Core.Bases.ViewModels;
-using ProtonVPN.Client.Core.Enums;
 using ProtonVPN.Client.Core.Services.Activation;
 using ProtonVPN.Client.EventMessaging.Contracts;
 using ProtonVPN.Client.Localization.Extensions;
@@ -31,18 +30,17 @@ using ProtonVPN.Client.Logic.Connection.Contracts;
 using ProtonVPN.Client.Logic.Connection.Contracts.Enums;
 using ProtonVPN.Client.Logic.Connection.Contracts.Messages;
 using ProtonVPN.Client.Logic.Connection.Contracts.Models.Intents;
-using ProtonVPN.Client.Logic.Connection.Contracts.Models.Intents.Locations;
 using ProtonVPN.Client.Logic.Connection.Contracts.Models.Intents.Locations.Countries;
-using ProtonVPN.Client.Logic.Servers;
 using ProtonVPN.Client.Logic.Servers.Cache;
 using ProtonVPN.Client.Logic.Servers.Contracts.Messages;
 using ProtonVPN.Client.Settings.Contracts;
 using ProtonVPN.Client.Settings.Contracts.Messages;
+using ProtonVPN.StatisticalEvents.Contracts;
 using ProtonVPN.StatisticalEvents.Contracts.Dimensions;
 
 namespace ProtonVPN.Client.UI.Main.Map;
 
-public partial class MapComponentViewModel : ViewModelBase,
+public partial class MapComponentViewModel : ActivatableViewModelBase,
     IEventMessageReceiver<ConnectionStatusChangedMessage>,
     IEventMessageReceiver<SettingChangedMessage>,
     IEventMessageReceiver<MainWindowVisibilityChangedMessage>,
@@ -84,13 +82,19 @@ public partial class MapComponentViewModel : ViewModelBase,
         _coordinatesProvider = coordinatesProvider;
         _upsellCarouselWindowActivator = upsellCarouselWindowActivator;
         _mainWindowOverlayActivator = mainWindowOverlayActivator;
+    }
 
+    protected override void OnActivated()
+    {
+        base.OnActivated();
+
+        InvalidateCountries();
         InvalidateActiveCountry();
     }
 
     public void Receive(ConnectionStatusChangedMessage message)
     {
-        ExecuteOnUIThread(() =>
+        ExecuteOnUIThreadIfActive(() =>
         {
             InvalidateActiveCountry();
 
@@ -102,7 +106,7 @@ public partial class MapComponentViewModel : ViewModelBase,
 
     public void Receive(SettingChangedMessage message)
     {
-        ExecuteOnUIThread(() =>
+        ExecuteOnUIThreadIfActive(() =>
         {
             if (message.PropertyName == nameof(ISettings.DeviceLocation))
             {
@@ -118,8 +122,19 @@ public partial class MapComponentViewModel : ViewModelBase,
 
     public void Receive(ServerListChangedMessage message)
     {
-        ExecuteOnUIThread(() =>
+        ExecuteOnUIThreadIfActive(() =>
         {
+            InvalidateCountries();
+            InvalidateActiveCountry();
+        });
+    }
+
+    protected override void OnLanguageChanged()
+    {
+        ExecuteOnUIThreadIfActive(() =>
+        {
+            base.OnLanguageChanged();
+
             InvalidateCountries();
             InvalidateActiveCountry();
         });
@@ -171,7 +186,7 @@ public partial class MapComponentViewModel : ViewModelBase,
     {
         if (!_settings.VpnPlan.IsPaid)
         {
-            return _upsellCarouselWindowActivator.ActivateAsync(UpsellFeatureType.WorldwideCoverage);
+            return _upsellCarouselWindowActivator.ActivateAsync(new UpsellModalContext(ModalSource.Countries, ModalTrigger.Map, country?.Code));
         }
 
         if (country == null || country.IsUnderMaintenance)

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  *
  * This file is part of ProtonVPN.
  *
@@ -23,6 +23,7 @@ using ProtonVPN.Client.Core.Enums;
 using ProtonVPN.Client.Core.Services.Navigation;
 using ProtonVPN.Client.EventMessaging.Contracts;
 using ProtonVPN.Client.Factories;
+using ProtonVPN.Client.Localization.Extensions;
 using ProtonVPN.Client.Logic.Connection.Contracts;
 using ProtonVPN.Client.Logic.Connection.Contracts.Messages;
 using ProtonVPN.Client.Logic.Searches.Contracts;
@@ -31,20 +32,26 @@ using ProtonVPN.Client.Logic.Servers.Contracts.Enums;
 using ProtonVPN.Client.Logic.Servers.Contracts.Extensions;
 using ProtonVPN.Client.Logic.Servers.Contracts.Messages;
 using ProtonVPN.Client.Logic.Servers.Contracts.Models;
+using ProtonVPN.Client.Logic.Servers.Contracts.Searches;
 using ProtonVPN.Client.Models.Connections;
 using ProtonVPN.Client.Settings.Contracts;
 using ProtonVPN.Client.UI.Main.Sidebar.Bases;
 using ProtonVPN.Client.UI.Main.Sidebar.Connections.Bases.Contracts;
 using ProtonVPN.Client.UI.Main.Sidebar.Search.Contracts;
+using ProtonVPN.Common.Core.Extensions;
 
 namespace ProtonVPN.Client.UI.Main.Sidebar.Search;
 
 public partial class SearchResultsPageViewModel : ConnectionListViewModelBase<ISidebarViewNavigator>,
-    ISearchInputReceiver, IEventMessageReceiver<ConnectionStatusChangedMessage>,
-    IEventMessageReceiver<ServerListChangedMessage>
+    ISearchInputReceiver, 
+    IEventMessageReceiver<ConnectionStatusChangedMessage>,
+    IEventMessageReceiver<ServerListChangedMessage>,
+    IEventMessageReceiver<NewServerFoundMessage>,
+    IEventMessageReceiver<LocationNamesChangedMessage>
 {
     private readonly IGlobalSearch _globalSearch;
     private readonly ILocationItemFactory _locationItemFactory;
+    private readonly IServerFinder _serverFinder;
 
     private string _input = string.Empty;
 
@@ -56,8 +63,8 @@ public partial class SearchResultsPageViewModel : ConnectionListViewModelBase<IS
 
     public List<ICountriesComponent> CountriesComponents { get; }
 
-    public string ExampleCountries => $"{Localizer.Get("Country_val_JP")}, {Localizer.Get("Country_val_US")}";
-    public string ExampleCities => "Tokyo, Los Angeles";
+    public string ExampleCountries => $"{Localizer.GetCountryName("JP")}, {Localizer.GetCountryName("US")}";
+    public string ExampleCities => $"{Localizer.GetCityName("Tokyo", "JP")}, {Localizer.GetCityName("Los Angeles", "US")}";
     public string ExampleServers => "JP#75, US-NY#166";
 
     public SearchResultsPageViewModel(
@@ -69,7 +76,8 @@ public partial class SearchResultsPageViewModel : ConnectionListViewModelBase<IS
         ILocationItemFactory locationItemFactory,
         IConnectionGroupFactory connectionGroupFactory,
         IEnumerable<ICountriesComponent> countriesComponents,
-        IViewModelHelper viewModelHelper)
+        IViewModelHelper viewModelHelper,
+        IServerFinder serverFinder)
         : base(parentViewNavigator,
                settings,
                serversLoader,
@@ -79,6 +87,7 @@ public partial class SearchResultsPageViewModel : ConnectionListViewModelBase<IS
     {
         _globalSearch = globalSearch;
         _locationItemFactory = locationItemFactory;
+        _serverFinder = serverFinder;
 
         CountriesComponents = new(countriesComponents.OrderBy(p => p.SortIndex));
         _selectedCountriesComponent = CountriesComponents.First();
@@ -88,12 +97,12 @@ public partial class SearchResultsPageViewModel : ConnectionListViewModelBase<IS
     {
         base.OnLanguageChanged();
         OnPropertyChanged(nameof(ExampleCountries));
-        SearchAsync().Wait();
+        SearchAsync().FireAndForget();
     }
 
     partial void OnSelectedCountriesComponentChanged(ICountriesComponent value)
     {
-        SearchAsync().Wait();
+        SearchAsync().FireAndForget();
     }
 
     public async Task SearchAsync(string input)
@@ -109,17 +118,47 @@ public partial class SearchResultsPageViewModel : ConnectionListViewModelBase<IS
         {
             HasSearchInput = false;
             SetSearchResult([]);
+            _serverFinder.Cancel();
         }
         else
         {
             HasSearchInput = true;
-            Func<ILocation, ConnectionItemBase?> connectionItemCreationFunction = GetConnectionItemCreationFunction();
-            IEnumerable<ConnectionItemBase> result = (await _globalSearch.SearchAsync(input, GetServerFeatures()))
-                .Select(connectionItemCreationFunction)
-                .Where(ci => ci is not null)
-                .Cast<ConnectionItemBase>();
-            SetSearchResult(result);
+            IEnumerable<ConnectionItemBase> result = await SetSearchResultsAsync(input);
+            TriggerServerSearchTimerIfNecessary(input, result);
         }
+    }
+
+    private async Task<IEnumerable<ConnectionItemBase>> SetSearchResultsAsync(string input)
+    {
+        IEnumerable<ConnectionItemBase> result = (await _globalSearch.SearchAsync(input, GetServerFeatures()))
+            .Select(GetConnectionItemCreationFunction())
+            .Where(ci => ci is not null)
+            .Cast<ConnectionItemBase>();
+        SetSearchResult(result);
+
+        return result;
+    }
+
+    private void TriggerServerSearchTimerIfNecessary(string input, IEnumerable<ConnectionItemBase> result)
+    {
+        if (!result.Where(r => r is ServerLocationItemBase slib && DoesInputMatchServerName(input, slib.Server.Name)).Any())
+        {
+            _serverFinder.Search(input);
+        }
+        else
+        {
+            _serverFinder.Cancel();
+        }
+    }
+
+    private bool DoesInputMatchServerName(string input, string serverName)
+    {
+        return string.Equals(TrimServerName(input), TrimServerName(serverName), StringComparison.InvariantCultureIgnoreCase);
+    }
+
+    private string TrimServerName(string input)
+    {
+        return input.Replace("#", "").Replace("-", "").Replace(" ", "");
     }
 
     private ServerFeatures? GetServerFeatures()
@@ -248,5 +287,21 @@ public partial class SearchResultsPageViewModel : ConnectionListViewModelBase<IS
             InvalidateMaintenanceStates();
             InvalidateRestrictions();
         });
+    }
+
+    public void Receive(NewServerFoundMessage message)
+    {
+        string input = _input;
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return;
+        }
+
+        ExecuteOnUIThread(() => SetSearchResultsAsync(input));
+    }
+
+    public void Receive(LocationNamesChangedMessage message)
+    {
+        ExecuteOnUIThread(SearchAsync);
     }
 }

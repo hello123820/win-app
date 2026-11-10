@@ -18,10 +18,10 @@
  */
 
 using NUnit.Framework;
-using ProtonVPN.UI.Tests.Annotations;
 using ProtonVPN.UI.Tests.Robots;
 using ProtonVPN.UI.Tests.TestBase;
 using ProtonVPN.UI.Tests.TestsHelper;
+using ProtonVPN.UI.Tests.Annotations;
 
 namespace ProtonVPN.UI.Tests.Tests.SliTests;
 
@@ -33,7 +33,7 @@ public class LoginSLIs : SliSetUp
     [OneTimeSetUp]
     public void TestInitialize()
     {
-        LaunchApp();
+        LaunchClient();
     }
 
     [Test]
@@ -41,14 +41,11 @@ public class LoginSLIs : SliSetUp
     [Sli("login")]
     public void LoginPerformance()
     {
-        LoginRobot
-            .Login(TestUserData.PlusUser);
+        LoginRobot.Login(TestUserData.PlusUser);
 
         SliHelper.MeasureTime(() =>
         {
-            HomeRobot.Verify.IsWelcomeModalDisplayed();
+            NavigationRobot.Verify.IsOnMainPage();
         });
-
-        HomeRobot.DismissWelcomeModal();
     }
 }

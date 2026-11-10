@@ -20,7 +20,6 @@
 using System;
 using DeviceId;
 using ProtonVPN.Common.Core.Extensions;
-using ProtonVPN.Common.Legacy.Extensions;
 using ProtonVPN.Logging.Contracts;
 using ProtonVPN.Logging.Contracts.Events.OperatingSystemLogs;
 
@@ -81,6 +80,6 @@ public static class DeviceIdStaticBuilder
 
     private static void LogError(Exception e, string prefix = null)
     {
-        _logger.Error<OperatingSystemLog>($"{prefix}Failed to generate device id.", e);
+        _logger?.Error<OperatingSystemLog>($"{prefix}Failed to generate device id.", e);
     }
 }
